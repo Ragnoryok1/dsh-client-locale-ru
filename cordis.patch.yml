@@ -1,0 +1,8 @@
+# @ragnoryok1/dsh-client-locale-ru profile-bundle patch.
+# Adds the Russian (ru) language pack as a dynamic client-plugin row. Composed
+# at profile boot; the dsh-client-modules host serves lib/client.js via the
+# combo /plugins/??<id>/client.js route. The row name resolves to this package,
+# which declares dsh.client (platform web) and exports ./client.
+- insert:
+    - id: locale-ru
+      name: '@ragnoryok1/dsh-client-locale-ru'
