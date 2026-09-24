@@ -1,7 +1,21 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
   "description": "Russian (ru) language pack for the dsh web GUI, registered as an external client language",
-  "version": "0.1.4",
+  "version": "0.1.5",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "cordis",
+    "cordis-plugin",
+    "localization",
+    "localisation",
+    "language-pack",
+    "i18n",
+    "l10n",
+    "russian",
+    "ru"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -9,6 +23,11 @@
     "type": "git",
     "url": "git+https://github.com/Ragnoryok1/dsh-client-locale-ru.git"
   },
+  "homepage": "https://github.com/Ragnoryok1/dsh-client-locale-ru#readme",
+  "bugs": {
+    "url": "https://github.com/Ragnoryok1/dsh-client-locale-ru/issues"
+  },
+  "author": "Ragnoryok1",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,15 +61,17 @@
   "license": "MIT",
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/dsh-client-locale": "^0.1.0"
+    "@deepseek-ai/dsh-client-locale": ">=0.1.0-rc.2 <0.2.0"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-client-locale": ">=0.1.0-rc.2 <0.2.0",
     "tsdown": "^0.22.2",
     "typescript": "^5.6.0"
   },
   "files": [
     "lib/",
+    "images/",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"

@@ -1,5 +1,23 @@
 # @ragnoryok1/dsh-client-locale-ru
 
+[![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
+[![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
+
+**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 53 namespaces, 2,163 strings, built against dsh `0.1.7-rc.1`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
+
+---
+
+## Как это выглядит
+
+Русский в списке языков и переведённые разделы настроек (снимки сделаны в текущей сборке `0.1.7-alpha.2`):
+
+![Настройки на русском: язык, оформление, темы](images/settings-ru.png)
+
+![Встроенные плагины на русском](images/plugins-ru.png)
+
+На втором снимке единица счёта показана в том виде, в каком она была в 0.1.4
+(«187 плагины») — в 0.1.5 исправлено на «187 плагинов».
+
 Русская локаль (`ru`) для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`).
 
 Плагин добавляет **русский** как выбираемый язык через контракт языковых пакетов локали: `ctx.locale.addLanguage({ id: 'ru', label: 'Русский', fallback: 'en' })` и по `ru`-словарю на каждый namespace. После выбора **Русский** в Settings → General интерфейс переключается сразу.
@@ -39,7 +57,7 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (54 namespace, ~2130 ключей, ~2250 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (53 namespace, 2163 ключа, ~2280 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).
@@ -66,6 +84,23 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 Проверка покрытия выполняется по исходникам харнеса: для каждого namespace
 сравниваются множества ключей, поэтому следующий выпуск начинается с точного
 списка «добавить / проверить / удалить».
+
+В 0.1.5 пакет догнал харнес **0.1.7-rc.1**: добавлено **49 ключей**, 13 обновлены,
+16 удалены, namespace `directory-browser` убран (в rc.1 его больше нет). Появились
+подписи шагов работы инструментов (`message.stepProcess.prepare.*` и `done.*` —
+чтение изображений, запись файлов, подготовка к поиску по коду, веб-поиску,
+координации субагентов и другие), просмотр изображений во весь экран
+(`image.*`), режимы показа ходов «Стандартный» и «Подробный», установка плагинов
+из GitHub с таймаутом и китайским зеркалом, предупреждение о несовместимой версии
+плагина, выбор источника загрузки моделей для голосового ввода и сообщения
+команды `Cordis`. Уточнены формулировки, где upstream заменил «teammate/agent»
+на «subagent», а «Beta» — на «Experimental».
+
+Также в 0.1.5 исправлена единица счёта в инвентаре плагинов: было «187 плагины»,
+стало «187 плагинов». Переведены и встроенные снимки интерфейса, добавлены npm
+keywords и исправлен peer-диапазон `@deepseek-ai/dsh-client-locale`
+(`>=0.1.0-rc.2 <0.2.0`) — раньше `^0.1.0` не разрешался, потому что пакет
+публикуется только под prerelease-версиями.
 
 В 0.1.4 пакет догнал харнес **0.1.7-alpha.2** — самый крупный скачок: добавлено
 **905 ключей**, 29 изменены, 126 удалены. Новые разделы:
