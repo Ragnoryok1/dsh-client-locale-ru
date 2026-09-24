@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 
-**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 53 namespaces, 2,163 strings, built against dsh `0.1.7-rc.1`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
+**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 54 namespaces, 2,387 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
 
 ---
 
@@ -57,7 +57,7 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (53 namespace, 2163 ключа, ~2280 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (54 namespace, 2387 ключей, ~2500 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).
@@ -84,6 +84,26 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 Проверка покрытия выполняется по исходникам харнеса: для каждого namespace
 сравниваются множества ключей, поэтому следующий выпуск начинается с точного
 списка «добавить / проверить / удалить».
+
+В 0.1.6 пакет догнал харнес **0.1.7-rc.2**: добавлено **252 ключа**, 18 обновлены,
+26 удалены, добавлены два новых namespace. Изменения:
+
+- **`shortcuts`** (новый namespace, 56 ключей) — редактор горячих клавиш: запись
+  сочетания, конфликты, зарезервированные комбинации, подсказки для macOS и
+  Windows, восстановление значений по умолчанию;
+- **`schedule.manager`** (70 ключей) — напоминания переписаны: список, удаление,
+  повтор, история запусков, выражения Cron; прежний namespace `schedule.catalog`
+  удалён;
+- **`settings.account`** (50 ключей) — первый запуск приложения: приветствие,
+  выбор назначения и глубины показа хода работы, пополнение баланса, выход из
+  учётной записи во время выполнения задач;
+- добавлены подписи добавления и удаления инструментов на ходу
+  (`message.tools*`, `trajectory.layout.*`), команды правой боковой панели
+  (`sidebarRight`), состояния «сначала выберите сессию» в панелях, обновлено
+  название раздела настроек: «Инструменты для кода» вместо «Инструментов
+  разработчика»;
+- 18 ключей обновлены под изменившийся английский текст, 26 удалены. Единый термин
+  «рабочая папка» вместо «рабочей области» в одном месте.
 
 В 0.1.5 пакет догнал харнес **0.1.7-rc.1**: добавлено **49 ключей**, 13 обновлены,
 16 удалены, namespace `directory-browser` убран (в rc.1 его больше нет). Появились
