@@ -2,8 +2,11 @@
 
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
+[![dsh](https://img.shields.io/badge/dsh-0.1.7--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
+[![namespaces](https://img.shields.io/badge/namespaces-52-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C598-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 54 namespaces, 2,387 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
+**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 52 namespaces, 2,598 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
 
 ---
 
@@ -42,7 +45,13 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 - **Браузерная половина** (`lib/client.js`) — регистрирует `ru` и словари через сервис `locale` (инжект из `ctx`). Рантайм-импортов фреймворка нет — только сервис.
 - **Рантайм-зависимостей нет** — `lib/client.js` не импортирует другие пакеты, поэтому не тянет тяжёлых зависимостей.
 - **Эффекты** — язык и словари регистрируются через `ctx.effect(...)`, поэтому выгружаются вместе с плагином (HMR-безопасно).
-- **Плюралы** — контракт локали не несёт правил плюрализации (нет ICU/`Intl.PluralRules`); русские формы задаются по ключу.
+- **Плюралы** — контракт локали не несёт правил плюрализации (нет ICU/`Intl.PluralRules`), и
+  компоненты выбирают форму как `count === 1 ? 'ключ.one' : 'ключ.other'`. Русский язык
+  требует трёх форм для `n ≥ 2` (2 задачи / 5 задач), поэтому одна строка `.other` не может
+  быть верной всегда. Пакет решает это **без** изменения апстрима: `.one` (это ровно `n = 1`)
+  содержит естественную форму, а `.other` — конструкцию, корректную при любом `n ≥ 2`
+  («Субагентов: 3», «Фоновых задач: 5») или инвариантное сокращение («каждые 2 ч»,
+  «ещё 3 стр.»). Ни одна видимая строка не показывает неверную форму числа.
 - **Фолбэк** — отсутствующий русский ключ падает на `en` (настроенный `fallback`).
 
 ## Разработка
@@ -57,7 +66,7 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (54 namespace, 2387 ключей, ~2500 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (52 namespace, 2598 переводов, ~2700 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).
@@ -66,6 +75,38 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 Актуальный набор — по тегам харнеса: ключи сняты с профильного коммита, а добавленные
 позже падают на `en` при поиске, поэтому пакет не ломает интерфейс на новых версиях.
+
+### 0.1.7 — исправлен мёртвый namespace, переведён менеджер задач, переписаны числительные
+
+Главное в релизе — **исправление ошибки из 0.1.6**. Тогда было записано, что namespace
+`schedule.catalog` упразднён, а его место занял `schedule.manager`. На деле в харнесе
+**оба** namespace живут и по отдельности: `schedule.catalog` — это каталог напоминаний в
+шапке сессии с частотами и единицами, `schedule.manager` — новый менеджер задач
+автоматизации. Из-за неверного вывода ~30 строк переводов (напоминания, частота, единицы
+времени) были зарегистрированы под именем, которое никто не читает, и **никогда не
+показывались** в интерфейсе. Теперь каталог зарегистрирован как `schedule.catalog`.
+
+- **исправлено:** переводы каталога расписания снова видны — `trigger.*`, `list.*`,
+  `delete.*`, `frequency.*`, `cron.*`, `unit.*`, `relative.*`, `mark.aria`, `hover.more`;
+- **добавлен `schedule.manager`** (188 ключей) — менеджер задач автоматизации целиком на
+  русском: панель и каталог задач, поиск, фильтр состояний, сведения о задаче и её вкладки,
+  **журнал запусков** с правилами хранения, редактор расписания (дата, время, час, минута,
+  секунда, часовой пояс, интервал повтора), правила повтора (разово, каждые N минут/часов/
+  секунд, ежедневно, пн–пт, еженедельно, свой cron), cron-форма с выбором дат и минуты,
+  удаление с подтверждением, уведомления и карточки;
+- **числительные переписаны** (17 пар ключей): формы, которые ломались на числах 2–4,
+  заменены на корректные при любом `n ≥ 2` — например «2 субагентов» → «Субагентов: 2»,
+  «каждые 2 часов» → «каждые 2 ч». Ещё 8 строк с `{count}` перед склоняемым словом
+  переведены на сокращения: «ещё 3 строк» → «ещё 3 стр.»;
+- **добавлено 7 ключей**, которые отсутствовали: `blocked.composer`,
+  `defaultWorkspace.title`, `schedule.active`, `settings.transcript.expanded`,
+  `status.scheduled`, `status.overdue` и namespace `shortcuts.layout` (подпись команды
+  показа левой панели);
+- **новая проверка в проекте:** аудит имён namespace. Прежняя проверка покрытия
+  сверяла ключи внутри namespace, но не сверяла сами имена, поэтому целый namespace
+  мог быть зарегистрирован под несуществующим именем и тихо не работать. Теперь имена
+  извлекаются из всех способов их объявления (`const NS`/`SETTINGS_NS`/`namespace`,
+  `locale.register`, `locale.bind`, `PropsLocale<…>`) и сравниваются множествами.
 
 В 0.1.2 добавлены разделы, которых не было в 0.1.1: `open-in-app` («Открыть в
 приложении»), `sidebarFiles`, `sidebarRight` (правый сайдбар с файлами) и
@@ -91,9 +132,10 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 - **`shortcuts`** (новый namespace, 56 ключей) — редактор горячих клавиш: запись
   сочетания, конфликты, зарезервированные комбинации, подсказки для macOS и
   Windows, восстановление значений по умолчанию;
-- **`schedule.manager`** (70 ключей) — напоминания переписаны: список, удаление,
-  повтор, история запусков, выражения Cron; прежний namespace `schedule.catalog`
-  удалён;
+- **`schedule.manager`** (70 ключей на тот момент) — менеджер задач автоматизации: список,
+  удаление, повтор, история запусков, выражения Cron. **Ошибочно было записано, что
+  namespace `schedule.catalog` при этом упразднён; в 0.1.7 это исправлено — оба
+  namespace существуют параллельно**;
 - **`settings.account`** (50 ключей) — первый запуск приложения: приветствие,
   выбор назначения и глубины показа хода работы, пополнение баланса, выход из
   учётной записи во время выполнения задач;
@@ -150,3 +192,7 @@ keywords и исправлен peer-диапазон `@deepseek-ai/dsh-client-lo
 ## Лицензия
 
 MIT
+
+## История изменений
+
+[CHANGELOG.md](CHANGELOG.md) — что было в каждом выпуске.

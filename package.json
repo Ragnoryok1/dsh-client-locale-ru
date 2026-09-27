@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian (ru) language pack for the dsh web GUI, registered as an external client language",
-  "version": "0.1.6",
+  "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 52 namespaces, verified against dsh 0.1.7-rc.2",
+  "version": "0.1.7",
   "keywords": [
     "deepseek",
     "deepseek-harness",
@@ -74,6 +74,7 @@
     "images/",
     "cordis.patch.yml",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ]
 }
