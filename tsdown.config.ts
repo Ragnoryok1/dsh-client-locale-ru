@@ -31,4 +31,14 @@ export default defineConfig([
       intro: 'var module = { exports: {} }; var exports = module.exports;',
     },
   },
+  {
+    name: `${id}/typography`,
+    entry: { typography: 'src/client/typography.ts' },
+    outDir: 'lib',
+    format: ['esm'],
+    platform: 'neutral',
+    target: 'es2024',
+    dts: false,
+    clean: false,
+  },
 ])

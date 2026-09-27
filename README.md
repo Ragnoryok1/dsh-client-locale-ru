@@ -2,11 +2,12 @@
 
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
+[![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.1.7--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-52-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C598-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C304-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 52 namespaces, 2,598 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
+**In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 52 namespaces, 2,304 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
 
 ---
 
@@ -54,6 +55,68 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
   «ещё 3 стр.»). Ни одна видимая строка не показывает неверную форму числа.
 - **Фолбэк** — отсутствующий русский ключ падает на `en` (настроенный `fallback`).
 
+## Типографика
+
+Пакет приводит уже отрисованный русский текст к типографским правилам: «ёлочки» вместо
+прямых кавычек, длинное тире вместо дефиса между словами, многоточие вместо трёх точек и
+неразрывный пробел между числом и следующим словом или единицей измерения (чтобы «187
+плагинов» не разрывалось на две строки). Правила намеренно осторожны: срабатывают только
+на однозначных шаблонах, а код, поля ввода, редактируемый текст и элементы с
+`data-typography="off"` не трогаются вообще. Повторный проход ничего не меняет.
+
+Правила проверяются скриптом, а не на глаз: `npm run check:typography`.
+
+## Проверки
+
+```sh
+npm run build             # сборка трёх выходов
+npm run check:typography  # 12 правил типографики, включая «не трогать»
+npm run audit -- <дерево харнеса>   # аудит локали
+npm run verify -- <дерево харнеса>  # всё вместе
+```
+
+Аудит выполняется в CI (`.github/workflows/verify.yml`) против **закреплённого тега**
+харнеса, а не против случайного локального чекаута. Гейтом проверяются две вещи, и обе
+уже ловили настоящие дефекты:
+
+- **мёртвые namespace** — каждый namespace, который регистрирует пакет, обязан
+  существовать в харнессе. В 0.1.6 переводы каталога расписания были зарегистрированы
+  под именем `schedule.manager`, тогда как читает их `schedule.catalog`: проверка покрытия
+  по ключам при этом рапортовала «всё переведено»;
+- **пары форм числа** — множества `.one`/`.other` должны совпадать, потому что клиент
+  выбирает форму как `count === 1 ? '.one' : '.other'`.
+
+Число покрытия выводится, но не является гейтом: точный список «добавить / удалить»
+требует сравнения ключей **по namespace** (это делает релизная оснастка), а сравнение имён
+ключей глобально отметило бы разделы, которые пакет сознательно оставляет на английском.
+
+## Область покрытия: только официальный интерфейс
+
+Пакет переводит **собственные namespace клиента харнеса** — 52 namespace, сверенные с
+закреплённым тегом. Словари сторонних плагинов в область сознательно не входят, и вот
+почему.
+
+Мы проверили 17 самых скачиваемых плагинов экосистемы (npm, `keywords:dsh-plugin`,
+скачивания за месяц) и посмотрели, какие из них вообще поставляют собственные строки:
+
+| Что обнаружено | Плагинов |
+|---|---|
+| **Своих строк нет** — интерфейс берёт текст из namespace харнеса | **11 из 17** |
+| Крупный собственный словарь (подтверждено вручную) | 2 — `dshmarket` (~1262 ключа), `@nanmicoder/dsh-agent-teams` (420) |
+| Только типы `.d.ts`, строк нет | 1 — `dsh-plugin-model-proxy` |
+| Требует отдельной проверки | 3 |
+
+Практическое следствие: у **11 из 17** популярнейших плагинов русский интерфейс уже
+работает — их текст лежит в общих namespace харнеса, которые пакет переводит полностью.
+Отдельный словарь нужен только там, где плагин везёт свои строки, а такой словарь — это
+обязательство следить за чужими релизами: у `dshmarket` уже версия 1.66.3, и её ключи
+меняются независимо от харнеса.
+
+Поэтому здесь один пакет и одно обязательство: **официальный интерфейс, переведённый и
+проверенный**, без гонки за чужими словарями. Нужен конкретный плагин — заведите issue:
+словарь для него возможен как отдельный слой, привязанный к версии, а не как молчаливое
+обещание «покрыто всё».
+
 ## Разработка
 
 ```sh
@@ -66,7 +129,7 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (52 namespace, 2598 переводов, ~2700 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (52 namespace, 2304 перевода, ~2700 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).

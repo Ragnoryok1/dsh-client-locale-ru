@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
   "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 52 namespaces, verified against dsh 0.1.7-rc.2",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "keywords": [
     "deepseek",
     "deepseek-harness",
@@ -40,6 +40,10 @@
       "types": "./lib/client.d.ts",
       "default": "./lib/client.js"
     },
+    "./typography": {
+      "types": "./lib/typography.d.ts",
+      "default": "./lib/typography.js"
+    },
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
@@ -56,6 +60,9 @@
   },
   "scripts": {
     "build": "tsdown",
+    "check:typography": "node scripts/check-typography.mjs",
+    "audit": "node scripts/audit.mjs",
+    "verify": "npm run build && npm run check:typography && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
@@ -78,3 +85,4 @@
     "LICENSE"
   ]
 }
+

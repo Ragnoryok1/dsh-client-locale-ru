@@ -1,0 +1,44 @@
+name: verify
+
+# The pack is a translation of a moving upstream: it must be checked against a
+# pinned harness tag, not against whatever the local checkout happens to hold.
+# The gate is deliberately narrow — a dead namespace and a mismatched plural
+# key set are the two failures a key-level comparison cannot see.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      # Bump when the pack is synced to a newer harness release.
+      HARNESS_TAG: dsh-v0.1.7-rc.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Export harness packages at the pinned tag
+        run: |
+          git clone --depth 1 --branch "$HARNESS_TAG" \
+            https://github.com/deepseek-ai/deepseek-harness.git harness
+          mkdir -p tree
+          git -C harness archive "$HARNESS_TAG" packages | tar -x -C tree
+
+      - name: Build
+        run: npm run build
+
+      - name: Typography rules
+        run: npm run check:typography
+
+      - name: Locale audit
+        run: node scripts/audit.mjs tree/packages
