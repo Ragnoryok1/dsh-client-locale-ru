@@ -9,6 +9,9 @@
 
 **In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 52 namespaces, 2,304 strings, built against dsh `0.1.7-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
 
+> **If the pack was useful to you, please star the repository.** It is the only signal that a
+> translation is wanted, and it is what decides which parts get worked on next.
+
 ---
 
 ## Как это выглядит
@@ -25,6 +28,14 @@
 Русская локаль (`ru`) для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`).
 
 Плагин добавляет **русский** как выбираемый язык через контракт языковых пакетов локали: `ctx.locale.addLanguage({ id: 'ru', label: 'Русский', fallback: 'en' })` и по `ru`-словарю на каждый namespace. После выбора **Русский** в Settings → General интерфейс переключается сразу.
+
+> **Если пакет вам пригодился — поставьте звезду.** Это единственный способ показать, что
+> перевод нужен, и он реально влияет на то, какие задачи берут в работу. Ни одна кнопка
+> «нравится» в интерфейсе не делает этого.
+>
+> Репозиторий при этом остаётся местом, где видно состояние перевода: [CHANGELOG](CHANGELOG.md)
+> с разбором каждого релиза (включая ошибки, которые находили в нём сами), проверки в CI и
+> перечень того, что сознательно не переводится.
 
 ## Установка
 
