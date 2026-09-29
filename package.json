@@ -79,6 +79,7 @@
   "files": [
     "lib/",
     "images/",
+    "assets/",
     "cordis.patch.yml",
     "README.md",
     "CHANGELOG.md",

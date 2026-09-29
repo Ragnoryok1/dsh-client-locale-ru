@@ -1,3 +1,16 @@
+<!-- deepseek-harness-meta
+{
+  "name": "Русский (ru) — языковой пакет для DeepSeek Harness",
+  "version": "0.1.8",
+  "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
+  "description": "Полный русский интерфейс веб-GUI DeepSeek Harness: 52 namespace, 2304 перевода, экранная типографика, аудит локали в CI",
+  "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
+  "compatible_versions": ["v0.1.7-rc.2", "v0.1.7-rc.1"],
+  "screenshots": "images",
+  "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
+}
+-->
+
 # @ragnoryok1/dsh-client-locale-ru
 
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
