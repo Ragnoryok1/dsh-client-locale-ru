@@ -1,11 +1,11 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 52 namespaces, 2341 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 53 namespaces, 2418 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
-  "compatible_versions": ["v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
+  "compatible_versions": ["v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
   "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
 }
@@ -18,9 +18,9 @@
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
-[![dsh](https://img.shields.io/badge/dsh-0.2.0--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-52-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C341-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.1%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
+[![namespaces](https://img.shields.io/badge/namespaces-53-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C418-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 **In English.** Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 52 namespaces, 2,341 strings, built against dsh `0.2.0-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek. Details below are in Russian.
 
@@ -118,7 +118,7 @@ npm run verify -- <дерево харнеса>  # всё вместе
 
 ## Область покрытия: только официальный интерфейс
 
-Пакет переводит **собственные namespace клиента харнеса** — 52 namespace, сверенные с
+Пакет переводит **собственные namespace клиента харнесса** — 53 namespace, сверенные с
 закреплённым тегом. Словари сторонних плагинов в область сознательно не входят, и вот
 почему.
 
@@ -155,7 +155,7 @@ npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (52 namespace, 2341 перевод, ~2750 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (53 namespace, 2418 перевод, ~2900 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).

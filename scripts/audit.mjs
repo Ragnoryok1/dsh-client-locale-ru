@@ -128,7 +128,14 @@ for (const file of walk(HARNESS)) {
 }
 
 const packText = readFileSync(PACK, 'utf8')
-const packNamespaces = new Set([...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => m[1]))
+const packNamespaceList = [...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => m[1])
+const packNamespaces = new Set(packNamespaceList)
+// A namespace declared twice shadows the earlier block in the object literal,
+// silently dropping every translation in it while key coverage still looks
+// complete. Counted before the Set collapses duplicates.
+const namespaceTally = new Map()
+for (const name of packNamespaceList) namespaceTally.set(name, (namespaceTally.get(name) ?? 0) + 1)
+const duplicateNamespaces = [...namespaceTally].filter(([, count]) => count > 1).map(([name]) => name).sort()
 const packEntries = dictionaryKeys(packText).filter(key => !NOT_A_KEY.has(key))
 const packKeys = new Set(packEntries)
 const pluralSuffix = /\.(?:one|other)$/u
@@ -156,20 +163,21 @@ const report = (title, items) => {
   for (const item of items) console.log('  ' + item)
 }
 
+report('namespace пака, объявленных дважды (перекрывают друг друга)', duplicateNamespaces)
 report('namespace пака, которых нет в харнессе (мёртвые)', deadNamespaces.map(ns => {
   const near = [...harnessNamespaces.keys()].filter(name => name.startsWith(ns.split('.')[0]))
   return `${ns}${near.length > 0 ? `  (похожие: ${near.join(', ')})` : ''}`
 }))
-report('пар форм харнеса, которых нет в паке', missingPlurals)
+report('пар форм харнесса, которых нет в паке', missingPlurals)
 report('лишние пары форм в паке', extraPlurals)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
 }
 
-const failures = deadNamespaces.length + missingPlurals.length + extraPlurals.length
+const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length + extraPlurals.length
 if (failures === 0) {
-  console.log('\nаудит пройден: мёртвых namespace нет, множества пар форм совпадают')
+  console.log('\nаудит пройден: дублей и мёртвых namespace нет, множества пар форм совпадают')
   process.exit(0)
 }
 console.log(`\nаудит провален: ${failures} расхождений`)
