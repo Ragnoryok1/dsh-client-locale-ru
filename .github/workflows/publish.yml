@@ -1,0 +1,101 @@
+name: publish
+
+# Releases are cut by tag only: npm credentials live in repository secrets, so a
+# release never needs a token pasted into a chat, a shell, or a local .npmrc.
+# Push a version tag and this workflow does the rest:
+#
+#   npm version 0.3.0 --no-git-tag-version
+#   npm pkg get version
+#   git commit -am "release: 0.3.0" && git tag v0.3.0 && git push origin v0.3.0
+#
+# Before doing that, bump the `deepseek-harness-meta` version in README.md — the
+# marketplace reads that field, not the npm tag.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Run every check but do not publish'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Check the tag matches package.json
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          tag_version="${GITHUB_REF_NAME#v}"
+          pkg_version="$(node -p "require('./package.json').version")"
+          if [ "$tag_version" != "$pkg_version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME says $tag_version but package.json says $pkg_version"
+            exit 1
+          fi
+
+      # The marketplace reads the version from this block, not from npm, and it
+      # only reads it once at first listing — so a stale field here is exactly
+      # the kind of drift that never announces itself.
+      - name: Check the README metadata version matches package.json
+        run: |
+          node -e "
+            const fs = require('node:fs');
+            const readme = fs.readFileSync('README.md', 'utf8');
+            const block = readme.match(/<!--\s*deepseek-harness-meta\s*([\s\S]*?)-->/);
+            if (!block) { console.error('::error::no deepseek-harness-meta block in README.md'); process.exit(1); }
+            let meta;
+            try { meta = JSON.parse(block[1]); } catch (error) { console.error('::error::meta block is not valid JSON:', error.message); process.exit(1); }
+            const pkg = require('./package.json').version;
+            if (meta.version !== pkg) {
+              console.error('::error::README meta version ' + meta.version + ' != package.json ' + pkg);
+              process.exit(1);
+            }
+            console.log('README meta version ' + meta.version + ' matches package.json');
+          "
+
+      # The audit and typography gates run before anything is uploaded, so a
+      # release cannot ship a dead namespace or a typo'd separator.
+      - name: Typography
+        run: npm run check:typography
+
+      - name: Audit against the harness tree
+        env:
+          HARNESS_TAG: dsh-v0.2.1-alpha.1
+        run: |
+          git clone --depth 1 --branch "$HARNESS_TAG" \
+            https://github.com/deepseek-ai/deepseek-harness.git harness
+          mkdir -p tree
+          git -C harness archive "$HARNESS_TAG" packages | tar -x -C tree
+          node scripts/audit.mjs tree/packages
+
+      - name: Build
+        run: npm run build
+
+      - name: Show what would be published
+        run: npm pack --dry-run
+
+      - name: Publish
+        if: ${{ !inputs.dry-run }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
