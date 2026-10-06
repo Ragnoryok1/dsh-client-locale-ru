@@ -60,9 +60,10 @@
   },
   "scripts": {
     "build": "tsdown",
+    "check:readmes": "node scripts/check-readmes.mjs",
     "check:typography": "node scripts/check-typography.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run build && npm run check:typography && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run build && npm run check:typography && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
