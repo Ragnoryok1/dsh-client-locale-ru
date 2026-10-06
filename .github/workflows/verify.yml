@@ -40,5 +40,8 @@ jobs:
       - name: Typography rules
         run: npm run check:typography
 
+      - name: Locale coexistence
+        run: npm run check:locale
+
       - name: Locale audit
         run: node scripts/audit.mjs tree/packages
