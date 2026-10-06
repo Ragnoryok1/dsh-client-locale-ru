@@ -9,6 +9,16 @@ import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { RU_DICTS, RU_LABEL } from './dicts.ts'
 import { startRussianTypography } from './typography.ts'
 
+/** Skip only occupied slots; validation and unexpected service errors still fail. */
+function skipDuplicate(register: () => () => void, duplicateMessage: string): () => void {
+  try {
+    return register()
+  } catch (error) {
+    if (!(error instanceof Error) || error.message !== duplicateMessage) throw error
+    return () => {}
+  }
+}
+
 /** Required service: the locale registry that owns languages and dictionaries. */
 export const inject = ['locale']
 
@@ -17,16 +27,26 @@ export const inject = ['locale']
  * a ru dictionary for every namespace this pack contributes, and start the
  * Russian typography pass. Registration is an effect, so the contributed
  * language, dictionaries and the typography observer are torn down with this
- * plugin's fiber.
+ * plugin's fiber. Existing languages and dictionaries belong to their first
+ * registrant: skip duplicates without replacing or disposing those resources.
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
   ctx.effect(
-    () => ctx.locale.addLanguage({ id: 'ru', label: RU_LABEL, fallback: 'en' }),
+    () => skipDuplicate(
+      () => ctx.locale.addLanguage({ id: 'ru', label: RU_LABEL, fallback: 'en' }),
+      'locale "ru" is already registered',
+    ),
     'locale-ru: language',
   )
   for (const [ns, dict] of Object.entries(RU_DICTS)) {
-    ctx.effect(() => ctx.locale.register(ns, 'ru', dict), `locale-ru: ${ns} dictionary`)
+    ctx.effect(
+      () => skipDuplicate(
+        () => ctx.locale.register(ns, 'ru', dict),
+        `locale namespace "${ns}" already has locale "ru"`,
+      ),
+      `locale-ru: ${ns} dictionary`,
+    )
   }
   ctx.effect(
     () => startRussianTypography(document),
