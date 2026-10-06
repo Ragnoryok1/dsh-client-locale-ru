@@ -62,8 +62,9 @@
     "build": "tsdown",
     "check:readmes": "node scripts/check-readmes.mjs",
     "check:typography": "node scripts/check-typography.mjs",
+    "check:locale": "node scripts/check-locale.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run build && npm run check:typography && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run build && npm run check:typography && npm run check:locale && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
@@ -73,7 +74,7 @@
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/dsh-client-locale": ">=0.1.0-rc.2 <0.1.1-0 || >=0.1.1-0 <0.1.2-0 || >=0.1.2-0 <0.1.3-0 || >=0.1.3-0 <0.1.5-0 || >=0.1.5-0 <0.1.6-0 || >=0.1.6-0 <0.1.7-0 || >=0.1.7-0 <0.2.0-0 || >=0.2.0-rc.1 <0.2.1-0 || >=0.2.1-0 <0.3.0-0",
+    "@deepseek-ai/dsh-client-locale": "0.2.0-rc.2",
     "tsdown": "^0.22.2",
     "typescript": "^5.6.0"
   },
