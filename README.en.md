@@ -154,7 +154,10 @@ The report is advisory — the same key name can mean different things in differ
 (`list.aria` is "Active reminders" in the catalog and "Background jobs" in jobs), so a
 translation is copied across namespaces only where one dictionary serves both. On the pinned
 tag the report is empty: every string the harness renders in a namespace we register lives in
-that namespace.
+that namespace. All 54 of the pack's namespaces are compared — the link comes both from a
+dictionary imported beside the registration and from the names that registration passes
+(`locale.register(NS, { zh, en })`); without the second rule `common` and `settings.locale`,
+whose dictionaries sit in a neighbouring directory, would stay uncovered.
 
 ## Coverage scope: the official interface only
 

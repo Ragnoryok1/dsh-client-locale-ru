@@ -297,12 +297,38 @@ function importedDictionaries(file, text) {
   const own = dirname(file)
   for (const m of text.matchAll(/from\s+'(\.[^']+\.ts)'/gu)) {
     const resolved = resolve(own, m[1])
-    // Same directory only: a cross-directory import is an aggregate
+    // Same directory only: a cross-directory import is usually an aggregate
     // (`locales/index.ts` re-exporting many dictionaries), and attributing its
-    // keys to the claiming namespace invents gaps that the runtime does not have.
+    // keys to the claiming namespace invents gaps the runtime does not have.
     if (dirname(resolved) === own && isDictionary(resolved)) found.add(resolved)
   }
   return found
+}
+
+/**
+ * Imported bindings that resolve to a dictionary file, wherever it lives.
+ *
+ * The same-directory rule above leaves the locale package's own two namespaces
+ * unattributed: `client/index.ts` takes `common` from `../locales/index.ts` and
+ * `settings.locale` from `../locales/settings.ts`. Reading the register call's
+ * bindings pins each namespace to the exact file it renders, without the
+ * over-attribution a bare cross-directory import would cause.
+ *
+ * @param {string} file - absolute path of the importing module.
+ * @param {string} text - source of the module.
+ * @returns {Map<string, string>} binding name to dictionary path.
+ */
+function importedBindings(file, text) {
+  const bindings = new Map()
+  for (const m of text.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from\s+'(\.[^']+\.ts)'/gu)) {
+    const resolved = resolve(dirname(file), m[2])
+    if (!isDictionary(resolved)) continue
+    for (const raw of m[1].split(',')) {
+      const name = raw.trim().replace(/^type\s+/u, '').split(/\s+as\s+/u).pop()?.trim()
+      if (name !== undefined && name !== '') bindings.set(name, resolved)
+    }
+  }
+  return bindings
 }
 
 for (const file of HARNESS_FILES) {
@@ -328,6 +354,28 @@ for (const file of HARNESS_FILES) {
   for (const m of text.matchAll(/(?:export\s+)?const\s+[A-Za-z_]*NS[A-Za-z_]*\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
   for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
   for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) owns.add(m[1])
+  /*
+   * Identifier-based registration: `const NS = 'x'` plus
+   * `locale.register(NS, { zh, en })`, where the bindings come from a dictionary
+   * in another directory. Resolving the bindings pins the namespace to that
+   * file without guessing.
+   */
+  const bindings = importedBindings(file, text)
+  if (bindings.size > 0) {
+    const byIdentifier = new Map()
+    for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
+      byIdentifier.set(m[1], m[2])
+    }
+    for (const m of text.matchAll(/locale\.register\(\s*([A-Za-z_$][\w$]*)\s*,\s*\{([^}]*)\}/gu)) {
+      const namespace = byIdentifier.get(m[1])
+      if (namespace === undefined) continue
+      for (const raw of m[2].split(',')) {
+        const binding = (raw.includes(':') ? raw.split(':')[1] : raw).trim()
+        const source = bindings.get(binding)
+        if (source !== undefined) addNamespaceFile(namespace, source)
+      }
+    }
+  }
   for (const imported of importedDictionaries(file, text)) {
     for (const name of owns) addNamespaceFile(name, imported)
   }
@@ -497,6 +545,16 @@ placeholderMismatches.sort()
  * to `common` for every namespace — so only keys missing from both places are
  * reported.
  */
+/**
+ * Namespaces the pack registers that no registration pattern tied to a
+ * dictionary, so the per-namespace comparison above cannot cover them. Listed
+ * rather than gated: a namespace may be unattributable for a legitimate reason,
+ * but the blind spot has to be visible.
+ */
+const uncomparedNamespaces = [...packKeysByNamespace.keys()]
+  .filter(namespace => !harnessNamespaceKeys.has(namespace))
+  .sort()
+
 const commonKeys = packKeysByNamespace.get('common') ?? new Set()
 const namespaceGaps = []
 let namespaceGapKeys = 0
@@ -717,6 +775,7 @@ console.log(`покрытие (информационно): ${covered} из ${ha
 
 console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, шаблон недоступен у ${placeholderUnavailable}`)
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
+console.log(`  сверено namespace: ${[...packKeysByNamespace.keys()].filter(ns => harnessNamespaceKeys.has(ns)).length} из ${packKeysByNamespace.size} в пакете; опознано в харнессе: ${harnessNamespaceKeys.size} из ${harnessNamespaces.size}`)
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
 console.log(`терминология: нарушений ${terminologyViolations.length}; латинских слов в прозе вне списка: ${latinProse.length}`)
@@ -737,6 +796,7 @@ report('пар форм харнесса, которых нет в паке', mi
 report('лишние пары форм в паке', extraPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
 report('ключи, которых нет в своём namespace', namespaceGaps)
+report('namespace пака, которых не сверить с харнессом (нет привязки к словарю)', uncomparedNamespaces)
 report('значения с китайскими иероглифами', cjkResidue)
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
