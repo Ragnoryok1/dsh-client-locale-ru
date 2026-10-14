@@ -101,6 +101,28 @@ test('the `n` keys pluralise too, and keys without extra forms keep their value'
   ctx.dispose()
 })
 
+test('a key the harness never paired gets the forms the pack adds to it', () => {
+  const locale = fresh()
+  const ctx = context(locale)
+  pack.apply(ctx)
+
+  // `terminal.expand` is called with `{ n }` and no suffix, so the harness has no
+  // pair to redirect; the pack carries `.one` / `.few` / `.many` for it and the
+  // count still chooses between them.
+  const job = locale.bind('job')
+  assert.equal(job('terminal.expand', { n: 1 }), 'Показать ещё 1 строку')
+  assert.equal(job('terminal.expand', { n: 3 }), 'Показать ещё 3 строки')
+  assert.equal(job('terminal.expand', { n: 7 }), 'Показать ещё 7 строк')
+  assert.equal(job('terminal.expandAria', { n: 2 }), 'Развернуть 2 скрытые строки вывода')
+  // Fractional counts keep the plain value, which is the neutral wording.
+  assert.equal(job('terminal.expand', { n: 1.5 }), 'Показать ещё 1.5 строк')
+
+  const plugins = locale.bind('pluginManager')
+  assert.equal(plugins('terminalExpand', { n: 5 }), '… ещё 5 строк')
+
+  ctx.dispose()
+})
+
 test('a call without a count, and a non-Russian locale, are left alone', () => {
   const locale = fresh()
   const ctx = context(locale)

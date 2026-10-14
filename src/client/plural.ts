@@ -70,7 +70,14 @@ function countOf(params: Record<string, unknown> | undefined): number | undefine
   if (typeof raw === 'number') return Number.isFinite(raw) ? raw : undefined
   if (typeof raw === 'string' && raw.trim() !== '') {
     const parsed = Number(raw)
-    return Number.isFinite(parsed) ? parsed : undefined
+    if (Number.isFinite(parsed)) return parsed
+  }
+  // The harness names its counts after the screen: `{shown}`, `{files}`,
+  // `{turns}`, `{n}`. Reading the first numeric parameter lets a key the harness
+  // never paired carry forms of its own; a form is substituted only when the
+  // dictionary actually has it, so a misread count cannot invent a translation.
+  for (const value of Object.values(params)) {
+    if (typeof value === 'number' && Number.isFinite(value)) return value
   }
   return undefined
 }
@@ -106,14 +113,18 @@ function translateWithPlurals(
   params?: Record<string, unknown>,
 ): string {
   if (activeLocale(receiver) === 'ru') {
-    const base = PLURAL_KEY.exec(key)?.[1]
     const count = countOf(params)
-    if (base !== undefined && count !== undefined) {
+    if (count !== undefined) {
       const suffix = SUFFIX_BY_CATEGORY[rules.select(count)]
       if (suffix !== undefined) {
-        const candidate = `${base}.${suffix}`
+        // A key the harness pairs with `.one` / `.other` gets its suffix replaced.
+        // A key it never paired — `terminal.expand`, whose count it passes to the
+        // plain key — is looked up as `<key>.<category>` instead, which is how the
+        // pack inflects a noun the harness does not ask about by name.
+        const paired = PLURAL_KEY.exec(key)
+        const candidate = paired !== null ? `${paired[1]}.${suffix}` : `${key}.${suffix}`
         // The runtime answers with the key itself when no dictionary carries it.
-        if (original.call(receiver, ns, candidate, undefined) !== candidate) {
+        if (candidate !== key && original.call(receiver, ns, candidate, undefined) !== candidate) {
           return original.call(receiver, ns, candidate, params)
         }
       }

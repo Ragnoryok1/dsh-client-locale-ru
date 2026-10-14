@@ -525,7 +525,19 @@ const harnessPlurals = new Set([...harnessKeys.keys()].filter(k => pluralSuffix.
 const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
 const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns)).sort()
 const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort()
-const extraPlurals = [...packPlurals].filter(k => !harnessPlurals.has(k)).sort()
+/*
+ * A pair the harness does not have is the pack's own augmentation: the harness
+ * passes some counts to a plain key (`terminal.expand` with `{n}`), and forms
+ * there are the only way to inflect the noun. Such a pair is legitimate as long
+ * as its base is translated; a pair whose base is missing too is drift.
+ */
+const packKeySet = new Set(packKeys)
+const extraPlurals = [...packPlurals]
+  .filter(k => !harnessPlurals.has(k) && !packKeySet.has(k.replace(pluralSuffix, '')))
+  .sort()
+const augmentedPlurals = [...packPlurals]
+  .filter(k => !harnessPlurals.has(k) && packKeySet.has(k.replace(pluralSuffix, '')))
+  .sort()
 
 /**
  * Compare each Russian value with the templates its key renders from.
@@ -653,7 +665,16 @@ const deadKeys = []
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const key of byKey.keys()) {
     if (harnessKeys.has(key)) continue
-    if (/\.(?:few|many)$/u.test(key)) continue
+    /*
+     * A plural form of a translated key is the pack's own: the wrapper adds
+     * `.few` / `.many` to keys the harness paired, and `.one` as well to keys it
+     * never paired (`terminal.expand`). The base of a paired key exists only with
+     * its own suffixes, so both shapes count as translated. A form whose base is
+     * nowhere is drift.
+     */
+    const base = key.replace(/\.(?:one|few|many|other)$/u, '')
+    if (base !== key
+      && (harnessKeys.has(`${base}.one`) || harnessKeys.has(`${base}.other`) || packKeySet.has(base))) continue
     deadKeys.push(`${namespace} · ${key}`)
   }
 }
@@ -731,6 +752,36 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   }
 }
 latinProse.sort()
+
+/**
+ * A number directly in front of an inflecting noun.
+ *
+ * Russian needs a form there — «1 путь», «2 пути», «5 путей» — and a dictionary
+ * entry carries exactly one. The pack handles it two ways: forms (`.one` /
+ * `.few` / `.many`) where the harness pairs the key, and a count-neutral wording
+ * («Путей: {shown}» instead of «{shown} путей») where it does not. This report
+ * lists the places still doing neither, with the neutral words declared in
+ * `terminology.json` subtracted, so the class cannot come back quietly.
+ */
+const numberInflection = []
+const NEUTRAL_AFTER_NUMBER = new Set((terminology.neutralAfterNumber ?? []).map(word => word.toLowerCase()))
+const NUMERIC_PLACEHOLDERS = new Set(terminology.numericPlaceholders ?? [])
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    // Keys with forms inflect by design: the runtime picks the right one, and the
+    // plain value is only the fallback for a fractional count.
+    if (/\.(?:one|few|many|other)$/u.test(key)) continue
+    if (['one', 'few', 'many'].some(form => packKeySet.has(`${key}.${form}`))) continue
+    for (const match of value.matchAll(/\{(\w+)\}\s+([^\s{}]+)/gu)) {
+      if (!NUMERIC_PLACEHOLDERS.has(match[1])) continue
+      const word = match[2].replace(/[^\p{L}\p{N}./-]+$/gu, '')
+      if (!/\p{L}/u.test(word)) continue
+      if (NEUTRAL_AFTER_NUMBER.has(word.toLowerCase())) continue
+      numberInflection.push(`${namespace} · ${key} — «{${match[1]}} ${word}»`)
+    }
+  }
+}
+numberInflection.sort()
 
 /**
  * Mechanical text hygiene: spacing and paired punctuation are unambiguous, so a
@@ -843,6 +894,7 @@ report('namespace пака, которых нет в харнессе (мёрт�
 }))
 report('пар форм харнесса, которых нет в паке', missingPlurals)
 report('лишние пары форм в паке', extraPlurals)
+report('формы, добавленные пакетом к ключам без пары (справочно)', augmentedPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
 report('ключи, которых нет в своём namespace', namespaceGaps)
 report('namespace пака, которых не сверить с харнессом (нет привязки к словарю)', uncomparedNamespaces)
@@ -853,6 +905,7 @@ report('ключи пака, которых нет в харнессе (спра
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
+report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)

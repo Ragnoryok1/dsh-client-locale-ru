@@ -82,9 +82,14 @@ Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-c
   dictionaries carry `.few` and `.many`, and a wrapper around the runtime's `translate`
   recomputes the form with `Intl.PluralRules('ru')` for any call carrying a numeric `count`
   or `n`. The number decides, not the key the component picked, so «2 вызова инструментов»
-  and «5 вызовов инструментов» come out of the same call site. Keys without the extra forms
-  keep their `.other` value — the neutral construction («Вызовов инструментов: 5») — so
-  nothing can regress. Checked by `npm run check:plural`.
+  and «5 вызовов инструментов» come out of the same call site. The forms are not limited to
+  paired keys: where the harness passes a number to a key it never paired (`terminal.expand`
+  with `{n}`), the pack adds its own `.one` / `.few` / `.many` — «Показать ещё 1 строку /
+  3 строки / 7 строк» — and the wrapper looks a form up for those keys too. Where a form does
+  not fit (a sentence carrying several numbers), the value is rewritten to be count-neutral:
+  «Символов: {total}» instead of «{total} символов», «файлов: {files}» instead of
+  «{files} файлов». Checked by `npm run check:plural` — five cases, including an unpaired key
+  and a fractional count.
 - **Fallback** — a missing Russian key falls back to `en` (the configured `fallback`).
 
 ## Typography
