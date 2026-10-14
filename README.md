@@ -15,7 +15,7 @@
 
 **Русский** | [English](README.en.md) | [中文](README.zh.md)
 
-![Русский языковой пакет для DeepSeek Harness](assets/banner.png)
+![Русский языковой пакет для DeepSeek Harness](assets/banner.jpg)
 
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
@@ -64,7 +64,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 Дальше при следующем старте `dsh web` в настройках появится **Русский**. Отдельно `pnpm add` в собранный `dsh web` не нужен — плагин тянет штатную локаль через сервис `locale`.
 
-Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется.
+Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Публикуемый пакет занимает 354 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
 
 ## Почему гибрид
 

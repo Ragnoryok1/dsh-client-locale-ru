@@ -10,7 +10,7 @@ export default defineConfig([
     format: ['esm'],
     platform: 'node',
     target: 'es2024',
-    dts: false,
+    dts: true,
     clean: false,
     fixedExtension: false,
   },
@@ -21,6 +21,9 @@ export default defineConfig([
     format: 'cjs',
     platform: 'browser',
     target: 'es2024',
+    // The browser entry is a module for the client loader, wrapped by the banner
+    // below; its shape is that loader contract, not a TypeScript API, and tsdown
+    // cannot emit declarations for this CJS-plus-banner combination.
     dts: false,
     clean: false,
     sourcemap: true,
@@ -38,7 +41,7 @@ export default defineConfig([
     format: ['esm'],
     platform: 'neutral',
     target: 'es2024',
-    dts: false,
+    dts: true,
     clean: false,
   },
 ])
