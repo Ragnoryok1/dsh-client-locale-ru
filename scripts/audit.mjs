@@ -256,6 +256,9 @@ const fileKeys = new Map()
 /** Dictionary file -> English template per key, for the per-namespace report. */
 const fileEnglish = new Map()
 
+/** Dictionary file -> English template per key, English dictionaries only. */
+const fileEnglishOnly = new Map()
+
 /**
  * Key -> every English string the harness carries for it, from every dictionary
  * file, whatever namespace it belongs to. The residue check reads this rather
@@ -359,6 +362,7 @@ for (const file of HARNESS_FILES) {
   fileKeys.set(file, stringKeys)
   // English wins over the Chinese fallback for the same key.
   fileEnglish.set(file, new Map([...fallback, ...english]))
+  fileEnglishOnly.set(file, english)
   for (const [key, value] of english) {
     if (!englishValuesByKey.has(key)) englishValuesByKey.set(key, new Set())
     englishValuesByKey.get(key).add(value)
@@ -373,17 +377,25 @@ const harnessNamespaceKeys = new Map()
 
 /** Namespace -> English template per key, so a gap can be translated from the report. */
 const namespaceEnglish = new Map()
+
+/** Namespace -> English-only template per key, for comparisons with a Russian value. */
+const namespaceEnglishOnly = new Map()
 for (const [namespace, files] of namespaceFiles) {
   const keys = new Set()
   const english = new Map()
+  const englishOnly = new Map()
   for (const file of files) {
     for (const key of fileKeys.get(file) ?? []) keys.add(key)
     for (const [key, value] of fileEnglish.get(file) ?? []) {
       if (!english.has(key)) english.set(key, value)
     }
+    for (const [key, value] of fileEnglishOnly.get(file) ?? []) {
+      if (!englishOnly.has(key)) englishOnly.set(key, value)
+    }
   }
   harnessNamespaceKeys.set(namespace, keys)
   namespaceEnglish.set(namespace, english)
+  namespaceEnglishOnly.set(namespace, englishOnly)
 }
 
 const packText = readFileSync(PACK, 'utf8')
@@ -637,6 +649,45 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   }
 }
 latinProse.sort()
+
+/**
+ * Mechanical text hygiene: spacing and paired punctuation are unambiguous, so a
+ * violation gates. Values carrying markdown (the guides) are left alone — line
+ * breaks and double spaces there are layout, not prose.
+ *
+ * An edge space is a composition concern: a value that starts or ends with one
+ * is glued to a neighbour by the component, so it must match what the English of
+ * its own namespace does. `number.groupSeparator` is the one value that exists
+ * to hold a non-breaking space.
+ */
+const HYGIENE_RULES = [
+  ['двойной пробел', value => / {2,}/u.test(value)],
+  ['пробел перед знаком препинания', value => / [,.!?;:]/u.test(value) && !/ \.[a-z]/u.test(value)],
+  ['пробел после « или перед »', value => /«\s|\s»/u.test(value)],
+  ['непарные « »', value => (value.match(/«/gu)?.length ?? 0) !== (value.match(/»/gu)?.length ?? 0)],
+  ['непарные скобки', value => (value.match(/\(/gu)?.length ?? 0) !== (value.match(/\)/gu)?.length ?? 0)],
+  ['неразрывный пробел в значении', value => /[\u00A0\u202F]/u.test(value)],
+]
+const hygiene = []
+const edgeSpaces = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  const english = namespaceEnglishOnly.get(namespace) ?? new Map()
+  for (const [key, value] of byKey) {
+    if (!value.includes('\\n')) {
+      for (const [title, test] of HYGIENE_RULES) {
+        if (title === 'неразрывный пробел в значении' && key === 'number.groupSeparator') continue
+        if (test(value)) hygiene.push(`${namespace} · ${key} — ${title}`)
+      }
+    }
+    const template = english.get(key)
+    if (template === undefined) continue
+    if (/^ /u.test(value) !== /^ /u.test(template) || / $/u.test(value) !== / $/u.test(template)) {
+      edgeSpaces.push(`${namespace} · ${key} — у нас ${JSON.stringify(value)} | шаблон ${JSON.stringify(template)}`)
+    }
+  }
+}
+hygiene.sort()
+edgeSpaces.sort()
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -669,6 +720,7 @@ console.log(`полнота по namespace: ${namespaceGapKeys} ключей в 
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
 console.log(`терминология: нарушений ${terminologyViolations.length}; латинских слов в прозе вне списка: ${latinProse.length}`)
+console.log(`гигиена текста: ${hygiene.length}, расхождений по краевым пробелам: ${edgeSpaces.length}`)
 console.log(`  ${terminologyCounts.join(', ')}`)
 
 const report = (title, items) => {
@@ -692,6 +744,8 @@ report('ключи пака, которых нет в харнессе (спра
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
+report('гигиена текста', hygiene)
+report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -700,6 +754,7 @@ if (uncovered.size > 0) {
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
+  + hygiene.length + edgeSpaces.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

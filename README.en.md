@@ -138,7 +138,11 @@ caught real defects:
   the decision and counts of the chosen forms, so drift shows up before it becomes a defect.
   The check immediately found `confirm.description` translated two ways in two namespaces —
   «шаги» and «этапы». The same report covers Latin words inside Russian phrases: a product,
-  command or code token is allowed, an ordinary English word in a sentence is not.
+  command or code token is allowed, an ordinary English word in a sentence is not. Next to it
+  comes mechanical hygiene: double spaces, a space before punctuation, unpaired «ёлочки» and
+  brackets, a non-breaking space inside a value, and edge spaces — a value that starts or ends
+  with one is glued to a neighbour by the component, so it has to match the English template
+  of its own namespace.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from
