@@ -156,6 +156,8 @@ git commit -am "release: 0.3.0" && git tag v0.3.0 && git push origin v0.3.0
 4. 针对锁定 harness 标签的本地化审计——无效 namespace、重复项、复数形式配对和占位符不一致会报错并中止发布；
 5. **与 `compatible_versions` 中每个版本的兼容性**：从 npm 下载该版本的 locale 运行时，并对它运行语言共存与复数形式两套测试（`npm run check:compat`）——meta 块里的承诺是被验证的，而不是被假定的。
 
+声明本身也单独检查（`npm run check:peers`，包含在 `verify` 中）：harness 并不把我们对 `@deepseek-ai/dsh*` 的 `peerDependencies` 当作包的版本，而是当作**运行时版本**的范围，并带上 `includePrerelease`；若该范围不满足正在运行的 dsh，用户就会看到不兼容警告与豁免提示。脚本把这条 harness 规则套用到所有被声明的版本上——目前八个都通过。
+
 在本地做完全相同的检查，但不发布：
 
 ```

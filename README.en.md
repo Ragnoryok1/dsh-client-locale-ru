@@ -264,6 +264,12 @@ Before publishing, the workflow checks:
    downloaded from npm and both suites — language coexistence and plural forms — run against it
    (`npm run check:compat`), so the promise in the meta block is checked rather than assumed.
 
+The declaration itself is checked separately (`npm run check:peers`, part of `verify`): the harness
+reads our `peerDependencies` for `@deepseek-ai/dsh*` not as package versions but as a range of
+**runtime versions**, with `includePrerelease`, and a range that fails to satisfy the running dsh
+makes the user see an incompatibility warning and an exemption prompt. The script runs that rule
+over every claimed version — all eight pass today.
+
 To check all the same things locally, without publishing:
 
 ```
