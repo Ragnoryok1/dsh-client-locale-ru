@@ -73,10 +73,13 @@ jobs:
             console.log('README meta version ' + meta.version + ' matches package.json');
           "
 
-      # The audit and typography gates run before anything is uploaded, so a
-      # release cannot ship a dead namespace or a typo'd separator.
+      # The audit, typography and plural gates run before anything is uploaded,
+      # so a release cannot ship a dead namespace or a typo'd separator.
       - name: Typography
         run: npm run check:typography
+
+      - name: Russian plural forms
+        run: npm run check:plural
 
       - name: Audit against the harness tree
         env:

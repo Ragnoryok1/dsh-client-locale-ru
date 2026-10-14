@@ -63,8 +63,9 @@
     "check:readmes": "node scripts/check-readmes.mjs",
     "check:typography": "node scripts/check-typography.mjs",
     "check:locale": "node scripts/check-locale.mjs",
+    "check:plural": "node scripts/check-plural.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run build && npm run check:typography && npm run check:locale && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run build && npm run check:typography && npm run check:locale && npm run check:plural && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",

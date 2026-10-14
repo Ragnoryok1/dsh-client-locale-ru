@@ -44,5 +44,8 @@ jobs:
       - name: Locale coexistence
         run: npm run check:locale
 
+      - name: Russian plural forms
+        run: npm run check:plural
+
       - name: Locale audit
         run: node scripts/audit.mjs tree/packages

@@ -76,13 +76,15 @@ Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-c
 - **Browser half** (`lib/client.js`) — registers `ru` and the dictionaries through the `locale` service (injected from `ctx`). There are no framework runtime imports — only the service.
 - **No runtime dependencies** — `lib/client.js` imports no other packages, so it does not drag in heavy dependencies.
 - **Effects** — the language and the dictionaries are registered through `ctx.effect(...)`, so they are unloaded together with the plugin (HMR-safe).
-- **Plural forms** — the locale contract carries no pluralization rules (there is no ICU/`Intl.PluralRules`), and
-  components choose the form as `count === 1 ? 'ключ.one' : 'ключ.other'`. Russian
-  requires three forms for `n ≥ 2` (2 задачи / 5 задач), so a single `.other` string cannot
-  be correct every time. The package solves this **without** changing upstream: `.one` (which is exactly `n = 1`)
-  holds the natural form, while `.other` holds a construction that is correct for any `n ≥ 2`
-  («Субагентов: 3», «Фоновых задач: 5») or an invariant abbreviation («каждые 2 ч»,
-  «ещё 3 стр.»). No visible string shows the wrong number form.
+- **Plural forms** — the locale contract carries no pluralization rules: components choose the
+  form as `count === 1 ? 'key.one' : 'key.other'`, while Russian needs three (1 вызов /
+  2 вызова / 5 вызовов). The package takes that over: alongside `.one` and `.other` the
+  dictionaries carry `.few` and `.many`, and a wrapper around the runtime's `translate`
+  recomputes the form with `Intl.PluralRules('ru')` for any call carrying a numeric `count`
+  or `n`. The number decides, not the key the component picked, so «2 вызова инструментов»
+  and «5 вызовов инструментов» come out of the same call site. Keys without the extra forms
+  keep their `.other` value — the neutral construction («Вызовов инструментов: 5») — so
+  nothing can regress. Checked by `npm run check:plural`.
 - **Fallback** — a missing Russian key falls back to `en` (the configured `fallback`).
 
 ## Typography
@@ -101,6 +103,8 @@ The rules are checked by a script rather than by eye: `npm run check:typography`
 ```sh
 npm run build             # сборка трёх выходов
 npm run check:typography  # 12 правил типографики, включая «не трогать»
+npm run check:locale      # сосуществование словарей: 6 проверок
+npm run check:plural      # формы числа: 1 вызов / 2 вызова / 5 вызовов
 npm run audit -- <дерево харнеса>   # аудит локали
 npm run verify -- <дерево харнеса>  # всё вместе
 ```

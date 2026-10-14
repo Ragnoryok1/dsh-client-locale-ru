@@ -7,6 +7,7 @@
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { RU_DICTS, RU_LABEL } from './dicts.ts'
+import { startRussianPlurals } from './plural.ts'
 import { startRussianTypography } from './typography.ts'
 
 /** Skip only occupied slots; validation and unexpected service errors still fail. */
@@ -25,10 +26,11 @@ export const inject = ['locale']
 /**
  * Client plugin body: add `ru` to the selectable language catalog, register
  * a ru dictionary for every namespace this pack contributes, and start the
- * Russian typography pass. Registration is an effect, so the contributed
- * language, dictionaries and the typography observer are torn down with this
- * plugin's fiber. Existing languages and dictionaries belong to their first
- * registrant: skip duplicates without replacing or disposing those resources.
+ * Russian plural and typography passes. Registration is an effect, so the
+ * contributed language, dictionaries, the plural wrapper and the typography
+ * observer are torn down with this plugin's fiber. Existing languages and
+ * dictionaries belong to their first registrant: skip duplicates without
+ * replacing or disposing those resources.
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
@@ -48,6 +50,10 @@ export function apply(ctx: ClientContext): void {
       `locale-ru: ${ns} dictionary`,
     )
   }
+  ctx.effect(
+    () => startRussianPlurals(ctx.locale),
+    'locale-ru: plurals',
+  )
   ctx.effect(
     () => startRussianTypography(document),
     'locale-ru: typography',
