@@ -91,10 +91,16 @@ Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-c
 
 The package brings already-rendered Russian text into line with typographic rules: guillemets
 («ёлочки») instead of straight quotes, an em dash instead of a hyphen between words, an ellipsis
-instead of three dots, and a non-breaking space between a number and the following word or unit
-of measurement (so that «187 плагинов» does not break across two lines). The rules are deliberately
-conservative: they fire only on unambiguous patterns, and code, input fields, editable text and
-elements with `data-typography="off"` are not touched at all. A second pass changes nothing.
+instead of three dots, a non-breaking space between a number and the following word or unit of
+measurement (so that «187 плагинов» does not break across two lines), and the same space after a
+short word — a preposition, a conjunction or a particle — so that «в режим» wraps as a whole
+instead of leaving «в» alone at the end of a line. The rules are deliberately conservative: they
+fire only on unambiguous patterns, and code, input fields, editable text and elements with
+`data-typography="off"` are not touched at all. A second pass changes nothing.
+
+A rule for numeric ranges (an en dash in «5–10») is **deliberately absent**: the only string in
+the whole pack with a hyphen between digits is the cron example `0 9 * * 1-5`, and a dash would
+corrupt it. Measured, not assumed.
 
 The rules are checked by a script rather than by eye: `npm run check:typography`.
 
@@ -102,7 +108,7 @@ The rules are checked by a script rather than by eye: `npm run check:typography`
 
 ```sh
 npm run build             # сборка трёх выходов
-npm run check:typography  # 12 правил типографики, включая «не трогать»
+npm run check:typography  # 18 правил типографики, включая «не трогать»
 npm run check:locale      # сосуществование словарей: 6 проверок
 npm run check:plural      # формы числа: 1 вызов / 2 вызова / 5 вызовов
 npm run audit -- <дерево харнеса>   # аудит локали
@@ -213,7 +219,7 @@ Before publishing, the workflow checks:
 1. the version in the tag matches the version in `package.json`;
 2. the version in the `deepseek-harness-meta` block matches `package.json` — the marketplace takes it from there,
    and reads it **only on first indexing**, so a mismatch does not fix itself;
-3. the typography (12 rules);
+3. the typography (18 rules);
 4. the localization audit against the pinned harness tag — dead namespaces, duplicates and plural-form
    pairs will fail and stop the publication.
 
