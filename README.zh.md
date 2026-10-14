@@ -96,7 +96,7 @@ npm run verify -- <дерево харнеса>  # всё вместе
 - **复数形式配对**——`.one`/`.other` 的集合必须一致，因为客户端按 `count === 1 ? '.one' : '.other'` 选择形式；
 - **占位符**——俄语值必须携带与英文模板完全相同的 `{name}`：多出的占位符会原样出现在界面上（`Заняло {duration}7мин 26с`，已在 #2 修复），缺失的则会让插值内容悄悄消失。对于只提供中文词典的包，模板以 `zh` 为准。
 
-覆盖率数字不是门禁：有些分区是有意保留英文的。紧随其后，审计会打印**按 namespace** 的报告：它根据注册方重建「namespace → 词典」的对应关系（`NS` 声明，或 `locale.register` 里的字面量；`bind` 与 `PropsLocale` 只是读取 namespace），并列出既不在自己 namespace、也不在运行时回退所用的 `common` 词典中的 key。全局比较 key 名称看不到这类空洞：放在别的 namespace 下的翻译会被算作已覆盖，而那个界面实际显示英文。该报告仅供参考——同名 key 在不同 namespace 下含义可能不同（`list.aria` 在提醒目录里是「活动提醒」，在任务里是「后台任务」），因此只有在两个 namespace 由同一份词典提供服务时才会跨 namespace 搬运翻译。
+覆盖率数字不是门禁：有些分区是有意保留英文的。紧随其后，审计会打印**按 namespace** 的报告：它根据注册方重建「namespace → 词典」的对应关系（`NS` 声明，或 `locale.register` 里的字面量；`bind` 与 `PropsLocale` 只是读取 namespace），并列出既不在自己 namespace、也不在运行时回退所用的 `common` 词典中的 key。全局比较 key 名称看不到这类空洞：放在别的 namespace 下的翻译会被算作已覆盖，而那个界面实际显示英文。该报告仅供参考——同名 key 在不同 namespace 下含义可能不同（`list.aria` 在提醒目录里是「活动提醒」，在任务里是「后台任务」），因此只有在两个 namespace 由同一份词典提供服务时才会跨 namespace 搬运翻译。在锁定的标签上，该报告为空：harness 在我们注册的 namespace 里渲染的每一条字符串，都位于该 namespace。
 
 ## 覆盖范围：仅官方界面
 

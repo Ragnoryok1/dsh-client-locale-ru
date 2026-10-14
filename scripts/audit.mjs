@@ -192,6 +192,25 @@ function dictionaryEntries(text) {
 }
 
 /**
+ * Dictionary a literal belongs to: the nearest preceding
+ * `export const <name> = {` (with an optional type annotation). It tells the
+ * English dictionary from the Chinese one, so the per-namespace report can show
+ * the text a translator needs.
+ *
+ * @param {string} text - source of a module.
+ * @param {number} index - offset of a key.
+ * @returns {string|null} dictionary name, or null before the first one.
+ */
+function dictionaryScope(text, index) {
+  let name = null
+  for (const m of text.matchAll(/export\s+const\s+(\w+)\s*(?::[^=]*)?=\s*\{/gu)) {
+    if (m.index > index) break
+    name = m[1]
+  }
+  return name
+}
+
+/**
  * `{name}` placeholders of a template, sorted so two sides compare as multisets.
  *
  * @param {string} value template or translated text
@@ -230,6 +249,9 @@ const namespaceFiles = new Map()
 
 /** Dictionary file -> the keys it defines, so a namespace's key set can be rebuilt. */
 const fileKeys = new Map()
+
+/** Dictionary file -> English template per key, for the per-namespace report. */
+const fileEnglish = new Map()
 
 /**
  * Record that a namespace renders the keys of a dictionary file.
@@ -308,13 +330,23 @@ for (const file of walk(HARNESS)) {
    * per-namespace comparison uses entries with string values instead.
    */
   const stringKeys = new Set()
+  const english = new Map()
+  const fallback = new Map()
   for (const entry of dictionaryEntries(text)) {
     if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
     stringKeys.add(entry.key)
     if (!harnessTemplates.has(entry.key)) harnessTemplates.set(entry.key, new Set())
     harnessTemplates.get(entry.key).add(entry.value)
+    const scope = dictionaryScope(text, entry.index)
+    if (scope === 'en') {
+      if (!english.has(entry.key)) english.set(entry.key, entry.value)
+    } else if (!fallback.has(entry.key)) {
+      fallback.set(entry.key, entry.value)
+    }
   }
   fileKeys.set(file, stringKeys)
+  // English wins over the Chinese fallback for the same key.
+  fileEnglish.set(file, new Map([...fallback, ...english]))
 }
 
 /**
@@ -322,12 +354,20 @@ for (const file of walk(HARNESS)) {
  * each namespace's owner imports or declares.
  */
 const harnessNamespaceKeys = new Map()
+
+/** Namespace -> English template per key, so a gap can be translated from the report. */
+const namespaceEnglish = new Map()
 for (const [namespace, files] of namespaceFiles) {
   const keys = new Set()
+  const english = new Map()
   for (const file of files) {
     for (const key of fileKeys.get(file) ?? []) keys.add(key)
+    for (const [key, value] of fileEnglish.get(file) ?? []) {
+      if (!english.has(key)) english.set(key, value)
+    }
   }
   harnessNamespaceKeys.set(namespace, keys)
+  namespaceEnglish.set(namespace, english)
 }
 
 const packText = readFileSync(PACK, 'utf8')
@@ -436,7 +476,9 @@ for (const [namespace, needed] of harnessNamespaceKeys) {
     .map(file => file.replaceAll('\\', '/').split('/').pop())
     .slice(0, 3)
     .join(', ')
-  namespaceGaps.push(`${namespace}: ${missing.length} (${sources}) — ${missing.join(', ')}`)
+  const english = namespaceEnglish.get(namespace) ?? new Map()
+  const lines = missing.map(key => `${key} — ${JSON.stringify(english.get(key) ?? '')}`)
+  namespaceGaps.push(`${namespace}: ${missing.length} (${sources})\n      ${lines.join('\n      ')}`)
 }
 namespaceGaps.sort()
 

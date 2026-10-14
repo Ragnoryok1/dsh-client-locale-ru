@@ -133,7 +133,9 @@ dictionary the runtime falls back to. A global name comparison cannot see those 
 translation filed under another namespace counts as coverage while the screen shows English.
 The report is advisory — the same key name can mean different things in different namespaces
 (`list.aria` is "Active reminders" in the catalog and "Background jobs" in jobs), so a
-translation is copied across namespaces only where one dictionary serves both.
+translation is copied across namespaces only where one dictionary serves both. On the pinned
+tag the report is empty: every string the harness renders in a namespace we register lives in
+that namespace.
 
 ## Coverage scope: the official interface only
 
