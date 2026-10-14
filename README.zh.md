@@ -58,6 +58,8 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 之后在下次启动 `dsh web` 时，设置里就会出现 **Русский**。无需再单独把 `pnpm add` 装进已构建的 `dsh web`——插件通过 `locale` 服务接入内置语言环境。
 
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。
+
 ## 为什么是混合插件
 
 `dsh web` 只从 **workspace 包**中加载客户端（UI）插件，仅带一个 `dsh.client` 的外部 npm 包不会被识别。要让带 UI 部分的外部插件可安装，它必须声明 **`dsh.bundle`**（profile 层），再由其 `cordis.patch.yml` 通过 `- insert:` 把客户端条目 `locale-ru` 加入浏览器 roster。其他第三方插件（例如 `@zseven-w/dsh-android`）也是同样的结构。

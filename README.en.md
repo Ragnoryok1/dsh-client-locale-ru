@@ -64,6 +64,8 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 After that, the next time `dsh web` starts, **Русский** will appear in the settings. A separate `pnpm add` into a built `dsh web` is not needed — the plugin pulls in the built-in locale through the `locale` service.
 
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed.
+
 ## Why hybrid
 
 `dsh web` takes client (UI) plugins only from **workspace packages**, and an external npm package carrying just a `dsh.client` is not picked up. For an external plugin with a UI half to be installable, it has to declare **`dsh.bundle`** (the profile layer), whose `cordis.patch.yml` adds the client entry `locale-ru` to the browser roster through `- insert:`. Other third-party plugins are built the same way (for example `@zseven-w/dsh-android`).
