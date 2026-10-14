@@ -110,7 +110,7 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Three things are gated, and all three have already
+not against some random local checkout. Four things are gated, and all four have already
 caught real defects:
 
 - **dead namespaces** — every namespace the package registers has to
@@ -124,6 +124,11 @@ caught real defects:
   (`Заняло {duration}7мин 26с`, fixed in #2), a dropped one silently removes the
   interpolated value. Packages that ship only the Chinese dictionary are compared
   against `zh`.
+- **residue** — a value has to be Russian: an exact copy of the English template, a leftover
+  Chinese character, or an empty string where the template has text is a defect. English
+  copies are allowed only by a decision recorded in `scripts/keep-english.json` (addresses,
+  format-only strings, protocol and tool names, abbreviations), so a new untranslated line
+  cannot slip through unnoticed.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from

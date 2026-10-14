@@ -254,6 +254,15 @@ const fileKeys = new Map()
 const fileEnglish = new Map()
 
 /**
+ * Key -> every English string the harness carries for it, from every dictionary
+ * file, whatever namespace it belongs to. The residue check reads this rather
+ * than the per-namespace map: a namespace whose dictionary is imported from
+ * another directory (`common`, for one) has no per-namespace English, and a
+ * leftover there would otherwise go unnoticed.
+ */
+const englishValuesByKey = new Map()
+
+/**
  * Record that a namespace renders the keys of a dictionary file.
  *
  * @param {string} namespace - locale namespace.
@@ -347,6 +356,10 @@ for (const file of walk(HARNESS)) {
   fileKeys.set(file, stringKeys)
   // English wins over the Chinese fallback for the same key.
   fileEnglish.set(file, new Map([...fallback, ...english]))
+  for (const [key, value] of english) {
+    if (!englishValuesByKey.has(key)) englishValuesByKey.set(key, new Set())
+    englishValuesByKey.get(key).add(value)
+  }
 }
 
 /**
@@ -397,6 +410,9 @@ for (const entry of dictionaryEntries(packText)) {
  * headings of `dicts.ts`.
  */
 const packKeysByNamespace = new Map()
+
+/** Namespace -> key -> Russian value, for the residue checks. */
+const packValuesByNamespace = new Map()
 const packHeadings = [...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => ({ name: m[1], index: m.index }))
 const namespaceAt = index => {
   let name = null
@@ -412,6 +428,9 @@ for (const entry of dictionaryEntries(packText)) {
   if (namespace === null) continue
   if (!packKeysByNamespace.has(namespace)) packKeysByNamespace.set(namespace, new Set())
   packKeysByNamespace.get(namespace).add(entry.key)
+  if (!packValuesByNamespace.has(namespace)) packValuesByNamespace.set(namespace, new Map())
+  const byKey = packValuesByNamespace.get(namespace)
+  if (!byKey.has(entry.key)) byKey.set(entry.key, entry.value)
 }
 
 const pluralSuffix = /\.(?:one|other)$/u
@@ -482,6 +501,50 @@ for (const [namespace, needed] of harnessNamespaceKeys) {
 }
 namespaceGaps.sort()
 
+/**
+ * Values that carry no Russian at all.
+ *
+ * An exact copy of the English template is sometimes right — product and
+ * protocol names stay untranslated — but a leftover Chinese character or an
+ * empty value where the template has text is always a defect, so those two gate
+ * the build and the English copies are listed for review.
+ */
+/**
+ * Keys the pack deliberately leaves in English, with the reason. The policy is
+ * data, not a comment: an undeclared copy of the English template fails the
+ * build, so a new leftover cannot arrive unnoticed.
+ */
+const KEEP_ENGLISH = (() => {
+  const path = new URL('./keep-english.json', import.meta.url)
+  if (!existsSync(path)) return new Map()
+  const parsed = JSON.parse(readFileSync(path, 'utf8'))
+  return new Map(Object.entries(parsed).filter(([key]) => !key.startsWith('_')))
+})()
+
+const englishResidue = []
+const declaredEnglish = []
+const cjkResidue = []
+const emptyResidue = []
+let residueChecked = 0
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
+    const templates = englishValuesByKey.get(key)
+    if (templates === undefined) continue
+    residueChecked += 1
+    if (value === '' && [...templates].some(template => template !== '')) {
+      emptyResidue.push(`${namespace} · ${key} — шаблон ${JSON.stringify([...templates][0])}`)
+    }
+    if (!templates.has(value) || !/[A-Za-z]/u.test(value)) continue
+    const id = `${namespace} · ${key}`
+    if (KEEP_ENGLISH.has(id)) declaredEnglish.push(id)
+    else englishResidue.push(`${id} — ${JSON.stringify(value)}`)
+  }
+}
+englishResidue.sort()
+cjkResidue.sort()
+emptyResidue.sort()
+
 const covered = [...packKeys].filter(k => harnessKeys.has(k)).length
 const uncovered = new Map()
 for (const [key, file] of harnessKeys) {
@@ -498,6 +561,7 @@ console.log(`покрытие (информационно): ${covered} из ${ha
 
 console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, шаблон недоступен у ${placeholderUnavailable}`)
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
+console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 
 const report = (title, items) => {
   console.log(`\n=== ${title}: ${items.length} ===`)
@@ -513,15 +577,19 @@ report('пар форм харнесса, которых нет в паке', mi
 report('лишние пары форм в паке', extraPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
 report('ключи, которых нет в своём namespace', namespaceGaps)
+report('значения с китайскими иероглифами', cjkResidue)
+report('пустые значения там, где шаблон не пуст', emptyResidue)
+report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
 }
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
-  + extraPlurals.length + placeholderMismatches.length
+  + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
+  + englishResidue.length
 if (failures === 0) {
-  console.log('\nаудит пройден: дублей и мёртвых namespace нет, пары форм и плейсхолдеры совпадают')
+  console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
 }
 console.log(`\nаудит провален: ${failures} расхождений`)
