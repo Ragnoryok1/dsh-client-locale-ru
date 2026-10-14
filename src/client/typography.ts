@@ -58,9 +58,6 @@ const SKIP_SELECTOR = [
   '[data-typography="off"]',
 ].join(',')
 
-/** Text nodes already rewritten, so a later pass leaves them alone. */
-const processed = new WeakSet<Text>()
-
 /** Whether the node sits inside content that must not be rewritten. */
 function isSkipped(node: Node): boolean {
   const element = node.nodeType === Node.ELEMENT_NODE
@@ -69,29 +66,38 @@ function isSkipped(node: Node): boolean {
   return element === null || element.closest(SKIP_SELECTOR) !== null
 }
 
-function rewriteNode(node: Node): void {
-  if (node.nodeType === Node.TEXT_NODE) {
-    if (processed.has(node as Text)) return
-    processed.add(node as Text)
-    const before = (node as Text).data
-    const after = applyRussianTypography(before)
-    if (after !== before) (node as Text).data = after
-    return
-  }
-  if (node.nodeType !== Node.ELEMENT_NODE || isSkipped(node)) return
-  for (const child of (node as Element).childNodes) rewriteNode(child)
-}
-
 /**
  * Start the typography pass on a document and keep it current as the app
  * renders. Returns a disposer that stops observing.
  *
  * @param doc - document whose body carries the rendered interface.
+ * @param isActive - whether the pass may run; the rules are Russian, so a pack
+ *   installed while another language is active must not rewrite that language's
+ *   punctuation. Checked before every rewrite, so a language switch takes effect
+ *   on the next render.
  * @returns disposer removing the observer.
  */
-export function startRussianTypography(doc: Document): () => void {
+export function startRussianTypography(doc: Document, isActive: () => boolean = () => true): () => void {
   const root = doc.body
   if (root === null) return () => {}
+
+  /** Text nodes already rewritten, so a batch of mutations does not re-walk them. */
+  const processed = new WeakSet<Text>()
+
+  function rewriteNode(node: Node): void {
+    if (!isActive()) return
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (processed.has(node as Text)) return
+      processed.add(node as Text)
+      const before = (node as Text).data
+      const after = applyRussianTypography(before)
+      if (after !== before) (node as Text).data = after
+      return
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE || isSkipped(node)) return
+    for (const child of (node as Element).childNodes) rewriteNode(child)
+  }
+
   rewriteNode(root)
   const observer = new MutationObserver(records => {
     for (const record of records) {

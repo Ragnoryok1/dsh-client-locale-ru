@@ -111,6 +111,16 @@ corrupt it. Measured, not assumed.
 
 The rules are checked by a script rather than by eye: `npm run check:typography`.
 
+Text that changes **after** the first pass — token counters, timers, progress — is rewritten
+again, so a live «4 с» keeps its non-breaking space. This is checked on a real document rather
+than on strings: `npm run check:typography:dom` (jsdom, six cases — the first pass, a later text
+change, an added subtree, disposal, a foreign language, and a language switch).
+
+The pass runs **only while Russian is active**: the rules are Russian, and applying them to
+another language would edit text this pack does not own — `"quotes"` would become «quotes» in an
+English interface. The pack listens to `locale/change` and starts or stops the pass on a switch
+rather than on installation.
+
 ## Checks
 
 ```sh

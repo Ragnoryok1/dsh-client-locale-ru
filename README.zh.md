@@ -81,6 +81,10 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 这些规则由脚本检查，而不是靠肉眼：`npm run check:typography`。
 
+**第一次处理之后**发生变化的文本——令牌计数器、计时器、进度——会被再次处理，因此实时的 «4 с» 仍保留不换行空格。这一点在真实文档上验证，而不只是对字符串：`npm run check:typography:dom`（jsdom，六个用例——首次处理、文本变更、新增子树、卸载停止、其他语言，以及语言切换）。
+
+该处理**仅在俄语处于活动状态时**运行：规则是俄语的，把它们用于其他语言会改动本包并不拥有的文本——英文界面里的 `"quotes"` 会变成 «quotes»。本包监听 `locale/change`，在切换语言时启动或停止处理，而不是在安装时。
+
 ## 检查
 
 ```sh

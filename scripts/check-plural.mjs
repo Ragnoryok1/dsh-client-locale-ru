@@ -42,9 +42,17 @@ const pack = load(fileURLToPath(new URL('../lib/client.js', import.meta.url)), '
 
 function context(locale) {
   const disposers = []
+  const listeners = new Map()
   return {
     locale,
-    emit() {},
+    emit(name, payload) {
+      for (const listener of [...(listeners.get(name) ?? [])]) listener(payload)
+    },
+    on(name, listener) {
+      if (!listeners.has(name)) listeners.set(name, new Set())
+      listeners.get(name).add(listener)
+      return () => listeners.get(name)?.delete(listener)
+    },
     effect(callback) {
       const dispose = callback()
       assert.equal(typeof dispose, 'function')

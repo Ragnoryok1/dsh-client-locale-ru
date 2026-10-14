@@ -20,8 +20,12 @@ declare function applyRussianTypography(text: string): string;
  * renders. Returns a disposer that stops observing.
  *
  * @param doc - document whose body carries the rendered interface.
+ * @param isActive - whether the pass may run; the rules are Russian, so a pack
+ *   installed while another language is active must not rewrite that language's
+ *   punctuation. Checked before every rewrite, so a language switch takes effect
+ *   on the next render.
  * @returns disposer removing the observer.
  */
-declare function startRussianTypography(doc: Document): () => void;
+declare function startRussianTypography(doc: Document, isActive?: () => boolean): () => void;
 //#endregion
 export { applyRussianTypography, startRussianTypography };

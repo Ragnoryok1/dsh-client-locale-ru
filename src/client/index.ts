@@ -30,7 +30,8 @@ export const inject = ['locale']
  * contributed language, dictionaries, the plural wrapper and the typography
  * observer are torn down with this plugin's fiber. Existing languages and
  * dictionaries belong to their first registrant: skip duplicates without
- * replacing or disposing those resources.
+ * replacing or disposing those resources. The typography pass runs only while
+ * Russian is the active language, and follows a switch through `locale/change`.
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
@@ -54,8 +55,29 @@ export function apply(ctx: ClientContext): void {
     () => startRussianPlurals(ctx.locale),
     'locale-ru: plurals',
   )
-  ctx.effect(
-    () => startRussianTypography(document),
-    'locale-ru: typography',
-  )
+  /*
+   * The typography rules are Russian: guillemets instead of straight quotes, an
+   * em dash between words, a non-breaking space after a short word. Applying them
+   * while another language is active would edit text this pack does not own —
+   * `"quotes"` would become «quotes» in an English interface — so the pass follows
+   * the language, not the installation. `locale/change` fires on a language
+   * switch only, not on dictionary registration.
+   */
+  ctx.effect(() => {
+    const isRussian = (): boolean => ctx.locale.getLocale().active === 'ru'
+    let stop = isRussian() ? startRussianTypography(document, isRussian) : null
+    const off = ctx.on('locale/change', () => {
+      if (isRussian() && stop === null) {
+        stop = startRussianTypography(document, isRussian)
+      } else if (!isRussian() && stop !== null) {
+        stop()
+        stop = null
+      }
+    })
+    return () => {
+      off()
+      stop?.()
+      stop = null
+    }
+  }, 'locale-ru: typography')
 }

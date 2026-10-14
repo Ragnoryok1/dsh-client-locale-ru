@@ -32,9 +32,20 @@ const { LocaleRuntime } = load(host, '@deepseek-ai/dsh-client-locale', {
 const pack = load(fileURLToPath(new URL('../lib/client.js', import.meta.url)), '@ragnoryok1/dsh-client-locale-ru')
 function context(locale) {
   const disposers = []
+  const listeners = new Map()
   return {
     locale,
-    emit() {},
+    /** Deliver an event to the pack's listeners, as the runtime would. */
+    emit(name, payload) {
+      for (const listener of [...(listeners.get(name) ?? [])]) listener(payload)
+    },
+    on(name, listener) {
+      if (!listeners.has(name)) listeners.set(name, new Set())
+      listeners.get(name).add(listener)
+      return () => listeners.get(name)?.delete(listener)
+    },
+    /** How many listeners a name carries, so a leak is visible. */
+    listenerCount(name) { return listeners.get(name)?.size ?? 0 },
     effect(callback) {
       const dispose = callback()
       assert.equal(typeof dispose, 'function')
@@ -66,6 +77,27 @@ test('standalone registration, disposal and reactivation', () => {
   assert.equal(locale.translate('common', 'cancel'), 'Отмена')
   reloaded.dispose()
 })
+
+test('the typography pass follows the active language', () => {
+  const locale = fresh()
+  const ctx = context(locale)
+  pack.apply(ctx)
+
+  /*
+   * The sandbox has no document body, so the observer itself is a no-op here —
+   * what this pins down is that the pack tracks the language at all. Without the
+   * subscription the Russian rules would keep running in an English interface and
+   * rewrite its punctuation.
+   */
+  assert.equal(ctx.listenerCount('locale/change'), 1)
+  ctx.emit('locale/change', { active: 'en', locales: [], revision: 1 })
+  ctx.emit('locale/change', { active: 'ru', locales: [], revision: 2 })
+  assert.equal(ctx.listenerCount('locale/change'), 1)
+
+  ctx.dispose()
+  assert.equal(ctx.listenerCount('locale/change'), 0)
+})
+
 
 test('other pack first: preserve its language and dictionary, contribute core translations', () => {
   const locale = fresh()
