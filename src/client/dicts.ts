@@ -2395,7 +2395,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'registryNpmmirror': 'Зеркало для материкового Китая',
     'registryCustom': 'Свой адрес',
     'registryCustomPlaceholder': 'https://npm.example.com/',
-    'registryCustomHint': 'Корпоративный или частный реестр npm; если для него нужен вход, храните учётные данные в ~/.npmrc на этой машине',
+    'registryCustomHint': 'Корпоративный или частный реестр npm; если для него нужен вход, храните учётные данные в ~/.npmrc на этой машине.',
     'registryCustomInvalid': 'Введите адрес, начинающийся с http:// или https://',
     'registryListSeparator': ', ',
     'installRun': 'Установить',

@@ -260,6 +260,16 @@ const fileEnglish = new Map()
 const fileEnglishOnly = new Map()
 
 /**
+ * Dictionary sources spell some characters as escapes — `'Creating\\u2026'` is an
+ * ellipsis — so comparisons decode them first. A raw comparison reads that value
+ * as ending in the digit `6` and invents a difference.
+ *
+ * @param {string} value - dictionary value as written in the source.
+ * @returns {string} the value the runtime would see.
+ */
+const decoded = value => value.replace(/\\u([0-9a-fA-F]{4})/gu, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+
+/**
  * Key -> every English string the harness carries for it, from every dictionary
  * file, whatever namespace it belongs to. The residue check reads this rather
  * than the per-namespace map: a namespace whose dictionary is imported from
@@ -267,6 +277,18 @@ const fileEnglishOnly = new Map()
  * leftover there would otherwise go unnoticed.
  */
 const englishValuesByKey = new Map()
+
+/**
+ * Key -> its English values, collected from English dictionaries only.
+ *
+ * A namespace whose dictionary file is an aggregate (`locales/index.ts`
+ * re-exporting the rest) declares no `en` of its own, so the per-namespace map
+ * has nothing for `common` — and a comparison that silently skips a whole
+ * namespace is worse than one that reports. A key with exactly one English
+ * wording can be compared against it whatever the namespace; a key with several
+ * wordings stays unchecked, because they are not interchangeable.
+ */
+const englishVariantsByKey = new Map()
 
 /**
  * Record that a namespace renders the keys of a dictionary file.
@@ -402,9 +424,9 @@ for (const file of HARNESS_FILES) {
     harnessTemplates.get(entry.key).add(entry.value)
     const scope = dictionaryScope(text, entry.index)
     if (scope === 'en') {
-      if (!english.has(entry.key)) english.set(entry.key, entry.value)
+      if (!english.has(entry.key)) english.set(entry.key, decoded(entry.value))
     } else if (!fallback.has(entry.key)) {
-      fallback.set(entry.key, entry.value)
+      fallback.set(entry.key, decoded(entry.value))
     }
   }
   fileKeys.set(file, stringKeys)
@@ -414,6 +436,8 @@ for (const file of HARNESS_FILES) {
   for (const [key, value] of english) {
     if (!englishValuesByKey.has(key)) englishValuesByKey.set(key, new Set())
     englishValuesByKey.get(key).add(value)
+    if (!englishVariantsByKey.has(key)) englishVariantsByKey.set(key, new Set())
+    englishVariantsByKey.get(key).add(value)
   }
 }
 
@@ -728,6 +752,7 @@ const HYGIENE_RULES = [
 ]
 const hygiene = []
 const edgeSpaces = []
+const style = []
 for (const [namespace, byKey] of packValuesByNamespace) {
   const english = namespaceEnglishOnly.get(namespace) ?? new Map()
   for (const [key, value] of byKey) {
@@ -737,15 +762,39 @@ for (const [namespace, byKey] of packValuesByNamespace) {
         if (test(value)) hygiene.push(`${namespace} · ${key} — ${title}`)
       }
     }
-    const template = english.get(key)
+    const variants = englishVariantsByKey.get(key)
+    const template = english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
     if (template === undefined) continue
     if (/^ /u.test(value) !== /^ /u.test(template) || / $/u.test(value) !== / $/u.test(template)) {
       edgeSpaces.push(`${namespace} · ${key} — у нас ${JSON.stringify(value)} | шаблон ${JSON.stringify(template)}`)
+    }
+    /*
+     * Style parity: the same value may differ in word order, but a terminator the
+     * template has should not disappear, and a capitalised template should not
+     * become lowercase. Only a lost terminator is reported — a Russian status
+     * line may add «…» for work in progress, which the template need not carry.
+     * A template that opens with a placeholder carries no case to mirror.
+     */
+    const trimmedValue = value.trimEnd()
+    const trimmedTemplate = template.trimEnd()
+    const abbreviation = /[а-яё]{1,5}\.$/iu.test(trimmedValue)
+    if (/[.!?…]$/u.test(trimmedTemplate) && !/[.!?…]$/u.test(trimmedValue) && !abbreviation) {
+      style.push(`${namespace} · ${key} — потерян знак в конце: у нас ${JSON.stringify(trimmedValue.slice(-30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(-30))}`)
+    }
+    if (!trimmedTemplate.startsWith('{') && !/^[«"([<]*[A-Z\u0400-\u042F]{2,}/u.test(trimmedValue)) {
+      const firstLetter = (text) => text.replace(/^[«"([<]+/u, '')[0]
+      const firstValue = firstLetter(value)
+      const firstTemplate = firstLetter(trimmedTemplate)
+      if (firstValue !== undefined && firstTemplate !== undefined && /[A-Za-z\u0400-\u04FF]/u.test(firstTemplate)) {
+        if ((firstValue !== firstValue.toLowerCase()) !== (firstTemplate !== firstTemplate.toLowerCase())) {          style.push(`${namespace} · ${key} — регистр: у нас ${JSON.stringify(value.slice(0, 30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(0, 30))}`)
+        }
+      }
     }
   }
 }
 hygiene.sort()
 edgeSpaces.sort()
+style.sort()
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -779,7 +828,7 @@ console.log(`  сверено namespace: ${[...packKeysByNamespace.keys()].filte
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
 console.log(`терминология: нарушений ${terminologyViolations.length}; латинских слов в прозе вне списка: ${latinProse.length}`)
-console.log(`гигиена текста: ${hygiene.length}, расхождений по краевым пробелам: ${edgeSpaces.length}`)
+console.log(`гигиена текста: ${hygiene.length}, краевые пробелы: ${edgeSpaces.length}, стиль: ${style.length}`)
 console.log(`  ${terminologyCounts.join(', ')}`)
 
 const report = (title, items) => {
@@ -806,6 +855,7 @@ report('терминология: запрещённые варианты', term
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
+report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -814,7 +864,7 @@ if (uncovered.size > 0) {
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
-  + hygiene.length + edgeSpaces.length
+  + hygiene.length + edgeSpaces.length + style.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

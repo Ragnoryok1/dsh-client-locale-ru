@@ -148,7 +148,10 @@ caught real defects:
   comes mechanical hygiene: double spaces, a space before punctuation, unpaired «ёлочки» and
   brackets, a non-breaking space inside a value, and edge spaces — a value that starts or ends
   with one is glued to a neighbour by the component, so it has to match the English template
-  of its own namespace.
+  of its own namespace. The same template checks style: a terminator the English carries must
+  not disappear (this is how `registryCustomHint` was found without its period), and the case
+  of the first letter has to match — except for acronyms like `JSON` and templates that open
+  with a placeholder.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from
