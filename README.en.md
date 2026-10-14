@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 53 namespaces, 2418 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 53 namespaces, 2417 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,9 +22,9 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.1%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-53-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C418-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C417-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 53 namespaces, 2,418 strings, built against dsh `0.2.1-alpha.1`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
+Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 53 namespaces, 2,417 strings, built against dsh `0.2.1-alpha.1`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -104,15 +104,20 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Two things are gated, and both have already caught
-real defects:
+not against some random local checkout. Three things are gated, and all three have already
+caught real defects:
 
 - **dead namespaces** — every namespace the package registers has to
   exist in the harness. In 0.1.6 the schedule catalog translations were registered
   under the name `schedule.manager`, whereas `schedule.catalog` is what reads them: the per-key
   coverage check nonetheless reported «всё переведено»;
 - **plural-form pairs** — the `.one`/`.other` sets have to match, because the client
-  chooses the form as `count === 1 ? '.one' : '.other'`.
+  chooses the form as `count === 1 ? '.one' : '.other'`;
+- **placeholders** — a Russian value has to carry exactly the `{name}` placeholders its
+  English template carries: an extra one reaches the screen literally
+  (`Заняло {duration}7мин 26с`, fixed in #2), a dropped one silently removes the
+  interpolated value. Packages that ship only the Chinese dictionary are compared
+  against `zh`.
 
 The coverage number is printed but is not a gate: an exact “add / remove” list
 requires comparing keys **per namespace** (which the release tooling does), whereas comparing
@@ -187,7 +192,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (53 namespaces, 2418 translations, ~2900 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries (53 namespaces, 2417 translations, ~2900 lines). This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).

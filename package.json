@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
   "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 53 namespaces, verified against dsh 0.2.1-alpha.1",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "keywords": [
     "deepseek",
     "deepseek-harness",
@@ -65,6 +65,7 @@
     "check:locale": "node scripts/check-locale.mjs",
     "audit": "node scripts/audit.mjs",
     "verify": "npm run check:readmes && npm run build && npm run check:typography && npm run check:locale && node scripts/audit.mjs",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
