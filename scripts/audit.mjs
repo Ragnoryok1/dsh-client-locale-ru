@@ -846,6 +846,37 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 hygiene.sort()
 edgeSpaces.sort()
 style.sort()
+
+/**
+ * Short interface strings that grew far longer than their template.
+ *
+ * A label, a tab or a chip has no room to reflow, and Russian runs longer than
+ * English by nature; past roughly twice the length of a short template the text
+ * starts to overflow. Prose is excluded — only strings whose English is under 28
+ * characters are compared, and the report is advisory, because a legitimate
+ * rewrite can be longer than its template.
+ */
+const grownShortStrings = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  const english = namespaceEnglishOnly.get(namespace)
+  if (english === undefined) continue
+  for (const [key, value] of byKey) {
+    const template = english.get(key)
+    if (template === undefined) continue
+    if (template.length < 6 || template.length > 28) continue
+    if (template.includes('{') || value.includes('{') || value.includes('\\n')) continue
+    const ratio = value.length / template.length
+    if (ratio < 2.8) continue
+    grownShortStrings.push({ id: `${namespace} · ${key}`, ratio, template, value })
+  }
+}
+// Russian runs longer than English as a rule — «Command failed» becomes «Команда
+// завершилась с ошибкой» — so only the extreme cases are worth a look, longest first.
+grownShortStrings.sort((left, right) => right.ratio - left.ratio)
+const grownShortStringsReport = grownShortStrings
+  .slice(0, 15)
+  .map(row => `${row.id} — ${row.ratio.toFixed(1)}× («${row.template}» → «${row.value}»)`)
+grownShortStringsReport.total = grownShortStrings.length
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -909,6 +940,7 @@ report('число перед склоняемым словом (нет форм
 report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
+report('короткие строки, выросшие больше чем в 2,8 раза (риск вёрстки)', grownShortStringsReport)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)

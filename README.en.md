@@ -121,8 +121,12 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Six things are gated, and all six have already
-caught real defects:
+not against some random local checkout. Six groups of checks are gated, and all six have
+already caught real defects. Beside them the audit prints **advisory reports**, which are not
+gates because they need a human decision: how many namespaces were compared and which could
+not be linked, whether any «number + inflecting word» is left, and whether a short string grew
+past 2.8× its English (a layout risk — «Effort» → «Уровень рассуждения» is normal Russian
+length, not a defect).
 
 - **dead namespaces** — every namespace the package registers has to
   exist in the harness. In 0.1.6 the schedule catalog translations were registered
