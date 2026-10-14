@@ -1,4 +1,4 @@
-﻿name: verify
+name: verify
 
 # The pack is a translation of a moving upstream: it must be checked against a
 # pinned harness tag, not against whatever the local checkout happens to hold.

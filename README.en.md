@@ -1,4 +1,4 @@
-﻿<!-- deepseek-harness-meta
+<!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",

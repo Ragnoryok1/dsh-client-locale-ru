@@ -1,4 +1,4 @@
-﻿name: publish
+name: publish
 
 # Releases are cut by tag only: npm credentials live in repository secrets, so a
 # release never needs a token pasted into a chat, a shell, or a local .npmrc.

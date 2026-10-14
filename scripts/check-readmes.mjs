@@ -14,10 +14,16 @@
  *   — fenced code blocks: same count;
  *   — tables: same row count per table, in order;
  *   — image references: same files, in order;
- *   — the language switcher: present in every file and pointing at all three.
+ *   — the language switcher: present in every file and pointing at all three;
+ *   — a byte-order mark: absent from the READMEs and `package.json`.
  *
  * What is NOT compared: the words themselves. Structure parity cannot prove a
  * translation is accurate, and this script does not pretend otherwise.
+ *
+ * The BOM check is here because it is the one defect that is invisible in every
+ * editor and fatal to a tool: a rewrite through a Windows editor added one to
+ * `package.json`, and `tsdown` died parsing it while every local check passed on
+ * an older install that tolerated it.
  *
  * Usage: node scripts/check-readmes.mjs
  */
@@ -108,6 +114,12 @@ console.log(`сверяю ${FILES.length} файла README`)
 for (const [file, print] of prints) {
   console.log(`  ${file.padEnd(16)} заголовков ${String(print.headings.length).padStart(2)}, блоков кода ${String(print.fences).padStart(2)}, таблиц ${print.tables.length}, картинок ${print.images.length}`)
 }
+const BOM = Buffer.from([0xEF, 0xBB, 0xBF])
+for (const file of [...FILES, 'package.json']) {
+  const head = readFileSync(join(ROOT, file)).subarray(0, 3)
+  if (head.equals(BOM)) problems.push(`${file}: файл начинается с BOM`)
+}
+
 if (problems.length === 0) {
   console.log('\nструктура совпадает — расхождений нет')
   process.exit(0)
