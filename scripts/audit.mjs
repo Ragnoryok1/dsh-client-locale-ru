@@ -110,12 +110,36 @@ function dictionaryKeys(text) {
 }
 
 /**
+ * Read the string literal that starts at or after `from`, or `null` when the
+ * value is not one (an object, a concatenation, an identifier).
+ *
+ * @param {string} text source of a module
+ * @param {number} from offset just after the key's colon
+ * @returns {string|null} the literal's content, or null
+ */
+function readStringValue(text, from) {
+  let start = from
+  while (start < text.length && /\s/u.test(text[start])) start += 1
+  const quote = text[start]
+  if (quote !== "'" && quote !== '"' && quote !== '`') return null
+  let end = start + 1
+  while (end < text.length) {
+    if (text[end] === '\\') { end += 2; continue }
+    if (text[end] === quote) break
+    end += 1
+  }
+  return text.slice(start + 1, end)
+}
+
+/**
  * Collect `key: 'value'` pairs outside string literals and comments, with the
  * offset of each key so a harness file's dictionary (`zh` / `en`) can be told
  * apart. `dictionaryKeys` answers "which keys exist"; this answers "what does
- * the template say", which is what placeholder parity needs. A value that is
- * not a single string literal (an object, a concatenation, an identifier)
- * yields `null` and is skipped by the comparison rather than guessed at.
+ * the template say", which is what placeholder parity needs.
+ *
+ * Both key forms are read: many harness dictionaries write bare identifiers
+ * (`panel: '插件'`, ui-plugin-manager), others quote them. Missing the bare form
+ * silently exempted whole files from the placeholder check.
  *
  * @param {string} text source of a module
  * @returns {{key: string, value: string|null, index: number}[]} entries in file order
@@ -145,20 +169,7 @@ function dictionaryEntries(text) {
       }
       if (text[cursor + 1] === ':') {
         const key = text.slice(start + 1, cursor)
-        let valueStart = cursor + 2
-        while (valueStart < text.length && /\s/u.test(text[valueStart])) valueStart += 1
-        const quote = text[valueStart]
-        let value = null
-        if (quote === "'" || quote === '"' || quote === '`') {
-          let end = valueStart + 1
-          while (end < text.length) {
-            if (text[end] === '\\') { end += 2; continue }
-            if (text[end] === quote) break
-            end += 1
-          }
-          value = text.slice(valueStart + 1, end)
-        }
-        if (/^[\w.]+$/u.test(key)) entries.push({ key, value, index: start })
+        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, cursor + 2), index: start })
       }
       index = cursor + 1
       continue
@@ -166,6 +177,12 @@ function dictionaryEntries(text) {
     if (/[A-Za-z_$]/u.test(char)) {
       let end = index + 1
       while (end < text.length && /[\w$.]/u.test(text[end])) end += 1
+      let after = end
+      while (after < text.length && /\s/u.test(text[after])) after += 1
+      if (text[after] === ':' && text[after + 1] !== ':') {
+        const key = text.slice(index, end)
+        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, after + 1), index })
+      }
       index = end
       continue
     }
@@ -174,17 +191,12 @@ function dictionaryEntries(text) {
   return entries
 }
 
-/** Dictionary a key belongs to: the nearest preceding `export const <name> = {`. */
-function dictionaryScope(text, index) {
-  let name = null
-  for (const m of text.matchAll(/export\s+const\s+(\w+)\s*=\s*\{/gu)) {
-    if (m.index > index) break
-    name = m[1]
-  }
-  return name
-}
-
-/** `{name}` placeholders of a template, sorted so two sides compare as multisets. */
+/**
+ * `{name}` placeholders of a template, sorted so two sides compare as multisets.
+ *
+ * @param {string} value template or translated text
+ * @returns {string[]} placeholder names, sorted
+ */
 function placeholders(value) {
   return [...value.matchAll(/\{([A-Za-z_]\w*)\}/gu)].map(m => m[1]).sort()
 }
@@ -201,8 +213,17 @@ const NOT_A_KEY = new Set([
 const harnessNamespaces = new Map()
 const harnessKeys = new Map()
 
-/** Key -> dictionary name (`zh` / `en`) -> template, for placeholder parity. */
-const harnessValues = new Map()
+/**
+ * Key -> every template the harness renders for it.
+ *
+ * Grouping by key rather than by dictionary file is deliberate: most harness
+ * dictionary files declare no namespace of their own — the consumer binds it —
+ * so a file-to-namespace map is not derivable. Keeping every template means a
+ * key that appears in several namespaces (`invalid` is in three) matches when
+ * it matches any of them, while a placeholder no template carries is still a
+ * failure.
+ */
+const harnessTemplates = new Map()
 
 for (const file of walk(HARNESS)) {
   const text = readFileSync(file, 'utf8')
@@ -218,10 +239,8 @@ for (const file of walk(HARNESS)) {
   }
   for (const entry of dictionaryEntries(text)) {
     if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
-    const scope = dictionaryScope(text, entry.index) ?? '?'
-    if (!harnessValues.has(entry.key)) harnessValues.set(entry.key, new Map())
-    const byScope = harnessValues.get(entry.key)
-    if (!byScope.has(scope)) byScope.set(scope, entry.value)
+    if (!harnessTemplates.has(entry.key)) harnessTemplates.set(entry.key, new Set())
+    harnessTemplates.get(entry.key).add(entry.value)
   }
 }
 
@@ -236,11 +255,16 @@ for (const name of packNamespaceList) namespaceTally.set(name, (namespaceTally.g
 const duplicateNamespaces = [...namespaceTally].filter(([, count]) => count > 1).map(([name]) => name).sort()
 const packEntries = dictionaryKeys(packText).filter(key => !NOT_A_KEY.has(key))
 const packKeys = new Set(packEntries)
-/** Key -> ru value, for placeholder parity. */
+/**
+ * Key -> every Russian value the pack carries for it. Several namespaces may
+ * use the same bare key (`invalid`, `read`), so the values are collected rather
+ * than first-wins: each of them has to match a template on its own.
+ */
 const packValues = new Map()
 for (const entry of dictionaryEntries(packText)) {
   if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
-  if (!packValues.has(entry.key)) packValues.set(entry.key, entry.value)
+  if (!packValues.has(entry.key)) packValues.set(entry.key, new Set())
+  packValues.get(entry.key).add(entry.value)
 }
 const pluralSuffix = /\.(?:one|other)$/u
 const harnessPlurals = new Set([...harnessKeys.keys()].filter(k => pluralSuffix.test(k)))
@@ -250,26 +274,32 @@ const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort
 const extraPlurals = [...packPlurals].filter(k => !harnessPlurals.has(k)).sort()
 
 /**
- * Compare each translated value with the template the host interpolates.
- * Both sides are multisets, because a template may repeat a placeholder
- * (`{first} … {first}`) and order alone would then look like a mismatch.
+ * Compare each Russian value with the templates its key renders from.
+ * Placeholders are multisets, because a template may repeat one
+ * (`{first} … {first}`) and order alone would then look like a mismatch. A value
+ * matches when it matches any template of that key, which is what keeps the
+ * three different `invalid` keys from inventing a mismatch, while a placeholder
+ * no template carries stays a failure.
  */
 const placeholderMismatches = []
 let placeholderChecked = 0
 let placeholderUnavailable = 0
-for (const [key, ru] of packValues) {
-  const byScope = harnessValues.get(key)
-  if (byScope === undefined) continue
-  const template = byScope.get('en') ?? byScope.get('zh')
-  if (template === undefined) { placeholderUnavailable += 1; continue }
-  placeholderChecked += 1
-  const ruPlaceholders = placeholders(ru)
-  const templatePlaceholders = placeholders(template)
-  const equal = ruPlaceholders.length === templatePlaceholders.length
-    && ruPlaceholders.every((name, position) => name === templatePlaceholders[position])
-  if (equal) continue
-  const show = list => list.length === 0 ? '—' : list.join(' ')
-  placeholderMismatches.push(`${key}  ru: ${show(ruPlaceholders)}  |  шаблон: ${show(templatePlaceholders)}`)
+const show = list => list.length === 0 ? '—' : list.join(' ')
+for (const [key, russian] of packValues) {
+  const candidates = harnessTemplates.get(key)
+  if (candidates === undefined) { placeholderUnavailable += russian.size; continue }
+  const rendered = [...new Set([...candidates].map(template => show(placeholders(template))))]
+  for (const ru of russian) {
+    placeholderChecked += 1
+    const ruPlaceholders = placeholders(ru)
+    const matched = [...candidates].some((template) => {
+      const templatePlaceholders = placeholders(template)
+      return ruPlaceholders.length === templatePlaceholders.length
+        && ruPlaceholders.every((name, position) => name === templatePlaceholders[position])
+    })
+    if (matched) continue
+    placeholderMismatches.push(`${key}  ru: ${show(ruPlaceholders)}  |  шаблон: ${rendered.join(' / ')}`)
+  }
 }
 placeholderMismatches.sort()
 

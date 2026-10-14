@@ -2,8 +2,9 @@ name: verify
 
 # The pack is a translation of a moving upstream: it must be checked against a
 # pinned harness tag, not against whatever the local checkout happens to hold.
-# The gate is deliberately narrow — a dead namespace and a mismatched plural
-# key set are the two failures a key-level comparison cannot see.
+# The gate is deliberately narrow — a dead namespace, a mismatched plural key
+# set and a placeholder the template never passes are the failures a key-level
+# comparison cannot see.
 
 on:
   push:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Bump when the pack is synced to a newer harness release.
-      HARNESS_TAG: dsh-v0.2.1-alpha.1
+      HARNESS_TAG: dsh-v0.2.1-alpha.2
     steps:
       - uses: actions/checkout@v4
 
