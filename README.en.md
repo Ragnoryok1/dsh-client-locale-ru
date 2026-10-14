@@ -153,6 +153,12 @@ caught real defects:
   of the first letter has to match — except for acronyms like `JSON` and templates that open
   with a placeholder.
 
+A separate workflow watches the tag itself: `watch-upstream` compares the pinned tag with
+the harness tags once a week, opens an issue with the steps when a newer one exists, and turns
+the run red — so lagging behind is found on a schedule rather than in a user's screenshot. The
+version comparison is checked without the network (`npm run check:upstream`, five cases) and is
+part of `verify`: a release has to outrank its own prereleases, or the watch would fire forever.
+
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from
 whoever registers it (`NS`, or a literal in `locale.register`; `bind` and `PropsLocale` only read

@@ -1,0 +1,55 @@
+name: watch-upstream
+
+# The pack is a translation of a moving target: a new `dsh-v*` tag adds keys, and
+# nothing in this repository notices until someone looks. This workflow looks once
+# a week, opens an issue when a newer tag exists, and fails the run so the
+# maintainer hears about it without watching the page.
+
+on:
+  schedule:
+    # Mondays, 06:00 UTC.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # The check exits 1 when upstream moved, which is expected here — the issue
+      # below is the report, and the last step turns the run red.
+      - name: Compare the pinned tag with upstream
+        id: watch
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/watch-upstream.mjs
+
+      - name: Open an issue when a newer tag exists
+        if: steps.watch.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ steps.watch.outputs.tag }}"
+          title="Upstream $tag is newer than the pinned tag"
+          open=$(gh issue list --state open --search "$title in:title" --json number --jq 'length')
+          if [ "$open" != "0" ]; then
+            echo "already reported: $title"
+            exit 0
+          fi
+          gh issue create --title "$title" --body-file upstream-report.md
+
+      - name: Fail the run when upstream moved
+        if: steps.watch.outcome == 'failure'
+        run: |
+          echo "::error::Upstream has a newer harness tag; see the issue opened above."
+          exit 1

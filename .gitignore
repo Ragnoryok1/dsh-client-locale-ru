@@ -11,6 +11,15 @@ node_modules/
 # packaged archive
 *.tgz
 
+# One lock file is canonical: `package-lock.json`, because CI installs with npm
+# and the published plugin has to match what CI verified. A pnpm lock beside it
+# is a local artifact of whichever tool was tried last, not a second truth.
+pnpm-lock.yaml
+package-lock.yaml
+
+# Written by scripts/watch-upstream.mjs for the issue it opens.
+upstream-report.md
+
 # local env / credentials — never commit
 .env
 .env.local
