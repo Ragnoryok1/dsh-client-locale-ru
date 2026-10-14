@@ -1,4 +1,4 @@
-name: verify
+﻿name: verify
 
 # The pack is a translation of a moving upstream: it must be checked against a
 # pinned harness tag, not against whatever the local checkout happens to hold.
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Bump when the pack is synced to a newer harness release.
-      HARNESS_TAG: dsh-v0.2.1-alpha.2
+      HARNESS_TAG: dsh-v0.2.1-alpha.3
     steps:
       - uses: actions/checkout@v4
 

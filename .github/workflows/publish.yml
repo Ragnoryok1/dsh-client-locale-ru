@@ -1,4 +1,4 @@
-name: publish
+﻿name: publish
 
 # Releases are cut by tag only: npm credentials live in repository secrets, so a
 # release never needs a token pasted into a chat, a shell, or a local .npmrc.
@@ -83,7 +83,7 @@ jobs:
 
       - name: Audit against the harness tree
         env:
-          HARNESS_TAG: dsh-v0.2.1-alpha.2
+          HARNESS_TAG: dsh-v0.2.1-alpha.3
         run: |
           git clone --depth 1 --branch "$HARNESS_TAG" \
             https://github.com/deepseek-ai/deepseek-harness.git harness

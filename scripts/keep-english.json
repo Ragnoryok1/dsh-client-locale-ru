@@ -25,6 +25,7 @@
   "schedule.catalog · frequency.cronLocal": "Cron — имя механизма расписания",
   "schedule.catalog · time.utcPrefix": "аббревиатура UTC",
   "settings · desktop.update.progress": "форматная строка без слов",
+  "settings.models · baseUrlPlaceholder": "только плейсхолдер, переводить нечего",
   "settings.models · customAnthropicBaseUrlPlaceholder": "пример адреса",
   "settings.models · customBaseUrlPlaceholder": "пример адреса",
   "settings.models · deepSeekBaseUrl": "адрес API по умолчанию",

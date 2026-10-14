@@ -1,11 +1,11 @@
-<!-- deepseek-harness-meta
+﻿<!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 54 namespaces, 2489 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2526 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
-  "compatible_versions": ["v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
+  "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
   "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
 }
@@ -20,11 +20,11 @@
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
-[![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-54-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C489-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
+[![namespaces](https://img.shields.io/badge/namespaces-55-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C526-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский язык для веб-интерфейса DeepSeek Harness: 54 namespace, 2489 переводов, экранная типографика и аудит локализации в CI.
+Русский язык для веб-интерфейса DeepSeek Harness: 55 namespace, 2526 переводов, экранная типографика и аудит локализации в CI.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -155,14 +155,14 @@ npm run verify -- <дерево харнеса>  # всё вместе
 (`list.aria` — «Активные напоминания» в каталоге и «Фоновые задачи» в задачах), поэтому
 перевод переносится в чужой namespace только там, где оба namespace обслуживает один и
 тот же словарь. На закреплённом теге отчёт пуст: каждая строка, которую харнесс рисует в
-нашем namespace, лежит именно в нём. Сверяются все 54 namespace пака — привязка строится и по
+нашем namespace, лежит именно в нём. Сверяются все 55 namespace пака — привязка строится и по
 импорту словаря рядом с регистрацией, и по именам, которые передаёт сама регистрирующая
 строка (`locale.register(NS, { zh, en })`); без второго правила `common` и `settings.locale`,
 чьи словари лежат в соседнем каталоге, оставались бы вне сверки.
 
 ## Область покрытия: только официальный интерфейс
 
-Пакет переводит **собственные namespace клиента харнесса** — 54 namespace, сверенные с
+Пакет переводит **собственные namespace клиента харнесса** — 55 namespace, сверенные с
 закреплённым тегом. Словари сторонних плагинов в область сознательно не входят, и вот
 почему.
 
@@ -229,7 +229,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (54 namespace, 2489 перевод, ~2900 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (55 namespace, 2526 перевод, ~2900 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).
