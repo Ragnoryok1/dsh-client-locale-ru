@@ -137,7 +137,8 @@ caught real defects:
   for «сессия», «этап» for «шаг») fail the build, and `scripts/terminology.json` keeps both
   the decision and counts of the chosen forms, so drift shows up before it becomes a defect.
   The check immediately found `confirm.description` translated two ways in two namespaces —
-  «шаги» and «этапы».
+  «шаги» and «этапы». The same report covers Latin words inside Russian phrases: a product,
+  command or code token is allowed, an ordinary English word in a sentence is not.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from

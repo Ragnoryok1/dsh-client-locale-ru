@@ -611,6 +611,32 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   }
 }
 terminologyViolations.sort()
+
+/**
+ * Latin words inside otherwise-Russian values.
+ *
+ * A product name, a slash-command name or a code token belongs there; an
+ * ordinary English word in a sentence does not, and nothing else sees it — the
+ * residue check only compares whole values, and terminology only Russian
+ * variants. Allowed tokens live in `terminology.json` under `latin`.
+ */
+const latinProse = []
+const allowedLatin = terminology.latin ?? {}
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    const cleaned = value.replace(/\{[^}]*\}/gu, ' ').replace(/\\[a-z]/gu, ' ')
+    for (const match of cleaned.matchAll(/[A-Za-z][A-Za-z0-9._+-]*/gu)) {
+      const token = match[0]
+      // Whole lowercase words only: capitalised names are product terms, and a
+      // token with punctuation is a package name, a path or an identifier.
+      if (token[0] !== token[0].toLowerCase()) continue
+      if (token.length < 4 || /[._/+-]/u.test(token)) continue
+      if (allowedLatin[token.toLowerCase()] !== undefined) continue
+      latinProse.push(`${namespace} · ${key} — «${token}»`)
+    }
+  }
+}
+latinProse.sort()
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -642,7 +668,8 @@ console.log(`плейсхолдеры сверены у ${placeholderChecked} к
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
-console.log(`терминология: нарушений ${terminologyViolations.length}; ${terminologyCounts.join(', ')}`)
+console.log(`терминология: нарушений ${terminologyViolations.length}; латинских слов в прозе вне списка: ${latinProse.length}`)
+console.log(`  ${terminologyCounts.join(', ')}`)
 
 const report = (title, items) => {
   console.log(`\n=== ${title}: ${items.length} ===`)
@@ -664,6 +691,7 @@ report('значения, совпадающие с английским шаб�
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
+report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -671,7 +699,7 @@ if (uncovered.size > 0) {
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
-  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length
+  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
