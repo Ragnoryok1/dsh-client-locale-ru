@@ -592,6 +592,38 @@ const deadReport = deadKeys.map(id => ({ id, mentions: harnessMentions(id.slice(
  */
 const deadUnreferenced = deadReport.filter(entry => entry.mentions === 0).map(entry => entry.id)
 
+/**
+ * Terminology: one concept, one rendering.
+ *
+ * A forbidden variant means the same notion is spelled two ways in one
+ * interface — «кэш» and «кеш», «сессия» and «сеанс» — which no other check can
+ * see, because both renderings are Russian. Watched concepts are only counted,
+ * so a drift shows up before it becomes a defect.
+ */
+const terminology = JSON.parse(readFileSync(new URL('./terminology.json', import.meta.url), 'utf8'))
+const terminologyViolations = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    const lower = value.toLowerCase()
+    for (const [variant, preferred] of Object.entries(terminology.forbidden ?? {})) {
+      if (lower.includes(variant)) terminologyViolations.push(`${namespace} · ${key} — «${variant}» вместо «${preferred}»`)
+    }
+  }
+}
+terminologyViolations.sort()
+const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
+  const counts = stems.map((stem) => {
+    let count = 0
+    for (const byKey of packValuesByNamespace.values()) {
+      for (const value of byKey.values()) {
+        count += value.toLowerCase().split(stem).length - 1
+      }
+    }
+    return `${stem}:${count}`
+  })
+  return `${concept} → ${counts.join(' / ')}`
+})
+
 const covered = [...packKeys].filter(k => harnessKeys.has(k)).length
 const uncovered = new Map()
 for (const [key, file] of harnessKeys) {
@@ -610,6 +642,7 @@ console.log(`плейсхолдеры сверены у ${placeholderChecked} к
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
+console.log(`терминология: нарушений ${terminologyViolations.length}; ${terminologyCounts.join(', ')}`)
 
 const report = (title, items) => {
   console.log(`\n=== ${title}: ${items.length} ===`)
@@ -630,6 +663,7 @@ report('пустые значения там, где шаблон не пуст'
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
+report('терминология: запрещённые варианты', terminologyViolations)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -637,7 +671,7 @@ if (uncovered.size > 0) {
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
-  + englishResidue.length + deadUnreferenced.length
+  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

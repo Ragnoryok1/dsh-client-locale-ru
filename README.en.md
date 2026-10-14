@@ -110,7 +110,7 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Five things are gated, and all five have already
+not against some random local checkout. Six things are gated, and all six have already
 caught real defects:
 
 - **dead namespaces** — every namespace the package registers has to
@@ -133,6 +133,11 @@ caught real defects:
   leftover from an older version: it shows nothing and only misleads. Such keys fail the
   build. A key a component still asks for stays in the advisory report, because the pack's
   value is what reaches the screen.
+- **terminology** — one concept, one rendering. Forbidden variants («кеш» for «кэш», «сеанс»
+  for «сессия», «этап» for «шаг») fail the build, and `scripts/terminology.json` keeps both
+  the decision and counts of the chosen forms, so drift shows up before it becomes a defect.
+  The check immediately found `confirm.description` translated two ways in two namespaces —
+  «шаги» and «этапы».
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from
