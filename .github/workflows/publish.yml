@@ -84,6 +84,11 @@ jobs:
       - name: Russian plural forms
         run: npm run check:plural
 
+      # The meta block promises a list of harness versions; a release is the one
+      # moment that promise has to hold, so each of them gets both suites.
+      - name: Compatibility with every claimed harness version
+        run: npm run check:compat
+
       - name: Audit against the harness tree
         env:
           HARNESS_TAG: dsh-v0.2.1-alpha.3

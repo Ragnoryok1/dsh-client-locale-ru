@@ -259,7 +259,10 @@ Before publishing, the workflow checks:
    and reads it **only on first indexing**, so a mismatch does not fix itself;
 3. the typography (18 rules);
 4. the localization audit against the pinned harness tag — dead namespaces, duplicates and plural-form
-   pairs will fail and stop the publication.
+   pairs will fail and stop the publication;
+5. **compatibility with every version in `compatible_versions`**: each one's locale runtime is
+   downloaded from npm and both suites — language coexistence and plural forms — run against it
+   (`npm run check:compat`), so the promise in the meta block is checked rather than assumed.
 
 To check all the same things locally, without publishing:
 

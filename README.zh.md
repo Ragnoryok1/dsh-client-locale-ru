@@ -153,7 +153,8 @@ git commit -am "release: 0.3.0" && git tag v0.3.0 && git push origin v0.3.0
 1. 标签中的版本与 `package.json` 中的版本一致；
 2. `deepseek-harness-meta` 块中的版本与 `package.json` 一致——marketplace 从那里读取版本，而且**只在首次索引时**读取，因此版本不一致不会自行修正；
 3. 排版（18 条规则）；
-4. 针对锁定 harness 标签的本地化审计——无效 namespace、重复项、复数形式配对和占位符不一致会报错并中止发布。
+4. 针对锁定 harness 标签的本地化审计——无效 namespace、重复项、复数形式配对和占位符不一致会报错并中止发布；
+5. **与 `compatible_versions` 中每个版本的兼容性**：从 npm 下载该版本的 locale 运行时，并对它运行语言共存与复数形式两套测试（`npm run check:compat`）——meta 块里的承诺是被验证的，而不是被假定的。
 
 在本地做完全相同的检查，但不发布：
 
