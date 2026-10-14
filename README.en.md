@@ -125,9 +125,15 @@ caught real defects:
   interpolated value. Packages that ship only the Chinese dictionary are compared
   against `zh`.
 
-The coverage number is printed but is not a gate: an exact “add / remove” list
-requires comparing keys **per namespace** (which the release tooling does), whereas comparing
-key names globally would flag sections the package deliberately leaves in English.
+The coverage number is not a gate: some sections are deliberately left in English. Next to it
+the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from
+whoever registers it (`NS`, or a literal in `locale.register`; `bind` and `PropsLocale` only read
+a namespace) and lists keys missing from both their own namespace and the shared `common`
+dictionary the runtime falls back to. A global name comparison cannot see those holes: a
+translation filed under another namespace counts as coverage while the screen shows English.
+The report is advisory — the same key name can mean different things in different namespaces
+(`list.aria` is "Active reminders" in the catalog and "Background jobs" in jobs), so a
+translation is copied across namespaces only where one dictionary serves both.
 
 ## Coverage scope: the official interface only
 

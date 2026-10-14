@@ -31,7 +31,7 @@
  * Usage: node scripts/audit.mjs [harnessTree]
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 
 const HARNESS = process.argv[2] ?? process.env.DSH_HARNESS_TREE ?? ''
 const PACK = new URL('../src/client/dicts.ts', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/u, '$1')
@@ -225,23 +225,109 @@ const harnessKeys = new Map()
  */
 const harnessTemplates = new Map()
 
+/** Namespace -> dictionary files whose keys it renders, from claims next to imports. */
+const namespaceFiles = new Map()
+
+/** Dictionary file -> the keys it defines, so a namespace's key set can be rebuilt. */
+const fileKeys = new Map()
+
+/**
+ * Record that a namespace renders the keys of a dictionary file.
+ *
+ * @param {string} namespace - locale namespace.
+ * @param {string} file - absolute path of the dictionary file.
+ */
+function addNamespaceFile(namespace, file) {
+  if (!namespaceFiles.has(namespace)) namespaceFiles.set(namespace, new Set())
+  namespaceFiles.get(namespace).add(file)
+}
+
+/**
+ * Dictionary files a module imports through a relative specifier.
+ *
+ * Most harness dictionaries declare no namespace of their own — the component
+ * that registers them does — so the consumer's import is what ties a namespace
+ * to the keys it renders. Without that link a per-namespace comparison is not
+ * possible, and a key translated under the wrong namespace looks covered while
+ * the screen it belongs to falls back to English.
+ *
+ * @param {string} file - absolute path of the importing module.
+ * @param {string} text - source of the module.
+ * @returns {Set<string>} absolute paths of imported dictionary files.
+ */
+function importedDictionaries(file, text) {
+  const found = new Set()
+  const own = dirname(file)
+  for (const m of text.matchAll(/from\s+'(\.[^']+\.ts)'/gu)) {
+    const resolved = resolve(own, m[1])
+    // Same directory only: a cross-directory import is an aggregate
+    // (`locales/index.ts` re-exporting many dictionaries), and attributing its
+    // keys to the claiming namespace invents gaps that the runtime does not have.
+    if (dirname(resolved) === own && isDictionary(resolved)) found.add(resolved)
+  }
+  return found
+}
+
 for (const file of walk(HARNESS)) {
   const text = readFileSync(file, 'utf8')
-  const claim = (name, why) => { if (!harnessNamespaces.has(name)) harnessNamespaces.set(name, `${file} (${why})`) }
+  const claims = new Set()
+  const owns = new Set()
+  const claim = (name, why) => {
+    claims.add(name)
+    if (!harnessNamespaces.has(name)) harnessNamespaces.set(name, `${file} (${why})`)
+  }
   for (const m of text.matchAll(/(?:export\s+)?const\s+[A-Za-z_]*NS[A-Za-z_]*\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) claim(m[1], 'const')
   for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) claim(m[1], 'namespace')
   for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) claim(m[1], 'register')
   for (const m of text.matchAll(/locale\.bind\(\s*'([\w.]+)'\s*\)/gu)) claim(m[1], 'bind')
   for (const m of text.matchAll(/PropsLocale<'([\w.]+)'>/gu)) claim(m[1], 'PropsLocale')
-  if (!isDictionary(file)) continue
-  for (const key of dictionaryKeys(text)) {
-    if (!NOT_A_KEY.has(key) && !harnessKeys.has(key)) harnessKeys.set(key, file)
+  /*
+   * Ownership, not usage: a namespace declaration or a literal `register`
+   * argument. `bind` and `PropsLocale` only read a namespace, and a component
+   * that reads `settings.agentPreset` while importing its own dictionary would
+   * otherwise donate that dictionary's keys to a namespace it does not own —
+   * which is how plugin-inventory keys first appeared as agent-preset gaps.
+   */
+  for (const m of text.matchAll(/(?:export\s+)?const\s+[A-Za-z_]*NS[A-Za-z_]*\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
+  for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
+  for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) owns.add(m[1])
+  for (const imported of importedDictionaries(file, text)) {
+    for (const name of owns) addNamespaceFile(name, imported)
   }
+  if (!isDictionary(file)) continue
+  // A dictionary that declares its own namespace serves it directly.
+  for (const name of owns) addNamespaceFile(name, file)
+  const keys = new Set(dictionaryKeys(text).filter(key => !NOT_A_KEY.has(key)))
+  fileKeys.set(file, keys)
+  for (const key of keys) {
+    if (!harnessKeys.has(key)) harnessKeys.set(key, file)
+  }
+  /**
+   * Keys this file really carries. `dictionaryKeys` also reads type members
+   * (`trajectory: TrajectoryKey`), which are not dictionary entries, so the
+   * per-namespace comparison uses entries with string values instead.
+   */
+  const stringKeys = new Set()
   for (const entry of dictionaryEntries(text)) {
     if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
+    stringKeys.add(entry.key)
     if (!harnessTemplates.has(entry.key)) harnessTemplates.set(entry.key, new Set())
     harnessTemplates.get(entry.key).add(entry.value)
   }
+  fileKeys.set(file, stringKeys)
+}
+
+/**
+ * Namespace -> keys the harness renders in it, rebuilt from the dictionaries
+ * each namespace's owner imports or declares.
+ */
+const harnessNamespaceKeys = new Map()
+for (const [namespace, files] of namespaceFiles) {
+  const keys = new Set()
+  for (const file of files) {
+    for (const key of fileKeys.get(file) ?? []) keys.add(key)
+  }
+  harnessNamespaceKeys.set(namespace, keys)
 }
 
 const packText = readFileSync(PACK, 'utf8')
@@ -266,6 +352,28 @@ for (const entry of dictionaryEntries(packText)) {
   if (!packValues.has(entry.key)) packValues.set(entry.key, new Set())
   packValues.get(entry.key).add(entry.value)
 }
+/**
+ * Namespace -> keys the pack carries in it, read from the `  '<namespace>': {`
+ * headings of `dicts.ts`.
+ */
+const packKeysByNamespace = new Map()
+const packHeadings = [...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => ({ name: m[1], index: m.index }))
+const namespaceAt = index => {
+  let name = null
+  for (const heading of packHeadings) {
+    if (heading.index > index) break
+    name = heading.name
+  }
+  return name
+}
+for (const entry of dictionaryEntries(packText)) {
+  if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
+  const namespace = namespaceAt(entry.index)
+  if (namespace === null) continue
+  if (!packKeysByNamespace.has(namespace)) packKeysByNamespace.set(namespace, new Set())
+  packKeysByNamespace.get(namespace).add(entry.key)
+}
+
 const pluralSuffix = /\.(?:one|other)$/u
 const harnessPlurals = new Set([...harnessKeys.keys()].filter(k => pluralSuffix.test(k)))
 const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
@@ -303,6 +411,35 @@ for (const [key, russian] of packValues) {
 }
 placeholderMismatches.sort()
 
+/**
+ * Keys the harness renders in a namespace the pack translates but omits there.
+ *
+ * Global name coverage hides these: a key translated under another namespace
+ * counts as covered while this screen keeps falling back to English. The
+ * namespace-to-dictionary link comes from the registering component's import,
+ * so the comparison is like for like.
+ *
+ * A key the pack carries in `common` is served anyway — the runtime falls back
+ * to `common` for every namespace — so only keys missing from both places are
+ * reported.
+ */
+const commonKeys = packKeysByNamespace.get('common') ?? new Set()
+const namespaceGaps = []
+let namespaceGapKeys = 0
+for (const [namespace, needed] of harnessNamespaceKeys) {
+  const have = packKeysByNamespace.get(namespace)
+  if (have === undefined) continue
+  const missing = [...needed].filter(key => !have.has(key) && !commonKeys.has(key)).sort()
+  if (missing.length === 0) continue
+  namespaceGapKeys += missing.length
+  const sources = [...(namespaceFiles.get(namespace) ?? [])]
+    .map(file => file.replaceAll('\\', '/').split('/').pop())
+    .slice(0, 3)
+    .join(', ')
+  namespaceGaps.push(`${namespace}: ${missing.length} (${sources}) — ${missing.join(', ')}`)
+}
+namespaceGaps.sort()
+
 const covered = [...packKeys].filter(k => harnessKeys.has(k)).length
 const uncovered = new Map()
 for (const [key, file] of harnessKeys) {
@@ -318,6 +455,7 @@ console.log(`в харнессе: ${harnessNamespaces.size} namespace, ${harness
 console.log(`покрытие (информационно): ${covered} из ${harnessKeys.size} найденных ключей харнеса`)
 
 console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, шаблон недоступен у ${placeholderUnavailable}`)
+console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 
 const report = (title, items) => {
   console.log(`\n=== ${title}: ${items.length} ===`)
@@ -332,6 +470,7 @@ report('namespace пака, которых нет в харнессе (мёрт�
 report('пар форм харнесса, которых нет в паке', missingPlurals)
 report('лишние пары форм в паке', extraPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
+report('ключи, которых нет в своём namespace', namespaceGaps)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
