@@ -67,8 +67,9 @@
     "check:upstream": "node scripts/watch-upstream.mjs --self-test",
     "check:compat": "node scripts/check-compat.mjs",
     "check:peers": "node scripts/check-peers.mjs",
+    "check:manifest": "node scripts/check-manifest.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run build && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run check:manifest && npm run build && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
