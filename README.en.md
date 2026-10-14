@@ -110,7 +110,7 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Four things are gated, and all four have already
+not against some random local checkout. Five things are gated, and all five have already
 caught real defects:
 
 - **dead namespaces** — every namespace the package registers has to
@@ -129,6 +129,10 @@ caught real defects:
   copies are allowed only by a decision recorded in `scripts/keep-english.json` (addresses,
   format-only strings, protocol and tool names, abbreviations), so a new untranslated line
   cannot slip through unnoticed.
+- **dead keys** — a key no harness dictionary defines and no harness source names is a
+  leftover from an older version: it shows nothing and only misleads. Such keys fail the
+  build. A key a component still asks for stays in the advisory report, because the pack's
+  value is what reaches the screen.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
 the audit prints a **per-namespace** report: it rebuilds the namespace-to-dictionary link from

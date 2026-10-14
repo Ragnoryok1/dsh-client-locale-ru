@@ -232,6 +232,9 @@ const NOT_A_KEY = new Set([
 const harnessNamespaces = new Map()
 const harnessKeys = new Map()
 
+/** Every harness source file, walked once and reused by the reference probe. */
+const HARNESS_FILES = walk(HARNESS)
+
 /**
  * Key -> every template the harness renders for it.
  *
@@ -299,7 +302,7 @@ function importedDictionaries(file, text) {
   return found
 }
 
-for (const file of walk(HARNESS)) {
+for (const file of HARNESS_FILES) {
   const text = readFileSync(file, 'utf8')
   const claims = new Set()
   const owns = new Set()
@@ -545,6 +548,50 @@ englishResidue.sort()
 cjkResidue.sort()
 emptyResidue.sort()
 
+/**
+ * Keys the pack carries that the harness no longer defines anywhere.
+ *
+ * A dead key shows as nothing on screen, so it cannot be caught by eye; the
+ * report is what turns "the upstream removed a package" into a visible line.
+ * The `.few` / `.many` forms are the pack's own (see `plural.ts`), not drift.
+ */
+const deadKeys = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const key of byKey.keys()) {
+    if (harnessKeys.has(key)) continue
+    if (/\.(?:few|many)$/u.test(key)) continue
+    deadKeys.push(`${namespace} · ${key}`)
+  }
+}
+deadKeys.sort()
+
+/**
+ * Whether any harness source still names a key. A dictionary may drop an entry
+ * while a component keeps asking for it, and then the pack's value is the only
+ * thing on screen; the count tells a reviewer which dead keys are safe to drop.
+ * Only called for keys already reported, so the cost stays near zero.
+ *
+ * @param {string} key - dictionary key to look for.
+ * @returns {number} files that mention the key in quotes.
+ */
+function harnessMentions(key) {
+  let files = 0
+  for (const file of HARNESS_FILES) {
+    if (readFileSync(file, 'utf8').includes(`'${key}'`)) files += 1
+  }
+  return files
+}
+
+/** Dead keys with the reference count, so a reviewer sees which are safe to drop. */
+const deadReport = deadKeys.map(id => ({ id, mentions: harnessMentions(id.slice(id.indexOf(' · ') + 3)) }))
+
+/**
+ * Dead and referenced by nothing: pure leftovers from an older harness, safe to
+ * delete and therefore gated. A key a component still names stays reported
+ * only — the pack's value is the last thing that can serve it.
+ */
+const deadUnreferenced = deadReport.filter(entry => entry.mentions === 0).map(entry => entry.id)
+
 const covered = [...packKeys].filter(k => harnessKeys.has(k)).length
 const uncovered = new Map()
 for (const [key, file] of harnessKeys) {
@@ -562,6 +609,7 @@ console.log(`покрытие (информационно): ${covered} из ${ha
 console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, шаблон недоступен у ${placeholderUnavailable}`)
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
+console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
 
 const report = (title, items) => {
   console.log(`\n=== ${title}: ${items.length} ===`)
@@ -580,6 +628,8 @@ report('ключи, которых нет в своём namespace', namespaceGap
 report('значения с китайскими иероглифами', cjkResidue)
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
+report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
+report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -587,7 +637,7 @@ if (uncovered.size > 0) {
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
-  + englishResidue.length
+  + englishResidue.length + deadUnreferenced.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
