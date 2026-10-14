@@ -859,6 +859,50 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 numberInflection.sort()
 
 /**
+ * The numbers a README advertises have to match the pack.
+ *
+ * A badge (`strings-2%2C526`), a meta description (`2526 translated strings`) and
+ * a body sentence (`2526 переводов`) are three spellings of one fact. The publish
+ * workflow checks the version in that block but not these, so the count can go
+ * stale unnoticed — it did: the pack grew to 2535 with the plural forms while the
+ * READMEs kept advertising 2526, and a count is exactly what a reader compares
+ * between packs.
+ */
+const packRoot = new URL('..', import.meta.url)
+/*
+ * Only the statements of *current* size are read, and they are recognised by
+ * their shape rather than by the word alone: a comma before the count («…,
+ * 2526 переводов», «…, 2526 translated strings»), an enumeration comma in the
+ * Chinese form, and a count in front of `namespace` that a punctuation mark
+ * closes. A bare `перевод` matched the version in «В 0.1.6 переводы каталога…»
+ * and a history section's own figures, which are legitimately different numbers.
+ */
+const ADVERTISED = [
+  { label: 'строк', pattern: /badge\/strings-(\d+)%2C(\d+)-/u, read: match => `${match[1]}${match[2]}`, expected: packKeys.size },
+  { label: 'строк', pattern: /,\s*(\d+) translated strings/u, expected: packKeys.size },
+  { label: 'строк', pattern: /,\s*(\d+)\s*перевод/u, expected: packKeys.size },
+  { label: 'строк', pattern: /、(\d+)\s*条翻译/u, expected: packKeys.size },
+  { label: 'namespace', pattern: /(\d+)\s*(?:namespaces?|个 namespace)\s*[,、]/u, expected: packNamespaces.size },
+]
+const advertisedWrong = []
+for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
+  let text
+  try {
+    text = readFileSync(new URL(file, packRoot), 'utf8')
+  } catch {
+    advertisedWrong.push(`${file} — не читается`)
+    continue
+  }
+  for (const { label, pattern, read, expected } of ADVERTISED) {
+    for (const match of text.matchAll(new RegExp(pattern.source, `${pattern.flags}g`))) {
+      const claimed = Number(read === undefined ? match[1] : read(match))
+      if (claimed !== expected) advertisedWrong.push(`${file}: заявлено ${claimed} ${label}, а в пакете ${expected}`)
+    }
+  }
+}
+advertisedWrong.sort()
+
+/**
  * Mechanical text hygiene: spacing and paired punctuation are unambiguous, so a
  * violation gates. Values carrying markdown (the guides) are left alone — line
  * breaks and double spaces there are layout, not prose.
@@ -1012,6 +1056,7 @@ report('мёртвые ключи без единой ссылки в харне
 report('терминология: запрещённые варианты', terminologyViolations)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
+report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
 report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
@@ -1024,7 +1069,7 @@ if (uncovered.size > 0) {
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
-  + hygiene.length + edgeSpaces.length + style.length
+  + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

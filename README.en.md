@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2526 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2535 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,7 +22,7 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-55-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C526-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C535-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 55 namespaces, 2,489 strings, built against dsh `0.2.1-alpha.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
 
@@ -139,6 +139,14 @@ gates because they need a human decision: how many namespaces were compared and 
 not be linked, whether any «number + inflecting word» is left, and whether a short string grew
 past 2.8× its English (a layout risk — «Effort» → «Уровень рассуждения» is normal Russian
 length, not a defect).
+
+The audit reads harness templates in the shape the harness writes them: a literal, an **array of
+paragraphs** (that is how the preset guides are stored) and a **reference to a constant**
+(`'hint.plan': PLAN_NEXT_ACTION_EN`). While only the first shape was read, ten keys — eight of
+them whole guide documents — silently fell out of every comparison. And the other way round: an
+empty policy file (`keep-english.json`, a `terminology.json` section) now fails the audit instead
+of widening a gate unnoticed. The numbers the READMEs advertise are checked against the pack the
+same way, because a stale count is simply a wrong claim.
 
 - **dead namespaces** — every namespace the package registers has to
   exist in the harness. In 0.1.6 the schedule catalog translations were registered
@@ -264,7 +272,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (55 namespaces, 2526 translations, ~2900 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries (55 namespaces, 2535 translations, ~3000 lines). This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).

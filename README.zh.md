@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2526 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2535 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,7 +22,7 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-55-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C526-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C535-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 55 个 namespace、2,489 条翻译，基于 dsh `0.2.1-alpha.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围仅限 harness 自带的客户端界面——第三方插件的词典有意不纳入范围，而下载量最高的 17 个生态插件中有 11 个不提供自己的字符串，所以它们通过这些 namespace 已经是俄语界面了。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
 
@@ -98,6 +98,8 @@ npm run verify -- <дерево харнеса>  # всё вместе
 
 审计在 CI（`.github/workflows/verify.yml`）中针对**锁定的 harness 标签**运行，而不是针对随便一份本地 checkout。有六组内容作为门禁检查，而且六者都已经抓到过真实的缺陷。除此之外，审计还会打印**参考报告**——它们不是门禁，因为需要人来判断：比对了多少个 namespace、哪些无法建立对应关系、是否还留有「数字 + 需变格的名词」，以及短字符串是否长到英文的 2.8 倍以上（排版风险——«Effort» → «Уровень рассуждения» 是俄语的正常长度，不是缺陷）。
 
+审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法。
+
 - **无效 namespace**——包注册的每一个 namespace 都必须在 harness 中存在。在 0.1.6 中，日程目录的翻译被注册在 `schedule.manager` 名下，而读取它们的是 `schedule.catalog`：此时按 key 做的覆盖率检查还报告「全部已翻译」；
 - **复数形式配对**——`.one`/`.other` 的集合必须一致，因为客户端按 `count === 1 ? '.one' : '.other'` 选择形式；
 - **占位符**——俄语值必须携带与英文模板完全相同的 `{name}`：多出的占位符会原样出现在界面上（`Заняло {duration}7мин 26с`，已在 #2 修复），缺失的则会让插值内容悄悄消失。对于只提供中文词典的包，模板以 `zh` 为准。
@@ -163,7 +165,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## 内容
 
-- `src/client/dicts.ts`——俄语词典（55 个 namespace、2526 条翻译、约 2900 行）。这正是本包的核心价值。
+- `src/client/dicts.ts`——俄语词典（55 个 namespace、2535 条翻译、约 3000 行）。这正是本包的核心价值。
 - `src/client/index.ts`——客户端插件入口（注册 `ru` 和词典）。
 - `src/index.ts`——空的宿主部分（`apply()`）。
 - `cordis.patch.yml`——profile 补丁（`- insert:` 客户端条目 `locale-ru`）。
