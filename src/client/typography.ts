@@ -8,6 +8,9 @@
  * rewrites text nodes in place. The rules are deliberately conservative: they
  * only fire on unambiguous straight-quote and spaced-hyphen patterns, and the
  * DOM pass skips code, form fields and editable content.
+ *
+ * Text that changes after the first pass — counters, timers, progress — is
+ * rewritten again, so a live «4 с» keeps its non-breaking space.
  */
 
 /** Straight double quotes around a span become Russian guillemets. */
@@ -94,11 +97,20 @@ export function startRussianTypography(doc: Document): () => void {
     for (const record of records) {
       if (record.type === 'characterData') {
         if (isSkipped(record.target)) continue
+        /*
+         * The text changed after the first pass — a live counter, a running
+         * timer, a progress figure. The node has to be rewritten again, so the
+         * "already processed" mark is dropped first; it exists to keep a batch of
+         * mutations from re-walking the whole tree, not to pin a node forever.
+         *
+         * No loop follows: the pass assigns only when the result differs, and a
+         * second pass over corrected text computes the same string and stops.
+         */
+        processed.delete(record.target as Text)
         rewriteNode(record.target)
         continue
       }
-      for (const added of record.addedNodes) rewriteNode(added)
-    }
+      for (const added of record.addedNodes) rewriteNode(added)    }
   })
   observer.observe(root, { childList: true, characterData: true, subtree: true })
   return () => observer.disconnect()

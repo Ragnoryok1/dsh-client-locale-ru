@@ -33,7 +33,9 @@ Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deeps
 
 ## What it looks like
 
-Russian in the language list and the translated settings sections (the screenshots were taken in build `0.1.8`):
+Russian in the language list and the translated settings sections (the screenshots were taken in build `0.1.8`:
+the same screen, but the wording and some sections have changed since — the font-size caption, for one, now reads
+«Влияет только на содержимое диалога»):):
 
 ![Settings in Russian: language, appearance, themes](images/settings-ru.png)
 

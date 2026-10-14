@@ -78,6 +78,9 @@ jobs:
       - name: Typography
         run: npm run check:typography
 
+      - name: Typography on a real document
+        run: npm run check:typography:dom
+
       - name: Russian plural forms
         run: npm run check:plural
 

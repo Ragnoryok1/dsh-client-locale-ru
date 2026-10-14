@@ -41,6 +41,9 @@ jobs:
       - name: Typography rules
         run: npm run check:typography
 
+      - name: Typography on a real document
+        run: npm run check:typography:dom
+
       - name: Locale coexistence
         run: npm run check:locale
 

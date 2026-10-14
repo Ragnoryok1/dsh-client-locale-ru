@@ -9,6 +9,9 @@
  * rewrites text nodes in place. The rules are deliberately conservative: they
  * only fire on unambiguous straight-quote and spaced-hyphen patterns, and the
  * DOM pass skips code, form fields and editable content.
+ *
+ * Text that changes after the first pass — counters, timers, progress — is
+ * rewritten again, so a live «4 с» keeps its non-breaking space.
  */
 /** Guillemets, em dash, ellipsis, and non-breaking spaces in running text. */
 declare function applyRussianTypography(text: string): string;
