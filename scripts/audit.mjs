@@ -109,26 +109,83 @@ function dictionaryKeys(text) {
   return keys
 }
 
-/**
- * Read the string literal that starts at or after `from`, or `null` when the
- * value is not one (an object, a concatenation, an identifier).
- *
- * @param {string} text source of a module
- * @param {number} from offset just after the key's colon
- * @returns {string|null} the literal's content, or null
- */
-function readStringValue(text, from) {
-  let start = from
-  while (start < text.length && /\s/u.test(text[start])) start += 1
-  const quote = text[start]
+/** Read one quoted literal at `at`, with the offset just past it. */
+function readQuoted(text, at) {
+  const quote = text[at]
   if (quote !== "'" && quote !== '"' && quote !== '`') return null
-  let end = start + 1
+  let end = at + 1
   while (end < text.length) {
     if (text[end] === '\\') { end += 2; continue }
     if (text[end] === quote) break
     end += 1
   }
-  return text.slice(start + 1, end)
+  return { value: text.slice(at + 1, end), end: end + 1 }
+}
+
+/** Read an identifier at `at`, with the offset just past it. */
+function readIdentifier(text, at) {
+  if (!/[A-Za-z_$]/u.test(text[at] ?? '')) return null
+  let end = at
+  while (end < text.length && /[\w$]/u.test(text[end])) end += 1
+  return { name: text.slice(at, end), end }
+}
+
+/**
+ * Read the text a dictionary value carries.
+ *
+ * Three shapes appear in the harness dictionaries, and only the first was read
+ * at the start: a plain literal, an **array of paragraphs** (the preset guides
+ * are stored that way), and a **reference to a constant** declared in the same
+ * file (`'hint.plan': PLAN_NEXT_ACTION_EN`). The last two made a key look as if
+ * the harness carried no text for it, which quietly exempted ten keys — eight of
+ * them whole guide documents — from every comparison.
+ *
+ * @param {string} text - source of a module.
+ * @param {number} from - offset just after the key's colon.
+ * @param {Map<string, string>} constants - string constants declared in the file.
+ * @returns {string|null} the text, or null when the value is something else.
+ */
+function readStringValue(text, from, constants = new Map()) {
+  let start = from
+  while (start < text.length && /\s/u.test(text[start])) start += 1
+  const literal = readQuoted(text, start)
+  if (literal !== null) return literal.value
+  if (text[start] === '[') {
+    const parts = []
+    let cursor = start + 1
+    while (cursor < text.length && text[cursor] !== ']') {
+      const quoted = readQuoted(text, cursor)
+      if (quoted !== null) { parts.push(quoted.value); cursor = quoted.end; continue }
+      const reference = readIdentifier(text, cursor)
+      if (reference !== null) {
+        const resolved = constants.get(reference.name)
+        if (resolved !== undefined) parts.push(resolved)
+        cursor = reference.end
+        continue
+      }
+      cursor += 1
+    }
+    return parts.length === 0 ? null : parts.join('\n')
+  }
+  const reference = readIdentifier(text, start)
+  if (reference !== null) return constants.get(reference.name) ?? null
+  return null
+}
+
+/**
+ * String constants a module declares, so a value written as a name resolves to
+ * its text. Only literals are collected: an imported constant stays unknown, and
+ * a key using one is compared against nothing rather than against a guess.
+ *
+ * @param {string} text - source of a module.
+ * @returns {Map<string, string>} name to text.
+ */
+function stringConstants(text) {
+  const constants = new Map()
+  for (const match of text.matchAll(/(?:^|\n)\s*(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::[^=]*)?=\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/gu)) {
+    constants.set(match[1], match[2].slice(1, -1))
+  }
+  return constants
 }
 
 /**
@@ -146,6 +203,7 @@ function readStringValue(text, from) {
  */
 function dictionaryEntries(text) {
   const entries = []
+  const constants = stringConstants(text)
   let index = 0
   while (index < text.length) {
     const char = text[index]
@@ -169,7 +227,7 @@ function dictionaryEntries(text) {
       }
       if (text[cursor + 1] === ':') {
         const key = text.slice(start + 1, cursor)
-        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, cursor + 2), index: start })
+        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, cursor + 2, constants), index: start })
       }
       index = cursor + 1
       continue
@@ -181,7 +239,7 @@ function dictionaryEntries(text) {
       while (after < text.length && /\s/u.test(text[after])) after += 1
       if (text[after] === ':' && text[after + 1] !== ':') {
         const key = text.slice(index, end)
-        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, after + 1), index })
+        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, after + 1, constants), index })
       }
       index = end
       continue
@@ -627,7 +685,18 @@ const KEEP_ENGLISH = (() => {
   const path = new URL('./keep-english.json', import.meta.url)
   if (!existsSync(path)) return new Map()
   const parsed = JSON.parse(readFileSync(path, 'utf8'))
-  return new Map(Object.entries(parsed).filter(([key]) => !key.startsWith('_')))
+  const entries = Object.entries(parsed).filter(([key]) => !key.startsWith('_'))
+  /*
+   * An empty policy is never intended: it would mean every declared English value
+   * went back to being a defect. A policy that fails to load — a mangled file, a
+   * renamed key — must fail loudly instead of quietly widening the gate, which is
+   * how a rewrite of this very script once reported thirty-four false findings.
+   */
+  if (entries.length === 0) {
+    console.error('keep-english.json не дал ни одной записи — политика не загрузилась')
+    process.exit(2)
+  }
+  return new Map(entries)
 })()
 
 const englishResidue = []
@@ -716,6 +785,12 @@ const deadUnreferenced = deadReport.filter(entry => entry.mentions === 0).map(en
  * so a drift shows up before it becomes a defect.
  */
 const terminology = JSON.parse(readFileSync(new URL('./terminology.json', import.meta.url), 'utf8'))
+for (const section of ['forbidden', 'latin']) {
+  if (Object.keys(terminology[section] ?? {}).length === 0) {
+    console.error(`terminology.json: раздел «${section}» пуст — проверка онемела бы молча`)
+    process.exit(2)
+  }
+}
 const terminologyViolations = []
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
