@@ -182,7 +182,9 @@ same way, because a stale count is simply a wrong claim.
   of its own namespace. The same template checks style: a terminator the English carries must
   not disappear (this is how `registryCustomHint` was found without its period), and the case
   of the first letter has to match — except for acronyms like `JSON` and templates that open
-  with a placeholder.
+  with a placeholder. The address to the reader is checked on its own: inside a sentence the
+  Russian interface writes «вы» lowercase, and «Вы» with a capital letter only at the start of
+  a sentence, where it is nothing but spelling.
 
 A separate workflow watches the tag itself: `watch-upstream` compares the pinned tag with
 the harness tags once a week, opens an issue with the steps when a newer one exists, and turns

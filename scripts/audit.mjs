@@ -785,7 +785,7 @@ const deadUnreferenced = deadReport.filter(entry => entry.mentions === 0).map(en
  * so a drift shows up before it becomes a defect.
  */
 const terminology = JSON.parse(readFileSync(new URL('./terminology.json', import.meta.url), 'utf8'))
-for (const section of ['forbidden', 'latin']) {
+for (const section of ['forbidden', 'latin', 'capitalized']) {
   if (Object.keys(terminology[section] ?? {}).length === 0) {
     console.error(`terminology.json: раздел «${section}» пуст — проверка онемела бы молча`)
     process.exit(2)
@@ -827,6 +827,34 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   }
 }
 latinProse.sort()
+
+/**
+ * Capitalised address forms in the middle of a sentence.
+ *
+ * Russian software addresses the reader with a lowercase «вы», while a capital
+ * «Вы» belongs to a personal letter — **except at the start of a sentence**, where
+ * a capital is simply correct spelling. So the rule looks at the middle only: a
+ * value that opens with «Вы вошли» is right, one that says «… и Вы можете» is not.
+ *
+ * The check is case-sensitive on purpose, which is why it lives here rather than
+ * among the terminology variants: those compare in lowercase.
+ */
+const capitalizedAddress = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    for (const form of terminology.capitalized ?? []) {
+      // `\b` is defined on Latin word characters, so Cyrillic needs its own edges.
+      const pattern = new RegExp(`(?<!\\p{L})${form}(?!\\p{L})`, 'gu')
+      for (const match of value.matchAll(pattern)) {
+        const before = value.slice(0, match.index).trimEnd()
+        // Start of the value or after a sentence terminator: a capital is correct there.
+        if (before === '' || /[.!?…:]$/u.test(before)) continue
+        capitalizedAddress.push(`${namespace} · ${key} — «${form}» с заглавной в середине фразы`)
+      }
+    }
+  }
+}
+capitalizedAddress.sort()
 
 /**
  * A number directly in front of an inflecting noun.
@@ -1054,6 +1082,7 @@ report('значения, совпадающие с английским шаб�
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
+report('обращение к пользователю с заглавной («Вы» вместо «вы»)', capitalizedAddress)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
@@ -1069,7 +1098,7 @@ if (uncovered.size > 0) {
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
-  + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length
+  + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
