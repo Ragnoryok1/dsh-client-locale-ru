@@ -1024,6 +1024,78 @@ const grownShortStringsReport = grownShortStrings
   .slice(0, 15)
   .map(row => `${row.id} — ${row.ratio.toFixed(1)}× («${row.template}» → «${row.value}»)`)
 grownShortStringsReport.total = grownShortStrings.length
+/**
+ * One English sentence, one Russian rendering.
+ *
+ * `terminology.json` pins the terms a human decided about; this check finds the
+ * rest of that class: the same English sentence translated into two different
+ * Russian sentences. It is how `confirm.description` was found rendered as
+ * «пропускать шаги подтверждения» in one namespace and «уменьшать число шагов
+ * подтверждения» in another — the second also reading "subsequent tasks" as
+ * «текущей задачей». Labels are excluded — «Open» is legitimately «Открыть» in a
+ * menu and «Открыто» in a status — so only templates of four words or more are
+ * compared, where a second rendering is a decision and not a context.
+ *
+ * A deliberate second rendering is declared in `one-rendering.json` with its
+ * reason, the same way an English leftover is declared in `keep-english.json`:
+ * the decision is data, so an undeclared divergence cannot arrive unnoticed. An
+ * exception that no longer matches anything is a failure too, or the list rots
+ * and quietly widens the check.
+ */
+const ONE_RENDERING = (() => {
+  const path = new URL('./one-rendering.json', import.meta.url)
+  if (!existsSync(path)) {
+    console.error('one-rendering.json отсутствует — проверка «одна фраза, один перевод» онемела бы молча')
+    process.exit(2)
+  }
+  const parsed = JSON.parse(readFileSync(path, 'utf8'))
+  const entries = parsed.exceptions ?? []
+  if (!Array.isArray(entries)) {
+    console.error('one-rendering.json: раздел exceptions обязан быть списком')
+    process.exit(2)
+  }
+  for (const entry of entries) {
+    if (typeof entry.template !== 'string' || entry.template.length === 0
+      || typeof entry.reason !== 'string' || entry.reason.length === 0) {
+      console.error('one-rendering.json: у каждого исключения нужны непустые template и reason')
+      process.exit(2)
+    }
+  }
+  return new Map(entries.map(entry => [entry.template, entry.reason]))
+})()
+
+const renderingsByTemplate = new Map()
+for (const [namespace, byKey] of packValuesByNamespace) {
+  const english = namespaceEnglishOnly.get(namespace)
+  if (english === undefined) continue
+  for (const [key, value] of byKey) {
+    const template = english.get(key)
+    if (template === undefined) continue
+    if (value.includes('\\n') || template.includes('\\n')) continue
+    if (template.split(/\s+/u).length < 4) continue
+    if (!renderingsByTemplate.has(template)) renderingsByTemplate.set(template, new Map())
+    const renderings = renderingsByTemplate.get(template)
+    if (!renderings.has(value)) renderings.set(value, [])
+    renderings.get(value).push(`${namespace} · ${key}`)
+  }
+}
+const allSplitRenderings = [...renderingsByTemplate]
+  .filter(([, renderings]) => renderings.size > 1)
+  .map(([template, renderings]) => ({ template, renderings: [...renderings] }))
+const splitRenderings = allSplitRenderings.filter(row => !ONE_RENDERING.has(row.template))
+const declaredSplitRenderings = allSplitRenderings.filter(row => ONE_RENDERING.has(row.template))
+const staleSplitRenderings = [...ONE_RENDERING.keys()].filter(
+  template => !allSplitRenderings.some(row => row.template === template),
+)
+splitRenderings.sort((left, right) => right.renderings.length - left.renderings.length)
+const renderSplitList = rows => rows.slice(0, 15).map(({ template, renderings }) => {
+  const listed = renderings.map(([value, sources]) => `${JSON.stringify(value)} (${sources.join(', ')})`)
+  return `«${template}»\n      ${listed.join('\n      ')}`
+})
+const splitRenderingsReport = renderSplitList(splitRenderings)
+splitRenderingsReport.total = splitRenderings.length
+const declaredSplitRenderingsReport = renderSplitList(declaredSplitRenderings)
+declaredSplitRenderingsReport.total = declaredSplitRenderings.length
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -1090,6 +1162,9 @@ report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
 report('короткие строки, выросшие больше чем в 2,8 раза (риск вёрстки)', grownShortStringsReport)
+report('одна английская фраза, переведённая по-разному', splitRenderingsReport)
+report('исключения one-rendering.json, объявленные вручную (справочно)', declaredSplitRenderingsReport)
+report('исключения one-rendering.json, которые уже ничего не исключают', staleSplitRenderings)
 if (uncovered.size > 0) {
   console.log(`\n=== ключи харнеса без перевода, по файлам (информационно, ${uncovered.size} файлов) ===`)
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
@@ -1099,6 +1174,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
+  + splitRenderings.length + staleSplitRenderings.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2535 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 55 namespaces, 2541 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,7 +22,7 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-55-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C535-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C541-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 55 namespaces, 2,489 strings, built against dsh `0.2.1-alpha.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
 
@@ -184,7 +184,15 @@ same way, because a stale count is simply a wrong claim.
   of the first letter has to match — except for acronyms like `JSON` and templates that open
   with a placeholder. The address to the reader is checked on its own: inside a sentence the
   Russian interface writes «вы» lowercase, and «Вы» with a capital letter only at the start of
-  a sentence, where it is nothing but spelling.
+  a sentence, where it is nothing but spelling. Finally the pack is compared with itself: one
+  English sentence has to come back as one Russian sentence. When two namespaces render it
+  differently — templates of four words or more are compared, because a short label legitimately
+  follows its context — the build fails. This is how `confirm.description` was found: one
+  rendering promised to «пропускать шаги подтверждения», the other to «уменьшать число шагов»,
+  and the English «subsequent tasks» had become «текущей задаче» in the second. A deliberate
+  divergence is declared in `scripts/one-rendering.json` with its reason, and an exception that
+  no longer matches anything fails as well — otherwise the list of decisions would quietly widen
+  the check.
 
 A separate workflow watches the tag itself: `watch-upstream` compares the pinned tag with
 the harness tags once a week, opens an issue with the steps when a newer one exists, and turns
@@ -285,7 +293,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (55 namespaces, 2535 translations, ~3000 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries (55 namespaces, 2541 translations, ~3000 lines). This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).
