@@ -60,6 +60,11 @@ jobs:
       - name: Advertised package size
         run: npm run check:size
 
+      # What a user installs is the tarball, not the checkout: this packs, unpacks and
+      # asks the same questions of the archive.
+      - name: Published artifact matches the package
+        run: npm run check:tarball
+
       - name: Typography rules
         run: npm run check:typography
 

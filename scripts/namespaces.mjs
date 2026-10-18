@@ -41,7 +41,16 @@ const { LocaleRuntime } = load(host, '@deepseek-ai/dsh-client-locale', {
   '@deepseek-ai/dsh-client-ui-primitives': {},
   '@deepseek-ai/dsh-client-store': { defineStore: () => ({}) },
 })
-const pack = load(fileURLToPath(new URL('../lib/client.js', import.meta.url)), '@ragnoryok1/dsh-client-locale-ru')
+/**
+ * The pack bundle to read. `--pack <path>` lets the tarball check ask the same question
+ * of the artifact that would be published — the unpacked `lib/client.js` — instead of
+ * trusting that the checkout's build equals it.
+ */
+const packArg = process.argv.indexOf('--pack')
+const packPath = packArg === -1
+  ? fileURLToPath(new URL('../lib/client.js', import.meta.url))
+  : process.argv[packArg + 1]
+const pack = load(packPath, '@ragnoryok1/dsh-client-locale-ru')
 
 const listeners = new Map()
 const ctx = {

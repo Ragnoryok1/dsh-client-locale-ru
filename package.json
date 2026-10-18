@@ -74,7 +74,7 @@
     "check:built": "node scripts/check-built.mjs",
     "check:size": "node scripts/check-size.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run check:readmes:pairs && npm run check:changelog && npm run check:manifest && npm run check:built && npm run check:size && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:composition && npm run check:namespaces && npm run check:upstream && npm run check:peers && npm run check:workflows && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run check:readmes:pairs && npm run check:changelog && npm run check:manifest && npm run check:built && npm run check:size && npm run check:tarball && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:composition && npm run check:namespaces && npm run check:upstream && npm run check:peers && npm run check:workflows && node scripts/audit.mjs",
     "prepublishOnly": "npm run build",
     "check:composition": "node scripts/check-composition.mjs",
     "namespaces": "node scripts/namespaces.mjs",
@@ -82,7 +82,8 @@
     "readmes:record": "node scripts/readmes-pairs.mjs --record",
     "check:readmes:pairs": "node scripts/readmes-pairs.mjs",
     "check:workflows": "node scripts/check-workflows.mjs",
-    "check:changelog": "node scripts/check-changelog.mjs"
+    "check:changelog": "node scripts/check-changelog.mjs",
+    "check:tarball": "node scripts/check-tarball.mjs"
   },
   "license": "MIT",
   "peerDependencies": {

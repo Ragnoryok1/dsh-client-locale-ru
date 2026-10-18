@@ -147,6 +147,10 @@ jobs:
       - name: Advertised package size
         run: npm run check:size
 
+      # The release is the one moment the tarball is real.
+      - name: Published artifact matches the package
+        run: npm run check:tarball
+
       - name: Show what would be published
         run: npm pack --dry-run
 
