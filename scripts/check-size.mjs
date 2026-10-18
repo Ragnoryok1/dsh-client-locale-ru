@@ -52,7 +52,7 @@ for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
      * real payload is never tens of kilobytes: the dictionaries alone are 250.
      */
     if (advertised < 100) continue
-    if (Math.abs(advertised - kilobytes) > 2) {
+    if (Math.abs(advertised - kilobytes) > 1) {
       wrong.push(`${file}: заявляет ${advertised} КБ, а пакет собирается в ${kilobytes} КБ`)
     }
   }

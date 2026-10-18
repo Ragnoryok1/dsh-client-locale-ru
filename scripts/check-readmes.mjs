@@ -35,7 +35,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const FILES = ['README.md', 'README.en.md', 'README.zh.md']
 
 /** Structural fingerprint of one README, ignoring everything inside code fences. */
-function fingerprint(text) {
+function fingerprint(rawText) {
+  /*
+   * Line endings are normalised first. Git's `autocrlf` rewrites a checked-out file
+   * to CRLF on Windows, and a CRLF line does not match `^(#{1,6})\s+(.*)$` — `.`
+   * stops before the carriage return — so a checked-out README reported zero
+   * headings while the same file passed on Linux. The check must describe the
+   * document, not the machine it was read on.
+   */
+  const text = rawText.replace(/\r\n/gu, '\n')
   const lines = text.split('\n')
   const headings = []
   const tables = []

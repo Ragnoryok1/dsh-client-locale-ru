@@ -657,11 +657,16 @@ missingRussianForms.sort()
 
 /**
  * Compare each Russian value with the templates its key renders from.
- * Placeholders are multisets, because a template may repeat one
- * (`{first} … {first}`) and order alone would then look like a mismatch. A value
- * matches when it matches any template of that key, which is what keeps the
- * three different `invalid` keys from inventing a mismatch, while a placeholder
- * no template carries stays a failure.
+ *
+ * Placeholders are compared **in order**, not as a multiset: interpolation is
+ * positional in the sense that a value carrying `{a}` where the template carries
+ * `{b}` puts the wrong number into the wrong slot, and a set comparison would call
+ * that equal. The order therefore has to survive translation — Russian may move a
+ * placeholder within the sentence, but then it is the template order that is wrong,
+ * not the value — and a value that reorders them deliberately has to match one of
+ * the key's other templates. A value matches when it matches any template of that
+ * key, which is what keeps the three different `invalid` keys from inventing a
+ * mismatch, while a placeholder no template carries stays a failure.
  */
 const placeholdersMatch = (value, templates) => {
   const wanted = placeholders(value)
@@ -869,12 +874,24 @@ for (const [namespace, byKey] of packValuesByNamespace) {
     if (value === '' && ![...templates].some(template => template === '')) {
       emptyResidue.push(`${namespace} · ${key} — шаблон ${JSON.stringify([...templates][0])}`)
     }
-    if (!templates.has(value)) continue
+    /*
+     * A copy that differs only in case or outer whitespace is still an English
+     * leftover: the exact test below misses `Cancel` against `cancel`, which reads
+     * as untranslated text on screen while every gate stayed green. Case is
+     * compared through `toLowerCase`, whitespace through `trim` — nothing else is
+     * normalised, so a real word change still goes through the exact test and its
+     * policy decision.
+     */
+    const normalized = value.trim().toLowerCase()
+    const caseCopy = !templates.has(value)
+      && [...templates].some(template => template.trim() !== '' && template.trim().toLowerCase() === normalized)
+    if (!templates.has(value) && !caseCopy) continue
     const id = `${namespace} · ${key}`
     if (isFormatOnly(value)) continue
     copiesNeedingDecision.add(id)
     const pattern = keepsEnglish(id)
     if (pattern !== undefined) declaredEnglish.add(id)
+    else if (caseCopy) englishResidue.push(`${id} — ${JSON.stringify(value)} (совпадает с шаблоном без учёта регистра)`)
     else englishResidue.push(`${id} — ${JSON.stringify(value)}`)
   }
 }
