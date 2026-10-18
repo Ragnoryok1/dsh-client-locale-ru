@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 68 namespaces, 3326 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 69 namespaces, 3407 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -21,26 +21,26 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-68-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-3%2C326-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-69-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-3%2C407-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский язык для веб-интерфейса DeepSeek Harness: 68 namespaces, 3326 перевод, экранная типографика и аудит локализации в CI.
+Русский язык для веб-интерфейса DeepSeek Harness: 69 namespaces, 3407 перевод, экранная типографика и аудит локализации в CI.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
 
 ---
 
-Полный список того, что переведено, — в [NAMESPACES.md](NAMESPACES.md): 68 namespaces, 3326 строки, с пометкой у словарей плагинов.
+Полный список того, что переведено, — в [NAMESPACES.md](NAMESPACES.md): 69 namespaces, 3407 строки, с пометкой у словарей плагинов.
 
 Плагины за пределами дерева харнесса переводятся так же, но их английский текст берётся
 из их собственной публикации: `plugins/<namespace>.json` хранит пакет, версию, лицензию и
 английские строки, выгруженные из бандла (`npm run fetch:plugins`). Так переводятся
 словари, которых у нас не было бы вовсе, — сейчас это `update` (43 строки) для
 `@linxin666/dsh-update`, `git-graph` (63 строки) для `@linxin666/dsh-client-ui-git-graph`,
-`dsh-web-ui-usage` (63 строки) для `@linxin666/dsh-usage` и `dsh-web-ui-session-archive`
-(124 строки) для `@linxin666/dsh-session-archive`; остальные выгруженные словари видны в
-`plugins/` и ждут перевода.
+`dsh-web-ui-usage` (63 строки) для `@linxin666/dsh-usage`, `dsh-web-ui-session-archive`
+(124 строки) для `@linxin666/dsh-session-archive` и `pet` (81 строка) для
+`@linxin666/dsh-pet`; остальные выгруженные словари видны в `plugins/` и ждут перевода.
 Чужой перевод мы не копируем: сверять его было бы не с чем, а аудит сравнивает наше
 значение с английским шаблоном того же плагина.
 
@@ -86,7 +86,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 половину; declared `dsh.client` без экспорта `./client` заставляет `client-modules` бросить
 ошибку; `dsh.bundle.patch` обязан указывать на существующий файл.
 
-Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 423 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
+Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 425 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
 
 ## Почему гибрид
 
@@ -322,7 +322,7 @@ PLAN_NEXT_ACTION_EN`). Пока читался только первый вид,
 (`list.aria` — «Активные напоминания» в каталоге и «Фоновые задачи» в задачах), поэтому
 перевод переносится в чужой namespace только там, где оба namespace обслуживает один и
 тот же словарь. На закреплённом теге отчёт пуст: каждая строка, которую харнесс рисует в
-нашем namespace, лежит именно в нём. Сверяются все 68 namespace пака — привязка строится и по
+нашем namespace, лежит именно в нём. Сверяются все 69 namespace пака — привязка строится и по
 импорту словаря рядом с регистрацией, и по именам, которые передаёт сама регистрирующая
 строка (`locale.register(NS, { zh, en })`); без второго правила `common` и `settings.locale`,
 чьи словари лежат в соседнем каталоге, оставались бы вне сверки. Обратная сторона проверяется
@@ -333,7 +333,7 @@ PLAN_NEXT_ACTION_EN`). Пока читался только первый вид,
 
 ## Область покрытия: только официальный интерфейс
 
-Пакет переводит **собственные namespace клиента харнесса** — 68 namespace, сверенные с
+Пакет переводит **собственные namespace клиента харнесса** — 69 namespace, сверенные с
 закреплённым тегом. Словари сторонних плагинов в область сознательно не входят, и вот
 почему.
 
@@ -410,7 +410,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (68 namespaces, 3326 перевод, ~3000 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (69 namespaces, 3407 перевод, ~3000 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).

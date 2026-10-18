@@ -95,15 +95,45 @@ for (const name of packages) {
     let english = null
     for (const bundle of bundles) {
       const text = readFileSync(join(bundleDir, bundle), 'utf8')
-      const declared = /(?:const|var|let)\s+NS\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
-        ?? /['"]([\w.-]{3,48})['"]\s*,\s*\{\s*zh\s*:/u.exec(text)
-      if (declared === null) continue
-      const start = text.search(/\bconst en(?::[^=]+)?\s*=\s*\{/u)
-        ?? text.search(/\ben\s*[:=]\s*\{/u)
+      /*
+       * The namespace comes from the registration call first: `ctx.locale.register("pet", {
+       * zh, en })` is what the host actually sees. Bundles that inline the call are common;
+       * a package whose settings namespace happens to differ (`const PET_SETTINGS_NS`)
+       * would otherwise be recorded under the wrong id.
+       */
+      const namespaceOf = (() => {
+        /*
+         * The registration is authoritative, and its first argument may be a constant:
+         * `locale.register(MARKET_NS, { zh, en })` with `const MARKET_NS = "dsh-web-ui-market"`
+         * above it. Reading the literal only from a bare `.register(` call picks up
+         * unrelated registries — one bundle exposed `market-like` (a Turnstile action) as
+         * its namespace that way.
+         */
+        for (const call of text.matchAll(/locale\.register\(\s*(?:["']([\w.-]+)["']|([A-Za-z_$][\w$]*))\s*,\s*\{([\s\S]{0,160})/gu)) {
+          const [, literal, identifier, body] = call
+          if (!/\ben\b/u.test(body)) continue
+          if (literal !== undefined) return literal
+          const constant = new RegExp(`(?:const|var|let)\\s+${identifier}\\s*=\\s*["']([\\w.-]+)["']`, 'u').exec(text)
+          if (constant !== null) return constant[1]
+        }
+        const fallback = /(?:const|var|let)\s+NS\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
+          ?? /(?:const|var|let)\s+\w*NS\w*\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
+          ?? /['"]([\w.-]{3,48})['"]\s*,\s*\{\s*zh\s*:/u.exec(text)
+        return fallback === null ? null : fallback[1]
+      })()
+      if (namespaceOf === null) continue
+      /*
+       * `String#search` returns -1, not null: `??` never fired here, so a bundle that
+       * declares `var en =` (or `en =`) instead of `const en =` was reported as having no
+       * dictionary at all — three family packages were skipped for exactly this reason.
+       */
+      const strict = text.search(/\bconst en(?::[^=]+)?\s*=\s*\{/u)
+      const loose = text.search(/\b(?:const|var|let)?\s*en\s*[:=]\s*\{/u)
+      const start = strict !== -1 ? strict : loose
       if (start === -1) continue
       const pairs = pairsOf(text, start)
       if (pairs.size === 0) continue
-      namespace = declared[1]
+      namespace = namespaceOf
       english = pairs
       break
     }
