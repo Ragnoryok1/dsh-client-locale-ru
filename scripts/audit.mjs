@@ -561,6 +561,46 @@ for (const file of HARNESS_FILES) {
 }
 
 /**
+ * Third-party plugin dictionaries, vendored with their provenance.
+ *
+ * The harness is not the whole interface: a Russian reader also meets plugins that live
+ * outside the harness tree and ship `zh`/`en` only. Their English is copied here by
+ * `scripts/fetch-plugin-dicts.mjs` (package, version, licence recorded in the file), so
+ * the pack can translate them *from their own text* — with the same completeness,
+ * placeholder, typography and casing rules the harness dictionaries get. Reading
+ * another pack's Russian instead would be neither verifiable nor ours.
+ */
+const pluginsDir = new URL('../plugins/', import.meta.url)
+const externalNamespaces = new Map()
+const externalNamespaceKeys = new Map()
+const externalNamespaceEnglish = new Map()
+if (existsSync(pluginsDir)) {
+  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json'))) {
+    const record = JSON.parse(readFileSync(new URL(name, pluginsDir), 'utf8'))
+    if (typeof record.namespace !== 'string' || typeof record.en !== 'object' || record.en === null) {
+      console.error(`plugins/${name}: нужны поля namespace и en`)
+      process.exit(2)
+    }
+    if (typeof record.package !== 'string' || typeof record.version !== 'string') {
+      console.error(`plugins/${name}: не записано происхождение (package, version)`)
+      process.exit(2)
+    }
+    externalNamespaces.set(record.namespace, record)
+    const keys = new Set()
+    const english = new Map()
+    for (const [key, value] of Object.entries(record.en)) {
+      if (typeof value !== 'string') continue
+      keys.add(key)
+      english.set(key, value)
+      if (!harnessTemplates.has(key)) harnessTemplates.set(key, new Set())
+      harnessTemplates.get(key).add(value)
+    }
+    externalNamespaceKeys.set(record.namespace, keys)
+    externalNamespaceEnglish.set(record.namespace, english)
+  }
+}
+
+/**
  * Namespace -> keys the harness renders in it, rebuilt from the dictionaries
  * each namespace's owner imports or declares.
  */
@@ -656,7 +696,9 @@ const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
  * policy file because the scan could not see hyphenated ids; that workaround is gone
  * and nothing about a namespace is now taken on trust.
  */
-const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns)).sort()
+const deadNamespaces = [...packNamespaces]
+  .filter(ns => !harnessNamespaces.has(ns) && !externalNamespaces.has(ns))
+  .sort()
 const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort()
 /*
  * A pair the harness does not have is the pack's own augmentation: the harness
@@ -835,7 +877,7 @@ const harnessNamespaceGaps = [...harnessNamespaceKeys]
  * but the blind spot has to be visible.
  */
 const uncomparedNamespaces = [...packKeysByNamespace.keys()]
-  .filter(namespace => !harnessNamespaceKeys.has(namespace))
+  .filter(namespace => !harnessNamespaceKeys.has(namespace) && !externalNamespaceKeys.has(namespace))
   .sort()
 if (process.env.AUDIT_DEBUG_NS === '1') {
   for (const probe of ['open-in-app', 'voice-input', 'session-log-download', 'session-inspector', 'claude-code-mods', 'agent-team', 'deepseek-model-label-1017']) {
@@ -848,19 +890,23 @@ if (process.env.AUDIT_DEBUG_NS === '1') {
 const commonKeys = packKeysByNamespace.get('common') ?? new Set()
 const namespaceGaps = []
 let namespaceGapKeys = 0
-for (const [namespace, needed] of harnessNamespaceKeys) {
+/* Both the harness's namespaces and the third-party plugins whose English is vendored
+   under `plugins/`: a covered plugin is held to the same completeness rule. */
+const allNamespaceKeys = new Map([...harnessNamespaceKeys, ...externalNamespaceKeys])
+for (const [namespace, needed] of allNamespaceKeys) {
   const have = packKeysByNamespace.get(namespace)
   if (have === undefined) continue
   const missing = [...needed].filter(key => !have.has(key) && !commonKeys.has(key)).sort()
   if (missing.length === 0) continue
   namespaceGapKeys += missing.length
-  const sources = [...(namespaceFiles.get(namespace) ?? [])]
-    .map(file => file.replaceAll('\\', '/').split('/').pop())
-    .slice(0, 3)
-    .join(', ')
-  const english = namespaceEnglish.get(namespace) ?? new Map()
+  const sources = externalNamespaces.has(namespace)
+    ? [`plugins/${namespace}.json`]
+    : [...(namespaceFiles.get(namespace) ?? [])]
+      .map(file => file.replaceAll('\\', '/').split('/').pop())
+      .slice(0, 3)
+  const english = namespaceEnglish.get(namespace) ?? externalNamespaceEnglish.get(namespace) ?? new Map()
   const lines = missing.map(key => `${key} — ${JSON.stringify(english.get(key) ?? '')}`)
-  namespaceGaps.push(`${namespace}: ${missing.length} (${sources})\n      ${lines.join('\n      ')}`)
+  namespaceGaps.push(`${namespace}: ${missing.length} (${sources.join(', ')})\n      ${lines.join('\n      ')}`)
 }
 namespaceGaps.sort()
 
@@ -1023,6 +1069,11 @@ const keepEnglishStale = (() => {
  */
 const deadKeys = []
 for (const [namespace, byKey] of packValuesByNamespace) {
+  /*
+   * A vendored plugin dictionary is not the harness: its keys are referenced by the
+   * plugin package, and no mention in the harness tree says nothing about them.
+   */
+  if (externalNamespaces.has(namespace)) continue
   for (const key of byKey.keys()) {
     if (harnessKeys.has(key)) continue
     /*
@@ -1147,6 +1198,22 @@ const yoStale = [...YO_PAIRS.keys()].filter((base) => {
  */
 const latinProse = []
 const allowedLatin = terminology.latin ?? {}
+/**
+ * Words allowed only in one value: `install` and `enable` are parts of a command a
+ * reader is told to run, and in ordinary prose they are still a defect. The map is
+ * `token -> ["namespace · key", …]`, and a stale entry fails the build like every
+ * other policy record, so the list cannot quietly grow into a blanket allowlist.
+ */
+const latinInValues = new Map()
+for (const [token, ids] of Object.entries(terminology.latinInValues ?? {})) {
+  if (token.startsWith('_')) continue
+  if (!Array.isArray(ids) || ids.length === 0) {
+    console.error(`terminology.json: latinInValues.${token} должен быть непустым списком`)
+    process.exit(2)
+  }
+  latinInValues.set(token.toLowerCase(), new Set(ids))
+}
+const latinInValuesUsed = new Set()
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     const cleaned = value.replace(/\{[^}]*\}/gu, ' ').replace(/\\[a-z]/gu, ' ')
@@ -1157,11 +1224,31 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       if (token[0] !== token[0].toLowerCase()) continue
       if (token.length < 4 || /[._/+-]/u.test(token)) continue
       if (allowedLatin[token.toLowerCase()] !== undefined) continue
+      const allowedHere = latinInValues.get(token.toLowerCase())
+      if (allowedHere !== undefined && allowedHere.has(`${namespace} · ${key}`)) {
+        latinInValuesUsed.add(`${token.toLowerCase()}|${namespace} · ${key}`)
+        continue
+      }
       latinProse.push(`${namespace} · ${key} — «${token}»`)
     }
   }
 }
 latinProse.sort()
+
+/**
+ * A per-value allowance that no longer covers anything.
+ *
+ * The same rule as the other policy records: an entry left behind after the value was
+ * reworded turns into a permanent hole for that word. Fails the build until the entry
+ * is removed or the value names the word again.
+ */
+const staleLatinInValues = []
+for (const [token, ids] of latinInValues) {
+  for (const id of ids) {
+    if (!latinInValuesUsed.has(`${token}|${id}`)) staleLatinInValues.push(`${token} — ${id}`)
+  }
+}
+staleLatinInValues.sort()
 
 /**
  * A product name is spelled the way the harness spells it.
@@ -1701,6 +1788,7 @@ report('обращение к пользователю с заглавной («
 report('значения не типографичны (дойдут до атрибутов без правки DOM)', typographicValues)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('написание латинских названий, разошедшееся с харнессом', productNameCasing)
+report('разрешения latinInValues, которые уже ничего не разрешают', staleLatinInValues)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
 report('закреплённый тег харнесса в других workflow, разошедшийся с verify.yml', tagDrift)
@@ -1720,7 +1808,8 @@ if (uncovered.size > 0) {
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
-  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length + productNameCasing.length
+  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
+  + staleLatinInValues.length + productNameCasing.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + tagDrift.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length

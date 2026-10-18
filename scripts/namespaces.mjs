@@ -11,7 +11,7 @@
  * Usage: node scripts/namespaces.mjs [--check]
  */
 import assert from 'node:assert/strict'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import vm from 'node:vm'
@@ -89,20 +89,37 @@ namespaces.sort((left, right) => left.namespace.localeCompare(right.namespace, '
 const total = namespaces.reduce((sum, item) => sum + item.count, 0)
 const escape = text => text.replace(/\|/gu, '\\|')
 
-const rows = namespaces.map(({ namespace, label, count }) =>
-  `| \`${namespace}\` | ${label === '' ? '—' : escape(label)} | ${count} |`).join('\n')
+/* Vendored plugin dictionaries: namespace -> package@version, recorded beside the text. */
+const pluginsDir = new URL('../plugins/', import.meta.url)
+const external = new Map()
+try {
+  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json'))) {
+    const record = JSON.parse(readFileSync(new URL(name, pluginsDir), 'utf8'))
+    external.set(record.namespace, `${record.package}@${record.version}`)
+  }
+} catch {
+  /* No vendored plugins: the inventory is the harness alone. */
+}
+
+const rows = namespaces.map(({ namespace, label, count }) => {
+  const source = external.get(namespace) ?? 'харнесс'
+  return `| \`${namespace}\` | ${label === '' ? '—' : escape(label)} | ${count} | ${escape(source)} |`
+}).join('\n')
 
 const document = `<!-- Сгенерировано \`npm run namespaces\`; проверяется \`npm run check:namespaces\`. -->
 # Что переведено
 
-Пакет переводит **собственные namespace клиента харнесса** — ${namespaces.length} namespace,
-${total} строк. Колонка «как это выглядит» берёт заголовок самого namespace (то, что читает
-пользователь), а не отдельное описание: список нельзя разойтись с переводами.
+Пакет переводит **${namespaces.length} namespace** — ${total} строк. Колонка «как это выглядит»
+берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
+список нельзя разойтись с переводами.
 
-Словари плагинов из дерева харнесса входят в тот же список: пакет поставляет их вместе с клиентскими словарями и проверяет так же строго.
+Колонка «источник» говорит, откуда взят английский текст: «харнесс» — собственные словари
+клиента, «пакет@версия» — словарь стороннего плагина, выгруженный из его собственной
+публикации (\`npm run fetch:plugins\`). Плагины проверяются теми же правилами, поэтому
+список — это обещание, а не перечень.
 
-| namespace | как это выглядит | строк |
-|---|---|---|
+| namespace | как это выглядит | строк | источник |
+|---|---|---|---|
 ${rows}
 
 Итого: **${namespaces.length}** namespace, **${total}** строк.

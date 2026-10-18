@@ -1,77 +1,81 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **собственные namespace клиента харнесса** — 64 namespace,
-3033 строк. Колонка «как это выглядит» берёт заголовок самого namespace (то, что читает
-пользователь), а не отдельное описание: список нельзя разойтись с переводами.
+Пакет переводит **65 namespace** — 3076 строк. Колонка «как это выглядит»
+берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
+список нельзя разойтись с переводами.
 
-Словари плагинов из дерева харнесса входят в тот же список: пакет поставляет их вместе с клиентскими словарями и проверяет так же строго.
+Колонка «источник» говорит, откуда взят английский текст: «харнесс» — собственные словари
+клиента, «пакет@версия» — словарь стороннего плагина, выгруженный из его собственной
+публикации (`npm run fetch:plugins`). Плагины проверяются теми же правилами, поэтому
+список — это обещание, а не перечень.
 
-| namespace | как это выглядит | строк |
-|---|---|---|
-| `agent-team` | Команда агентов | 25 |
-| `approval` | — | 5 |
-| `chat` | — | 200 |
-| `claude-code-mods` | — | 4 |
-| `command` | — | 28 |
-| `common` | — | 41 |
-| `conversation` | — | 379 |
-| `cordis` | — | 51 |
-| `cotTranslation` | — | 32 |
-| `deepseek-model-label-1017` | — | 1 |
-| `deliverables` | — | 60 |
-| `documentHtml` | HTML | 4 |
-| `documentMarkdown` | — | 4 |
-| `feedback` | — | 20 |
-| `goal` | — | 12 |
-| `inspectorPanel` | Инспектор Node.js | 4 |
-| `job` | — | 50 |
-| `model` | — | 23 |
-| `open-in-app` | — | 45 |
-| `permission.access` | Права доступа | 20 |
-| `plan` | — | 17 |
-| `pluginManager` | Плагины | 227 |
-| `pluginMarket` | Обзор плагинов | 78 |
-| `question` | — | 31 |
-| `reference` | — | 15 |
-| `schedule.catalog` | — | 90 |
-| `schedule.manager` | Задачи автоматизации | 207 |
-| `secretMask` | — | 2 |
-| `session-inspector` | — | 52 |
-| `session-log-download` | — | 10 |
-| `settings` | Настройки | 41 |
-| `settings.account` | Учётная запись | 94 |
-| `settings.agentLoop` | Цикл агента | 12 |
-| `settings.agentPreset` | Пресеты агента | 47 |
-| `settings.locale` | — | 1 |
-| `settings.models` | Модели | 134 |
-| `settings.permission` | Права доступа | 20 |
-| `settings.pluginInventory` | — | 37 |
-| `settings.plugins` | Встроенные плагины | 5 |
-| `settings.sessionLog` | — | 4 |
-| `settings.shell` | Командная оболочка | 14 |
-| `settings.subagent` | — | 35 |
-| `settings.theme` | — | 25 |
-| `settings.webSearch` | Веб-поиск | 27 |
-| `shortcuts` | Горячие клавиши | 56 |
-| `shortcuts.layout` | — | 1 |
-| `sidebar` | — | 5 |
-| `sidebarBrowser` | — | 26 |
-| `sidebarCodePreview` | Код | 3 |
-| `sidebarDocumentPreview` | — | 22 |
-| `sidebarExcel` | Таблица | 15 |
-| `sidebarFiles` | — | 17 |
-| `sidebarImage` | Изображение | 11 |
-| `sidebarOffice` | Документ Office | 15 |
-| `sidebarPdf` | PDF | 15 |
-| `sidebarRight` | — | 34 |
-| `sidebarTerminal` | Терминал | 28 |
-| `skill` | — | 8 |
-| `slash.menu` | — | 9 |
-| `subagent` | — | 79 |
-| `trajectory` | — | 196 |
-| `voice-input` | — | 109 |
-| `workflowRun` | — | 20 |
-| `workspace` | — | 131 |
+| namespace | как это выглядит | строк | источник |
+|---|---|---|---|
+| `agent-team` | Команда агентов | 25 | харнесс |
+| `approval` | — | 5 | харнесс |
+| `chat` | — | 200 | харнесс |
+| `claude-code-mods` | — | 4 | харнесс |
+| `command` | — | 28 | харнесс |
+| `common` | — | 41 | харнесс |
+| `conversation` | — | 379 | харнесс |
+| `cordis` | — | 51 | харнесс |
+| `cotTranslation` | — | 32 | харнесс |
+| `deepseek-model-label-1017` | — | 1 | харнесс |
+| `deliverables` | — | 60 | харнесс |
+| `documentHtml` | HTML | 4 | харнесс |
+| `documentMarkdown` | — | 4 | харнесс |
+| `feedback` | — | 20 | харнесс |
+| `goal` | — | 12 | харнесс |
+| `inspectorPanel` | Инспектор Node.js | 4 | харнесс |
+| `job` | — | 50 | харнесс |
+| `model` | — | 23 | харнесс |
+| `open-in-app` | — | 45 | харнесс |
+| `permission.access` | Права доступа | 20 | харнесс |
+| `plan` | — | 17 | харнесс |
+| `pluginManager` | Плагины | 227 | харнесс |
+| `pluginMarket` | Обзор плагинов | 78 | харнесс |
+| `question` | — | 31 | харнесс |
+| `reference` | — | 15 | харнесс |
+| `schedule.catalog` | — | 90 | харнесс |
+| `schedule.manager` | Задачи автоматизации | 207 | харнесс |
+| `secretMask` | — | 2 | харнесс |
+| `session-inspector` | — | 52 | харнесс |
+| `session-log-download` | — | 10 | харнесс |
+| `settings` | Настройки | 41 | харнесс |
+| `settings.account` | Учётная запись | 94 | харнесс |
+| `settings.agentLoop` | Цикл агента | 12 | харнесс |
+| `settings.agentPreset` | Пресеты агента | 47 | харнесс |
+| `settings.locale` | — | 1 | харнесс |
+| `settings.models` | Модели | 134 | харнесс |
+| `settings.permission` | Права доступа | 20 | харнесс |
+| `settings.pluginInventory` | — | 37 | харнесс |
+| `settings.plugins` | Встроенные плагины | 5 | харнесс |
+| `settings.sessionLog` | — | 4 | харнесс |
+| `settings.shell` | Командная оболочка | 14 | харнесс |
+| `settings.subagent` | — | 35 | харнесс |
+| `settings.theme` | — | 25 | харнесс |
+| `settings.webSearch` | Веб-поиск | 27 | харнесс |
+| `shortcuts` | Горячие клавиши | 56 | харнесс |
+| `shortcuts.layout` | — | 1 | харнесс |
+| `sidebar` | — | 5 | харнесс |
+| `sidebarBrowser` | — | 26 | харнесс |
+| `sidebarCodePreview` | Код | 3 | харнесс |
+| `sidebarDocumentPreview` | — | 22 | харнесс |
+| `sidebarExcel` | Таблица | 15 | харнесс |
+| `sidebarFiles` | — | 17 | харнесс |
+| `sidebarImage` | Изображение | 11 | харнесс |
+| `sidebarOffice` | Документ Office | 15 | харнесс |
+| `sidebarPdf` | PDF | 15 | харнесс |
+| `sidebarRight` | — | 34 | харнесс |
+| `sidebarTerminal` | Терминал | 28 | харнесс |
+| `skill` | — | 8 | харнесс |
+| `slash.menu` | — | 9 | харнесс |
+| `subagent` | — | 79 | харнесс |
+| `trajectory` | — | 196 | харнесс |
+| `update` | — | 43 | @linxin666/dsh-update@0.4.7 |
+| `voice-input` | — | 109 | харнесс |
+| `workflowRun` | — | 20 | харнесс |
+| `workspace` | — | 131 | харнесс |
 
-Итого: **64** namespace, **3033** строк.
+Итого: **65** namespace, **3076** строк.
