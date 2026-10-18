@@ -171,3 +171,32 @@ test('a month-restricted rule names the month in Russian', () => {
   assert.equal(one, 'Каждый день (январь)')
   assert.doesNotMatch(one, /[A-Za-z]{3,}/u)
 })
+
+test('the date stamps read in Russian, and the zone keeps its offset', () => {
+  const ru = dictionary(activate(), 'schedule.catalog')
+  const at = Date.UTC(2026, 9, 5, 12, 51)
+  /*
+   * The harness prints these with `Intl.DateTimeFormat(t('time.locale'))`, in the
+   * option sets `formatScheduleAbsolute` and `formatScheduleNextRun` use. With the
+   * tag at 'en' a Russian reader saw «Oct 5, 2026, 3:51 PM»; these assertions pin
+   * the language of the stamp without pinning one CI's ICU revision: the month is
+   * Cyrillic and no Latin word survives.
+   */
+  const absolute = new Intl.DateTimeFormat(ru['time.locale'], {
+    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).format(at)
+  const nextRun = new Intl.DateTimeFormat(ru['time.locale'], {
+    year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+  }).format(at)
+  for (const stamp of [absolute, nextRun]) {
+    assert.match(stamp, /окт/u)
+    assert.doesNotMatch(stamp, /[A-Za-z]/u)
+  }
+  /* The named zone is the harness's `longGeneric` label, prefixed by our `UTC`. */
+  const zone = new Intl.DateTimeFormat(ru['time.locale'], { timeZone: 'Europe/Moscow', timeZoneName: 'longGeneric' })
+    .formatToParts(at).find(part => part.type === 'timeZoneName')?.value
+  assert.match(zone, /Москва/u)
+  assert.doesNotMatch(zone, /[A-Za-z]/u)
+  assert.equal(ru['time.utcPrefix'], 'UTC')
+})
+

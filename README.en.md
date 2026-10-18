@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 399 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 400 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -157,7 +157,7 @@ The same part-by-part reading found the cron wording: abbreviations («Кажд�
 {hours}»). The counted parts gained plural forms — «Каждые 3 минуты» / «Каждые 5 минут»,
 «Каждые 2 часа» / «Каждые 6 часов» — and the rest were rewritten into one readable labelled
 style: «Каждый час, минуты: 5, 30», «минуты: 5, часы: 09–17». The whole schedule sentence is
-asserted end to end: «Пн–Пт каждые 5 минут».
+asserted end to end: «Пн–Пт каждые 5 минут». The date stamps are pinned the same way: «5 окт. 2026 г., 15:51» and the zone label «Москва, стандартное время» come from Intl with our tag, without a single Latin word.
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
 not against some random local checkout. The same run also fires **weekly on a schedule**: a
