@@ -58,7 +58,7 @@
     }
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && node scripts/normalize-map.mjs",
     "check:readmes": "node scripts/check-readmes.mjs",
     "check:typography": "node scripts/check-typography.mjs",
     "check:typography:dom": "node scripts/check-typography-dom.mjs",
