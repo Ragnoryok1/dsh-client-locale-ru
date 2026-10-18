@@ -128,6 +128,7 @@ function englishOf(text, at, dictionaryName) {
 function readPluginDictionaries(files) {
   const found = new Map()
   const selfTranslated = new Set()
+  let loopRegistered = 0
   const registration = /locale\.register\(\s*(?:["']([\w.-]+)["']|([A-Za-z_$][\w$]*))\s*,\s*(?:["']([a-z]{2})["']\s*,\s*)?(?:([A-Za-z_$][\w$]*)|(\{))/gu
   for (const file of files) {
     let text
@@ -135,6 +136,34 @@ function readPluginDictionaries(files) {
       text = readFileSync(file, 'utf8')
     } catch {
       continue
+    }
+    /*
+     * A pack that ships hundreds of namespaces registers them in a loop over one table
+     * (`for (const [ns, dict] of Object.entries(DICTS)) locale.register(ns, "ru", dict)`),
+     * so no namespace literal exists to read. The table itself is still a literal object:
+     * reading it gives the real key count instead of a guess from the Cyrillic payload.
+     */
+    const loop = /for\s*\(\s*const\s*\[[^\]]+\]\s*of\s*Object\.entries\(\s*([A-Za-z_$][\w$]*)\s*\)\s*\)/u.exec(text)
+    if (loop !== null && /locale\.register\(\s*[A-Za-z_$][\w$]*\s*,/u.test(text)) {
+      const table = declarationOf(text, loop[1])
+      const members = table === -1 ? null : objectMembers(text, table)
+      let counted = 0
+      /*
+       * A namespace holds plain keys plus plural groups (`{ one, few, many }`), so the count
+       * walks the nested objects too; otherwise a pack with 90 plural groups reports a total
+       * below what its own inventory states.
+       */
+      const countDeep = (at, depth) => {
+        if (depth > 3) return 0
+        const level = objectMembers(text, at)
+        let total = level.strings.size
+        for (const nested of level.objects.values()) total += countDeep(nested, depth + 1)
+        return total
+      }
+      for (const namespaceObject of members?.objects.values() ?? []) {
+        counted += countDeep(namespaceObject, 0)
+      }
+      loopRegistered += counted
     }
     for (const call of text.matchAll(registration)) {
       const [, literal, identifier, language, dictionaryName] = call
@@ -162,7 +191,7 @@ function readPluginDictionaries(files) {
       found.set(namespace, existing)
     }
   }
-  return { found, selfTranslated }
+  return { found, selfTranslated, loopRegistered }
 }
 
 function bundlesOf(packageDir) {
@@ -217,15 +246,19 @@ for (const pkg of packageDirectories(target).sort((left, right) => left.name.loc
     || /(?:^|\/)dsh[.-][\w.-]*$/u.test(pkg.name)
   if (!isPlugin) continue
   const version = manifest?.version ?? null
-  const { found, selfTranslated } = readPluginDictionaries(bundlesOf(pkg.path))
+  const { found, selfTranslated, loopRegistered } = readPluginDictionaries(bundlesOf(pkg.path))
   if (found.size === 0) {
     rows.push({
       package: pkg.name,
       version,
       namespace: selfTranslated.size > 0 ? [...selfTranslated].join(', ') : null,
-      keys: 0,
-      translated: 0,
-      status: selfTranslated.size > 0 ? 'self-translated' : 'no-dictionary',
+      keys: loopRegistered,
+      translated: loopRegistered,
+      status: selfTranslated.size > 0
+        ? 'self-translated'
+        : loopRegistered > 0
+          ? 'loop-registered'
+          : 'no-dictionary',
     })
     continue
   }
@@ -254,6 +287,7 @@ const label = {
   partial: 'частично',
   'missing-namespace': 'не покрыто',
   'self-translated': 'перевод внутри плагина',
+  'loop-registered': 'словарь внутри, регистрация циклом',
   'no-dictionary': 'словаря нет',
 }
 const width = Math.max(7, ...rows.map(row => row.package.length))
@@ -269,5 +303,5 @@ const covered = rowsWithDictionary.reduce((sum, row) => sum + row.translated, 0)
 console.log('')
 console.log(`пакетов осмотрено: ${rows.length}; со словарём: ${rowsWithDictionary.length}; ключей в них: ${keys}; переведено нами: ${covered}`)
 console.log(`без словаря (переводить нечего, пока плагин не спросит перевод): ${rows.filter(row => row.status === 'no-dictionary').length}`)
-console.log(`перевод уже внутри плагина: ${rows.filter(row => row.status === 'self-translated').length}`)
+console.log(`перевод уже внутри плагина: ${rows.filter(row => row.status === 'self-translated' || row.status === 'loop-registered').length}`)
 console.log(`ждать нашей работы: ${rows.filter(row => row.status === 'missing-namespace' || row.status === 'partial').length}`)
