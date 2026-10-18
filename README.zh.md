@@ -60,7 +60,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 395 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 396 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -96,9 +96,12 @@ npm run build             # сборка трёх выходов
 npm run check:typography  # 18 правил типографики, включая «не трогать»
 npm run check:locale      # сосуществование словарей: 6 проверок
 npm run check:plural      # формы числа: 1 вызов / 2 вызова / 5 вызовов
+npm run check:composition # собранные фразы: «Пн, Ср в 09:00», «Раз в 2 дня»
 npm run audit -- <дерево харнеса>   # аудит локали
 npm run verify -- <дерево харнеса>  # всё вместе
 ```
+
+另有一项检查按 harness 的方式把短语拼起来，再整句阅读。审计只把取值与它自己的模板比对，因此「单独看正确、被替换后就错了」的句子它看不见：`frequency.weekly` 曾填成 «По {weekdays} в {time}»，而星期是 «Пн, Ср»——得到 «По Пн, Ср в 09:00»，任何逐值检查都发现不了。同样被钉住的还有 «Каждые 2 дня»（现为 «Раз в 2 дня»）、«Каждый день в 09:00 (Europe/Moscow)»，以及带复数形式的组合间隔。
 
 审计在 CI（`.github/workflows/verify.yml`）中针对**锁定的 harness 标签**运行，而不是针对随便一份本地 checkout。同一次运行还会**每周按计划**触发一次：即使没人改动，译文也会腐坏——上游继续前进，本地一切正常，而偏差只在用户构建时才浮现。有六组内容作为门禁检查，而且六者都已经抓到过真实的缺陷。除此之外，审计还会打印**参考报告**——它们不是门禁，因为需要人来判断：比对了多少个 namespace、哪些无法建立对应关系、是否还留有「数字 + 需变格的名词」，以及短字符串是否长到英文的 2.8 倍以上（排版风险——«Effort» → «Уровень рассуждения» 是俄语的正常长度，不是缺陷）。
 

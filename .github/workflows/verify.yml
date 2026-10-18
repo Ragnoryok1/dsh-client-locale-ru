@@ -67,6 +67,9 @@ jobs:
       - name: Russian plural forms
         run: npm run check:plural
 
+      - name: Composed Russian sentences
+        run: npm run check:composition
+
       - name: Compatibility promise
         run: npm run check:peers
 

@@ -74,8 +74,9 @@
     "check:built": "node scripts/check-built.mjs",
     "check:size": "node scripts/check-size.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run check:manifest && npm run check:built && npm run check:size && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
-    "prepublishOnly": "npm run build"
+    "verify": "npm run check:readmes && npm run check:manifest && npm run check:built && npm run check:size && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:composition && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
+    "prepublishOnly": "npm run build",
+    "check:composition": "node scripts/check-composition.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
