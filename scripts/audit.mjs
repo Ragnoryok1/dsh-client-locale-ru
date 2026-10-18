@@ -1164,6 +1164,52 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 latinProse.sort()
 
 /**
+ * A product name is spelled the way the harness spells it.
+ *
+ * «GitHub Desktop» written as «Github Desktop», or «VS Code» as «VS code», reads to a
+ * developer exactly like a typo in the product's own name — and the pack is the only
+ * place it can appear. The reference is the harness's own English: for every Latin
+ * token we use, if the harness writes the same letters with some capitalisation, our
+ * capitalisation has to match.
+ *
+ * Two guards keep this from turning into noise:
+ *
+ * - a token the harness only ever writes in lowercase («cursor», «desktop») is an
+ *   ordinary word there, and our capital may be the product name — ignored;
+ * - a token the harness itself spells two ways is ambiguous — ignored.
+ */
+const productNameCasing = (() => {
+  const spellings = new Map()
+  for (const templates of harnessTemplates.values()) {
+    for (const template of templates) {
+      for (const match of template.matchAll(/\b[A-Za-z][A-Za-z0-9.+-]{2,}\b/gu)) {
+        const token = match[0]
+        const key = token.toLowerCase()
+        if (!spellings.has(key)) spellings.set(key, new Set())
+        spellings.get(key).add(token)
+      }
+    }
+  }
+  const reference = new Map()
+  for (const [key, seen] of spellings) {
+    const capitalised = [...seen].filter(token => token !== token.toLowerCase())
+    if (capitalised.length === 1 && seen.size === 1) reference.set(key, capitalised[0])
+  }
+  const violations = []
+  for (const [namespace, byKey] of packValuesByNamespace) {
+    for (const [key, value] of byKey) {
+      for (const match of value.matchAll(/\b[A-Za-z][A-Za-z0-9.+-]{2,}\b/gu)) {
+        const token = match[0]
+        const expected = reference.get(token.toLowerCase())
+        if (expected === undefined || expected === token) continue
+        violations.push(`${namespace} · ${key}: «${token}», а харнесс пишет «${expected}»`)
+      }
+    }
+  }
+  return violations.sort()
+})()
+
+/**
  * Capitalised address forms in the middle of a sentence.
  *
  * Russian software addresses the reader with a lowercase «вы», while a capital
@@ -1654,6 +1700,7 @@ report('объявления yo-pairs.json, которых больше нет �
 report('обращение к пользователю с заглавной («Вы» вместо «вы»)', capitalizedAddress)
 report('значения не типографичны (дойдут до атрибутов без правки DOM)', typographicValues)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
+report('написание латинских названий, разошедшееся с харнессом', productNameCasing)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
 report('закреплённый тег харнесса в других workflow, разошедшийся с verify.yml', tagDrift)
@@ -1673,7 +1720,7 @@ if (uncovered.size > 0) {
 
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
-  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
+  + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length + productNameCasing.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + tagDrift.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
