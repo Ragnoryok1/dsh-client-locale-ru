@@ -1,6 +1,6 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 66 namespaces, verified against dsh 0.2.1-rc.2",
+  "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 67 namespaces, verified against dsh 0.2.1-rc.2",
   "version": "0.2.1",
   "keywords": [
     "deepseek",
