@@ -427,13 +427,29 @@ for (const file of HARNESS_FILES) {
    * a tab id, and the pack would have "failed" a harness release it covered.
    */
   const isNamespaceConst = name => name === 'NS' || /(?:^|_)NS(?:_|$)/u.test(name)
-  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
-    if (isNamespaceConst(m[1])) claim(m[2], 'const')
+  /*
+   * The value pattern carries a hyphen: `open-in-app`, `voice-input`,
+   * `session-log-download` are namespace ids, and `[\w.]+` dropped every one of them
+   * — the seven plugin dictionaries then looked like dead namespaces with no keys.
+   */
+  /*
+   * A const is a *locale* namespace only when the locale service is what consumes it:
+   * `locale.register(NS, …)` or `locale.bind(NS)`. Every other `const NS = 'x'` names
+   * a host-wire or settings namespace — `agent-preset-registry` is a settings store,
+   * `llm-pi-ai` a config form, `session-log-deepseek` a remote channel — and reading
+   * them as locale namespaces handed them their component's dictionary and demanded
+   * 166 already-translated keys a second time.
+   */
+  const localeUses = name => new RegExp(`locale\\.(?:register|bind)\\(\\s*${name}\\b`, 'u').test(text)
+  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.-]+)'/gu)) {
+    if (isNamespaceConst(m[1]) && localeUses(m[1])) claim(m[2], 'const')
   }
-  for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) claim(m[1], 'namespace')
-  for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) claim(m[1], 'register')
-  for (const m of text.matchAll(/locale\.bind\(\s*'([\w.]+)'\s*\)/gu)) claim(m[1], 'bind')
-  for (const m of text.matchAll(/PropsLocale<'([\w.]+)'>/gu)) claim(m[1], 'PropsLocale')
+  for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.-]+)'/gu)) {
+    if (localeUses('namespace')) claim(m[1], 'namespace')
+  }
+  for (const m of text.matchAll(/locale\.register\(\s*'([\w.-]+)'/gu)) claim(m[1], 'register')
+  for (const m of text.matchAll(/locale\.bind\(\s*'([\w.-]+)'\s*\)/gu)) claim(m[1], 'bind')
+  for (const m of text.matchAll(/PropsLocale<'([\w.-]+)'>/gu)) claim(m[1], 'PropsLocale')
   /*
    * Ownership, not usage: a namespace declaration or a literal `register`
    * argument. `bind` and `PropsLocale` only read a namespace, and a component
@@ -441,35 +457,68 @@ for (const file of HARNESS_FILES) {
    * otherwise donate that dictionary's keys to a namespace it does not own —
    * which is how plugin-inventory keys first appeared as agent-preset gaps.
    */
-  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
-    if (isNamespaceConst(m[1])) owns.add(m[2])
+  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.-]+)'/gu)) {
+    if (isNamespaceConst(m[1]) && localeUses(m[1])) owns.add(m[2])
   }
-  for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
-  for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) owns.add(m[1])
+  for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.-]+)'/gu)) {
+    if (localeUses('namespace')) owns.add(m[1])
+  }
+  for (const m of text.matchAll(/locale\.register\(\s*'([\w.-]+)'/gu)) owns.add(m[1])
   /*
-   * Identifier-based registration: `const NS = 'x'` plus
-   * `locale.register(NS, { zh, en })`, where the bindings come from a dictionary
-   * in another directory. Resolving the bindings pins the namespace to that
-   * file without guessing.
+   * Registration with dictionary bindings, in both shapes the harness uses:
+   * `locale.register(NS, { zh, en })` where `NS` lives in the dictionary module, and
+   * `locale.register('settings.permission', { zh, en })` with the id written out. The
+   * bindings name the dictionary, and that is what pins a namespace to its keys — a
+   * literal registration used to claim a namespace while binding nothing to it.
    */
   const bindings = importedBindings(file, text)
   if (bindings.size > 0) {
     const byIdentifier = new Map()
-    for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
+    for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.-]+)'/gu)) {
       byIdentifier.set(m[1], m[2])
     }
-    for (const m of text.matchAll(/locale\.register\(\s*([A-Za-z_$][\w$]*)\s*,\s*\{([^}]*)\}/gu)) {
-      const namespace = byIdentifier.get(m[1])
-      if (namespace === undefined) continue
-      for (const raw of m[2].split(',')) {
-        const binding = (raw.includes(':') ? raw.split(':')[1] : raw).trim()
-        const source = bindings.get(binding)
-        if (source !== undefined) addNamespaceFile(namespace, source)
+    /*
+     * The identifier usually comes *from* the dictionary module: `locales.ts` exports
+     * `NS = 'open-in-app'` next to its `zh`/`en` blocks, and `index.ts` does
+     * `locale.register(NS, { zh, en })`. Resolving the identifier through the import
+     * is what ties the namespace to its dictionary — without it the seven plugin
+     * dictionaries looked like dead namespaces.
+     */
+    const importedIdentifier = (name, source) => {
+      if (source === undefined) return undefined
+      let imported = ''
+      try {
+        imported = readFileSync(source, 'utf8')
+      } catch {
+        return undefined
       }
+      const declared = new RegExp(`(?:export\\s+)?const\\s+${name}\\s*(?::\\s*string)?\\s*=\\s*'([\\w.-]+)'`, 'u').exec(imported)
+      return declared?.[1]
+    }
+    for (const m of text.matchAll(/locale\.register\(\s*(?:'([\w.-]+)'|([A-Za-z_$][\w$]*))\s*,\s*\{([^}]*)\}/gu)) {
+      const literal = m[1]
+      const identifier = m[2]
+      const candidates = m[3].split(',').map(raw => (raw.includes(':') ? raw.split(':')[1] : raw).trim())
+      const sources = candidates.map(binding => bindings.get(binding)).filter(source => source !== undefined)
+      const namespace = literal ?? byIdentifier.get(identifier)
+        ?? sources.map(source => importedIdentifier(identifier, source)).find(value => value !== undefined)
+      if (namespace === undefined) continue
+      claim(namespace, 'register')
+      owns.add(namespace)
+      for (const source of sources) addNamespaceFile(namespace, source)
     }
   }
-  for (const imported of importedDictionaries(file, text)) {
-    for (const name of owns) addNamespaceFile(name, imported)
+  /*
+   * A module that owns several namespaces imports several dictionaries, and binding
+   * every import to every owned namespace crosses them: `ui-schedule/index.ts` owns
+   * both `schedule.catalog` and `schedule.manager`, so the manager's 127 keys landed
+   * in the catalog and looked like a translation gap. A single owned namespace keeps
+   * this fallback — a module with one namespace and one dictionary is unambiguous.
+   */
+  if (owns.size === 1) {
+    for (const imported of importedDictionaries(file, text)) {
+      for (const name of owns) addNamespaceFile(name, imported)
+    }
   }
   if (!isDictionary(file)) continue
   // A dictionary that declares its own namespace serves it directly.
@@ -598,31 +647,16 @@ for (const entry of dictionaryEntries(packText)) {
 const pluralSuffix = /\.(?:one|other)$/u
 const harnessPlurals = new Set([...harnessKeys.keys()].filter(k => pluralSuffix.test(k)))
 const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
-/**
- * Bundled plugin dictionaries, declared with their reasons.
- *
- * The harness does not declare these namespaces, so without a declaration the pack
- * looks like it carries dead namespaces, and the residue rule compares their values
- * with foreign templates by bare key name (`title`, `close`, `cancel` occur in a
- * hundred namespaces) — 32 false English copies came from exactly that. A declared
- * namespace is exempt from both; an undeclared one still fails, so a typo in a
- * namespace name cannot slip through.
+/*
+ * Every namespace the pack ships is a harness namespace: the seven plugin
+ * dictionaries this pack bundles (`agent-team`, `voice-input`, `open-in-app`, …) are
+ * packages of the harness tree itself, so once the binding follows
+ * `locale.register(NS, …)` through the import that declares `NS`, they are ordinary
+ * namespaces with ordinary templates. An earlier round had to declare them in a
+ * policy file because the scan could not see hyphenated ids; that workaround is gone
+ * and nothing about a namespace is now taken on trust.
  */
-const PLUGIN_NAMESPACES = (() => {
-  const path = new URL('./plugin-namespaces.json', import.meta.url)
-  if (!existsSync(path)) return new Map()
-  const parsed = JSON.parse(readFileSync(path, 'utf8'))
-  const entries = Object.entries(parsed).filter(([key]) => !key.startsWith('_'))
-  if (entries.length === 0) {
-    console.error('plugin-namespaces.json не дал ни одной записи — политика не загрузилась')
-    process.exit(2)
-  }
-  return new Map(entries)
-})()
-const isPluginNamespace = namespace => PLUGIN_NAMESPACES.has(namespace)
-const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns) && !isPluginNamespace(ns)).sort()
-const stalePluginNamespaces = [...PLUGIN_NAMESPACES.keys()].filter(ns => !packNamespaces.has(ns)).sort()
-const pluginNamespaces = [...PLUGIN_NAMESPACES.keys()].filter(ns => packNamespaces.has(ns)).sort()
+const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns)).sort()
 const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort()
 /*
  * A pair the harness does not have is the pack's own augmentation: the harness
@@ -803,6 +837,13 @@ const harnessNamespaceGaps = [...harnessNamespaceKeys]
 const uncomparedNamespaces = [...packKeysByNamespace.keys()]
   .filter(namespace => !harnessNamespaceKeys.has(namespace))
   .sort()
+if (process.env.AUDIT_DEBUG_NS === '1') {
+  for (const probe of ['open-in-app', 'voice-input', 'session-log-download', 'session-inspector', 'claude-code-mods', 'agent-team', 'deepseek-model-label-1017']) {
+    const files = namespaceFiles.get(probe) ?? new Set()
+    const keys = harnessNamespaceKeys.get(probe) ?? new Set()
+    console.error(`debug ${probe}: claimed=${harnessNamespaces.has(probe)} files=${files.size} keys=${keys.size}`)
+  }
+}
 
 const commonKeys = packKeysByNamespace.get('common') ?? new Set()
 const namespaceGaps = []
@@ -895,26 +936,6 @@ let residueValuesChecked = 0
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
-    /*
-     * A bundled plugin dictionary has no harness template to compare with: its keys
-     * are the plugin's own, and matching them by bare name against the harness would
-     * read `title: 'Title'` as an untranslated copy of an unrelated `title`. What can
-     * still be judged without a template is a sentence left in English — three or more
-     * Latin words and no Cyrillic — which is a defect wherever it lives. Single names
-     * («Cursor», «Finder», «Hugging Face») are what a plugin dictionary is full of and
-     * stay as they are.
-     */
-    if (isPluginNamespace(namespace)) {
-      const words = value.split(/\s+/u).filter(word => word !== '').length
-      const latinOnly = /\p{Script=Latin}/u.test(value) && !/[А-Яа-яЁё]/u.test(value)
-      if (latinOnly && words >= 3) {
-        residueValuesChecked += 1
-        const id = `${namespace} · ${key}`
-        if (keepsEnglish(id) !== undefined) declaredEnglish.add(id)
-        else englishResidue.push(`${id} — ${JSON.stringify(value)}`)
-      }
-      continue
-    }
     /*
      * Every template of the key, not only the English-scope ones: a dictionary
      * whose `en` block the scope detector did not see used to make its keys
@@ -1524,8 +1545,6 @@ report('namespace пака, которых нет в харнессе (мёрт�
   const near = [...harnessNamespaces.keys()].filter(name => name.startsWith(ns.split('.')[0]))
   return `${ns}${near.length > 0 ? `  (похожие: ${near.join(', ')})` : ''}`
 }))
-report('словари плагинов в паке, объявленные в plugin-namespaces.json (справочно)', pluginNamespaces.map(ns => `${ns} — ${PLUGIN_NAMESPACES.get(ns)}`))
-report('объявления plugin-namespaces.json, которых нет в паке', stalePluginNamespaces)
 report('пар форм харнесса, которых нет в паке', missingPlurals)
 report('пар форм харнесса без русских форм .few/.many', missingRussianForms)
 report('лишние пары форм в паке', extraPlurals)
@@ -1567,7 +1586,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
-  + typographicValues.length + stalePluginNamespaces.length
+  + typographicValues.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

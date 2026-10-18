@@ -5,23 +5,20 @@
 3033 строк. Колонка «как это выглядит» берёт заголовок самого namespace (то, что читает
 пользователь), а не отдельное описание: список нельзя разойтись с переводами.
 
-Строки с пометкой «плагин» — словари сторонних плагинов, которые пакет поставляет сам: харнесс их
-не объявляет, поэтому они и вынесены в отдельную группу (`scripts/plugin-namespaces.json`).
-Систематически чужие плагины в охват не входят: плагин приносит свои строки сам, и его русский
-текст — его ответственность.
+Словари плагинов из дерева харнесса входят в тот же список: пакет поставляет их вместе с клиентскими словарями и проверяет так же строго.
 
 | namespace | как это выглядит | строк |
 |---|---|---|
-| `agent-team` (плагин) | Команда агентов | 25 |
+| `agent-team` | Команда агентов | 25 |
 | `approval` | — | 5 |
 | `chat` | — | 200 |
-| `claude-code-mods` (плагин) | — | 4 |
+| `claude-code-mods` | — | 4 |
 | `command` | — | 28 |
 | `common` | — | 41 |
 | `conversation` | — | 379 |
 | `cordis` | — | 51 |
 | `cotTranslation` | — | 32 |
-| `deepseek-model-label-1017` (плагин) | — | 1 |
+| `deepseek-model-label-1017` | — | 1 |
 | `deliverables` | — | 60 |
 | `documentHtml` | HTML | 4 |
 | `documentMarkdown` | — | 4 |
@@ -30,7 +27,7 @@
 | `inspectorPanel` | Инспектор Node.js | 4 |
 | `job` | — | 50 |
 | `model` | — | 23 |
-| `open-in-app` (плагин) | — | 45 |
+| `open-in-app` | — | 45 |
 | `permission.access` | Права доступа | 20 |
 | `plan` | — | 17 |
 | `pluginManager` | Плагины | 227 |
@@ -40,8 +37,8 @@
 | `schedule.catalog` | — | 90 |
 | `schedule.manager` | Задачи автоматизации | 207 |
 | `secretMask` | — | 2 |
-| `session-inspector` (плагин) | — | 52 |
-| `session-log-download` (плагин) | — | 10 |
+| `session-inspector` | — | 52 |
+| `session-log-download` | — | 10 |
 | `settings` | Настройки | 41 |
 | `settings.account` | Учётная запись | 94 |
 | `settings.agentLoop` | Цикл агента | 12 |
@@ -73,9 +70,8 @@
 | `slash.menu` | — | 9 |
 | `subagent` | — | 79 |
 | `trajectory` | — | 196 |
-| `voice-input` (плагин) | — | 109 |
+| `voice-input` | — | 109 |
 | `workflowRun` | — | 20 |
 | `workspace` | — | 131 |
 
-Итого: **64** namespace, **3033** строк; из них словарей плагинов —
-7.
+Итого: **64** namespace, **3033** строк.

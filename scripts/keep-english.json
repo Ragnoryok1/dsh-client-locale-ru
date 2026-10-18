@@ -1,5 +1,6 @@
 {
   "_comment": "Значения, которые сознательно совпадают с шаблоном харнесса. Аудит валит сборку на любом другом совпадении, поэтому сюда попадает только осознанное решение. Шаблон с `*` разрешает закрытый список (например `chat · app.*` — названия приложений), и он обязан называть namespace. Значения без слов вне плейсхолдеров (`{from}–{to}`, `{percent}%`) решением не нуждаются: переводить в них нечего. Запись, которая больше ничего не разрешает, тоже валит сборку.",
+  "open-in-app · app.*": "названия приложений — закрытый список",
   "chat · message.compaction.commandTitle": "имя слэш-команды /compact — не переводится",
   "conversation · detail.field.id": "аббревиатура ID",
   "conversation · detail.schedule.cron": "Cron — имя механизма расписания",
@@ -36,5 +37,6 @@
   "trajectory · timing.ttft": "аббревиатура TTFT",
   "pluginMarket · sourcePlaceholder": "пример адреса индекса",
   "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek",
-  "open-in-app · app.vscodeinsiders": "название приложения"
+  "open-in-app · app.vscodeinsiders": "название приложения",
+  "voice-input · sourceHuggingFace": "название службы распознавания"
 }

@@ -80,17 +80,8 @@ namespaces.sort((left, right) => left.namespace.localeCompare(right.namespace, '
 const total = namespaces.reduce((sum, item) => sum + item.count, 0)
 const escape = text => text.replace(/\|/gu, '\\|')
 
-const plugins = (() => {
-  try {
-    const parsed = JSON.parse(readFileSync(new URL('./plugin-namespaces.json', import.meta.url), 'utf8'))
-    return Object.keys(parsed).filter(key => !key.startsWith('_'))
-  } catch {
-    return []
-  }
-})()
-const pluginRows = new Set(plugins)
 const rows = namespaces.map(({ namespace, label, count }) =>
-  `| \`${namespace}\`${pluginRows.has(namespace) ? ' (плагин)' : ''} | ${label === '' ? '—' : escape(label)} | ${count} |`).join('\n')
+  `| \`${namespace}\` | ${label === '' ? '—' : escape(label)} | ${count} |`).join('\n')
 
 const document = `<!-- Сгенерировано \`npm run namespaces\`; проверяется \`npm run check:namespaces\`. -->
 # Что переведено
@@ -99,17 +90,13 @@ const document = `<!-- Сгенерировано \`npm run namespaces\`; про
 ${total} строк. Колонка «как это выглядит» берёт заголовок самого namespace (то, что читает
 пользователь), а не отдельное описание: список нельзя разойтись с переводами.
 
-Строки с пометкой «плагин» — словари сторонних плагинов, которые пакет поставляет сам: харнесс их
-не объявляет, поэтому они и вынесены в отдельную группу (\`scripts/plugin-namespaces.json\`).
-Систематически чужие плагины в охват не входят: плагин приносит свои строки сам, и его русский
-текст — его ответственность.
+Словари плагинов из дерева харнесса входят в тот же список: пакет поставляет их вместе с клиентскими словарями и проверяет так же строго.
 
 | namespace | как это выглядит | строк |
 |---|---|---|
 ${rows}
 
-Итого: **${namespaces.length}** namespace, **${total}** строк; из них словарей плагинов —
-${pluginRows.size}.
+Итого: **${namespaces.length}** namespace, **${total}** строк.
 `
 
 const target = fileURLToPath(new URL('../NAMESPACES.md', import.meta.url))
