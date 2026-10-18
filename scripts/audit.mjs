@@ -605,27 +605,61 @@ const augmentedPlurals = [...packPlurals]
  * three different `invalid` keys from inventing a mismatch, while a placeholder
  * no template carries stays a failure.
  */
+const placeholdersMatch = (value, templates) => {
+  const wanted = placeholders(value)
+  return templates.some((template) => {
+    const carried = placeholders(template)
+    return wanted.length === carried.length && wanted.every((name, position) => name === carried[position])
+  })
+}
 const placeholderMismatches = []
+const pluralFormMismatches = []
+const untemplatedKeys = []
 let placeholderChecked = 0
+let pluralFormChecked = 0
 let placeholderUnavailable = 0
 const show = list => list.length === 0 ? '—' : list.join(' ')
 for (const [key, russian] of packValues) {
   const candidates = harnessTemplates.get(key)
-  if (candidates === undefined) { placeholderUnavailable += russian.size; continue }
+  if (candidates === undefined) {
+    /*
+     * Our own plural forms are not in the harness, so they used to be
+     * unverifiable: every `.few`/`.many` we add, and the `.one` of a key the
+     * harness never paired, had no template at all and therefore went
+     * unchecked — 49 values, where a dropped `{count}` would render literally on
+     * screen. The same lexeme's template is right there under a sibling suffix
+     * (`.one`/`.other`) or under the base key, so a form is compared with that.
+     * What has no sibling either stays in the report: there the blind spot is
+     * real and cannot be closed from the pack's side.
+     */
+    const suffix = /^(.*)\.(?:one|few|many|other)$/u.exec(key)
+    const siblings = suffix === null ? [] : ['one', 'other', 'few', 'many']
+      .flatMap(kind => [...harnessTemplates.get(`${suffix[1]}.${kind}`) ?? []])
+    const base = suffix === null ? [] : [...harnessTemplates.get(suffix[1]) ?? []]
+    const inherited = siblings.length > 0 ? siblings : base
+    if (inherited.length === 0) {
+      placeholderUnavailable += russian.size
+      untemplatedKeys.push(`${key} — ${russian.size} знач.`)
+      continue
+    }
+    for (const ru of russian) {
+      pluralFormChecked += 1
+      if (placeholdersMatch(ru, inherited)) continue
+      const rendered = [...new Set([...inherited].map(template => show(placeholders(template))))]
+      pluralFormMismatches.push(`${key}  ru: ${show(placeholders(ru))}  |  соседняя форма: ${rendered.join(' / ')}`)
+    }
+    continue
+  }
   const rendered = [...new Set([...candidates].map(template => show(placeholders(template))))]
   for (const ru of russian) {
     placeholderChecked += 1
-    const ruPlaceholders = placeholders(ru)
-    const matched = [...candidates].some((template) => {
-      const templatePlaceholders = placeholders(template)
-      return ruPlaceholders.length === templatePlaceholders.length
-        && ruPlaceholders.every((name, position) => name === templatePlaceholders[position])
-    })
-    if (matched) continue
-    placeholderMismatches.push(`${key}  ru: ${show(ruPlaceholders)}  |  шаблон: ${rendered.join(' / ')}`)
+    if (placeholdersMatch(ru, [...candidates])) continue
+    placeholderMismatches.push(`${key}  ru: ${show(placeholders(ru))}  |  шаблон: ${rendered.join(' / ')}`)
   }
 }
 placeholderMismatches.sort()
+pluralFormMismatches.sort()
+untemplatedKeys.sort()
 
 /**
  * Harness namespaces the pack never registers.
@@ -1181,7 +1215,7 @@ console.log(`в пакете: ${packNamespaces.size} namespace, ${packKeys.size}
 console.log(`в харнессе: ${harnessNamespaces.size} namespace, ${harnessKeys.size} ключей, ${harnessPlurals.size} пар форм`)
 console.log(`покрытие (информационно): ${covered} из ${harnessKeys.size} найденных ключей харнеса`)
 
-console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, шаблон недоступен у ${placeholderUnavailable}`)
+console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, у ${pluralFormChecked} значений форм числа — с соседней формой; шаблона нет вовсе у ${placeholderUnavailable}`)
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 console.log(`  сверено namespace: ${[...packKeysByNamespace.keys()].filter(ns => harnessNamespaceKeys.has(ns)).length} из ${packKeysByNamespace.size} в пакете; опознано в харнессе: ${harnessNamespaceKeys.size} из ${harnessNamespaces.size}`)
 console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
@@ -1204,6 +1238,8 @@ report('пар форм харнесса, которых нет в паке', mi
 report('лишние пары форм в паке', extraPlurals)
 report('формы, добавленные пакетом к ключам без пары (справочно)', augmentedPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
+report('плейсхолдеры наших форм числа, расходящиеся с соседней формой', pluralFormMismatches)
+report('ключи без шаблона в харнессе — сверить не с чем (справочно)', untemplatedKeys)
 report('ключи, которых нет в своём namespace', namespaceGaps)
 report('namespace пака, которых не сверить с харнессом (нет привязки к словарю)', uncomparedNamespaces)
 report('namespace харнесса с ключами, которых пак не регистрирует', harnessNamespaceGaps)
@@ -1234,6 +1270,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
+  + pluralFormMismatches.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 383 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 384 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -170,7 +170,11 @@ whole kilobytes.
   English template carries: an extra one reaches the screen literally
   (`Заняло {duration}7мин 26с`, fixed in #2), a dropped one silently removes the
   interpolated value. Packages that ship only the Chinese dictionary are compared
-  against `zh`.
+  against `zh`. Our **own plural forms** — the `.few`/`.many` we add, and the `.one` of a key
+  the harness never paired — do not exist upstream, so each is compared with the template of
+  a sibling form of the same word (`.one`/`.other`) or of the key itself. Without that, 52
+  values were never checked at all: that is exactly how a `{count}` can disappear from a form
+  and leave the sentence without its number.
 - **residue** — a value has to be Russian: an exact copy of the English template, a leftover
   Chinese character, or an empty string where the template has text is a defect. English
   copies are allowed only by a decision recorded in `scripts/keep-english.json` (addresses,

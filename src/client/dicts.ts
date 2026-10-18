@@ -2880,7 +2880,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'rule.weekdays': 'С понедельника по пятницу',
     'rule.weekly': 'Еженедельно',
     'rule.cron': 'Свой cron',
-    'rule.cronLabel': 'Cron-выражение',
+    'rule.cronLabel': 'cron-выражение',
     'rule.cronInvalid': 'Введите cron-выражение из пяти полей, например 0 9 * * 1-5.',
     'cronForm.frequency': 'Частота',
     'cronForm.monthly': 'Ежемесячно',
