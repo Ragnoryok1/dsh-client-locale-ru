@@ -37,7 +37,7 @@
 consult registered dictionaries）。221 个 harness 包带有 `locale/en.json`，其中 219 个带有
 `locale/zh.json`，**没有一个带 `locale/ru.json`**，所以这 261 行在任何语言包下都保持英文，只能由
 harness 侧的 `locale/ru.json` 文件补上。`scripts/descriptor-coverage.mjs` 单独统计这个缺口，
-不与我们的词典覆盖率混在一起。
+不与我们的词典覆盖率混在一起；机制说明与 32 份已备好的译文见 `docs/descriptor-upstream.md`。
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json`
 记录包名、版本、许可证，以及从其 bundle 中提取的英文字符串（`npm run fetch:plugins`）。
 安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，
