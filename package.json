@@ -85,7 +85,8 @@
     "check:changelog": "node scripts/check-changelog.mjs",
     "check:tarball": "node scripts/check-tarball.mjs",
     "diff:harness": "node scripts/diff-harness.mjs",
-    "fetch:plugins": "node scripts/fetch-plugin-dicts.mjs"
+    "fetch:plugins": "node scripts/fetch-plugin-dicts.mjs",
+    "report:plugins": "node scripts/report-plugins.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
