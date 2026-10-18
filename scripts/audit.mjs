@@ -1348,6 +1348,39 @@ const splitRenderingsReport = renderSplitList(splitRenderings)
 splitRenderingsReport.total = splitRenderings.length
 const declaredSplitRenderingsReport = renderSplitList(declaredSplitRenderings)
 declaredSplitRenderingsReport.total = declaredSplitRenderings.length
+/**
+ * One Russian rendering, one English sentence — the mirror of the check above.
+ *
+ * The same Russian sentence used for two different English ones hides a
+ * copy-paste: a hint pasted from a neighbouring key, or two different facts
+ * collapsed into one phrase. The reverse case is checked above; this one cannot be
+ * a gate as it stands, because Russian legitimately merges words English keeps
+ * apart («Save» and «Keep» are both «сохранить») — but a shared rendering of two
+ * different *sentences* deserves a look, so it is printed with both sides.
+ */
+const englishByRendering = new Map()
+for (const [namespace, byKey] of packValuesByNamespace) {
+  const english = namespaceEnglishOnly.get(namespace)
+  if (english === undefined) continue
+  for (const [key, value] of byKey) {
+    const template = english.get(key)
+    if (template === undefined || template === value) continue
+    if (template.split(/\s+/u).length < 4 || !/[A-Za-z]/u.test(template)) continue
+    if (!englishByRendering.has(value)) englishByRendering.set(value, new Map())
+    const templates = englishByRendering.get(value)
+    if (!templates.has(template)) templates.set(template, [])
+    templates.get(template).push(`${namespace} · ${key}`)
+  }
+}
+const sharedRenderings = [...englishByRendering]
+  .filter(([, templates]) => templates.size > 1)
+  .map(([value, templates]) => ({ value, templates: [...templates] }))
+  .sort((left, right) => right.templates.length - left.templates.length)
+const sharedRenderingsReport = sharedRenderings.slice(0, 15).map(({ value, templates }) => {
+  const listed = templates.map(([template, sources]) => `«${template}» (${sources.join(', ')})`)
+  return `${JSON.stringify(value)}\n      ${listed.join('\n      ')}`
+})
+sharedRenderingsReport.total = sharedRenderings.length
 const terminologyCounts = Object.entries(terminology.watch ?? {}).map(([concept, stems]) => {
   const counts = stems.map((stem) => {
     let count = 0
@@ -1421,6 +1454,7 @@ report('краевые пробелы, расходящиеся с шаблон�
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
 report('короткие строки, выросшие больше чем в 2,8 раза (риск вёрстки)', grownShortStringsReport)
 report('одна английская фраза, переведённая по-разному', splitRenderingsReport)
+report('один русский ответ на разные английские фразы (справочно)', sharedRenderingsReport)
 report('исключения one-rendering.json, объявленные вручную (справочно)', declaredSplitRenderingsReport)
 report('исключения one-rendering.json, которые уже ничего не исключают', staleSplitRenderings)
 if (uncovered.size > 0) {
