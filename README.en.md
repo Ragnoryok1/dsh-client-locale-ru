@@ -70,7 +70,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 413 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 414 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -135,14 +135,21 @@ rather than on installation.
 ## Checks
 
 ```sh
-npm run build             # сборка трёх выходов
-npm run check:typography  # 18 правил типографики, включая «не трогать»
-npm run check:locale      # сосуществование словарей: 6 проверок
-npm run check:plural      # формы числа: 1 вызов / 2 вызова / 5 вызовов
-npm run check:composition # собранные фразы: «Пн, Ср в 09:00», «Раз в 2 дня»
+npm run build               # the three outputs
+npm run check:typography    # 18 typography rules, including "leave alone"
+npm run check:locale        # dictionaries side by side: 6 checks
+npm run check:plural        # plural forms: 1 вызов / 2 вызова / 5 вызовов
+npm run check:composition   # composed phrases: «Пн, Ср в 09:00», «Раз в 2 дня»
+npm run check:namespaces    # NAMESPACES.md matches the built bundle
+npm run check:tarball       # what gets installed: the archive is unpacked and checked
+npm run check:workflows     # both workflows run the whole verify chain
 npm run check:readmes:pairs # the three READMEs move together (recorded section hashes)
-npm run audit -- <дерево харнеса>   # аудит локали
-npm run verify -- <дерево харнеса>  # всё вместе
+npm run audit -- <harness tree>     # the locale audit
+npm run verify -- <harness tree>    # everything together
+
+npm run namespaces          # regenerate NAMESPACES.md and pack-count.json
+npm run readmes:record      # re-record section hashes after editing all three READMEs
+npm run diff:harness -- <old> <new>  # what the harness reworded under us
 ```
 
 A separate check composes phrases the way the harness does and reads the result whole. The

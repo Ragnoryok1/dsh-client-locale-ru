@@ -62,7 +62,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 413 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 414 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -94,14 +94,21 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 ## 检查
 
 ```sh
-npm run build             # сборка трёх выходов
-npm run check:typography  # 18 правил типографики, включая «не трогать»
-npm run check:locale      # сосуществование словарей: 6 проверок
-npm run check:plural      # формы числа: 1 вызов / 2 вызова / 5 вызовов
-npm run check:composition # собранные фразы: «Пн, Ср в 09:00», «Раз в 2 дня»
+npm run build               # 三个产物的构建
+npm run check:typography    # 18 条排版规则，含「不要动」
+npm run check:locale        # 词典共存：6 项检查
+npm run check:plural        # 复数形式：1 вызов / 2 вызова / 5 вызовов
+npm run check:composition   # 组合短语：«Пн, Ср в 09:00»、«Раз в 2 дня»
+npm run check:namespaces    # NAMESPACES.md 与构建出的 bundle 一致
+npm run check:tarball       # 用户实际安装的：解开归档并检查
+npm run check:workflows     # 两个 workflow 都运行完整的 verify 链
 npm run check:readmes:pairs # 三个 README 同步推进（记录各节哈希）
-npm run audit -- <дерево харнеса>   # аудит локали
-npm run verify -- <дерево харнеса>  # всё вместе
+npm run audit -- <harness tree>     # 本地化审计
+npm run verify -- <harness tree>    # 全部一起
+
+npm run namespaces          # 重新生成 NAMESPACES.md 与 pack-count.json
+npm run readmes:record      # 三个 README 都改完后重新记录各节哈希
+npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 ```
 
 另有一项检查按 harness 的方式把短语拼起来，再整句阅读。审计只把取值与它自己的模板比对，因此「单独看正确、被替换后就错了」的句子它看不见：`frequency.weekly` 曾填成 «По {weekdays} в {time}»，而星期是 «Пн, Ср»——得到 «По Пн, Ср в 09:00»，任何逐值检查都发现不了。同样被钉住的还有 «Каждые 2 дня»（现为 «Раз в 2 дня»）、«Каждый день в 09:00 (Europe/Moscow)»，以及带复数形式的组合间隔。同一种方式还找出了第三处：`time.locale` 不是文案，而是给 `Intl` 的语言标签，它的取值曾是 `en`——限制到某个月的规则显示成 «Каждый день в January»，俄语界面里的时区标签是 «Moscow Standard Time»。现在是 `ru`（harness 的中文词典同样用 `zh-CN`），月份放在括号里：«Каждый день (январь, март)»。
