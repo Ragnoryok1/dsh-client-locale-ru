@@ -83,7 +83,8 @@
     "check:readmes:pairs": "node scripts/readmes-pairs.mjs",
     "check:workflows": "node scripts/check-workflows.mjs",
     "check:changelog": "node scripts/check-changelog.mjs",
-    "check:tarball": "node scripts/check-tarball.mjs"
+    "check:tarball": "node scripts/check-tarball.mjs",
+    "diff:harness": "node scripts/diff-harness.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
