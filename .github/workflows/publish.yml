@@ -110,6 +110,11 @@ jobs:
       - name: README languages move together
         run: npm run check:readmes:pairs
 
+      # The registry page shows the changelog of whatever version is published; a
+      # release without a section for it is a page that describes the release before.
+      - name: Changelog describes the released version
+        run: npm run check:changelog
+
       # The shipped inventory is generated from the bundle: a release is the last
       # moment to notice that it no longer matches what the pack registers.
       - name: Translated namespace inventory

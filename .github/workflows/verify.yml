@@ -46,6 +46,11 @@ jobs:
       - name: Readme structure, paragraphs and claims
         run: npm run check:readmes
 
+      # The registry page shows the changelog of whatever version is published; a
+      # release without a section for it is a page that describes the release before.
+      - name: Changelog describes the released version
+        run: npm run check:changelog
+
       - name: Plugin manifest rules
         run: npm run check:manifest
 
