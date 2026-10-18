@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 387 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 389 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -184,11 +184,16 @@ whole kilobytes.
   translated and the decision went stale. This is how the `deepSeekBaseUrl` entry was found:
   the English template gained a note about `DEEPSEEK_BASE_URL`, while the input placeholder
   has to be a bare example URL, so that note would have been noise inside the field. The entry
-  is gone, the value stays. Next to it the audit prints the copies the residue rule cannot
-  reach — the `en` block of some dictionaries is not recognised, and 60 values live there:
-  application names (`VS Code`, `iTerm2`), format strings (`{from}–{to}`, `{percent}%`), the
-  `en` marker and labels like `Cron {expression}`; the list is visible so a translated
-  sentence cannot hide in that zone unnoticed.
+  is gone, the value stays. A decision may also name a closed list: `chat · app.*` allows
+  thirty application names in one line, because a dictionary of application names is a list of
+  names. And a value with no word outside its placeholders (`{from}–{to}`, `{percent}%`, `, `)
+  needs no decision at all: there is nothing in it to translate, so the policy stays about
+  words rather than about punctuation. The residue rule reads **every** template of a key, not
+  only the `en` block: 60 values in dictionaries with an unrecognised block used to go
+  unexamined, while now 2802 values are compared, 68 of them covered by decisions (38 entries,
+  one of them a pattern), and the zone is gone as a class. The rule did not become wider:
+  an empty value is a defect only where no template is empty either, since Russian justly
+  drops the prefix that English drops too (`message.stepProcess.sharedPrefix`).
 - **dead keys** — a key no harness dictionary defines and no harness source names is a
   leftover from an older version: it shows nothing and only misleads. Such keys fail the
   build. A key a component still asks for stays in the advisory report, because the pack's

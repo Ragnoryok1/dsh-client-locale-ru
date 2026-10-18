@@ -729,8 +729,13 @@ namespaceGaps.sort()
  */
 /**
  * Keys the pack deliberately leaves in English, with the reason. The policy is
- * data, not a comment: an undeclared copy of the English template fails the
- * build, so a new leftover cannot arrive unnoticed.
+ * data, not a comment: an undeclared copy of a harness template fails the build,
+ * so a new leftover cannot arrive unnoticed.
+ *
+ * An entry may name one key (`chat · app.finder`) or a closed list with `*`
+ * (`chat · app.*`). The glob exists because a dictionary of application names is
+ * a list of names by construction: thirty entries saying «название приложения»
+ * would bury decisions that actually need reading.
  */
 const KEEP_ENGLISH = (() => {
   const path = new URL('./keep-english.json', import.meta.url)
@@ -747,75 +752,106 @@ const KEEP_ENGLISH = (() => {
     console.error('keep-english.json не дал ни одной записи — политика не загрузилась')
     process.exit(2)
   }
+  for (const [pattern] of entries) {
+    if (pattern.includes('*') && !pattern.includes(' · ')) {
+      console.error(`keep-english.json: шаблон «${pattern}» обязан называть namespace, иначе он разрешил бы всё`)
+      process.exit(2)
+    }
+  }
   return new Map(entries)
 })()
 
-const keepEnglishStale = (() => {
-  /*
-   * A policy entry is needed exactly while the pack value still equals a template
-   * of its key — the same test the residue rule applies, against the same template
-   * set, so the two cannot disagree about what "an English copy" is. An entry that
-   * no longer answers that question is rot, and rot in this file is dangerous in
-   * one direction: it silently allows the English text it names. A key that has
-   * left the pack, and one that was translated since, are both failures, with the
-   * difference spelled out so the fix is obvious.
-   */
-  const templateCopies = new Set()
-  for (const [namespace, byKey] of packValuesByNamespace) {
-    for (const [key, value] of byKey) {
-      if (harnessTemplates.get(key)?.has(value)) templateCopies.add(`${namespace} · ${key}`)
-    }
+const keepsEnglish = (id) => {
+  if (KEEP_ENGLISH.has(id)) return id
+  for (const pattern of KEEP_ENGLISH.keys()) {
+    if (!pattern.includes('*')) continue
+    const source = pattern.split('*').map(part => part.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')).join('.*')
+    if (new RegExp(`^${source}$`, 'u').test(id)) return pattern
   }
-  return [...KEEP_ENGLISH.keys()]
-    .filter(id => !templateCopies.has(id))
-    .map((id) => {
-      const separator = id.indexOf(' · ')
-      const namespace = id.slice(0, separator)
-      const key = id.slice(separator + 3)
-      const present = packValuesByNamespace.get(namespace)?.has(key) ?? false
-      return present
-        ? `${id} — значение уже не совпадает с шаблоном, запись ничего не разрешает`
-        : `${id} — такого ключа в пакете нет`
-    })
-    .sort()
-})()
+  return undefined
+}
+
+/**
+ * A value with no word to translate: placeholders, punctuation, a unit.
+ *
+ * `{from}–{to}`, `{percent}%`, `+{count}`, `, ` carry no text of their own, so
+ * requiring a written decision for every one of them would turn the policy into a
+ * list of punctuation. Stripping placeholders before looking for a letter is the
+ * whole test — a format string cannot be "untranslated prose", because it has no
+ * prose in it.
+ */
+const isFormatOnly = value => !/\p{L}/u.test(value.replace(/\{[^}]*\}/gu, ''))
 
 const englishResidue = []
-const declaredEnglish = []
-const unresiduedCopies = []
+const declaredEnglish = new Set()
 const cjkResidue = []
 const emptyResidue = []
-let residueChecked = 0
+const copiesNeedingDecision = new Set()
+let residueValuesChecked = 0
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
-    const templates = englishValuesByKey.get(key)
-    if (templates === undefined) {
-      /*
-       * The residue rule reads only English-scope templates, so a dictionary whose
-       * `en` block the scope detector did not see is invisible to it — and 50
-       * values sit exactly there. They are names, format strings and the `en`
-       * locale marker, not prose, but that is a claim to verify rather than
-       * assume, so the copies in that zone are listed: a translated sentence may
-       * never hide in it.
-       */
-      if (harnessTemplates.get(key)?.has(value)) unresiduedCopies.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
-      continue
-    }
-    residueChecked += 1
-    if (value === '' && [...templates].some(template => template !== '')) {
+    /*
+     * Every template of the key, not only the English-scope ones: a dictionary
+     * whose `en` block the scope detector did not see used to make its keys
+     * invisible to this rule, and 60 values lived — unexamined — exactly there.
+     * Reading the same template set as the placeholder rule closes that zone, and
+     * what sits in it now either carries no word (format strings, the `en` locale
+     * marker, application names by pattern) or fails.
+     */
+    const templates = harnessTemplates.get(key)
+    if (templates === undefined) continue
+    residueValuesChecked += 1
+    /*
+     * Empty is a defect only when no template is empty either: the English of
+     * `message.stepProcess.sharedPrefix` is `''` while the Chinese marks the line
+     * with 「已」, and Russian needs no prefix there. "Matches any template" is the
+     * same rule the placeholder check follows.
+     */
+    if (value === '' && ![...templates].some(template => template === '')) {
       emptyResidue.push(`${namespace} · ${key} — шаблон ${JSON.stringify([...templates][0])}`)
     }
-    if (!templates.has(value) || !/[A-Za-z]/u.test(value)) continue
+    if (!templates.has(value)) continue
     const id = `${namespace} · ${key}`
-    if (KEEP_ENGLISH.has(id)) declaredEnglish.push(id)
+    if (isFormatOnly(value)) continue
+    copiesNeedingDecision.add(id)
+    const pattern = keepsEnglish(id)
+    if (pattern !== undefined) declaredEnglish.add(id)
     else englishResidue.push(`${id} — ${JSON.stringify(value)}`)
   }
 }
 englishResidue.sort()
 cjkResidue.sort()
 emptyResidue.sort()
-unresiduedCopies.sort()
+
+/**
+ * The policy itself must not rot.
+ *
+ * An entry is needed exactly while something still asks for it: a value that
+ * equals a harness template and carries a word. An exact entry whose key left the
+ * pack, an exact entry whose value was translated, and a glob that matches nothing
+ * needing a decision are all failures — rot here is dangerous in one direction,
+ * because the file silently allows the text it names.
+ */
+const keepEnglishStale = (() => {
+  const stale = []
+  for (const pattern of KEEP_ENGLISH.keys()) {
+    if (pattern.includes('*')) {
+      const matched = [...copiesNeedingDecision].filter(id => keepsEnglish(id) === pattern)
+      if (matched.length === 0) stale.push(`${pattern} — под шаблон не подходит ни одно значение, которое нужно разрешить`)
+      continue
+    }
+    if (copiesNeedingDecision.has(pattern)) continue
+    const separator = pattern.indexOf(' · ')
+    const namespace = pattern.slice(0, separator)
+    const key = pattern.slice(separator + 3)
+    const present = packValuesByNamespace.get(namespace)?.has(key) ?? false
+    stale.push(present
+      ? `${pattern} — значение уже не совпадает с шаблоном, запись ничего не разрешает`
+      : `${pattern} — такого ключа в пакете нет`)
+  }
+  return stale.sort()
+})()
 
 /**
  * Keys the pack carries that the harness no longer defines anywhere.
@@ -1261,7 +1297,7 @@ console.log(`покрытие (информационно): ${covered} из ${ha
 console.log(`плейсхолдеры сверены у ${placeholderChecked} ключей, у ${pluralFormChecked} значений форм числа — с соседней формой; шаблона нет вовсе у ${placeholderUnavailable}`)
 console.log(`полнота по namespace: ${namespaceGapKeys} ключей в ${namespaceGaps.length} namespace`)
 console.log(`  сверено namespace: ${[...packKeysByNamespace.keys()].filter(ns => harnessNamespaceKeys.has(ns)).length} из ${packKeysByNamespace.size} в пакете; опознано в харнессе: ${harnessNamespaceKeys.size} из ${harnessNamespaces.size}`)
-console.log(`остатки: сверено ${residueChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.length} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
+console.log(`остатки: сверено ${residueValuesChecked} значений, английский ${englishResidue.length} (плюс ${declaredEnglish.size} объявленных в политике), китайский ${cjkResidue.length}, пустые ${emptyResidue.length}`)
 console.log(`мёртвые ключи (нет в харнессе): ${deadKeys.length} (из них без ссылок: ${deadUnreferenced.length})`)
 console.log(`терминология: нарушений ${terminologyViolations.length}; латинских слов в прозе вне списка: ${latinProse.length}`)
 console.log(`гигиена текста: ${hygiene.length}, краевые пробелы: ${edgeSpaces.length}, стиль: ${style.length}`)
@@ -1290,7 +1326,6 @@ report('значения с китайскими иероглифами', cjkRes
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
 report('решения keep-english.json, которые уже ничего не разрешают', keepEnglishStale)
-report('совпадения с шаблоном вне сверки остатков (справочно)', unresiduedCopies)
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
