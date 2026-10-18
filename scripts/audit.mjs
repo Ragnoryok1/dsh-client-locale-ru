@@ -954,10 +954,20 @@ const pinnedTag = (() => {
   }
   return match[1]
 })()
-const BUILT_AGAINST = /built against dsh `v?([^`]+)`/gu
+const pinnedVersion = pinnedTag.replace(/^dsh-v?/u, '')
+const BUILT_AGAINST = /(?:built|verified) against dsh\s+`?v?([\w.+-]+)`?/gu
+
+/*
+ * `package.json` is the fourth place the same facts are written down, and the
+ * description is what npm shows in search and on the package page; it had drifted
+ * to «55 namespaces» while the READMEs said 56. The version claim is matched in
+ * both phrasings — «built against dsh» in the leads, «verified against dsh» in
+ * the manifest — because both name the harness release a reader relies on.
+ */
+const ADVERTISED_FILES = ['README.md', 'README.en.md', 'README.zh.md', 'package.json']
 
 const advertisedWrong = []
-for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
+for (const file of ADVERTISED_FILES) {
   let text
   try {
     text = readFileSync(new URL(file, packRoot), 'utf8')
@@ -972,9 +982,8 @@ for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
     }
   }
   for (const match of text.matchAll(BUILT_AGAINST)) {
-    const claimed = match[1].trim()
-    const pinned = pinnedTag.replace(/^dsh-v?/u, '')
-    if (claimed !== pinned) advertisedWrong.push(`${file}: заявлено «built against dsh ${claimed}», а workflow закрепляет ${pinnedTag}`)
+    const claimed = match[1].trim().replace(/\.+$/u, '')
+    if (claimed !== pinnedVersion) advertisedWrong.push(`${file}: заявлено «${match[0]}», а workflow закрепляет ${pinnedTag}`)
   }
 }
 advertisedWrong.sort()

@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. The published package is 354 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 383 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -148,12 +148,17 @@ paragraphs** (that is how the preset guides are stored) and a **reference to a c
 them whole guide documents — silently fell out of every comparison. And the other way round: an
 empty policy file (`keep-english.json`, a `terminology.json` section) now fails the audit instead
 of widening a gate unnoticed. The numbers the READMEs advertise are checked against the pack the
-same way, because a stale count is simply a wrong claim — including the grouped spelling: the
+same way, because a stale count is simply a wrong claim — and the same numbers are read from the
+`package.json` description, which is what npm shows in search and on the package page (that is
+where «55 namespaces» lived longest) — including the grouped spelling: the
 old leads said `2 489`, and the gate only read the ungrouped form, so the pattern now accepts
 thousands separators. The sentence naming the harness version the pack was built against is
 checked next to it, against the tag the workflow pins, because that workflow is what verifies
 the pack (both leads claimed `0.2.1-alpha.2` while CI had already moved to
-`dsh-v0.2.1-alpha.3`).
+`dsh-v0.2.1-alpha.3`). The published size is measured there too: `npm run check:size` packs the
+archive and compares the advertised kilobytes with the real ones, allowing one kilobyte of slack
+because gzip compresses slightly differently across Node builds while the sentence rounds to
+whole kilobytes.
 
 - **dead namespaces** — every namespace the package registers has to
   exist in the harness. In 0.1.6 the schedule catalog translations were registered

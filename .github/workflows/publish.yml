@@ -100,12 +100,32 @@ jobs:
           node scripts/audit.mjs tree/packages
 
       # The three READMEs describe one document; this gate fails when an edit
-      # touches one language and leaves the others behind.
+      # touches one language and leaves the others behind, or when a number they
+      # advertise has drifted from the pack.
       - name: Check the READMEs stay in step
         run: npm run check:readmes
 
+      - name: Plugin manifest rules
+        run: npm run check:manifest
+
+      # The meta block promises a runtime range; a release is the moment that
+      # promise is read, so it is checked here as well as on every push.
+      - name: Compatibility promise
+        run: npm run check:peers
+
+      - name: Upstream tag watch
+        run: npm run check:upstream
+
       - name: Build
         run: npm run build
+
+      # What is committed is what a GitHub install runs, so the release ships the
+      # bundle that this build produces — not an older one.
+      - name: Committed bundle matches the build
+        run: npm run check:built
+
+      - name: Advertised package size
+        run: npm run check:size
 
       - name: Show what would be published
         run: npm pack --dry-run

@@ -1,6 +1,6 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 55 namespaces, verified against dsh 0.2.1-alpha.3",
+  "description": "Russian (ru) language pack for the DeepSeek Harness web GUI - installable hybrid dsh.bundle + dsh.client plugin, 56 namespaces, verified against dsh 0.2.1-alpha.3",
   "version": "0.2.1",
   "keywords": [
     "deepseek",
@@ -68,8 +68,10 @@
     "check:compat": "node scripts/check-compat.mjs",
     "check:peers": "node scripts/check-peers.mjs",
     "check:manifest": "node scripts/check-manifest.mjs",
+    "check:built": "node scripts/check-built.mjs",
+    "check:size": "node scripts/check-size.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run check:manifest && npm run build && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run check:manifest && npm run check:built && npm run check:size && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:upstream && npm run check:peers && node scripts/audit.mjs",
     "prepublishOnly": "npm run build"
   },
   "license": "MIT",
