@@ -103,5 +103,11 @@ jobs:
       - name: Upstream tag watch
         run: npm run check:upstream
 
+      # The plugin descriptors a user reads are translated from an English snapshot; this
+      # fails when upstream rewrites one, which would leave a Russian title saying something
+      # the English no longer says.
+      - name: Plugin descriptor translations follow upstream
+        run: npm run check:descriptors -- tree/packages
+
       - name: Locale audit
         run: node scripts/audit.mjs tree/packages

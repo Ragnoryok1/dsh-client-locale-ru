@@ -15,6 +15,7 @@ import { basename, dirname, join, relative, resolve } from 'node:path'
 
 const args = process.argv.slice(2)
 const write = args.includes('--write')
+const check = args.includes('--check')
 const root = resolve(args.find(argument => !argument.startsWith('--')) ?? '../deepseek-harness/packages')
 const translations = JSON.parse(readFileSync(new URL('../descriptor-ru.json', import.meta.url), 'utf8'))
 
@@ -48,6 +49,7 @@ const located = localeByPackage(root)
 const missing = []
 const written = []
 const skipped = []
+const drifted = []
 
 for (const [specifier, fields] of Object.entries(translations)) {
   const localeDirectory = located.get(specifier)
@@ -56,6 +58,15 @@ for (const [specifier, fields] of Object.entries(translations)) {
     continue
   }
   const english = JSON.parse(readFileSync(join(localeDirectory, 'en.json'), 'utf8'))
+  /*
+   * `en` is the snapshot the translation was made from. When upstream rewrites the title
+   * the Russian text no longer says what the English says, and silence would hide it.
+   */
+  for (const field of ['title', 'description']) {
+    if (fields.en?.[field] !== undefined && english.meta?.[field] !== fields.en[field]) {
+      drifted.push(`${specifier}.${field}: было «${fields.en[field]}», стало «${String(english.meta?.[field])}»`)
+    }
+  }
   const target = join(localeDirectory, 'ru.json')
   const wanted = {}
   /* Only the fields English declares: an extra key would be a shape mismatch, not a translation. */
@@ -87,4 +98,15 @@ if (missing.length > 0) {
   console.log('пакеты не найдены в дереве (проверьте имя и версию):')
   for (const line of missing) console.log(`  ${line}`)
   process.exitCode = 1
+}
+
+if (check) {
+  console.log('')
+  if (drifted.length === 0 && missing.length === 0) {
+    console.log(`переводы не разошлись с деревом: ${Object.keys(translations).length} записей, английский текст совпадает со снимком`)
+  } else {
+    console.log(`расхождений: ${drifted.length + missing.length}`)
+    for (const line of drifted) console.log(`  дрейф: ${line}`)
+    process.exitCode = 1
+  }
 }

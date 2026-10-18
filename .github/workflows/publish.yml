@@ -134,6 +134,12 @@ jobs:
       - name: Upstream tag watch
         run: npm run check:upstream
 
+      # The plugin descriptors a user reads are translated from an English snapshot; this
+      # fails when upstream rewrites one, which would leave a Russian title saying something
+      # the English no longer says.
+      - name: Plugin descriptor translations follow upstream
+        run: npm run check:descriptors -- tree/packages
+
       # The release path reads the same workflow files as CI; a check missing here is
       # a check that never runs before `npm publish`.
       - name: Workflows run the verify chain
