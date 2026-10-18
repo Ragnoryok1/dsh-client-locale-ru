@@ -598,6 +598,45 @@ const augmentedPlurals = [...packPlurals]
   .sort()
 
 /**
+ * Every harness pair needs the two forms Russian has and the client never asks for.
+ *
+ * The client selects `count === 1 ? '.one' : '.other'`, so a pair with only those
+ * two answers 2–4 and 5+ with the `.other` text: grammatical, because the pack
+ * keeps `.other` count-neutral («Вызовов инструментов: 5»), but a caption where a
+ * sentence was possible. The wrapper substitutes `.few` / `.many` only when the
+ * dictionary carries them (`plural.ts`, "a form is substituted only when the
+ * dictionary actually has it"), so a missing form is invisible at runtime — the
+ * string simply stays neutral. This gate keeps the promise from decaying key by
+ * key: a harness pair without both forms is a failure.
+ *
+ * Only a key the harness really pairs counts. `category.other`, `entry.other` and
+ * `usage.other` end in `.other` without a `.one` sibling: those are enum variants
+ * ("Other" next to "file"/"directory"), not grammatical plurals, and inventing
+ * Russian forms there would produce a legend nobody asked for.
+ */
+const harnessPairedBases = new Set([...harnessPlurals]
+  .filter(key => key.endsWith('.one') && harnessKeys.has(`${key.slice(0, -4)}.other`))
+  .map(key => key.slice(0, -4)))
+/*
+ * Checked per namespace, not per key name: the runtime looks the form up in the
+ * namespace that asked for it, so a pair present in `schedule.catalog` and absent
+ * in `schedule.manager` is a defect in the second screen only — and a global set of
+ * key names would hide exactly that.
+ */
+const missingRussianForms = []
+for (const [namespace, harnessKeysHere] of harnessNamespaceKeys) {
+  const packKeysHere = packKeysByNamespace.get(namespace)
+  if (packKeysHere === undefined) continue
+  for (const base of harnessPairedBases) {
+    if (!harnessKeysHere.has(`${base}.one`)) continue
+    for (const form of ['few', 'many']) {
+      if (!packKeysHere.has(`${base}.${form}`)) missingRussianForms.push(`${namespace} · ${base}.${form}`)
+    }
+  }
+}
+missingRussianForms.sort()
+
+/**
  * Compare each Russian value with the templates its key renders from.
  * Placeholders are multisets, because a template may repeat one
  * (`{first} … {first}`) and order alone would then look like a mismatch. A value
@@ -1314,6 +1353,7 @@ report('namespace пака, которых нет в харнессе (мёрт�
   return `${ns}${near.length > 0 ? `  (похожие: ${near.join(', ')})` : ''}`
 }))
 report('пар форм харнесса, которых нет в паке', missingPlurals)
+report('пар форм харнесса без русских форм .few/.many', missingRussianForms)
 report('лишние пары форм в паке', extraPlurals)
 report('формы, добавленные пакетом к ключам без пары (справочно)', augmentedPlurals)
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
@@ -1350,7 +1390,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
-  + pluralFormMismatches.length + keepEnglishStale.length
+  + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

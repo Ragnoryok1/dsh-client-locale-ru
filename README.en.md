@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2542 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2550 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,9 +22,9 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-56-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C542-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C550-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 56 namespaces, 2,542 strings, built against dsh `0.2.1-alpha.3`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
+Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 56 namespaces, 2,550 strings, built against dsh `0.2.1-alpha.3`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface only — third-party plugin dictionaries are deliberately out of scope, and 11 of the 17 most-downloaded ecosystem plugins ship no strings of their own, so they are already Russian through these namespaces. MIT, community-maintained, not affiliated with DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -165,7 +165,14 @@ whole kilobytes.
   under the name `schedule.manager`, whereas `schedule.catalog` is what reads them: the per-key
   coverage check nonetheless reported «всё переведено»;
 - **plural-form pairs** — the `.one`/`.other` sets have to match, because the client
-  chooses the form as `count === 1 ? '.one' : '.other'`;
+  chooses the form as `count === 1 ? '.one' : '.other'`. That is not enough for Russian:
+  every pair also needs `.few` and `.many`, or the wrapper quietly falls back to the neutral
+  `.other` and shows «2 д» where «2 дня» was possible. The check runs **per namespace** —
+  the wrapper looks the form up in the namespace that asked, so a pair missing on one screen
+  while present on another would otherwise stay invisible. It found the four time units
+  (`unit.day/hour/minute/second` in `schedule.catalog`) and `trigger` in the task manager;
+  the units stopped being abbreviations («д», «ч», «мин») and gained full forms in the right
+  case — «через 2 дня», «через 5 часов», and «Каждые 2 дня» became «Раз в 2 дня»;
 - **placeholders** — a Russian value has to carry exactly the `{name}` placeholders its
   English template carries: an extra one reaches the screen literally
   (`Заняло {duration}7мин 26с`, fixed in #2), a dropped one silently removes the
@@ -325,7 +332,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (56 namespaces, 2542 translations, ~3000 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries (56 namespaces, 2550 translations, ~3000 lines). This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).

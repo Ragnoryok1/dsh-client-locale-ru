@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2542 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2550 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,9 +22,9 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-56-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C542-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C550-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский язык для веб-интерфейса DeepSeek Harness: 56 namespace, 2542 переводов, экранная типографика и аудит локализации в CI.
+Русский язык для веб-интерфейса DeepSeek Harness: 56 namespace, 2550 переводов, экранная типографика и аудит локализации в CI.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -169,7 +169,14 @@ PLAN_NEXT_ACTION_EN`). Пока читался только первый вид,
   под именем `schedule.manager`, тогда как читает их `schedule.catalog`: проверка покрытия
   по ключам при этом рапортовала «всё переведено»;
 - **пары форм числа** — множества `.one`/`.other` должны совпадать, потому что клиент
-  выбирает форму как `count === 1 ? '.one' : '.other'`;
+  выбирает форму как `count === 1 ? '.one' : '.other'`. Этого мало для русского: каждой
+  паре нужны ещё `.few` и `.many`, иначе обёртка молча вернётся к нейтральному `.other` и
+  вместо «2 дня» покажет «2 д». Проверка сверяет это **по namespace** — обёртка ищет форму
+  в том namespace, который спросил, поэтому пара, забытая в одном экране при наличии в
+  другом, иначе осталась бы незамеченной. Так нашлись четыре единицы времени
+  (`unit.day/hour/minute/second` в `schedule.catalog`) и `trigger` в менеджере задач;
+  заодно единицы перестали быть сокращениями («д», «ч», «мин») и получили полные формы в
+  нужном падеже — «через 2 дня», «через 5 часов», а «Каждые 2 дня» стало «Раз в 2 дня»;
 - **плейсхолдеры** — русское значение обязано нести ровно те `{name}`, что и английский
   шаблон ключа: лишний плейсхолдер попадает на экран буквально (`Заняло {duration}7мин 26с`,
   исправлено в #2), а потерянный молча убирает подставленное значение. Для пакетов,
@@ -328,7 +335,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (56 namespace, 2542 перевод, ~3000 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (56 namespace, 2550 перевод, ~3000 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).

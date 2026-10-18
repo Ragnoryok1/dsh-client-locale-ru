@@ -102,9 +102,15 @@ test('the `n` keys pluralise too, and keys without extra forms keep their value'
   assert.equal(job('count.live.other', { count: 2 }), '2 фоновые задачи выполняются')
   assert.equal(job('count.idle.other', { count: 5 }), '5 фоновых задач')
 
-  // `unit.day` carries no `.few` / `.many`: the dictionary value is returned.
+  // `unit.day` carries `.few` / `.many` now, so the count picks the Russian form;
+  // `.other` stays the fallback for a fractional count, where CLDR has no form to
+  // substitute and the dictionary's own value («1,5 минуты») is the right one.
   const schedule = locale.bind('schedule.catalog')
-  assert.equal(schedule('unit.day.other', { count: 5 }), 'д')
+  assert.equal(schedule('unit.day.one', { count: 1 }), 'день')
+  assert.equal(schedule('unit.day.other', { count: 2 }), 'дня')
+  assert.equal(schedule('unit.day.other', { count: 5 }), 'дней')
+  assert.equal(schedule('unit.hour.other', { count: 3 }), 'часа')
+  assert.equal(schedule('unit.minute.other', { count: 1.5 }), 'минуты')
 
   ctx.dispose()
 })
