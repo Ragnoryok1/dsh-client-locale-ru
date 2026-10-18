@@ -1,0 +1,130 @@
+{
+  "@deepseek-ai/dsh-client-ui-schedule": {
+    "title": "Интерфейс задач",
+    "description": "Страница задач автоматизации в боковой панели, карточки задач и отметки напоминаний в сессиях."
+  },
+  "@deepseek-ai/dsh-time-context": {
+    "title": "Ощущение времени",
+    "description": "Сообщает модели текущее время, часовой пояс браузера и время с предыдущего сообщения на каждом шаге."
+  },
+  "@deepseek-ai/dsh-experimental-agent-team": {
+    "title": "Командная работа",
+    "description": "Управление участниками команды, сообщениями участников и общими задачами."
+  },
+  "@deepseek-ai/dsh-experimental-agent-team-profile": {
+    "title": "Команды агентов",
+    "description": "Включает командную работу, инструменты команды, список участников и общую доску задач."
+  },
+  "@deepseek-ai/dsh-experimental-api-speech-to-text": {
+    "title": "API распознавания речи",
+    "description": "Даёт браузерным клиентам расшифровку речи в текст."
+  },
+  "@deepseek-ai/dsh-experimental-auto-review": {
+    "title": "Автоматическая проверка разрешений",
+    "description": "Добавляет режим разрешений с автоматической проверкой: модель оценивает запрос перед каждым вызовом инструмента."
+  },
+  "@deepseek-ai/dsh-experimental-badge-skill-bundle": {
+    "title": "Навык значка DSH",
+    "description": "Позволяет агентам добавлять значок «сделано на dsh» в документы, пул-реквесты и другие результаты."
+  },
+  "@deepseek-ai/dsh-experimental-browser-use-chrome-devtools-mcp": {
+    "title": "Работа в браузере (Chrome DevTools)",
+    "description": "Позволяет модели просматривать веб-страницы и управлять ими через Chrome DevTools MCP в запущенном Chrome."
+  },
+  "@deepseek-ai/dsh-experimental-browser-use-playwright-mcp": {
+    "title": "Работа в браузере (Playwright)",
+    "description": "Позволяет модели просматривать веб-страницы и управлять ими через Playwright MCP в запущенном Chromium."
+  },
+  "@deepseek-ai/dsh-experimental-client-ui-agent-team": {
+    "title": "Панель команды",
+    "description": "Показывает участников команды и общие задачи, позволяет переходить в разговоры участников."
+  },
+  "@deepseek-ai/dsh-experimental-client-ui-cot-translation": {
+    "title": "Машинный перевод рассуждений",
+    "description": "Показывает развёрнутые рассуждения на другом языке с помощью машинного перевода."
+  },
+  "@deepseek-ai/dsh-experimental-client-ui-voice-input": {
+    "title": "Запись голоса",
+    "description": "Записывает речь и вставляет редактируемый текст в черновик сообщения."
+  },
+  "@deepseek-ai/dsh-experimental-computer-use-cua-driver-mcp": {
+    "title": "Управление компьютером (Cua Driver MCP)",
+    "description": "Позволяет модели управлять рабочим столом через отдельно установленный исполняемый файл cua-driver."
+  },
+  "@deepseek-ai/dsh-experimental-computer-use-cua-driver-native": {
+    "title": "Управление компьютером (Cua Driver)",
+    "description": "Позволяет модели управлять рабочим столом встроенной средой Cua Driver; нужны разрешения рабочего стола для приложения, запускающего dsh."
+  },
+  "@deepseek-ai/dsh-experimental-cot-translation-bundle": {
+    "title": "Машинный перевод рассуждений",
+    "description": "Машинный перевод развёрнутых рассуждений; исходный текст отправляется в выбранную службу"
+  },
+  "@deepseek-ai/dsh-experimental-inspector": {
+    "title": "Инспектор NodeJS",
+    "description": "Открывает Chrome DevTools в нижней панели по Ctrl/Cmd+Shift+. для разработки и отладки."
+  },
+  "@deepseek-ai/dsh-experimental-inspector-profile": {
+    "title": "Инструменты разработчика",
+    "description": "Просмотр и отладка сырых данных сессии, сгруппированных сообщений чата и серверной части на NodeJS."
+  },
+  "@deepseek-ai/dsh-experimental-plugin-market-bundle": {
+    "title": "Свои магазины плагинов",
+    "description": "Добавляет в раздел «Плагины» вкладку «Обзор» для просмотра и установки наборов из указанных вами каталогов магазинов плагинов"
+  },
+  "@deepseek-ai/dsh-experimental-ralph-bundle": {
+    "title": "Циклы Ralph",
+    "description": "Выполняет явно запрошенную повторяющуюся работу свежими агентами."
+  },
+  "@deepseek-ai/dsh-experimental-session-inspector": {
+    "title": "Журнал сессии",
+    "description": "Включает разбор сырых данных текущей сессии и сгруппированных сообщений чата в боковой панели сессии."
+  },
+  "@deepseek-ai/dsh-experimental-session-search": {
+    "title": "Поиск по сессиям",
+    "description": "Даёт агентам инструменты для поиска и чтения прежних сессий этой рабочей области."
+  },
+  "@deepseek-ai/dsh-experimental-session-titles-bundle": {
+    "title": "Названия, следующие за разговором",
+    "description": "Обновляет названия сессий по мере поступления новых запросов человека."
+  },
+  "@deepseek-ai/dsh-skill-badge": {
+    "title": "DSH",
+    "description": "Даёт официальный навык со значком «сделано на DSH»."
+  },
+  "@deepseek-ai/dsh-experimental-speech-to-text": {
+    "title": "Распознавание речи",
+    "description": "Управляет расшифровкой речи в текст и выбирает службу распознавания."
+  },
+  "@deepseek-ai/dsh-experimental-speech-to-text-sensevoice": {
+    "title": "Локальное распознавание SenseVoice",
+    "description": "Расшифровывает записи в текст локально с помощью SenseVoice."
+  },
+  "@deepseek-ai/dsh-experimental-terminal-bundle": {
+    "title": "Постоянные терминалы",
+    "description": "Сохраняет оболочки живыми между вызовами инструментов."
+  },
+  "@deepseek-ai/dsh-experimental-tool-agent-team": {
+    "title": "Инструменты команды",
+    "description": "Даёт агентам инструменты для согласования участников, обмена сообщениями и управления общими задачами."
+  },
+  "@deepseek-ai/dsh-experimental-tool-worktree": {
+    "title": "Рабочие деревья Git",
+    "description": "Позволяет агенту создать новую ветку и рабочее дерево Git и продолжить работу в нём."
+  },
+  "@deepseek-ai/dsh-experimental-voice-input-bundle": {
+    "title": "Голосовой ввод",
+    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости"
+  },
+  "@deepseek-ai/dsh-schedule": {
+    "title": "Планирование задач",
+    "description": "Хранит задачи автоматизации, запускает каждую в её исходной сессии по расписанию и даёт агенту инструменты управления."
+  },
+  "@deepseek-ai/dsh-subagent-claude-code": {
+    "title": "Субагент Claude Code",
+    "description": "Передаёт одну задачу в Claude Code с его собственными настройками и авторизацией."
+  },
+  "@deepseek-ai/dsh-subagent-codex": {
+    "title": "Субагент Codex",
+    "description": "Передаёт одну задачу в Codex с его собственными настройками и авторизацией."
+  }
+}

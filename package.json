@@ -87,7 +87,8 @@
     "diff:harness": "node scripts/diff-harness.mjs",
     "fetch:plugins": "node scripts/fetch-plugin-dicts.mjs",
     "report:plugins": "node scripts/report-plugins.mjs",
-    "report:descriptors": "node scripts/descriptor-coverage.mjs"
+    "report:descriptors": "node scripts/descriptor-coverage.mjs",
+    "apply:descriptors": "node scripts/apply-descriptor-ru.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
