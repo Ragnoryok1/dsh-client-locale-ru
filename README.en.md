@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 396 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 397 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -146,7 +146,11 @@ audit compares a value with its own template, so a phrase that is correct in iso
 broken by substitution stays invisible to it: `frequency.weekly` was filled as «По {weekdays}
 в {time} », while the days arrive as «Пн, Ср» — producing «По Пн, Ср в 09:00», which no
 line-by-line check can see. The same way «Каждые 2 дня» (now «Раз в 2 дня»), «Каждый день в
-09:00 (Europe/Moscow)» and a composed interval with the plural forms are pinned.
+09:00 (Europe/Moscow)» and a composed interval with the plural forms are pinned. The third find
+of the same kind: `time.locale` is not text but a tag for `Intl`, and it was `en` — a rule
+restricted to a month read «Каждый день в January», and the zone label «Moscow Standard Time»
+inside a Russian interface. The tag is `ru` now (the harness's Chinese dictionary uses `zh-CN`
+the same way), and the month sits in parentheses: «Каждый день (январь, март)».
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
 not against some random local checkout. The same run also fires **weekly on a schedule**: a
@@ -216,7 +220,7 @@ whole kilobytes.
   needs no decision at all: there is nothing in it to translate, so the policy stays about
   words rather than about punctuation. The residue rule reads **every** template of a key, not
   only the `en` block: 60 values in dictionaries with an unrecognised block used to go
-  unexamined, while now 2802 values are compared, 68 of them covered by decisions (38 entries,
+  unexamined, while now 2802 values are compared, 66 of them covered by decisions (36 entries,
   one of them a pattern), and the zone is gone as a class. The rule did not become wider:
   an empty value is a defect only where no template is empty either, since Russian justly
   drops the prefix that English drops too (`message.stepProcess.sharedPrefix`).

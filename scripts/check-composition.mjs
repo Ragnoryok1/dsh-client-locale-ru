@@ -117,3 +117,23 @@ test('an interval rule composes with the inflected unit', () => {
   assert.equal(render(30, 'unit.minute.many'), 'Раз в 30 минут')
   assert.equal(render(1, 'unit.minute.one'), 'Раз в 1 минуту')
 })
+
+test('a month-restricted rule names the month in Russian', () => {
+  const ru = dictionary(activate(), 'schedule.catalog')
+  /*
+   * The harness builds the month names with `Intl.DateTimeFormat(t('time.locale'))`,
+   * so the dictionary value is a locale tag, not UI text: 'en' produced «Каждый
+   * день в January» and an English zone label in a Russian interface. The tag has
+   * to be the language's own, as the harness's zh pack uses 'zh-CN'.
+   */
+  assert.equal(ru['time.locale'], 'ru')
+  const format = new Intl.DateTimeFormat(ru['time.locale'], { month: 'long', timeZone: 'UTC' })
+  const months = [1, 3].map(month => format.format(Date.UTC(2026, month - 1, 1))).join(ru['cron.list.join'])
+  assert.equal(months, 'январь, март')
+  const every = fill(ru['cron.day.every'], { months: fill(ru['cron.months'], { months }) })
+  assert.equal(every, 'Каждый день (январь, март)')
+  /* A single month reads the same way, and no English name can come back. */
+  const one = fill(ru['cron.day.every'], { months: fill(ru['cron.months'], { months: 'январь' }) })
+  assert.equal(one, 'Каждый день (январь)')
+  assert.doesNotMatch(one, /[A-Za-z]{3,}/u)
+})
