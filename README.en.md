@@ -33,6 +33,13 @@ Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deeps
 
 The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 77 namespaces, 4495 strings, with the bundled plugin dictionaries marked.
 
+The plugin names and descriptions on the Plugins page cannot come from this pack: the harness
+keeps them in `locale/<language>.json` inside each package, builds a translation map from them,
+and its locale service resolves that map without consulting dictionaries at all — «maps do not
+consult registered dictionaries». 221 harness packages ship `locale/en.json`, 219 of them ship
+`locale/zh.json`, and **none ships `locale/ru.json`**, so those 261 strings stay English with any
+language pack; only `locale/ru.json` files on the harness side can close them.
+`scripts/descriptor-coverage.mjs` counts that gap so it is not mixed into our dictionary coverage.
 Plugins outside the harness tree are translated the same way, but their English comes from
 their own publication: `plugins/<namespace>.json` records the package, version, licence and the
 English strings extracted from its bundle (`npm run fetch:plugins`). `npm run report:plugins`

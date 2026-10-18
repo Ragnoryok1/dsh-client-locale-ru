@@ -32,6 +32,12 @@
 
 完整清单见 [NAMESPACES.md](NAMESPACES.md)：77 个 namespace、4495 条字符串，随包附带的插件词典单独标注。
 
+「插件」页面上的插件名称与说明无法由本包提供：harness 把她们放在每个包的 `locale/<语言>.json`
+里并据此拼出翻译映射，而 locale 服务的 `resolveText` 根本不查词典（原文注释：maps do not
+consult registered dictionaries）。221 个 harness 包带有 `locale/en.json`，其中 219 个带有
+`locale/zh.json`，**没有一个带 `locale/ru.json`**，所以这 261 行在任何语言包下都保持英文，只能由
+harness 侧的 `locale/ru.json` 文件补上。`scripts/descriptor-coverage.mjs` 单独统计这个缺口，
+不与我们的词典覆盖率混在一起。
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json`
 记录包名、版本、许可证，以及从其 bundle 中提取的英文字符串（`npm run fetch:plugins`）。
 安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，
