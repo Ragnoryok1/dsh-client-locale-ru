@@ -41,5 +41,9 @@
   "voice-input · sourceHuggingFace": "название службы распознавания",
   "shortcuts · desktop-document": "путь к файлу привязок: userData/keybindings.json",
   "dsh-web-ui-market · badge.market": "имя сайта: dsh-market.com",
-  "liangshen · lever.state.on": "имя режима: LiangShen"
+  "liangshen · lever.state.on": "имя режима: LiangShen",
+  "dsh-ssh · cluster.col.stdout": "имя потока: Stdout",
+  "dsh-ssh · cluster.col.stderr": "имя потока: Stderr",
+  "dsh-ssh · entry.label": "аббревиатура протокола: SSH",
+  "dsh-ssh · form.proxyCommand": "имя директивы OpenSSH: ProxyCommand"
 }
