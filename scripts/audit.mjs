@@ -1026,6 +1026,29 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 capitalizedAddress.sort()
 
 /**
+ * Values have to be typographically correct before they reach the screen.
+ *
+ * The DOM pass fixes what a text node shows, but a dictionary value also travels
+ * into attributes — `title`, `aria-label`, `placeholder` — which the pass never
+ * sees. A straight quote or a hyphen standing for a dash in such a value would
+ * reach the screen untouched, and worse, the same string would render two ways
+ * depending on where it landed. Checking the values themselves makes the rules
+ * independent of the rendering path: what the pack ships is already correct.
+ */
+const typographicValues = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  for (const [key, value] of byKey) {
+    const defects = []
+    if (/["„“”]/u.test(value)) defects.push('прямые кавычки')
+    if (/(?:^|\s)-(?:\s|$)/u.test(value)) defects.push('дефис вместо тире')
+    if (/[^\s—]—|—[^\s]/u.test(value)) defects.push('тире без пробела')
+    if (/\.\.\./u.test(value)) defects.push('три точки вместо многоточия')
+    for (const defect of defects) typographicValues.push(`${namespace} · ${key} — ${defect}`)
+  }
+}
+typographicValues.sort()
+
+/**
  * A number directly in front of an inflecting noun.
  *
  * Russian needs a form there — «1 путь», «2 пути», «5 путей» — and a dictionary
@@ -1370,6 +1393,7 @@ report('ключи пака, которых нет в харнессе (спра
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
 report('обращение к пользователю с заглавной («Вы» вместо «вы»)', capitalizedAddress)
+report('значения не типографичны (дойдут до атрибутов без правки DOM)', typographicValues)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
@@ -1391,6 +1415,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
+  + typographicValues.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

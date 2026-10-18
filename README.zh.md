@@ -60,7 +60,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 391 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 392 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -82,6 +82,8 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 数字区间规则（«5–10» 用短横线）**有意没有加入**：整个包中唯一在两个数字之间出现连字符的地方是 cron 表达式示例 `0 9 * * 1-5`，换成短横线会把它改坏。这是实测结论，而非假设。
 
 这些规则由脚本检查，而不是靠肉眼：`npm run check:typography`。
+
+排版处理只看到文本节点，而词典取值还会进入属性——`title`、`aria-label`、`placeholder`——它根本到不了那里。因此取值单独检查：包内不能出现直引号、用连字符代替破折号、没有空格的长破折号，或三个点。否则同一个字符串会因为落点不同而呈现两种样子，而提示与朗读标签里则完全没有规则生效。
 
 **第一次处理之后**发生变化的文本——令牌计数器、计时器、进度——会被再次处理，因此实时的 «4 с» 仍保留不换行空格。这一点在真实文档上验证，而不只是对字符串：`npm run check:typography:dom`（jsdom，六个用例——首次处理、文本变更、新增子树、卸载停止、其他语言，以及语言切换）。
 
