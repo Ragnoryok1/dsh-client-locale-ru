@@ -1094,6 +1094,50 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 terminologyViolations.sort()
 
 /**
+ * One word, one spelling of «ё».
+ *
+ * Russian writes «ещё» and «все» differently, and a pack that spells one word both
+ * ways looks machine-made: a reader notices «еще» next to «ещё» sooner than any
+ * grammar mistake. The rule folds every «ё» to «е» and fails when one folded form
+ * carries two spellings. A handful of pairs are *different words* rather than one
+ * word spelled twice — «все» (all) and «всё» (everything) — and they are declared in
+ * `scripts/yo-pairs.json`, which must stay honest: an entry whose pair no longer
+ * exists in the pack fails the build.
+ */
+const YO_PAIRS = (() => {
+  const path = new URL('./yo-pairs.json', import.meta.url)
+  if (!existsSync(path)) return new Map()
+  const parsed = JSON.parse(readFileSync(path, 'utf8'))
+  return new Map(Object.entries(parsed).filter(([key]) => !key.startsWith('_')))
+})()
+const yoSpellings = new Map()
+for (const [, byKey] of packValuesByNamespace) {
+  for (const [, value] of byKey) {
+    for (const word of value.match(/[А-Яа-яЁё]{3,}/gu) ?? []) {
+      const lower = word.toLowerCase()
+      const base = lower.replace(/ё/gu, 'е')
+      if (!yoSpellings.has(base)) yoSpellings.set(base, new Map())
+      const variants = yoSpellings.get(base)
+      if (!variants.has(lower)) variants.set(lower, 0)
+      variants.set(lower, variants.get(lower) + 1)
+    }
+  }
+}
+const yoVariants = []
+for (const [base, variants] of yoSpellings) {
+  if (variants.size < 2) continue
+  if (YO_PAIRS.has(base)) continue
+  yoVariants.push(`${base}: ${[...variants].map(([word, count]) => `${word}×${count}`).join(', ')}`)
+}
+yoVariants.sort()
+const yoStale = [...YO_PAIRS.keys()].filter((base) => {
+  const variants = yoSpellings.get(base)
+  if (variants === undefined) return true
+  const declared = YO_PAIRS.get(base)
+  return !declared.split(/\s+/u).every(word => variants.has(word.toLowerCase()))
+}).sort()
+
+/**
  * Latin words inside otherwise-Russian values.
  *
  * A product name, a slash-command name or a code token belongs there; an
@@ -1562,6 +1606,8 @@ report('решения keep-english.json, которые уже ничего н�
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
+report('одно слово, два написания с «ё»', yoVariants)
+report('объявления yo-pairs.json, которых больше нет в паке', yoStale)
 report('обращение к пользователю с заглавной («Вы» вместо «вы»)', capitalizedAddress)
 report('значения не типографичны (дойдут до атрибутов без правки DOM)', typographicValues)
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
@@ -1586,7 +1632,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
-  + typographicValues.length
+  + typographicValues.length + yoVariants.length + yoStale.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
