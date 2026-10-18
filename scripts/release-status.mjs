@@ -40,22 +40,28 @@ const versionTag = `v${version}`
 const tagCommit = tagTargets[versionTag] ?? null
 const publishedAtTag = tagCommit === null ? null : git(['rev-list', '-n', '1', versionTag])
 
-/* The registry serves bytes; compare them with the tree that claims to produce them. */
+/* The registry is the one fact that needs the network; retry before calling it a problem. */
 let registry = null
 let registryError = null
 const encoded = manifest.name.replace('/', '%2F')
-try {
-  const response = await fetch(`https://registry.npmjs.org/${encoded}/${version}`, {
-    headers: { 'User-Agent': 'dsh-release-status' },
-  })
-  if (response.ok) {
-    const body = await response.json()
-    registry = { shasum: body.dist?.shasum ?? null, publishedAt: body.dist?.tarball ?? null }
-  } else {
-    registryError = `HTTP ${response.status}`
+for (let attempt = 0; attempt < 3 && registry === null && registryError === null; attempt += 1) {
+  try {
+    const response = await fetch(`https://registry.npmjs.org/${encoded}/${version}`, {
+      headers: { 'User-Agent': 'dsh-release-status' },
+      signal: AbortSignal.timeout(15_000),
+    })
+    if (response.ok) {
+      const body = await response.json()
+      registry = { shasum: body.dist?.shasum ?? null }
+    } else if (response.status === 404) {
+      registryError = `версии ${version} в реестре нет`
+    } else {
+      registryError = `HTTP ${response.status}`
+    }
+  } catch (error) {
+    if (attempt === 2) registryError = `реестр недоступен: ${error.message}`
+    else await new Promise(resolve => setTimeout(resolve, 1000))
   }
-} catch (error) {
-  registryError = error.message
 }
 
 let localShasum = null
@@ -83,7 +89,16 @@ if (tagCommit !== null && tagCommit !== head) {
   const commits = Number(git(['rev-list', '--count', `${tagCommit}..${head}`]) || '0')
   notes.push(`после релиза в ветке ${commits} коммит(ов); тег ${versionTag} помечает опубликованное содержимое`)
 }
-if (registry === null) problems.push(`реестр не отдал ${version}: ${registryError ?? 'нет ответа'}`)
+/*
+ * An unreachable registry is the environment, not the release: the version lookup retries
+ * and, when the network is simply down, says so as a note. A version the registry answers
+ * 404 for is a real problem — the tag claims a release that was never published.
+ */
+if (registry === null && /недоступен/u.test(registryError ?? '')) {
+  notes.push(`${registryError} — сверка с реестром пропущена, остальные факты проверены`)
+} else if (registry === null) {
+  problems.push(`реестр не отдал ${version}: ${registryError ?? 'нет ответа'}`)
+}
 if (registry !== null && localShasum !== null && registry.shasum !== localShasum) {
   const message = `shasum в реестре ${registry.shasum}, а текущее дерево собирается в ${localShasum}`
   if (tagCommit === head) problems.push(`тег ${versionTag} стоит на рабочем дереве, но ${message}`)
