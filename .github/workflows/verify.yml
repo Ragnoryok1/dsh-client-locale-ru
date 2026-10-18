@@ -73,6 +73,9 @@ jobs:
       - name: Translated namespace inventory
         run: npm run check:namespaces
 
+      - name: README languages move together
+        run: npm run check:readmes:pairs
+
       - name: Compatibility promise
         run: npm run check:peers
 
