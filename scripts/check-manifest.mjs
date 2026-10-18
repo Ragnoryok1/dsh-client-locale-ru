@@ -75,6 +75,52 @@ if (bundle !== undefined) {
   }
 }
 
+/**
+ * Everything a README links to has to be in the tarball.
+ *
+ * `README.ru` links to the translated-namespace inventory, and the inventory lived in
+ * the repository only: npm renders the README on the package page, so a reader of the
+ * published page follows a link into a file that was never shipped. A link to a file
+ * that `files` does not cover is the same defect one step earlier.
+ */
+const FILES = manifest.files ?? []
+const globToRegExp = (glob) => {
+  const escaped = glob.replace(/[.+^${}()|[\]\\]/gu, '\\$&')
+    .replace(/\*\*/gu, '\u0000').replace(/\*/gu, '[^/]*').replace(/\u0000/gu, '.*')
+  return new RegExp(`^${escaped}$`, 'u')
+}
+const shipped = (path) => FILES.some((entry) => {
+  const normalized = path.replace(/\\/gu, '/')
+  if (entry.endsWith('/')) return normalized.startsWith(entry)
+  if (entry.includes('*')) return globToRegExp(entry).test(normalized)
+  return entry === normalized
+})
+
+for (const readme of ['README.md', 'README.en.md', 'README.zh.md']) {
+  const file = join(ROOT, readme)
+  if (!existsSync(file)) {
+    note(`${readme} отсутствует`)
+    continue
+  }
+  const text = readFileSync(file, 'utf8')
+  const targets = new Set()
+  for (const match of text.matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)) {
+    const target = match[1]
+    if (/^(?:https?:|mailto:|#)/u.test(target)) continue
+    targets.add(target.split('#')[0])
+  }
+  for (const target of targets) {
+    const relative = target.replace(/^\.\//u, '')
+    if (!existsSync(join(ROOT, relative))) {
+      note(`${readme}: ссылка на ${target}, которого нет в репозитории`)
+      continue
+    }
+    if (!shipped(relative)) {
+      note(`${readme}: ссылка на ${target}, которого нет в package.json files — он не попадёт в публикацию`)
+    }
+  }
+}
+
 if (problems.length === 0) {
   console.log(`манифест проходит правила харнесса: dsh.client=${JSON.stringify(client?.platform ?? '—')}, ` +
     `экспорт ./client=${manifest.exports?.['./client'] === undefined ? 'нет' : 'есть'}, ` +
