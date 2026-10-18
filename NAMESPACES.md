@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **67 namespace** — 3202 строк. Колонка «как это выглядит»
+Пакет переводит **68 namespace** — 3326 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -25,6 +25,7 @@
 | `deliverables` | — | 60 | харнесс |
 | `documentHtml` | HTML | 4 | харнесс |
 | `documentMarkdown` | — | 4 | харнесс |
+| `dsh-web-ui-session-archive` | — | 124 | @linxin666/dsh-session-archive@0.4.7 |
 | `dsh-web-ui-usage` | — | 63 | @linxin666/dsh-usage@0.4.7 |
 | `feedback` | — | 20 | харнесс |
 | `git-graph` | — | 63 | @linxin666/dsh-client-ui-git-graph@0.4.7 |
@@ -80,4 +81,4 @@
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **67** namespace, **3202** строк.
+Итого: **68** namespace, **3326** строк.

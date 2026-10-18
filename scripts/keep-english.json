@@ -38,5 +38,6 @@
   "pluginMarket · sourcePlaceholder": "пример адреса индекса",
   "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek",
   "open-in-app · app.vscodeinsiders": "название приложения",
-  "voice-input · sourceHuggingFace": "название службы распознавания"
+  "voice-input · sourceHuggingFace": "название службы распознавания",
+  "shortcuts · desktop-document": "путь к файлу привязок: userData/keybindings.json"
 }

@@ -90,7 +90,8 @@ function dictionaryKeys(text) {
       }
       if (text[cursor + 1] === ':') {
         const key = text.slice(index + 1, cursor)
-        if (/^[\w.]+$/u.test(key)) keys.push(key)
+        /* A plugin key may carry a hyphen: `arch.issue.no-archive-time`. */
+        if (/^[\w.-]+$/u.test(key)) keys.push(key)
       }
       index = cursor + 1
       continue
@@ -227,7 +228,8 @@ function dictionaryEntries(text) {
       }
       if (text[cursor + 1] === ':') {
         const key = text.slice(start + 1, cursor)
-        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, cursor + 2, constants), index: start })
+        /* A plugin key may carry a hyphen: `arch.issue.no-archive-time`. */
+        if (/^[\w.-]+$/u.test(key)) entries.push({ key, value: readStringValue(text, cursor + 2, constants), index: start })
       }
       index = cursor + 1
       continue
@@ -239,7 +241,7 @@ function dictionaryEntries(text) {
       while (after < text.length && /\s/u.test(text[after])) after += 1
       if (text[after] === ':' && text[after + 1] !== ':') {
         const key = text.slice(index, end)
-        if (/^[\w.]+$/u.test(key)) entries.push({ key, value: readStringValue(text, after + 1, constants), index })
+        if (/^[\w.-]+$/u.test(key)) entries.push({ key, value: readStringValue(text, after + 1, constants), index })
       }
       index = end
       continue
