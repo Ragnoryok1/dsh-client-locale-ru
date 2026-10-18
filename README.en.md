@@ -359,8 +359,9 @@ Before publishing, the workflow checks:
 4. the localization audit against the pinned harness tag — dead namespaces, duplicates and plural-form
    pairs will fail and stop the publication;
 5. **compatibility with every version in `compatible_versions`**: each one's locale runtime is
-   downloaded from npm and both suites — language coexistence and plural forms — run against it
-   (`npm run check:compat`), so the promise in the meta block is checked rather than assumed.
+   downloaded from npm and three suites — language coexistence, plural forms and composed phrases
+   — run against it (`npm run check:compat`, part of CI), so the promise in the meta block is
+   checked rather than assumed.
 
 The declaration itself is checked separately (`npm run check:peers`, part of `verify`): the harness
 reads our `peerDependencies` for `@deepseek-ai/dsh*` not as package versions but as a range of

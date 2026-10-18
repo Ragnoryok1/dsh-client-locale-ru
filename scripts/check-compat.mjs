@@ -74,8 +74,9 @@ function runSuite(script, host) {
 
 const versions = claimedVersions()
 rmSync(WORK, { recursive: true, force: true })
-console.log(`проверяю совместимость с ${versions.length} заявленными версиями харнесса\n`)
+console.log(`проверяю совместимость с ${versions.length} заявленными версиями харнесса (три набора на каждую)\n`)
 
+const resultsPerVersion = 3
 const failures = []
 for (const version of versions) {
   let host
@@ -89,6 +90,14 @@ for (const version of versions) {
   const results = [
     ['локали', runSuite('check-locale.mjs', host)],
     ['формы числа', runSuite('check-plural.mjs', host)],
+    /*
+     * The composed-phrase suite reads the finished sentence as a whole, and that is
+     * the layer an older runtime can break without failing either of the suites
+     * above: `time.locale` and the plural categories come from the host, and a
+     * runtime that resolves a key differently produces «Раз в 2 дня» from pieces that
+     * are each correct. Verified which runtime is actually in use, not assumed.
+     */
+    ['фразы', runSuite('check-composition.mjs', host)],
   ]
   const summary = results.map(([name, { ok, output }]) => {
     const passed = /pass (\d+)/u.exec(output)?.[1]
@@ -107,7 +116,7 @@ for (const version of versions) {
 }
 
 console.log(failures.length === 0
-  ? `\nсовместимость подтверждена: ${versions.length} версий, оба набора прошли`
+  ? `\nсовместимость подтверждена: ${versions.length} версий × ${resultsPerVersion} набора`
   : `\nпровалы: ${failures.join(', ')}`)
 process.exitCode = failures.length === 0 ? 0 : 1
 

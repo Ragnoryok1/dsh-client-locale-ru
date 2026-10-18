@@ -166,7 +166,7 @@ git commit -am "release: 0.3.0" && git tag v0.3.0 && git push origin v0.3.0
 2. `deepseek-harness-meta` 块中的版本与 `package.json` 一致——marketplace 从那里读取版本，而且**只在首次索引时**读取，因此版本不一致不会自行修正；
 3. 排版（18 条规则）；
 4. 针对锁定 harness 标签的本地化审计——无效 namespace、重复项、复数形式配对和占位符不一致会报错并中止发布；
-5. **与 `compatible_versions` 中每个版本的兼容性**：从 npm 下载该版本的 locale 运行时，并对它运行语言共存与复数形式两套测试（`npm run check:compat`）——meta 块里的承诺是被验证的，而不是被假定的。
+5. **与 `compatible_versions` 中每个版本的兼容性**：从 npm 下载该版本的 locale 运行时，并对它运行三套测试——语言共存、复数形式与组合短语（`npm run check:compat`，已纳入 CI）——meta 块里的承诺是被验证的，而不是被假定的。
 
 声明本身也单独检查（`npm run check:peers`，包含在 `verify` 中）：harness 并不把我们对 `@deepseek-ai/dsh*` 的 `peerDependencies` 当作包的版本，而是当作**运行时版本**的范围，并带上 `includePrerelease`；若该范围不满足正在运行的 dsh，用户就会看到不兼容警告与豁免提示。脚本把这条 harness 规则套用到所有被声明的版本上——目前八个都通过。
 
