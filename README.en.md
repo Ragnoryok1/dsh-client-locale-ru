@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 385 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 387 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -179,7 +179,16 @@ whole kilobytes.
   Chinese character, or an empty string where the template has text is a defect. English
   copies are allowed only by a decision recorded in `scripts/keep-english.json` (addresses,
   format-only strings, protocol and tool names, abbreviations), so a new untranslated line
-  cannot slip through unnoticed.
+  cannot slip through unnoticed. The decisions themselves are checked too: an entry that no
+  longer excuses anything fails the build — either its key left the pack, or the value was
+  translated and the decision went stale. This is how the `deepSeekBaseUrl` entry was found:
+  the English template gained a note about `DEEPSEEK_BASE_URL`, while the input placeholder
+  has to be a bare example URL, so that note would have been noise inside the field. The entry
+  is gone, the value stays. Next to it the audit prints the copies the residue rule cannot
+  reach — the `en` block of some dictionaries is not recognised, and 60 values live there:
+  application names (`VS Code`, `iTerm2`), format strings (`{from}–{to}`, `{percent}%`), the
+  `en` marker and labels like `Cron {expression}`; the list is visible so a translated
+  sentence cannot hide in that zone unnoticed.
 - **dead keys** — a key no harness dictionary defines and no harness source names is a
   leftover from an older version: it shows nothing and only misleads. Such keys fail the
   build. A key a component still asks for stays in the advisory report, because the pack's

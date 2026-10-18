@@ -28,7 +28,6 @@
   "settings.models · baseUrlPlaceholder": "только плейсхолдер, переводить нечего",
   "settings.models · customAnthropicBaseUrlPlaceholder": "пример адреса",
   "settings.models · customBaseUrlPlaceholder": "пример адреса",
-  "settings.models · deepSeekBaseUrl": "адрес API по умолчанию",
   "settings.models · protocolAnthropicMessages": "название протокола",
   "settings.models · protocolOpenAiCompletions": "название протокола",
   "settings.models · protocolOpenAiResponses": "название протокола",

@@ -750,8 +750,39 @@ const KEEP_ENGLISH = (() => {
   return new Map(entries)
 })()
 
+const keepEnglishStale = (() => {
+  /*
+   * A policy entry is needed exactly while the pack value still equals a template
+   * of its key — the same test the residue rule applies, against the same template
+   * set, so the two cannot disagree about what "an English copy" is. An entry that
+   * no longer answers that question is rot, and rot in this file is dangerous in
+   * one direction: it silently allows the English text it names. A key that has
+   * left the pack, and one that was translated since, are both failures, with the
+   * difference spelled out so the fix is obvious.
+   */
+  const templateCopies = new Set()
+  for (const [namespace, byKey] of packValuesByNamespace) {
+    for (const [key, value] of byKey) {
+      if (harnessTemplates.get(key)?.has(value)) templateCopies.add(`${namespace} · ${key}`)
+    }
+  }
+  return [...KEEP_ENGLISH.keys()]
+    .filter(id => !templateCopies.has(id))
+    .map((id) => {
+      const separator = id.indexOf(' · ')
+      const namespace = id.slice(0, separator)
+      const key = id.slice(separator + 3)
+      const present = packValuesByNamespace.get(namespace)?.has(key) ?? false
+      return present
+        ? `${id} — значение уже не совпадает с шаблоном, запись ничего не разрешает`
+        : `${id} — такого ключа в пакете нет`
+    })
+    .sort()
+})()
+
 const englishResidue = []
 const declaredEnglish = []
+const unresiduedCopies = []
 const cjkResidue = []
 const emptyResidue = []
 let residueChecked = 0
@@ -759,7 +790,18 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
     const templates = englishValuesByKey.get(key)
-    if (templates === undefined) continue
+    if (templates === undefined) {
+      /*
+       * The residue rule reads only English-scope templates, so a dictionary whose
+       * `en` block the scope detector did not see is invisible to it — and 50
+       * values sit exactly there. They are names, format strings and the `en`
+       * locale marker, not prose, but that is a claim to verify rather than
+       * assume, so the copies in that zone are listed: a translated sentence may
+       * never hide in it.
+       */
+      if (harnessTemplates.get(key)?.has(value)) unresiduedCopies.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
+      continue
+    }
     residueChecked += 1
     if (value === '' && [...templates].some(template => template !== '')) {
       emptyResidue.push(`${namespace} · ${key} — шаблон ${JSON.stringify([...templates][0])}`)
@@ -773,6 +815,7 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 englishResidue.sort()
 cjkResidue.sort()
 emptyResidue.sort()
+unresiduedCopies.sort()
 
 /**
  * Keys the pack carries that the harness no longer defines anywhere.
@@ -1246,6 +1289,8 @@ report('namespace харнесса с ключами, которых пак не
 report('значения с китайскими иероглифами', cjkResidue)
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
+report('решения keep-english.json, которые уже ничего не разрешают', keepEnglishStale)
+report('совпадения с шаблоном вне сверки остатков (справочно)', unresiduedCopies)
 report('ключи пака, которых нет в харнессе (справочно)', deadReport.map(entry => `${entry.id} — ссылок в исходниках харнесса: ${entry.mentions}`))
 report('мёртвые ключи без единой ссылки в харнессе', deadUnreferenced)
 report('терминология: запрещённые варианты', terminologyViolations)
@@ -1270,7 +1315,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
-  + pluralFormMismatches.length
+  + pluralFormMismatches.length + keepEnglishStale.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
