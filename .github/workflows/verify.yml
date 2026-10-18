@@ -79,6 +79,17 @@ jobs:
       - name: Compatibility promise
         run: npm run check:peers
 
+      # The meta block claims a set of harness releases; this downloads each one's
+      # locale runtime and runs three suites against it. It is the one step that needs
+      # the registry, which is why `verify` leaves it out and CI does not.
+      - name: Compatibility matrix (downloads each claimed version)
+        run: npm run check:compat
+
+      # A check that runs only in `package.json` protects nobody: this reads both
+      # workflow files and fails when one of them is missing a check from `verify`.
+      - name: Workflows run the verify chain
+        run: npm run check:workflows
+
       - name: Upstream tag watch
         run: npm run check:upstream
 

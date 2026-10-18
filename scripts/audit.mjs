@@ -1310,6 +1310,29 @@ const pinnedTag = (() => {
   }
   return match[1]
 })()
+/*
+ * Every workflow that audits against a harness tree has to audit against the *pinned*
+ * tag. `publish.yml` carried `dsh-v0.2.1-alpha.3` long after the pin moved to rc.2, so
+ * a release would have been gated by an audit run against a tree the pack no longer
+ * targets — silently, because the tag there is a separate copy of the same fact.
+ */
+const tagDrift = (() => {
+  const dir = new URL('.github/workflows/', packRoot)
+  const found = []
+  let names = []
+  try {
+    names = readdirSync(dir).filter(name => name.endsWith('.yml') || name.endsWith('.yaml'))
+  } catch {
+    return found
+  }
+  for (const name of names) {
+    const text = readFileSync(new URL(name, dir), 'utf8')
+    for (const match of text.matchAll(/^\s*HARNESS_TAG:\s*(\S+)\s*$/gmu)) {
+      if (match[1] !== pinnedTag) found.push(`${name}: HARNESS_TAG ${match[1]}, а закреплён ${pinnedTag}`)
+    }
+  }
+  return found.sort()
+})()
 const pinnedVersion = pinnedTag.replace(/^dsh-v?/u, '')
 const BUILT_AGAINST = /(?:built|verified) against dsh\s+`?v?([\w.+-]+)`?/gu
 
@@ -1633,6 +1656,7 @@ report('значения не типографичны (дойдут до атр
 report('латинские слова в русской прозе вне списка terminology.json', latinProse)
 report('число перед склоняемым словом (нет форм и нет нейтральной формулировки)', numberInflection)
 report('числа, заявленные в README, разошедшиеся с пакетом', advertisedWrong)
+report('закреплённый тег харнесса в других workflow, разошедшийся с verify.yml', tagDrift)
 report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
@@ -1650,7 +1674,7 @@ if (uncovered.size > 0) {
 const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
-  + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
+  + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + tagDrift.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
   + typographicValues.length + yoVariants.length + yoStale.length + navOverflow.length
