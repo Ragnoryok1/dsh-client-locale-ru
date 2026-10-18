@@ -45,5 +45,6 @@
   "dsh-ssh · cluster.col.stdout": "имя потока: Stdout",
   "dsh-ssh · cluster.col.stderr": "имя потока: Stderr",
   "dsh-ssh · entry.label": "аббревиатура протокола: SSH",
-  "dsh-ssh · form.proxyCommand": "имя директивы OpenSSH: ProxyCommand"
+  "dsh-ssh · form.proxyCommand": "имя директивы OpenSSH: ProxyCommand",
+  "task-board · preset.builtin.cordis": "имя встроенного пресета: Cordis"
 }

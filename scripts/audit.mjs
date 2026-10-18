@@ -1240,7 +1240,6 @@ function insideCommand(text, index) {
   for (const match of group.matchAll(/[A-Za-z][A-Za-z0-9._+-]*/gu)) {
     if (COMMAND_NAMES.has(match[0].toLowerCase())) return true
   }
-  void length
   return false
 }
 /**
