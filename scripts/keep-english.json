@@ -46,5 +46,21 @@
   "dsh-ssh · cluster.col.stderr": "имя потока: Stderr",
   "dsh-ssh · entry.label": "аббревиатура протокола: SSH",
   "dsh-ssh · form.proxyCommand": "имя директивы OpenSSH: ProxyCommand",
-  "task-board · preset.builtin.cordis": "имя встроенного пресета: Cordis"
+  "task-board · preset.builtin.cordis": "имя встроенного пресета: Cordis",
+  "michengai.codexUi · about.dependency.btw": "BTW — название сопутствующего плагина",
+  "michengai.codexUi · about.dependency.dsh": "DeepSeek Harness — название продукта",
+  "michengai.codexUi · about.dependency.pua": "PUA — название сопутствующего плагина",
+  "michengai.codexUi · about.dependency.simplify": "Simplify — название сопутствующего плагина",
+  "michengai.codexUi · about.dependency.ui": "Codex UI — название плагина",
+  "michengai.codexUi · about.nav": "Codex UI — название плагина",
+  "michengai.codexUi · about.title": "Codex UI — название плагина",
+  "michengai.codexUi · about.viewProject": "GitHub — название сервиса",
+  "michengai.codexUi · channel.dingtalk": "DingTalk — название сервиса",
+  "michengai.codexUi · channel.feishu": "Feishu — название сервиса",
+  "michengai.codexUi · channel.lark": "Lark — название сервиса",
+  "michengai.codexUi · channel.qq": "QQ — название сервиса",
+  "michengai.codexUi · channel.telegram": "Telegram — название сервиса",
+  "michengai.codexUi · channel.wecom": "WeCom — название сервиса",
+  "michengai.codexUi · channel.weixin": "WeChat — название сервиса",
+  "michengai.codexUi · meta.locale": "en-US — идентификатор локали, а не текст"
 }

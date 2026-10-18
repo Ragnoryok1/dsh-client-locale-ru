@@ -21,8 +21,8 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-77-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-4%2C495-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-78-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-4788-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 77 个 namespace、4,495 条翻译，基于 dsh `0.2.1-alpha.3` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围仅限 harness 自带的客户端界面——第三方插件的词典有意不纳入范围，而下载量最高的 17 个生态插件中有 11 个不提供自己的字符串，所以它们通过这些 namespace 已经是俄语界面了。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
 
@@ -85,7 +85,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 482 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 490 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -140,7 +140,7 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 
 审计在 CI（`.github/workflows/verify.yml`）中针对**锁定的 harness 标签**运行，而不是针对随便一份本地 checkout。同一次运行还会**每周按计划**触发一次：即使没人改动，译文也会腐坏——上游继续前进，本地一切正常，而偏差只在用户构建时才浮现。门禁覆盖完整性（key 与 namespace）、复数形式、占位符、英文与中文残留、术语、正文中的拉丁词、文本卫生、首尾空格、风格、取值的排版、«ё»、组合短语、设置侧栏标签的长度以及对外宣称的数字——每一项都已经抓到过真实缺陷。除此之外，审计还会打印**参考报告**——它们不是门禁，因为需要人来判断：比对了多少个 namespace、哪些无法建立对应关系、是否还留有「数字 + 需变格的名词」，以及短字符串是否长到英文的 2.8 倍以上（排版风险——«Effort» → «Уровень рассуждения» 是俄语的正常长度，不是缺陷）。
 
-审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 1 KB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
+审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 490 KB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
 
 - **无效 namespace**——包注册的每一个 namespace 都必须在 harness 中存在。在 0.1.6 中，日程目录的翻译被注册在 `schedule.manager` 名下，而读取它们的是 `schedule.catalog`：此时按 key 做的覆盖率检查还报告「全部已翻译」；
 - **复数形式配对**——`.one`/`.other` 的集合必须一致，因为客户端按 `count === 1 ? '.one' : '.other'` 选择形式。这对俄语还不够：每一对还需要 `.few` 与 `.many`，否则包装层会悄悄退回中性的 `.other`，本该是 «2 дня» 的地方显示成 «2 д»。该检查**按 namespace** 进行——包装层在提问的那个 namespace 里查找形式，因此「某个界面上有、另一个界面上缺」这种情况否则不会被发现。它找到了四个时间单位（`schedule.catalog` 中的 `unit.day/hour/minute/second`）和任务管理器里的 `trigger`；同时这些单位不再是缩写（«д»、«ч»、«мин»），而是带正确格位的完整形式——«через 2 дня»、«через 5 часов»，而 «Каждые 2 дня» 现在写作 «Раз в 2 дня»。同样的要求也覆盖本包自己添加的 key（`terminal.expand` 及其同类：harness 会把计数传给它，却从不配对）——这些形式只由我们维护，少一个不会有任何其他检查发现；

@@ -21,8 +21,8 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-77-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-4%2C495-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-78-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-4788-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 Русский язык для веб-интерфейса DeepSeek Harness: 77 namespaces, 4495 перевод, экранная типографика и аудит локализации в CI.
 
@@ -107,7 +107,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 половину; declared `dsh.client` без экспорта `./client` заставляет `client-modules` бросить
 ошибку; `dsh.bundle.patch` обязан указывать на существующий файл.
 
-Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 482 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
+Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 490 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
 
 ## Почему гибрид
 
