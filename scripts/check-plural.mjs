@@ -147,10 +147,53 @@ test('a call without a count, and a non-Russian locale, are left alone', () => {
   assert.equal(t('message.turnProcess.toolCalls.other', { other: 'x' }), 'Вызовов инструментов: {count}')
   assert.equal(t('message.turnProcess.toolCalls.other'), 'Вызовов инструментов: {count}')
 
+  /*
+   * Switching to another language must leave the wrapper inert: the runtime now
+   * resolves the same keys through the English dictionary, and a rewritten
+   * `…other.few` would miss it. Registering a real `en` block is what makes this
+   * observable — with no English text every key falls through anyway, so the test
+   * would pass even if the wrapper rewrote it.
+   */
+  locale.register('chat', 'en', {
+    'message.turnProcess.toolCalls.one': '1 tool call',
+    'message.turnProcess.toolCalls.other': '{count} tool calls',
+  })
   locale.setLocale('en')
   assert.equal(locale.getLocale().active, 'en')
-  // Nothing carries the key in `en`, so it falls through unchanged.
-  assert.equal(t('message.turnProcess.toolCalls.other', { count: 2 }), 'message.turnProcess.toolCalls.other')
+  assert.equal(t('message.turnProcess.toolCalls.one', { count: 1 }), '1 tool call')
+  assert.equal(t('message.turnProcess.toolCalls.other', { count: 2 }), '2 tool calls')
+  // …and switching back restores the Russian forms on the same binding.
+  locale.setLocale('ru')
+  assert.equal(t('message.turnProcess.toolCalls.other', { count: 2 }), '2 вызова инструментов')
+  assert.equal(t('message.turnProcess.toolCalls.other', { count: 5 }), '5 вызовов инструментов')
+
+  ctx.dispose()
+})
+
+test('another language pack keeps its own forms: our rules never touch it', () => {
+  const locale = fresh()
+  const ctx = context(locale)
+  pack.apply(ctx)
+  /*
+   * Our wrapper selects forms with `Intl.PluralRules('ru')`. If it ran while another
+   * language was active, it would rewrite the key to the *Russian* category — a
+   * Polish pack's `.few` would then answer a call that asked for its `.other`, and
+   * the reader would see the wrong inflection from a dictionary that is not ours.
+   * The guard is what makes the English case in the test above indistinguishable
+   * from a rewrite: English has no `.few`, so only a pack that does have one can
+   * show the difference.
+   */
+  locale.addLanguage({ id: 'pl', label: 'Polski', fallback: 'en' })
+  locale.register('chat', 'pl', {
+    'message.turnProcess.toolCalls.one': 'PL one',
+    'message.turnProcess.toolCalls.few': 'PL few',
+    'message.turnProcess.toolCalls.other': 'PL other',
+  })
+  locale.setLocale('pl')
+  const t = locale.bind('chat')
+  assert.equal(t('message.turnProcess.toolCalls.other', { count: 2 }), 'PL other')
+  assert.equal(t('message.turnProcess.toolCalls.other', { count: 5 }), 'PL other')
+  assert.equal(t('message.turnProcess.toolCalls.one', { count: 1 }), 'PL one')
 
   ctx.dispose()
 })
