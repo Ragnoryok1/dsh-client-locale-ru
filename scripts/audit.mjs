@@ -1202,6 +1202,48 @@ const yoStale = [...YO_PAIRS.keys()].filter((base) => {
 const latinProse = []
 const allowedLatin = terminology.latin ?? {}
 /**
+ * Command names that make the parenthesised group around them an instruction.
+ *
+ * The rule is deliberately narrow: a group containing `npm`, `cloudflared` or another
+ * listed name is a command the reader types, so its words are not English prose. An
+ * unknown name does not exempt anything — `(see the tunnel documentation)` stays a
+ * finding, which is what keeps the exemption from becoming a blanket one.
+ */
+const COMMAND_NAMES = new Set(['npm', 'pnpm', 'npx', 'brew', 'corepack', 'git', 'dsh', 'docker', 'cloudflared', 'tar'])
+function insideCommand(text, index) {
+  let open = -1
+  let depth = 0
+  for (let cursor = index; cursor >= 0; cursor -= 1) {
+    if (text[cursor] === ')') depth += 1
+    else if (text[cursor] === '(') {
+      if (depth === 0) {
+        open = cursor
+        break
+      }
+      depth -= 1
+    }
+  }
+  if (open === -1) return false
+  let close = text.length
+  depth = 0
+  for (let cursor = open; cursor < text.length; cursor += 1) {
+    if (text[cursor] === '(') depth += 1
+    else if (text[cursor] === ')') {
+      depth -= 1
+      if (depth === 0) {
+        close = cursor
+        break
+      }
+    }
+  }
+  const group = text.slice(open, close)
+  for (const match of group.matchAll(/[A-Za-z][A-Za-z0-9._+-]*/gu)) {
+    if (COMMAND_NAMES.has(match[0].toLowerCase())) return true
+  }
+  void length
+  return false
+}
+/**
  * Words allowed only in one value: `install` and `enable` are parts of a command a
  * reader is told to run, and in ordinary prose they are still a defect. The map is
  * `token -> ["namespace · key", …]`, and a stale entry fails the build like every
@@ -1236,11 +1278,24 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       const after = cleaned[match.index + token.length] ?? ''
       if (before === '/' || after === '/' || (before === '<' && after === '>')) continue
       if (allowedLatin[token.toLowerCase()] !== undefined) continue
+      /*
+       * A per-value allowance is consulted before the structural exemptions: an entry
+       * whose word is now covered by the command rule would otherwise be reported stale
+       * while still being the reason the word is allowed.
+       */
       const allowedHere = latinInValues.get(token.toLowerCase())
       if (allowedHere !== undefined && allowedHere.has(`${namespace} · ${key}`)) {
         latinInValuesUsed.add(`${token.toLowerCase()}|${namespace} · ${key}`)
         continue
       }
+      /*
+       * A flag (`--host`, `--token`) and a word inside a parenthesised command
+       * (`(cloudflared tunnel run --token)`) are instructions to type, not prose. The
+       * second rule needs the command-name list: `tunnel` on its own in a sentence stays
+       * a finding, while the same word in that example does not.
+       */
+      if (before === '-') continue
+      if (insideCommand(cleaned, match.index)) continue
       latinProse.push(`${namespace} · ${key} — «${token}»`)
     }
   }
