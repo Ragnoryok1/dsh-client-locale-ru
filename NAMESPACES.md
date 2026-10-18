@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **76 namespace** — 4382 строк. Колонка «как это выглядит»
+Пакет переводит **77 namespace** — 4495 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -83,10 +83,11 @@
 | `slash.menu` | — | 9 | харнесс |
 | `subagent` | — | 79 | харнесс |
 | `task-board` | — | 437 | @linxin666/dsh-client-ui-task-board@0.4.7 |
+| `task-board-github` | — | 113 | @linxin666/dsh-client-ui-task-board-github@0.4.7 |
 | `trajectory` | — | 196 | харнесс |
 | `update` | — | 43 | @linxin666/dsh-update@0.4.7 |
 | `voice-input` | — | 109 | харнесс |
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **76** namespace, **4382** строк.
+Итого: **77** namespace, **4495** строк.
