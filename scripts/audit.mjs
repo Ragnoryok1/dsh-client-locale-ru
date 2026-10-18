@@ -1434,6 +1434,26 @@ for (const [namespace, byKey] of packValuesByNamespace) {
 // Russian runs longer than English as a rule — «Command failed» becomes «Команда
 // завершилась с ошибкой» — so only the extreme cases are worth a look, longest first.
 grownShortStrings.sort((left, right) => right.ratio - left.ratio)
+/**
+ * A settings sidebar label has to fit the column.
+ *
+ * The reference screenshot of 0.1.8 shows «Встроенные пл…» — the 18-character
+ * «Встроенные плагины» did not fit where «Built-in plugins» and「内置插件」do. The
+ * column width is the harness's, not ours, so the fix belongs here: a label of 17
+ * characters or more in a `settings` namespace is refused, and the page title may
+ * keep the full wording («Встроенные плагины») because it has the room.
+ */
+const NAV_LIMIT = 17
+const navOverflow = []
+for (const [namespace, byKey] of packValuesByNamespace) {
+  if (!namespace.startsWith('settings')) continue
+  for (const [key, value] of byKey) {
+    if (!(key === 'nav' || key.endsWith('.nav'))) continue
+    if (value.length < NAV_LIMIT) continue
+    navOverflow.push(`${namespace} · ${key} — ${value.length} символов: «${value}»`)
+  }
+}
+navOverflow.sort()
 const grownShortStringsReport = grownShortStrings
   .slice(0, 15)
   .map(row => `${row.id} — ${row.ratio.toFixed(1)}× («${row.template}» → «${row.value}»)`)
@@ -1617,6 +1637,7 @@ report('гигиена текста', hygiene)
 report('краевые пробелы, расходящиеся с шаблоном своего namespace', edgeSpaces)
 report('стиль, расходящийся с шаблоном своего namespace (знак в конце, регистр)', style)
 report('короткие строки, выросшие больше чем в 2,8 раза (риск вёрстки)', grownShortStringsReport)
+report(`подписи в боковой панели настроек длиннее ${NAV_LIMIT - 1} символов (не помещаются)`, navOverflow)
 report('одна английская фраза, переведённая по-разному', splitRenderingsReport)
 report('один русский ответ на разные английские фразы (справочно)', sharedRenderingsReport)
 report('исключения one-rendering.json, объявленные вручную (справочно)', declaredSplitRenderingsReport)
@@ -1632,7 +1653,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
-  + typographicValues.length + yoVariants.length + yoStale.length
+  + typographicValues.length + yoVariants.length + yoStale.length + navOverflow.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)

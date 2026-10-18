@@ -1005,7 +1005,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'metadataError': 'Ошибка метаданных пакета: {error}',
   },
   'settings.plugins': {
-    'nav': 'Встроенные плагины',
+    'nav': 'Встроенные',
     'title': 'Встроенные плагины',
     'intro': 'Просмотр плагинов, которые поставляет это развёртывание.',
     'tabs': 'Виды плагинов',
@@ -3172,3 +3172,5 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'badge.label': '1017',
   },
 }
+
+

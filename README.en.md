@@ -167,8 +167,9 @@ not against some random local checkout. The same run also fires **weekly on a sc
 translation rots without anyone editing it — the upstream moves on, everything is green
 locally, and the drift surfaces only when a user builds. The gates cover completeness (keys and
 namespaces), plural forms, placeholders, English and Chinese residue, terminology, Latin words in
-prose, text hygiene, edge spaces, style, typography of values, «ё», composed phrases and the
-advertised numbers — and every one of them has already caught real defects. Beside them the audit
+prose, text hygiene, edge spaces, style, typography of values, «ё», composed phrases, the length
+of settings sidebar labels and the advertised numbers — and every one of them has already caught
+real defects. Beside them the audit
 prints **advisory reports**,
 which are not gates because they need a human decision: how many namespaces were compared and
 which could not be linked, whether any «number + inflecting word» is left, and whether a short
