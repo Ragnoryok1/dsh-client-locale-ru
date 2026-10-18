@@ -163,8 +163,26 @@ jobs:
       - name: Show what would be published
         run: npm pack --dry-run
 
+      # A version can already be on the registry — published by hand, or a re-run of this
+      # workflow on an older tag. Publishing it again fails the last step after every gate
+      # has passed, which reads as a broken release; the guard turns that into a skip.
+      - name: Is this version already on the registry
+        id: published
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          if npm view "${name}@${version}" version >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::${name}@${version} is already published — nothing to publish"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish
-        if: ${{ !inputs.dry-run }}
+        if: ${{ !inputs.dry-run && steps.published.outputs.exists != 'true' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public --provenance

@@ -95,7 +95,8 @@
     "report:plugins": "node scripts/report-plugins.mjs",
     "report:descriptors": "node scripts/descriptor-coverage.mjs",
     "apply:descriptors": "node scripts/apply-descriptor-ru.mjs",
-    "check:descriptors": "node scripts/apply-descriptor-ru.mjs --check"
+    "check:descriptors": "node scripts/apply-descriptor-ru.mjs --check",
+    "release:status": "node scripts/release-status.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
