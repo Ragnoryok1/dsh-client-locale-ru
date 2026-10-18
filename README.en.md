@@ -70,7 +70,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 407 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 408 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -94,8 +94,9 @@ Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-c
   3 строки / 7 строк» — and the wrapper looks a form up for those keys too. Where a form does
   not fit (a sentence carrying several numbers), the value is rewritten to be count-neutral:
   «Символов: {total}» instead of «{total} символов», «файлов: {files}» instead of
-  «{files} файлов». Checked by `npm run check:plural` — five cases, including an unpaired key
-  and a fractional count.
+  «{files} файлов». Checked by `npm run check:plural` at counts 0, 1, 2, 3, 5 and 22, on an
+  unpaired key, on a fractional count, and on a foreign language pack whose forms our rules
+  must not rewrite.
 - **Fallback** — a missing Russian key falls back to `en` (the configured `fallback`).
 
 ## Typography
@@ -164,8 +165,11 @@ asserted end to end: «Пн–Пт каждые 5 минут». The date stamps 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
 not against some random local checkout. The same run also fires **weekly on a schedule**: a
 translation rots without anyone editing it — the upstream moves on, everything is green
-locally, and the drift surfaces only when a user builds. Six groups of checks are gated, and
-all six have already caught real defects. Beside them the audit prints **advisory reports**,
+locally, and the drift surfaces only when a user builds. The gates cover completeness (keys and
+namespaces), plural forms, placeholders, English and Chinese residue, terminology, Latin words in
+prose, text hygiene, edge spaces, style, typography of values, «ё», composed phrases and the
+advertised numbers — and every one of them has already caught real defects. Beside them the audit
+prints **advisory reports**,
 which are not gates because they need a human decision: how many namespaces were compared and
 which could not be linked, whether any «number + inflecting word» is left, and whether a short
 string grew past 2.8× its English (a layout risk — «Effort» → «Уровень рассуждения» is normal
@@ -272,7 +276,8 @@ whole kilobytes.
 A separate workflow watches the tag itself: `watch-upstream` compares the pinned tag with
 the harness tags once a week, opens an issue with the steps when a newer one exists, and turns
 the run red — so lagging behind is found on a schedule rather than in a user's screenshot. The
-version comparison is checked without the network (`npm run check:upstream`, five cases) and is
+version comparison is checked without the network (`npm run check:upstream`: prerelease order,
+equal versions, a move between lines) and is
 part of `verify`: a release has to outrank its own prereleases, or the watch would fire forever.
 
 The coverage number is not a gate: some sections are deliberately left in English. Next to it
