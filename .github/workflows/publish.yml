@@ -24,6 +24,9 @@ on:
 
 permissions:
   contents: read
+  # `npm publish --provenance` signs an attestation with the OIDC token; without this
+  # grant the release dies on its last step after every gate has passed.
+  id-token: write
 
 concurrency:
   group: publish-${{ github.ref }}

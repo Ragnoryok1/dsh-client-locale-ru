@@ -83,4 +83,20 @@ if (problems.length > 0) {
   for (const problem of problems) console.error(`  ${problem}`)
   process.exit(1)
 }
+
+/*
+ * A publish with `--provenance` needs the OIDC token, and the workflow grants it only
+ * through `permissions: id-token: write`. Without that grant the whole release stops at
+ * the last step — every gate green, nothing published — which is exactly what happened to
+ * v0.2.1 on 2026-10-18. The coupling is mechanical, so it is checked mechanically.
+ */
+const publishText = read('.github/workflows/publish.yml')
+if (/npm publish[^\n]*--provenance/u.test(publishText)) {
+  const permissions = /^permissions:\n((?: {2}\S.*\n)+)/mu.exec(publishText)?.[1] ?? ''
+  if (!/^ {2}id-token: write$/mu.test(permissions)) {
+    console.error('publish.yml: npm publish --provenance без «permissions: id-token: write» — релиз упрётся в последнем шаге')
+    process.exit(1)
+  }
+}
+
 console.log(`workflows запускают все ${chain.length} проверок цепочки verify (verify.yml и publish.yml; CI-only: ${[...CI_ONLY].join(', ')})`)
