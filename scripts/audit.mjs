@@ -628,6 +628,23 @@ for (const [key, russian] of packValues) {
 placeholderMismatches.sort()
 
 /**
+ * Harness namespaces the pack never registers.
+ *
+ * Key coverage cannot see this class: every key of such a dictionary may be
+ * translated under another namespace and still count as covered, while the
+ * component that registers this namespace keeps falling back to English. The
+ * pack shipped 55 namespaces against the harness's 63, and one of the extras —
+ * `settings.sessionLog` — reaches the general settings screen, so an unclaimed
+ * namespace with keys is a failure, not a report. Namespaces the registration
+ * scan picks up without carrying any key (a constant that merely looks like a
+ * namespace) are ignored: there is nothing to translate in them.
+ */
+const harnessNamespaceGaps = [...harnessNamespaceKeys]
+  .filter(([namespace, keys]) => keys.size > 0 && !packNamespaces.has(namespace))
+  .map(([namespace, keys]) => `${namespace} — ключей ${keys.size}, регистрация: ${harnessNamespaces.get(namespace)}`)
+  .sort()
+
+/**
  * Keys the harness renders in a namespace the pack translates but omits there.
  *
  * Global name coverage hides these: a key translated under another namespace
@@ -904,14 +921,41 @@ const packRoot = new URL('..', import.meta.url)
  * Chinese form, and a count in front of `namespace` that a punctuation mark
  * closes. A bare `перевод` matched the version in «В 0.1.6 переводы каталога…»
  * and a history section's own figures, which are legitimately different numbers.
+ *
+ * A grouped thousands separator is a fourth spelling of the same fact — the
+ * English and Chinese leads said «2,489 strings» while every gated form said
+ * 2535 — so the digit pattern accepts separators and the reader strips them.
  */
+const readGrouped = match => Number(match[1].replace(/[^\d]/gu, ''))
 const ADVERTISED = [
   { label: 'строк', pattern: /badge\/strings-(\d+)%2C(\d+)-/u, read: match => `${match[1]}${match[2]}`, expected: packKeys.size },
-  { label: 'строк', pattern: /,\s*(\d+) translated strings/u, expected: packKeys.size },
-  { label: 'строк', pattern: /,\s*(\d+)\s*перевод/u, expected: packKeys.size },
-  { label: 'строк', pattern: /、(\d+)\s*条翻译/u, expected: packKeys.size },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*translated strings/u, read: readGrouped, expected: packKeys.size },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*strings/u, read: readGrouped, expected: packKeys.size },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*перевод/u, read: readGrouped, expected: packKeys.size },
+  { label: 'строк', pattern: /、\s*(\d[\d,\u00A0]*)\s*条翻译/u, read: readGrouped, expected: packKeys.size },
   { label: 'namespace', pattern: /(\d+)\s*(?:namespaces?|个 namespace)\s*[,、]/u, expected: packNamespaces.size },
 ]
+
+/**
+ * The harness version the READMEs say they were built against.
+ *
+ * The pinned tag and the prose about it drift apart silently: both leads claimed
+ * `0.2.1-alpha.2` while the workflow had already moved to `dsh-v0.2.1-alpha.3`,
+ * and a reader compares packs by that sentence, not by the workflow. The tag is
+ * read from the workflow that pins it, so the claim is checked against the thing
+ * that actually builds and verifies the pack.
+ */
+const pinnedTag = (() => {
+  const workflow = readFileSync(new URL('.github/workflows/verify.yml', packRoot), 'utf8')
+  const match = /^\s*HARNESS_TAG:\s*(\S+)\s*$/mu.exec(workflow)
+  if (match === null) {
+    console.error('verify.yml не объявляет HARNESS_TAG — сверять заявление README не с чем')
+    process.exit(2)
+  }
+  return match[1]
+})()
+const BUILT_AGAINST = /built against dsh `v?([^`]+)`/gu
+
 const advertisedWrong = []
 for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
   let text
@@ -926,6 +970,11 @@ for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
       const claimed = Number(read === undefined ? match[1] : read(match))
       if (claimed !== expected) advertisedWrong.push(`${file}: заявлено ${claimed} ${label}, а в пакете ${expected}`)
     }
+  }
+  for (const match of text.matchAll(BUILT_AGAINST)) {
+    const claimed = match[1].trim()
+    const pinned = pinnedTag.replace(/^dsh-v?/u, '')
+    if (claimed !== pinned) advertisedWrong.push(`${file}: заявлено «built against dsh ${claimed}», а workflow закрепляет ${pinnedTag}`)
   }
 }
 advertisedWrong.sort()
@@ -1148,6 +1197,7 @@ report('формы, добавленные пакетом к ключам без
 report('плейсхолдеры, расходящиеся с шаблоном харнесса', placeholderMismatches)
 report('ключи, которых нет в своём namespace', namespaceGaps)
 report('namespace пака, которых не сверить с харнессом (нет привязки к словарю)', uncomparedNamespaces)
+report('namespace харнесса с ключами, которых пак не регистрирует', harnessNamespaceGaps)
 report('значения с китайскими иероглифами', cjkResidue)
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
@@ -1174,7 +1224,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
-  + splitRenderings.length + staleSplitRenderings.length
+  + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
