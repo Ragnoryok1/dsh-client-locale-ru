@@ -39,5 +39,6 @@
   "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek",
   "open-in-app · app.vscodeinsiders": "название приложения",
   "voice-input · sourceHuggingFace": "название службы распознавания",
-  "shortcuts · desktop-document": "путь к файлу привязок: userData/keybindings.json"
+  "shortcuts · desktop-document": "путь к файлу привязок: userData/keybindings.json",
+  "dsh-web-ui-market · badge.market": "имя сайта: dsh-market.com"
 }
