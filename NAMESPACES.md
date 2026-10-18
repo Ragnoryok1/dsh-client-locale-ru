@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **72 namespace** — 3703 строк. Колонка «как это выглядит»
+Пакет переводит **74 namespace** — 3791 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -27,6 +27,7 @@
 | `documentMarkdown` | — | 4 | харнесс |
 | `dsh-skill-explorer` | — | 75 | @linxin666/dsh-client-ui-skill-explorer@0.4.7 |
 | `dsh-web-ui-market` | — | 106 | @linxin666/dsh-client-ui-market@0.4.7 |
+| `dsh-web-ui-preset-center` | — | 46 | @linxin666/dsh-client-ui-preset-center@0.4.7 |
 | `dsh-web-ui-session-archive` | — | 124 | @linxin666/dsh-session-archive@0.4.7 |
 | `dsh-web-ui-usage` | — | 63 | @linxin666/dsh-usage@0.4.7 |
 | `feedback` | — | 20 | харнесс |
@@ -34,6 +35,7 @@
 | `goal` | — | 12 | харнесс |
 | `inspectorPanel` | Инспектор Node.js | 4 | харнесс |
 | `job` | — | 50 | харнесс |
+| `liangshen` | — | 42 | @linxin666/dsh-liangshen@0.4.7 |
 | `model` | — | 23 | харнесс |
 | `open-in-app` | — | 45 | харнесс |
 | `permission.access` | Права доступа | 20 | харнесс |
@@ -85,4 +87,4 @@
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **72** namespace, **3703** строк.
+Итого: **74** namespace, **3791** строк.

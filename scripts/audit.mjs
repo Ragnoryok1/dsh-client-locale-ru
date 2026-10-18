@@ -1589,7 +1589,14 @@ const hygiene = []
 const edgeSpaces = []
 const style = []
 for (const [namespace, byKey] of packValuesByNamespace) {
-  const english = namespaceEnglishOnly.get(namespace) ?? new Map()
+  /*
+   * A vendored plugin dictionary is the template for its own keys: `confirm.title` there
+   * is «Install an executable preset», while the harness's `common` namespace uses the
+   * same bare key for a question («Enable Full access?»). Falling back to the cross-namespace
+   * map made the plugin's title look like a lost question mark.
+   */
+  const external = externalNamespaceEnglish.get(namespace)
+  const english = external ?? namespaceEnglishOnly.get(namespace) ?? new Map()
   for (const [key, value] of byKey) {
     if (!value.includes('\\n')) {
       for (const [title, test] of HYGIENE_RULES) {
@@ -1598,7 +1605,9 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       }
     }
     const variants = englishVariantsByKey.get(key)
-    const template = english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
+    const template = external === undefined
+      ? english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
+      : english.get(key)
     if (template === undefined) continue
     if (/^ /u.test(value) !== /^ /u.test(template) || / $/u.test(value) !== / $/u.test(template)) {
       edgeSpaces.push(`${namespace} · ${key} — у нас ${JSON.stringify(value)} | шаблон ${JSON.stringify(template)}`)
@@ -1621,7 +1630,16 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       const firstValue = firstLetter(value)
       const firstTemplate = firstLetter(trimmedTemplate)
       if (firstValue !== undefined && firstTemplate !== undefined && /[A-Za-z\u0400-\u04FF]/u.test(firstTemplate)) {
-        if ((firstValue !== firstValue.toLowerCase()) !== (firstTemplate !== firstTemplate.toLowerCase())) {          style.push(`${namespace} · ${key} — регистр: у нас ${JSON.stringify(value.slice(0, 30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(0, 30))}`)
+        /*
+         * One direction only: a capitalised template must not become lowercase in the
+         * Russian. The reverse is normal — an English template may open with a lowercase
+         * code token (`customSkillDirs config`, `v{version} release notes`) while a Russian
+         * sentence starts with a capital.
+         */
+        const templateCapitalised = firstTemplate !== firstTemplate.toLowerCase()
+        const valueLowercase = firstValue === firstValue.toLowerCase()
+        if (templateCapitalised && valueLowercase) {
+          style.push(`${namespace} · ${key} — регистр: у нас ${JSON.stringify(value.slice(0, 30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(0, 30))}`)
         }
       }
     }

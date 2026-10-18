@@ -40,5 +40,6 @@
   "open-in-app · app.vscodeinsiders": "название приложения",
   "voice-input · sourceHuggingFace": "название службы распознавания",
   "shortcuts · desktop-document": "путь к файлу привязок: userData/keybindings.json",
-  "dsh-web-ui-market · badge.market": "имя сайта: dsh-market.com"
+  "dsh-web-ui-market · badge.market": "имя сайта: dsh-market.com",
+  "liangshen · lever.state.on": "имя режима: LiangShen"
 }
