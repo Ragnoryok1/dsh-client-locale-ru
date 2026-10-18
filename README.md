@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.1",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2550 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface for the DeepSeek Harness web GUI: 56 namespaces, 2560 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,9 +22,9 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--alpha.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-56-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-2%2C550-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-2%2C560-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский язык для веб-интерфейса DeepSeek Harness: 56 namespace, 2550 переводов, экранная типографика и аудит локализации в CI.
+Русский язык для веб-интерфейса DeepSeek Harness: 56 namespace, 2560 переводов, экранная типографика и аудит локализации в CI.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -73,7 +73,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 половину; declared `dsh.client` без экспорта `./client` заставляет `client-modules` бросить
 ошибку; `dsh.bundle.patch` обязан указывать на существующий файл.
 
-Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 397 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
+Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 399 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
 
 ## Почему гибрид
 
@@ -158,6 +158,13 @@ npm run verify -- <дерево харнеса>  # всё вместе
 часового пояса — «Moscow Standard Time» в русском интерфейсе. Теперь тег `ru` (у китайского
 словаря харнесса точно так же `zh-CN`), а месяц встаёт в скобки: «Каждый день (январь,
 март)».
+
+Тот же разбор по частям нашёлся в описании cron. Там были сокращения («Каждые {step} мин»,
+«Каждые {count} ч») и книжные обороты («в минуту {minutes}», «минуты {minutes} в часы
+{hours}»). Счётные части получили формы числа — «Каждые 3 минуты» / «Каждые 5 минут»,
+«Каждые 2 часа» / «Каждые 6 часов», — а остальные части переписаны в один читаемый вид с
+метками: «Каждый час, минуты: 5, 30», «минуты: 5, часы: 09–17». Вся фраза расписания
+складывается проверкой целиком: «Пн–Пт каждые 5 минут».
 
 Аудит выполняется в CI (`.github/workflows/verify.yml`) против **закреплённого тега**
 харнеса, а не против случайного локального чекаута. Раз в неделю тот же прогон запускается
@@ -369,7 +376,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## Содержимое
 
-- `src/client/dicts.ts` — русские словари (56 namespace, 2550 перевод, ~3000 строк). Это и есть основная ценность.
+- `src/client/dicts.ts` — русские словари (56 namespace, 2560 перевод, ~3000 строк). Это и есть основная ценность.
 - `src/client/index.ts` — точка входа клиентского плагина (регистрация `ru` + словарей).
 - `src/index.ts` — пустая host-половина (`apply()`).
 - `cordis.patch.yml` — профиль-патч (`- insert:` клиентской строки `locale-ru`).

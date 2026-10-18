@@ -118,6 +118,40 @@ test('an interval rule composes with the inflected unit', () => {
   assert.equal(render(1, 'unit.minute.one'), 'Раз в 1 минуту')
 })
 
+test('a cron rule states its repetition through the plural wrapper', () => {
+  const locale = activate()
+  const t = (key, params) => locale.translate('schedule.catalog', key, params)
+  /*
+   * `cron.time.everyMinutes` carries `{step}` and nothing else numeric, so the
+   * wrapper's fallback to the first numeric parameter finds it and substitutes the
+   * Russian form: «Каждые 3 минуты» for 2–4, «Каждые 5 минут» for 5 and above.
+   * Without the forms the abbreviation «мин» would have to do for every count.
+   */
+  assert.equal(t('cron.time.everyMinutes', { step: 3 }), 'Каждые 3 минуты')
+  assert.equal(t('cron.time.everyMinutes', { step: 5 }), 'Каждые 5 минут')
+  assert.equal(t('cron.time.joinedEveryMinutes', { step: 2 }), 'каждые 2 минуты')
+  assert.equal(t('cron.time.everyNHours', { count: 2 }), 'Каждые 2 часа')
+  assert.equal(t('cron.time.everyNHours', { count: 6 }), 'Каждые 6 часов')
+  assert.equal(t('cron.time.joinedEveryNHours', { count: 3 }), 'каждые 3 часа')
+  /* A single minute of every hour reads as a labelled part, not as a clause. */
+  const ru = dictionary(locale, 'schedule.catalog')
+  assert.equal(
+    fill(ru['cron.time.hourlyAt'], { minutes: '5, 30' }),
+    'Каждый час, минуты: 5, 30',
+  )
+  assert.equal(
+    fill(ru['cron.time.hoursAt'], { hours: '09–17', minutes: '5' }),
+    'минуты: 5, часы: 09–17',
+  )
+  /*
+   * The whole sentence the harness builds: a day phrase, the joining space, and the
+   * lower-case time clause. «Пн–Пт каждые 5 минут» is what the schedule row shows.
+   */
+  const day = ru['cron.day.weekdays'].replace('{weekdays}', 'Пн–Пт').replace('{months}', '')
+  const sentence = [day, t('cron.time.joinedEveryMinutes', { step: 5 })].join(ru['cron.part.join'])
+  assert.equal(sentence, 'Пн–Пт каждые 5 минут')
+})
+
 test('a month-restricted rule names the month in Russian', () => {
   const ru = dictionary(activate(), 'schedule.catalog')
   /*
