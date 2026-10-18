@@ -1223,6 +1223,15 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       // token with punctuation is a package name, a path or an identifier.
       if (token[0] !== token[0].toLowerCase()) continue
       if (token.length < 4 || /[._/+-]/u.test(token)) continue
+      /*
+       * A token inside a path segment (`$DSH_HOME/worktrees/`,
+       * `feature/git-branch-switcher`) or inside angle brackets (`wt/<name>`) is part of
+       * an example the reader types, not prose — the same reason the gate skips a token
+       * that carries punctuation itself.
+       */
+      const before = match.index === 0 ? '' : cleaned[match.index - 1]
+      const after = cleaned[match.index + token.length] ?? ''
+      if (before === '/' || after === '/' || (before === '<' && after === '>')) continue
       if (allowedLatin[token.toLowerCase()] !== undefined) continue
       const allowedHere = latinInValues.get(token.toLowerCase())
       if (allowedHere !== undefined && allowedHere.has(`${namespace} · ${key}`)) {
