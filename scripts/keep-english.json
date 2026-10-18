@@ -35,5 +35,7 @@
   "slash.menu · drill.key": "имя клавиши Tab",
   "trajectory · record.json": "аббревиатура JSON",
   "trajectory · timing.ttft": "аббревиатура TTFT",
-  "chat · app.*": "названия приложений — закрытый список; переводится только подпись вокруг них"
+  "chat · app.*": "названия приложений — закрытый список; переводится только подпись вокруг них",
+  "pluginMarket · sourcePlaceholder": "пример адреса индекса",
+  "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek"
 }

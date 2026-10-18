@@ -419,7 +419,17 @@ for (const file of HARNESS_FILES) {
     claims.add(name)
     if (!harnessNamespaces.has(name)) harnessNamespaces.set(name, `${file} (${why})`)
   }
-  for (const m of text.matchAll(/(?:export\s+)?const\s+[A-Za-z_]*NS[A-Za-z_]*\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) claim(m[1], 'const')
+  /*
+   * A namespace const is named `NS`, `COMMON_NS`, `SETTINGS_NS` — the `NS` is a
+   * segment, not a substring. Matching the letters anywhere picked up
+   * `INSTALLED_TAB = 'installed'` (I + NS + TALLED) and invented a namespace that
+   * no dictionary serves: it then demanded 221 translated keys on the strength of
+   * a tab id, and the pack would have "failed" a harness release it covered.
+   */
+  const isNamespaceConst = name => name === 'NS' || /(?:^|_)NS(?:_|$)/u.test(name)
+  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
+    if (isNamespaceConst(m[1])) claim(m[2], 'const')
+  }
   for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) claim(m[1], 'namespace')
   for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) claim(m[1], 'register')
   for (const m of text.matchAll(/locale\.bind\(\s*'([\w.]+)'\s*\)/gu)) claim(m[1], 'bind')
@@ -431,7 +441,9 @@ for (const file of HARNESS_FILES) {
    * otherwise donate that dictionary's keys to a namespace it does not own —
    * which is how plugin-inventory keys first appeared as agent-preset gaps.
    */
-  for (const m of text.matchAll(/(?:export\s+)?const\s+[A-Za-z_]*NS[A-Za-z_]*\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
+  for (const m of text.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) {
+    if (isNamespaceConst(m[1])) owns.add(m[2])
+  }
   for (const m of text.matchAll(/const\s+namespace\s*(?::\s*string)?\s*=\s*'([\w.]+)'/gu)) owns.add(m[1])
   for (const m of text.matchAll(/locale\.register\(\s*'([\w.]+)'/gu)) owns.add(m[1])
   /*
