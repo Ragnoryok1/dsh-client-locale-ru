@@ -13,7 +13,6 @@
   "cotTranslation · google": "название службы",
   "documentHtml · title": "аббревиатура HTML",
   "documentMarkdown · viewer.label": "название формата Markdown",
-  "pluginManager · sourceHuggingFace": "название службы Hugging Face",
   "pluginManager · installSubjectTarball": "Tarball — принятый термин",
   "pluginManager · registryCustomPlaceholder": "пример адреса реестра",
   "pluginManager · versionTag": "форматная строка без слов",
@@ -35,7 +34,7 @@
   "slash.menu · drill.key": "имя клавиши Tab",
   "trajectory · record.json": "аббревиатура JSON",
   "trajectory · timing.ttft": "аббревиатура TTFT",
-  "chat · app.*": "названия приложений — закрытый список; переводится только подпись вокруг них",
   "pluginMarket · sourcePlaceholder": "пример адреса индекса",
-  "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek"
+  "settings.webSearch · searchGuideUrl": "адрес руководства DeepSeek",
+  "open-in-app · app.vscodeinsiders": "название приложения"
 }

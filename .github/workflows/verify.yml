@@ -70,6 +70,9 @@ jobs:
       - name: Composed Russian sentences
         run: npm run check:composition
 
+      - name: Translated namespace inventory
+        run: npm run check:namespaces
+
       - name: Compatibility promise
         run: npm run check:peers
 

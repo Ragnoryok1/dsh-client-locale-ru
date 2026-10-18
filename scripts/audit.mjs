@@ -541,7 +541,12 @@ for (const [namespace, files] of namespaceFiles) {
 }
 
 const packText = readFileSync(PACK, 'utf8')
-const packNamespaceList = [...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => m[1])
+/*
+ * Namespace ids may carry hyphens: `agent-team`, `voice-input`, `claude-code-mods`.
+ * A `[\w.]+` pattern silently skipped seven of them — 372 strings that were never
+ * checked by any rule in this file while the counts still looked coherent.
+ */
+const packNamespaceList = [...packText.matchAll(/^ {2}'([\w.-]+)':\s*\{/gmu)].map(m => m[1])
 const packNamespaces = new Set(packNamespaceList)
 // A namespace declared twice shadows the earlier block in the object literal,
 // silently dropping every translation in it while key coverage still looks
@@ -570,7 +575,7 @@ const packKeysByNamespace = new Map()
 
 /** Namespace -> key -> Russian value, for the residue checks. */
 const packValuesByNamespace = new Map()
-const packHeadings = [...packText.matchAll(/^ {2}'([\w.]+)':\s*\{/gmu)].map(m => ({ name: m[1], index: m.index }))
+const packHeadings = [...packText.matchAll(/^ {2}'([\w.-]+)':\s*\{/gmu)].map(m => ({ name: m[1], index: m.index }))
 const namespaceAt = index => {
   let name = null
   for (const heading of packHeadings) {
@@ -593,7 +598,31 @@ for (const entry of dictionaryEntries(packText)) {
 const pluralSuffix = /\.(?:one|other)$/u
 const harnessPlurals = new Set([...harnessKeys.keys()].filter(k => pluralSuffix.test(k)))
 const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
-const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns)).sort()
+/**
+ * Bundled plugin dictionaries, declared with their reasons.
+ *
+ * The harness does not declare these namespaces, so without a declaration the pack
+ * looks like it carries dead namespaces, and the residue rule compares their values
+ * with foreign templates by bare key name (`title`, `close`, `cancel` occur in a
+ * hundred namespaces) — 32 false English copies came from exactly that. A declared
+ * namespace is exempt from both; an undeclared one still fails, so a typo in a
+ * namespace name cannot slip through.
+ */
+const PLUGIN_NAMESPACES = (() => {
+  const path = new URL('./plugin-namespaces.json', import.meta.url)
+  if (!existsSync(path)) return new Map()
+  const parsed = JSON.parse(readFileSync(path, 'utf8'))
+  const entries = Object.entries(parsed).filter(([key]) => !key.startsWith('_'))
+  if (entries.length === 0) {
+    console.error('plugin-namespaces.json не дал ни одной записи — политика не загрузилась')
+    process.exit(2)
+  }
+  return new Map(entries)
+})()
+const isPluginNamespace = namespace => PLUGIN_NAMESPACES.has(namespace)
+const deadNamespaces = [...packNamespaces].filter(ns => !harnessNamespaces.has(ns) && !isPluginNamespace(ns)).sort()
+const stalePluginNamespaces = [...PLUGIN_NAMESPACES.keys()].filter(ns => !packNamespaces.has(ns)).sort()
+const pluginNamespaces = [...PLUGIN_NAMESPACES.keys()].filter(ns => packNamespaces.has(ns)).sort()
 const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort()
 /*
  * A pair the harness does not have is the pack's own augmentation: the harness
@@ -867,6 +896,26 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
     /*
+     * A bundled plugin dictionary has no harness template to compare with: its keys
+     * are the plugin's own, and matching them by bare name against the harness would
+     * read `title: 'Title'` as an untranslated copy of an unrelated `title`. What can
+     * still be judged without a template is a sentence left in English — three or more
+     * Latin words and no Cyrillic — which is a defect wherever it lives. Single names
+     * («Cursor», «Finder», «Hugging Face») are what a plugin dictionary is full of and
+     * stay as they are.
+     */
+    if (isPluginNamespace(namespace)) {
+      const words = value.split(/\s+/u).filter(word => word !== '').length
+      const latinOnly = /\p{Script=Latin}/u.test(value) && !/[А-Яа-яЁё]/u.test(value)
+      if (latinOnly && words >= 3) {
+        residueValuesChecked += 1
+        const id = `${namespace} · ${key}`
+        if (keepsEnglish(id) !== undefined) declaredEnglish.add(id)
+        else englishResidue.push(`${id} — ${JSON.stringify(value)}`)
+      }
+      continue
+    }
+    /*
      * Every template of the key, not only the English-scope ones: a dictionary
      * whose `en` block the scope detector did not see used to make its keys
      * invisible to this rule, and 60 values lived — unexamined — exactly there.
@@ -929,6 +978,10 @@ const keepEnglishStale = (() => {
       continue
     }
     if (copiesNeedingDecision.has(pattern)) continue
+    /* A declared bundled-plugin value has no harness template to match, so the
+     * decision is satisfied when the value was flagged by the plugin-sentence rule
+     * above — `declaredEnglish` is that record. */
+    if (declaredEnglish.has(pattern)) continue
     const separator = pattern.indexOf(' · ')
     const namespace = pattern.slice(0, separator)
     const key = pattern.slice(separator + 3)
@@ -1150,13 +1203,28 @@ const packRoot = new URL('..', import.meta.url)
  * 2535 — so the digit pattern accepts separators and the reader strips them.
  */
 const readGrouped = match => Number(match[1].replace(/[^\d]/gu, ''))
+/*
+ * The advertised count is the number of *values* the pack registers, not of distinct
+ * key names: several namespaces legitimately reuse `title`, `close`, `cancel`, and a
+ * reader comparing packs counts strings, not unique identifiers.
+ *
+ * `scripts/pack-count.json` is written by `scripts/namespaces.mjs` from the built
+ * bundle and checked by `check:namespaces`, so the audit and the inventory cannot
+ * disagree about one fact. A static parser here used to report a slightly different
+ * number (49 values in entries it did not decode), which made two truthful counts
+ * look like a stale claim.
+ */
+const packCountPath = new URL('./pack-count.json', import.meta.url)
+const packCount = existsSync(packCountPath) ? JSON.parse(readFileSync(packCountPath, 'utf8')) : null
+const packValueCount = packCount === null ? packKeys.size : packCount.values
+const packNamespaceCount = packCount === null ? packNamespaces.size : packCount.namespaces
 const ADVERTISED = [
-  { label: 'строк', pattern: /badge\/strings-(\d+)%2C(\d+)-/u, read: match => `${match[1]}${match[2]}`, expected: packKeys.size },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*translated strings/u, read: readGrouped, expected: packKeys.size },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*strings/u, read: readGrouped, expected: packKeys.size },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*перевод/u, read: readGrouped, expected: packKeys.size },
-  { label: 'строк', pattern: /、\s*(\d[\d,\u00A0]*)\s*条翻译/u, read: readGrouped, expected: packKeys.size },
-  { label: 'namespace', pattern: /(\d+)\s*(?:namespaces?|个 namespace)\s*[,、]/u, expected: packNamespaces.size },
+  { label: 'строк', pattern: /badge\/strings-(\d+)%2C(\d+)-/u, read: match => `${match[1]}${match[2]}`, expected: packValueCount },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*translated strings/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*strings/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*перевод/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /、\s*(\d[\d,\u00A0]*)\s*条翻译/u, read: readGrouped, expected: packValueCount },
+  { label: 'namespace', pattern: /(\d+)\s*(?:namespaces?|个 namespace)\s*[,、]/u, expected: packNamespaceCount },
 ]
 
 /**
@@ -1433,7 +1501,7 @@ for (const [key, file] of harnessKeys) {
 }
 
 console.log(`дерево харнеса: ${HARNESS}`)
-console.log(`в пакете: ${packNamespaces.size} namespace, ${packKeys.size} переводов, ${packPlurals.size} пар форм числа`)
+console.log(`в пакете: ${packNamespaces.size} namespace, ${packValueCount} значений (${packKeys.size} разных ключей), ${packPlurals.size} пар форм числа`)
 console.log(`в харнессе: ${harnessNamespaces.size} namespace, ${harnessKeys.size} ключей, ${harnessPlurals.size} пар форм`)
 console.log(`покрытие (информационно): ${covered} из ${harnessKeys.size} найденных ключей харнеса`)
 
@@ -1456,6 +1524,8 @@ report('namespace пака, которых нет в харнессе (мёрт�
   const near = [...harnessNamespaces.keys()].filter(name => name.startsWith(ns.split('.')[0]))
   return `${ns}${near.length > 0 ? `  (похожие: ${near.join(', ')})` : ''}`
 }))
+report('словари плагинов в паке, объявленные в plugin-namespaces.json (справочно)', pluginNamespaces.map(ns => `${ns} — ${PLUGIN_NAMESPACES.get(ns)}`))
+report('объявления plugin-namespaces.json, которых нет в паке', stalePluginNamespaces)
 report('пар форм харнесса, которых нет в паке', missingPlurals)
 report('пар форм харнесса без русских форм .few/.many', missingRussianForms)
 report('лишние пары форм в паке', extraPlurals)
@@ -1497,7 +1567,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlu
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + capitalizedAddress.length
   + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
-  + typographicValues.length
+  + typographicValues.length + stalePluginNamespaces.length
 if (failures === 0) {
   console.log('\nаудит пройден: дублей и мёртвых namespace нет; пары форм, плейсхолдеры и остатки в норме')
   process.exit(0)
