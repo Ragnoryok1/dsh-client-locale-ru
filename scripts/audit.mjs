@@ -634,6 +634,25 @@ for (const [namespace, harnessKeysHere] of harnessNamespaceKeys) {
     }
   }
 }
+/*
+ * The pack's own augmentations need the same completeness. The wrapper looks an
+ * unpaired key up as `<key>.<category>`, so `terminal.expand` — a plain key whose
+ * count the harness passes as `{n}` — relies entirely on `.few` / `.many` being
+ * there; a missing form would make it fall back to the plain key, whose value has
+ * no inflection at all. These bases are ours, so only the pack decides whether the
+ * forms exist — which is exactly why nothing else would notice their loss.
+ */
+const augmentedBases = new Set([...packPlurals]
+  .filter(key => !harnessPlurals.has(key) && packKeySet.has(key.replace(pluralSuffix, '')))
+  .map(key => key.replace(pluralSuffix, '')))
+for (const [namespace, packKeysHere] of packKeysByNamespace) {
+  for (const base of augmentedBases) {
+    if (!packKeysHere.has(`${base}.one`) && !packKeysHere.has(`${base}.other`)) continue
+    for (const form of ['few', 'many']) {
+      if (!packKeysHere.has(`${base}.${form}`)) missingRussianForms.push(`${namespace} · ${base}.${form}`)
+    }
+  }
+}
 missingRussianForms.sort()
 
 /**

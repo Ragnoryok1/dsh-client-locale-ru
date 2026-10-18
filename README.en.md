@@ -68,7 +68,7 @@ After that, the next time `dsh web` starts, **Русский** will appear in th
 
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 392 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 393 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -141,12 +141,14 @@ npm run verify -- <дерево харнеса>  # всё вместе
 ```
 
 The audit runs in CI (`.github/workflows/verify.yml`) against a **pinned harness tag**,
-not against some random local checkout. Six groups of checks are gated, and all six have
-already caught real defects. Beside them the audit prints **advisory reports**, which are not
-gates because they need a human decision: how many namespaces were compared and which could
-not be linked, whether any «number + inflecting word» is left, and whether a short string grew
-past 2.8× its English (a layout risk — «Effort» → «Уровень рассуждения» is normal Russian
-length, not a defect).
+not against some random local checkout. The same run also fires **weekly on a schedule**: a
+translation rots without anyone editing it — the upstream moves on, everything is green
+locally, and the drift surfaces only when a user builds. Six groups of checks are gated, and
+all six have already caught real defects. Beside them the audit prints **advisory reports**,
+which are not gates because they need a human decision: how many namespaces were compared and
+which could not be linked, whether any «number + inflecting word» is left, and whether a short
+string grew past 2.8× its English (a layout risk — «Effort» → «Уровень рассуждения» is normal
+Russian length, not a defect).
 
 The audit reads harness templates in the shape the harness writes them: a literal, an **array of
 paragraphs** (that is how the preset guides are stored) and a **reference to a constant**
@@ -178,7 +180,10 @@ whole kilobytes.
   while present on another would otherwise stay invisible. It found the four time units
   (`unit.day/hour/minute/second` in `schedule.catalog`) and `trigger` in the task manager;
   the units stopped being abbreviations («д», «ч», «мин») and gained full forms in the right
-  case — «через 2 дня», «через 5 часов», and «Каждые 2 дня» became «Раз в 2 дня»;
+  case — «через 2 дня», «через 5 часов», and «Каждые 2 дня» became «Раз в 2 дня». The same
+  requirement covers the keys the pack added itself (`terminal.expand` and its kin: the
+  harness passes them a count but never pairs them) — their forms rest on us alone, and
+  losing one would be invisible to everything else;
 - **placeholders** — a Russian value has to carry exactly the `{name}` placeholders its
   English template carries: an extra one reaches the screen literally
   (`Заняло {duration}7мин 26с`, fixed in #2), a dropped one silently removes the

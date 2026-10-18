@@ -6,15 +6,18 @@
     "deepseek",
     "deepseek-harness",
     "dsh",
+    "dsh-plugin",
     "cordis",
     "cordis-plugin",
     "localization",
     "localisation",
     "language-pack",
+    "locale",
     "i18n",
     "l10n",
     "russian",
-    "ru"
+    "ru",
+    "typography"
   ],
   "publishConfig": {
     "access": "public"
