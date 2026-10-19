@@ -180,15 +180,33 @@ jobs:
           set -euo pipefail
           name="$(node -p "require('./package.json').name")"
           version="$(node -p "require('./package.json').version")"
-          if npm view "${name}@${version}" version >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::${name}@${version} is already published — nothing to publish"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
+          # The registry can lag a publish made elsewhere by a couple of minutes, so the question
+          # is asked three times before the answer «no» is believed.
+          for attempt in 1 2 3; do
+            if npm view "${name}@${version}" version >/dev/null 2>&1; then
+              echo "exists=true" >> "$GITHUB_OUTPUT"
+              echo "::notice::${name}@${version} is already published — nothing to publish"
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "exists=false" >> "$GITHUB_OUTPUT"
       - name: Publish
         if: ${{ !inputs.dry-run && steps.published.outputs.exists != 'true' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public --provenance
+        run: |
+          set -euo pipefail
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          if npm publish --access public --provenance; then
+            exit 0
+          fi
+          # A version published a moment ago may not have been visible to the guard; npm then
+          # refuses to publish over it. The release is out either way, so the run ends
+          # successfully — with the reason in the log.
+          if npm view "${name}@${version}" version >/dev/null 2>&1; then
+            echo "::notice::${name}@${version} is on the registry — the publish lost a race with an earlier release, not with a broken package"
+            exit 0
+          fi
+          exit 1
