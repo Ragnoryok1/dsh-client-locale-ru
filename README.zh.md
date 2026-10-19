@@ -43,6 +43,8 @@ harness 侧的 `locale/ru.json` 文件补上。`scripts/descriptor-coverage.mjs`
 不与我们的词典覆盖率混在一起；机制说明与 32 份已备好的译文见 `docs/descriptor-upstream.md`。
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json`
 记录包名、版本、许可证，以及从其 bundle 中提取的英文字符串（`npm run fetch:plugins`）。
+它还会提醒另一件事：如果配置文件里还有另一个自己注册俄语的包，语言就归先注册的那个——
+第二个会静默跳过自己的 namespace，界面上出现的就是别人的译文。
 安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，
 读出每个插件自己的词典并与我们的对照。没有词典的插件会照实标注——在它请求翻译之前无从翻译；
 自带俄语的插件单独标出。

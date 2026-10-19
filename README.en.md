@@ -43,6 +43,9 @@ language pack; only `locale/ru.json` files on the harness side can close them.
 Plugins outside the harness tree are translated the same way, but their English comes from
 their own publication: `plugins/<namespace>.json` records the package, version, licence and the
 English strings extracted from its bundle (`npm run fetch:plugins`). `npm run report:plugins`
+It also warns about another thing: when the profile holds a second pack that registers
+Russian itself, the language belongs to whoever registered it first — the other one silently
+skips its namespaces, and the interface ends up showing someone else's translation.
 shows what in your installation is still English: it walks the profile's `node_modules`, reads
 each plugin's own dictionary and compares its keys with ours. A plugin without a dictionary is
 reported as such — there is nothing to translate until it asks for one — and a plugin that

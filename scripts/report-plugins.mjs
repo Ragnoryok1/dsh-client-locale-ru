@@ -23,6 +23,7 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 
 const args = process.argv.slice(2)
+const OURS = '@ragnoryok1/dsh-client-locale-ru'
 const asJson = args.includes('--json')
 const target = args.find(argument => !argument.startsWith('--'))
   ?? join(homedir(), '.dsh', 'profiles', 'web', 'node_modules')
@@ -194,6 +195,28 @@ function readPluginDictionaries(files) {
   return { found, selfTranslated, loopRegistered }
 }
 
+
+/**
+ * Does the bundle register the Russian language itself?
+ *
+ * Only a claim on the language id counts: `ctx.locale.addLanguage('ru', …)`. A pack that
+ * merely registers a few of its own namespaces in Russian is an ordinary plugin, not a rival.
+ */
+function registersRussian(files) {
+  for (const file of files) {
+    let text
+    try {
+      text = readFileSync(file, 'utf8')
+    } catch {
+      continue
+    }
+    if (!/addLanguage\(/u.test(text)) continue
+    if (/addLanguage\(\s*['"`]ru['"`]/u.test(text)) return true
+    if (/\bid\s*:\s*['"`]ru['"`]/u.test(text)) return true
+  }
+  return false
+}
+
 function bundlesOf(packageDir) {
   for (const folder of ['lib', 'dist', 'build']) {
     const dir = join(packageDir, folder)
@@ -230,6 +253,7 @@ function packageDirectories(root) {
 
 const pack = readPack()
 const rows = []
+const competitors = []
 for (const pkg of packageDirectories(target).sort((left, right) => left.name.localeCompare(right.name))) {
   let manifest = null
   try {
@@ -246,7 +270,9 @@ for (const pkg of packageDirectories(target).sort((left, right) => left.name.loc
     || /(?:^|\/)dsh[.-][\w.-]*$/u.test(pkg.name)
   if (!isPlugin) continue
   const version = manifest?.version ?? null
-  const { found, selfTranslated, loopRegistered } = readPluginDictionaries(bundlesOf(pkg.path))
+  const bundles = bundlesOf(pkg.path)
+  if (pkg.name !== OURS && registersRussian(bundles)) competitors.push({ package: pkg.name, version })
+  const { found, selfTranslated, loopRegistered } = readPluginDictionaries(bundles)
   if (found.size === 0) {
     rows.push({
       package: pkg.name,
@@ -305,3 +331,12 @@ console.log(`пакетов осмотрено: ${rows.length}; со слова�
 console.log(`без словаря (переводить нечего, пока плагин не спросит перевод): ${rows.filter(row => row.status === 'no-dictionary').length}`)
 console.log(`перевод уже внутри плагина: ${rows.filter(row => row.status === 'self-translated' || row.status === 'loop-registered').length}`)
 console.log(`ждать нашей работы: ${rows.filter(row => row.status === 'missing-namespace' || row.status === 'partial').length}`)
+if (competitors.length > 0) {
+  console.log('')
+  console.log('ВНИМАНИЕ: в профиле есть другие пакеты, которые сами регистрируют русский:')
+  for (const competitor of competitors) {
+    console.log(`  ${competitor.package}${competitor.version === null ? '' : `@${competitor.version}`}`)
+  }
+  console.log('Язык ru достаётся тому, кто зарегистрировал его первым: второй пакет молча пропустит')
+  console.log('свои namespace, и в интерфейсе окажется перевод другого пакета. Оставьте один.')
+}
