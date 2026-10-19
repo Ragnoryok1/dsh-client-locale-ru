@@ -63,7 +63,7 @@ if (!/exit 0/u.test(publish)) {
 }
 
 /* The dynamic half, when a shell is around. */
-const shells = ['/bin/sh', 'C:\\Program Files\\Git\\bin\\sh.exe']
+const shells = ['/usr/bin/bash', '/bin/bash', 'C:\\Program Files\\Git\\bin\\bash.exe', 'C:\\Program Files\\Git\\bin\\sh.exe']
 const shell = shells.find(candidate => existsSync(candidate))
 if (shell !== undefined) {
   const stubDirectory = join(tmpdir(), `dsh-npm-stub-${Date.now()}`)
