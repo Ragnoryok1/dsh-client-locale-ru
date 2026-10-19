@@ -17,7 +17,8 @@
 import { execFileSync } from 'node:child_process'
 import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { dirname, join } from 'node:path'
+import { delimiter } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -79,13 +80,33 @@ if (shell !== undefined) {
       execFileSync(shell, [script], {
         cwd: ROOT,
         encoding: 'utf8',
-        env: { ...process.env, PATH: `${stubDirectory};${process.env.PATH}`, GITHUB_OUTPUT: output },
+        env: { ...process.env, PATH: `${stubDirectory}${delimiter}${process.env.PATH}`, GITHUB_OUTPUT: output },
         stdio: ['ignore', 'pipe', 'pipe'],
       })
       return 0
     } catch (error) {
       return error.status ?? 1
     }
+  }
+
+  /*
+   * The steps are only meaningful if they ran against the stub: with the real npm on the
+   * PATH the publish would reach the registry, which is not what this check is about.
+   */
+  const which = (() => {
+    try {
+      return execFileSync(shell, ['-c', 'command -v npm'], {
+        cwd: ROOT,
+        encoding: 'utf8',
+        env: { ...process.env, PATH: `${stubDirectory}${delimiter}${process.env.PATH}` },
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }).trim()
+    } catch {
+      return ''
+    }
+  })()
+  if (!which.includes(basename(stubDirectory))) {
+    problems.push(`подмена npm не сработала: шаги увидят "${which || 'ничего'}" вместо заглушки`)
   }
 
   if (run(publish) !== 0) {
