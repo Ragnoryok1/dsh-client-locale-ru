@@ -126,5 +126,11 @@ jobs:
       - name: The upstream patch carries the same translations
         run: npm run check:descriptor-patch
 
+      # A plugin's name comes from the plugin's own locale file, which no dictionary
+      # can reach, so the pack carries those names itself and rewrites them in the
+      # rendered interface. This proves the rewrite on a real document.
+      - name: Plugin names are Russian in the interface
+        run: npm run check:plugin-names
+
       - name: Locale audit
         run: node scripts/audit.mjs tree/packages

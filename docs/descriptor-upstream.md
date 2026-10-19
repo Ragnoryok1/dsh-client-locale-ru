@@ -41,7 +41,7 @@ node scripts/descriptor-coverage.mjs ../deepseek-harness/packages
 
 ## Правка
 
-`descriptor-ru.json` в этом репозитории содержит 32 перевода (два `@local/*` пакета из
+`src/client/descriptor-ru.json` в этом репозитории содержит 32 перевода (два `@local/*` пакета из
 дерева — демонстрационные, они не публикуются). `scripts/apply-descriptor-ru.mjs`
 раскладывает их по `locale/ru.json` указанного дерева:
 
@@ -64,7 +64,7 @@ node scripts/apply-descriptor-ru.mjs ../deepseek-harness/packages --write
 ## Что делать при обновлении харнесса
 
 1. `npm run report:descriptors -- <дерево>` — посмотреть, появились ли новые читаемые названия.
-2. Добавить переводы в `descriptor-ru.json`.
+2. Добавить переводы в `src/client/descriptor-ru.json`.
 3. `node scripts/record-descriptor-sources.mjs <дерево>` — записать новый английский снимок.
 4. `npm run check:descriptors -- <дерево>` — убедиться, что расхождений нет.
 5. `node scripts/apply-descriptor-ru.mjs <дерево> --write` — разложить файлы.

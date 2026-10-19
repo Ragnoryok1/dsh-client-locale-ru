@@ -1,5 +1,5 @@
 /**
- * Applies `descriptor-ru.json` to a harness checkout as `locale/ru.json` files.
+ * Applies `src/client/descriptor-ru.json` to a harness checkout as `locale/ru.json` files.
  *
  * The loader builds a plugin's `LocalizedText` from `locale/<language>.json` and the locale
  * service resolves that map without consulting dictionaries, so a plugin's *name* can only
@@ -17,7 +17,7 @@ const args = process.argv.slice(2)
 const write = args.includes('--write')
 const check = args.includes('--check')
 const root = resolve(args.find(argument => !argument.startsWith('--')) ?? '../deepseek-harness/packages')
-const translations = JSON.parse(readFileSync(new URL('../descriptor-ru.json', import.meta.url), 'utf8'))
+const translations = JSON.parse(readFileSync(new URL('../src/client/descriptor-ru.json', import.meta.url), 'utf8'))
 
 if (!existsSync(root)) {
   console.log(`дерево харнесса не найдено: ${root}`)

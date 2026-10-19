@@ -2,7 +2,7 @@
  * Records the English text each translation was made from, so a later upstream rename is
  * visible as a drift instead of a silently wrong title.
  *
- * Reads `descriptor-ru.json`, adds or refreshes an `en` snapshot per entry from the harness
+ * Reads `src/client/descriptor-ru.json`, adds or refreshes an `en` snapshot per entry from the harness
  * tree, and writes the file back with the translation order preserved.
  *
  * Usage: node scripts/record-descriptor-sources.mjs [harness tree]
@@ -11,7 +11,7 @@ import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from '
 import { join, resolve } from 'node:path'
 
 const root = resolve(process.argv[2] ?? '../deepseek-harness/packages')
-const file = new URL('../descriptor-ru.json', import.meta.url)
+const file = new URL('../src/client/descriptor-ru.json', import.meta.url)
 const translations = JSON.parse(readFileSync(file, 'utf8'))
 
 if (!existsSync(root)) {

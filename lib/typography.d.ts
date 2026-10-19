@@ -15,6 +15,8 @@
  */
 /** Guillemets, em dash, ellipsis, and non-breaking spaces in running text. */
 declare function applyRussianTypography(text: string): string;
+/** Elements whose text is code, data or user input and must stay verbatim. */
+declare const SKIP_SELECTOR: string;
 /**
  * Start the typography pass on a document and keep it current as the app
  * renders. Returns a disposer that stops observing.
@@ -28,4 +30,4 @@ declare function applyRussianTypography(text: string): string;
  */
 declare function startRussianTypography(doc: Document, isActive?: () => boolean): () => void;
 //#endregion
-export { applyRussianTypography, startRussianTypography };
+export { SKIP_SELECTOR, applyRussianTypography, startRussianTypography };

@@ -8,6 +8,7 @@ import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
 import { RU_DICTS, RU_LABEL } from './dicts.ts'
 import { startRussianPlurals } from './plural.ts'
+import { startRussianPluginNames } from './plugin-names.ts'
 import { startRussianTypography } from './typography.ts'
 
 /**
@@ -33,6 +34,37 @@ function skipDuplicate(
 
 /** Required service: the locale registry that owns languages and dictionaries. */
 export const inject = ['locale']
+
+/**
+ * Run a Russian-only pass while Russian is the active language, and stop it on a switch.
+ *
+ * The typography rules and the plugin names are Russian: applying them while another
+ * language is active would edit text this pack does not own — `"quotes"` would become
+ * «quotes» in an English interface, and a plugin would be renamed in a language the
+ * user did not choose. `locale/change` fires on a language switch only, not on
+ * dictionary registration.
+ *
+ * @param ctx - client root context.
+ * @param start - the pass to run, given the check that says whether Russian is active.
+ * @returns a disposer stopping the pass and the subscription.
+ */
+function followLanguage(ctx: ClientContext, start: (isActive: () => boolean) => () => void): () => void {
+  const isRussian = (): boolean => ctx.locale.getLocale().active === 'ru'
+  let stop = isRussian() ? start(isRussian) : null
+  const off = ctx.on('locale/change', () => {
+    if (isRussian() && stop === null) {
+      stop = start(isRussian)
+    } else if (!isRussian() && stop !== null) {
+      stop()
+      stop = null
+    }
+  })
+  return () => {
+    off()
+    stop?.()
+    stop = null
+  }
+}
 
 /**
  * Client plugin body: add `ru` to the selectable language catalog, register
@@ -99,21 +131,17 @@ export function apply(ctx: ClientContext): void {
    * the language, not the installation. `locale/change` fires on a language
    * switch only, not on dictionary registration.
    */
-  ctx.effect(() => {
-    const isRussian = (): boolean => ctx.locale.getLocale().active === 'ru'
-    let stop = isRussian() ? startRussianTypography(document, isRussian) : null
-    const off = ctx.on('locale/change', () => {
-      if (isRussian() && stop === null) {
-        stop = startRussianTypography(document, isRussian)
-      } else if (!isRussian() && stop !== null) {
-        stop()
-        stop = null
-      }
-    })
-    return () => {
-      off()
-      stop?.()
-      stop = null
-    }
-  }, 'locale-ru: typography')
+  ctx.effect(
+    () => followLanguage(ctx, isRussian => startRussianTypography(document, isRussian)),
+    'locale-ru: typography',
+  )
+  /*
+   * A plugin's name comes from the plugin's own locale file, which no dictionary can
+   * reach, so a Russian name exists only where the pack carries it. The pass rewrites
+   * the rendered name and description, and follows the language like the typography.
+   */
+  ctx.effect(
+    () => followLanguage(ctx, isRussian => startRussianPluginNames(document, isRussian)),
+    'locale-ru: plugin names',
+  )
 }

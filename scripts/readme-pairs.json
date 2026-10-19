@@ -2,9 +2,9 @@
   {
     "section": 0,
     "heading": "/",
-    "ru": "7eb2aef92d2f286d",
-    "en": "7eb2aef92d2f286d",
-    "zh": "7eb2aef92d2f286d"
+    "ru": "efc043a9f0761b4e",
+    "en": "efc043a9f0761b4e",
+    "zh": "efc043a9f0761b4e"
   },
   {
     "section": 1,
@@ -23,9 +23,9 @@
   {
     "section": 3,
     "heading": "Установка",
-    "ru": "afc3908c104a43a1",
-    "en": "a75bada908de5553",
-    "zh": "166e27929e308190"
+    "ru": "481f0a0df1d3a66d",
+    "en": "4e983eb59bc23d71",
+    "zh": "7acc716e98439490"
   },
   {
     "section": 4,
@@ -50,55 +50,62 @@
   },
   {
     "section": 7,
-    "heading": "Проверки",
-    "ru": "08add8d084673391",
-    "en": "4322d4a74ec1fb2c",
-    "zh": "a13bff776d22b95f"
+    "heading": "Имена плагинов",
+    "ru": "db4eae3560482df6",
+    "en": "1c1bb0c6864879de",
+    "zh": "2a067e233078cf24"
   },
   {
     "section": 8,
+    "heading": "Проверки",
+    "ru": "a5211b2ea4a0052b",
+    "en": "e47dd4ab94f326e9",
+    "zh": "253845954faacd75"
+  },
+  {
+    "section": 9,
     "heading": "Область покрытия: только официальный интерфейс",
     "ru": "2dcd41f106b4ac80",
     "en": "a1540df2f5cdeeea",
     "zh": "382fcde6295e686e"
   },
   {
-    "section": 9,
+    "section": 10,
     "heading": "Разработка",
     "ru": "040475902f058161",
     "en": "a25b3ba9ce06377b",
     "zh": "cabb9860e29ec087"
   },
   {
-    "section": 10,
+    "section": 11,
     "heading": "Релизы",
     "ru": "b8191540df2ed7bf",
     "en": "36efe115778cf9c4",
     "zh": "b1292e3593602065"
   },
   {
-    "section": 11,
+    "section": 12,
     "heading": "Содержимое",
     "ru": "6cc59ea0ded89b6b",
     "en": "85a3e3d9cbc9909a",
     "zh": "e56456f5854c8e98"
   },
   {
-    "section": 12,
+    "section": 13,
     "heading": "Что переведено",
     "ru": "bca7cd701d073581",
     "en": "a808d33bf7dd3370",
     "zh": "9f8352f3ba6861c1"
   },
   {
-    "section": 13,
+    "section": 14,
     "heading": "Лицензия",
     "ru": "66dbcf0d2b10c03d",
     "en": "66dbcf0d2b10c03d",
     "zh": "66dbcf0d2b10c03d"
   },
   {
-    "section": 14,
+    "section": 15,
     "heading": "История изменений",
     "ru": "04f3a0409bafbd10",
     "en": "4eb99b02c522dabe",

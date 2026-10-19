@@ -52,7 +52,7 @@ export function applyRussianTypography(text: string): string {
 }
 
 /** Elements whose text is code, data or user input and must stay verbatim. */
-const SKIP_SELECTOR = [
+export const SKIP_SELECTOR = [
   'code', 'pre', 'kbd', 'samp', 'var', 'textarea', 'input', 'select', 'option',
   '[contenteditable]:not([contenteditable="false"])',
   '[data-typography="off"]',

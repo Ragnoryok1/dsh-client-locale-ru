@@ -85,7 +85,7 @@ descriptors as false positives, so it needs a rule for what counts as a label.
 The Russian text lives in this repository, not in the harness tree, so it can be reviewed and
 regenerated:
 
-- `descriptor-ru.json` — the translations, with an `en` snapshot of the text each one was
+- `src/client/descriptor-ru.json` — the translations, with an `en` snapshot of the text each one was
   made from;
 - `npm run apply:descriptors -- <harness tree>` — writes the `locale/ru.json` files;
 - `npm run check:descriptors -- <harness tree>` — fails when upstream rewrites a title, so a

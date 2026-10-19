@@ -88,9 +88,16 @@ const descriptions = rows.filter(row => row.description !== null).length
 const withRussian = rows.filter(row => row.languages.includes('ru')).length
 const withChinese = rows.filter(row => row.languages.includes('zh')).length
 const readable = rows.filter(row => !row.identifierLike)
+/*
+ * A package that already ships `locale/ru.json` is not part of the gap: its name is
+ * already Russian. Counting it again would say the same title both is and is not
+ * covered.
+ */
+const covered = readable.filter(row => row.languages.includes('ru'))
+const uncovered = readable.filter(row => !row.languages.includes('ru'))
 
 if (asJson) {
-  console.log(JSON.stringify({ root, titles, descriptions, withRussian, withChinese, readable }, null, 2))
+  console.log(JSON.stringify({ root, titles, descriptions, withRussian, withChinese, readable, covered, uncovered }, null, 2))
   process.exit(0)
 }
 
@@ -98,10 +105,10 @@ console.log(`дерево: ${root}`)
 console.log(`пакетов с locale/en.json: ${rows.length}`)
 console.log(`строк meta.title: ${titles}, meta.description: ${descriptions}, всего: ${titles + descriptions}`)
 console.log(`с локалью zh: ${withChinese}, с локалью ru: ${withRussian}`)
-console.log(`читаемых названий (не идентификаторов): ${readable.length}`)
+console.log(`читаемых названий (не идентификаторов): ${readable.length}; из них уже переведено: ${covered.length}`)
 console.log('')
 console.log('названия, которые пользователь видит и которые останутся английскими без locale/ru.json:')
-for (const row of readable.slice(0, 40)) {
+for (const row of uncovered.slice(0, 40)) {
   console.log(`  ${row.title}  —  ${row.package}`)
 }
-if (readable.length > 40) console.log(`  … ещё ${readable.length - 40}`)
+if (uncovered.length > 40) console.log(`  … ещё ${uncovered.length - 40}`)
