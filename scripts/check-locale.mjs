@@ -78,7 +78,7 @@ test('standalone registration, disposal and reactivation', () => {
   reloaded.dispose()
 })
 
-test('the typography pass follows the active language', () => {
+test('the Russian passes follow the active language', () => {
   const locale = fresh()
   const ctx = context(locale)
   pack.apply(ctx)
@@ -87,12 +87,13 @@ test('the typography pass follows the active language', () => {
    * The sandbox has no document body, so the observer itself is a no-op here —
    * what this pins down is that the pack tracks the language at all. Without the
    * subscription the Russian rules would keep running in an English interface and
-   * rewrite its punctuation.
+   * rewrite its punctuation, and the Russian plugin names would replace the English
+   * ones there. Two passes follow the language: the typography and the plugin names.
    */
-  assert.equal(ctx.listenerCount('locale/change'), 1)
+  assert.equal(ctx.listenerCount('locale/change'), 2)
   ctx.emit('locale/change', { active: 'en', locales: [], revision: 1 })
   ctx.emit('locale/change', { active: 'ru', locales: [], revision: 2 })
-  assert.equal(ctx.listenerCount('locale/change'), 1)
+  assert.equal(ctx.listenerCount('locale/change'), 2)
 
   ctx.dispose()
   assert.equal(ctx.listenerCount('locale/change'), 0)
