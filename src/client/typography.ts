@@ -56,6 +56,13 @@ const SKIP_SELECTOR = [
   'code', 'pre', 'kbd', 'samp', 'var', 'textarea', 'input', 'select', 'option',
   '[contenteditable]:not([contenteditable="false"])',
   '[data-typography="off"]',
+  /*
+   * The conversation is content, not interface: the user's own words and the model's
+   * answer are the pack's business only to the extent that the pack translated a label.
+   * Rewriting quotes and hyphens inside a message changes what was said, and what the
+   * user copies out of the chat. The harness marks that region itself.
+   */
+  '[data-conversation-region]',
 ].join(',')
 
 /** Whether the node sits inside content that must not be rewritten. */

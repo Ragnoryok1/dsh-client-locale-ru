@@ -59,6 +59,21 @@ test('added subtrees are rewritten, and code is left alone', async () => {
   dispose()
 })
 
+test('the conversation is left alone, the interface around it is not', () => {
+  const { body, dispose } = setup(
+    '<p>Нажмите "Сохранить" для продолжения</p>'
+    + '<div data-conversation-region="chat"><p>Он сказал: "это важно" - и ушёл</p></div>',
+  )
+  // The label is the pack's own text: it is rewritten.
+  assert.equal(body.querySelector('p').textContent, 'Нажмите «Сохранить» для продолжения')
+  // The message is the user's and the model's: it stays as it was written.
+  assert.equal(
+    body.querySelector('[data-conversation-region="chat"] p').textContent,
+    'Он сказал: "это важно" - и ушёл',
+  )
+  dispose()
+})
+
 test('the disposer stops the pass', async () => {
   const { dom, body, dispose } = setup('<span>за 5 ч</span>')
   dispose()
