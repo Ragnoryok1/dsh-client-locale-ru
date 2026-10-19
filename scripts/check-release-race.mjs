@@ -74,8 +74,13 @@ if (shell !== undefined) {
   const script = join(stubDirectory, 'step.sh')
   const output = join(stubDirectory, 'out.txt')
 
+  /*
+   * dash does not know `set -o pipefail`; the body is copied from the workflow, and the
+   * runner executes it with bash, so the copy is adjusted when the shell is not bash.
+   */
+  const isBash = /bash/u.test(shell)
   const run = body => {
-    writeFileSync(script, body)
+    writeFileSync(script, isBash ? body : body.replaceAll(' -o pipefail', ''))
     try {
       execFileSync(shell, [script], {
         cwd: ROOT,
