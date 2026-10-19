@@ -62,5 +62,9 @@
   "michengai.codexUi · channel.telegram": "Telegram — название сервиса",
   "michengai.codexUi · channel.wecom": "WeCom — название сервиса",
   "michengai.codexUi · channel.weixin": "WeChat — название сервиса",
-  "michengai.codexUi · meta.locale": "en-US — идентификатор локали, а не текст"
+  "michengai.codexUi · meta.locale": "en-US — идентификатор локали, а не текст",
+  "dsh-remote-ssh · ops.globPh": "glob-шаблон *.py — пример ввода, а не текст",
+  "dsh-remote-ssh · settings.hostPlaceholder": "login.example.com — образец адреса",
+  "dsh-remote-ssh · settings.keyPathPlaceholder": "~/.ssh/id_rsa — образец пути",
+  "univer · settings.title": "Univer Office — название продукта"
 }

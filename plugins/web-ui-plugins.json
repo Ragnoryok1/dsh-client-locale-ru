@@ -1,0 +1,11 @@
+{
+  "namespace": "web-ui-plugins",
+  "package": "@linxin666/dsh-client-ui-web-ui-settings",
+  "version": "0.4.7",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/zhu1090093659/dsh-web.git",
+  "fetched": "2026-10-18",
+  "en": {
+    "title": "Web Plugins"
+  }
+}

@@ -196,7 +196,17 @@
     "standard": "имя режима",
     "tool": "термин API",
     "ttft": "аббревиатура",
-    "workflow": "имя инструмента"
+    "workflow": "имя инструмента",
+    "glob": "имя механизма поиска по шаблону",
+    "grep": "имя механизма поиска по содержимому",
+    "node": "имя среды выполнения",
+    "sshpass": "имя утилиты",
+    "keyPath": "имя поля профиля Remote-SSH",
+    "nodePath": "имя поля профиля Remote-SSH",
+    "remoteRoot": "имя поля профиля Remote-SSH",
+    "keypath": "имя поля профиля Remote-SSH",
+    "nodepath": "имя поля профиля Remote-SSH",
+    "remoteroot": "имя поля профиля Remote-SSH"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
