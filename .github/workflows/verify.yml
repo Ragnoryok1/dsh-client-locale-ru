@@ -54,8 +54,8 @@ jobs:
       - name: Plugin manifest rules
         run: npm run check:manifest
 
-        - name: Marketplace metadata matches the package
-          run: npm run check:meta
+      - name: Marketplace metadata matches the package
+        run: npm run check:meta
 
       - name: Committed bundle matches the build
         run: npm run check:built
@@ -102,6 +102,9 @@ jobs:
       # workflow files and fails when one of them is missing a check from `verify`.
       - name: Workflows run the verify chain
         run: npm run check:workflows
+
+      - name: Workflow files are parsable
+        run: npm run check:workflow-yaml
 
       - name: Upstream tag watch
         run: npm run check:upstream

@@ -126,8 +126,8 @@ jobs:
       - name: Plugin manifest rules
         run: npm run check:manifest
 
-        - name: Marketplace metadata matches the package
-          run: npm run check:meta
+      - name: Marketplace metadata matches the package
+        run: npm run check:meta
 
       # The meta block promises a runtime range; a release is the moment that
       # promise is read, so it is checked here as well as on every push.
@@ -147,6 +147,9 @@ jobs:
       # a check that never runs before `npm publish`.
       - name: Workflows run the verify chain
         run: npm run check:workflows
+
+      - name: Workflow files are parsable
+        run: npm run check:workflow-yaml
 
       - name: Build
         run: npm run build
