@@ -66,5 +66,10 @@
   "dsh-remote-ssh · ops.globPh": "glob-шаблон *.py — пример ввода, а не текст",
   "dsh-remote-ssh · settings.hostPlaceholder": "login.example.com — образец адреса",
   "dsh-remote-ssh · settings.keyPathPlaceholder": "~/.ssh/id_rsa — образец пути",
-  "univer · settings.title": "Univer Office — название продукта"
+  "univer · settings.title": "Univer Office — название продукта",
+  "dsh-tts · sseState": "аббревиатура протокола SSE",
+  "dsh-usage-guard · stats_scope_val": "имя области действия из настройки плагина",
+  "ego-browser · pxUnit": "единица измерения из настройки плагина",
+  "ego-browser · title": "имя плагина",
+  "dsh-market · webdav": "имя протокола: WebDAV"
 }

@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **81 namespace** — 4949 строк. Колонка «как это выглядит»
+Пакет переводит **90 namespace** — 6433 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -14,10 +14,12 @@
 |---|---|---|---|
 | `agent-team` | Команда агентов | 25 | харнесс |
 | `approval` | — | 5 | харнесс |
+| `better-input` | — | 123 | dsh-better-input@0.2.6 |
 | `chat` | — | 200 | харнесс |
 | `claude-code-mods` | — | 4 | харнесс |
 | `command` | — | 28 | харнесс |
 | `common` | — | 41 | харнесс |
+| `config-manager` | — | 36 | dsh-config-manager@0.1.78 |
 | `conversation` | — | 379 | харнесс |
 | `cordis` | — | 51 | харнесс |
 | `cotTranslation` | — | 32 | харнесс |
@@ -25,13 +27,19 @@
 | `deliverables` | — | 60 | харнесс |
 | `documentHtml` | HTML | 4 | харнесс |
 | `documentMarkdown` | — | 4 | харнесс |
+| `dsh-cost-meter` | Счётчик расходов | 85 | @goodandready/dsh-cost-meter@0.8.22 |
+| `dsh-market` | Магазин плагинов | 733 | dshmarket@1.66.44 |
+| `dsh-moa` | Ансамбль агентов (MoA) | 159 | @goodandready/dsh-moa@0.2.53 |
 | `dsh-remote-ssh` | — | 111 | @zhangfengshun/dsh-remote-ssh@2.4.33 |
 | `dsh-skill-explorer` | — | 75 | @linxin666/dsh-client-ui-skill-explorer@0.4.7 |
 | `dsh-ssh` | — | 154 | @linxin666/dsh-ssh@0.4.7 |
+| `dsh-tts` | Речь | 226 | @goodandready/dsh-tts@0.4.34 |
+| `dsh-usage-guard` | Сторож расхода | 42 | @goodandready/dsh-usage-guard@0.1.19 |
 | `dsh-web-ui-market` | — | 106 | @linxin666/dsh-client-ui-market@0.4.7 |
 | `dsh-web-ui-preset-center` | — | 46 | @linxin666/dsh-client-ui-preset-center@0.4.7 |
 | `dsh-web-ui-session-archive` | — | 124 | @linxin666/dsh-session-archive@0.4.7 |
 | `dsh-web-ui-usage` | — | 63 | @linxin666/dsh-usage@0.4.7 |
+| `ego-browser` | ego-browser | 75 | dsh-ego-browser@0.8.6 |
 | `feedback` | — | 20 | харнесс |
 | `git-graph` | — | 63 | @linxin666/dsh-client-ui-git-graph@0.4.7 |
 | `goal` | — | 12 | харнесс |
@@ -42,6 +50,7 @@
 | `model` | — | 23 | харнесс |
 | `open-in-app` | — | 45 | харнесс |
 | `permission.access` | Права доступа | 20 | харнесс |
+| `personalDirective` | Переключение личной директивы | 5 | dsh-personal-directive@0.2.11 |
 | `pet` | — | 81 | @linxin666/dsh-pet@0.4.7 |
 | `plan` | — | 17 | харнесс |
 | `pluginManager` | Плагины | 227 | харнесс |
@@ -94,4 +103,4 @@
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **81** namespace, **4949** строк.
+Итого: **90** namespace, **6433** строк.

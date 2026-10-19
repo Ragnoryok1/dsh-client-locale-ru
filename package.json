@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "dsh language pack — i18n for the DeepSeek Harness Web GUI: Russian (ru) locale, 81 namespaces, 4949 strings, 17 third-party plugin dictionaries, ru plural forms",
-  "version": "0.2.8",
+  "description": "dsh language pack — i18n for the DeepSeek Harness Web GUI: Russian (ru) locale, 90 namespaces, 6433 strings, 25 third-party plugin dictionaries, ru plural forms",
+  "version": "0.2.9",
   "keywords": [
     "dsh",
     "deepseek-harness",

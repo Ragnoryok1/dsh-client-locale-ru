@@ -16,7 +16,7 @@
  * name: `@linxin666/dsh-client-ui-git-graph` registers `git-graph`.
  */
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync, readdirSync, existsSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync, readdirSync, existsSync, statSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -31,7 +31,13 @@ if (packages.length === 0) {
   process.exit(2)
 }
 
-/** Every string-literal pair of an object literal starting at `start`, flattened. */
+/**
+ * Every string-literal pair of an object literal starting at `start`, flattened.
+ *
+ * A key is either a quoted string (`"cancel": "Cancel"`) or a bare identifier
+ * (`cancel: "Cancel"`) — a bundler that keeps the source shape writes the second, and
+ * a dictionary read only in the first form came back empty for every such package.
+ */
 function pairsOf(text, start) {
   const pairs = new Map()
   let index = text.indexOf('{', start)
@@ -65,6 +71,21 @@ function pairsOf(text, start) {
       }
       cursor = end + 1
       continue
+    } else if (/[A-Za-z_$]/u.test(char)) {
+      /*
+       * A bare key, and only where an object member can start: after `{` or `,`.
+       * Elsewhere an identifier before a colon is an expression (`a ? b : c`), and
+       * reading it as a key would put nonsense in the dictionary.
+       */
+      const before = text.slice(0, cursor).replace(/\s+$/u, '').slice(-1)
+      if (before === '{' || before === ',') {
+        const identifier = /^([A-Za-z_$][\w$]*)\s*:/u.exec(text.slice(cursor, cursor + 80))
+        if (identifier !== null) {
+          key = identifier[1]
+          cursor += identifier[0].length
+          continue
+        }
+      }
     }
     cursor += 1
   }
@@ -88,56 +109,114 @@ for (const name of packages) {
     if (archive === undefined) throw new Error('npm pack не создал архив')
     execFileSync('tar', ['-xzf', join(work, archive), '-C', work])
 
-    const bundleDir = join(work, 'package', 'lib')
-    if (!existsSync(bundleDir)) throw new Error('в пакете нет lib/ — опубликован только исходник?')
-    const bundles = readdirSync(bundleDir).filter(entry => entry.endsWith('.js'))
-    let namespace = null
-    let english = null
-    for (const bundle of bundles) {
-      const text = readFileSync(join(bundleDir, bundle), 'utf8')
-      /*
-       * The namespace comes from the registration call first: `ctx.locale.register("pet", {
-       * zh, en })` is what the host actually sees. Bundles that inline the call are common;
-       * a package whose settings namespace happens to differ (`const PET_SETTINGS_NS`)
-       * would otherwise be recorded under the wrong id.
-       */
-      const namespaceOf = (() => {
-        /*
-         * The registration is authoritative, and its first argument may be a constant:
-         * `locale.register(MARKET_NS, { zh, en })` with `const MARKET_NS = "dsh-web-ui-market"`
-         * above it. Reading the literal only from a bare `.register(` call picks up
-         * unrelated registries — one bundle exposed `market-like` (a Turnstile action) as
-         * its namespace that way.
-         */
-        for (const call of text.matchAll(/locale\.register\(\s*(?:["']([\w.-]+)["']|([A-Za-z_$][\w$]*))\s*,\s*\{([\s\S]{0,160})/gu)) {
-          const [, literal, identifier, body] = call
-          if (!/\ben\b/u.test(body)) continue
-          if (literal !== undefined) return literal
-          const constant = new RegExp(`(?:const|var|let)\\s+${identifier}\\s*=\\s*["']([\\w.-]+)["']`, 'u').exec(text)
-          if (constant !== null) return constant[1]
-        }
-        const fallback = /(?:const|var|let)\s+NS\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
-          ?? /(?:const|var|let)\s+\w*NS\w*\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
-          ?? /['"]([\w.-]{3,48})['"]\s*,\s*\{\s*zh\s*:/u.exec(text)
-        return fallback === null ? null : fallback[1]
-      })()
-      if (namespaceOf === null) continue
-      /*
-       * `String#search` returns -1, not null: `??` never fired here, so a bundle that
-       * declares `var en =` (or `en =`) instead of `const en =` was reported as having no
-       * dictionary at all — three family packages were skipped for exactly this reason.
-       */
-      const strict = text.search(/\bconst en(?::[^=]+)?\s*=\s*\{/u)
-      const loose = text.search(/\b(?:const|var|let)?\s*en\s*[:=]\s*\{/u)
-      const start = strict !== -1 ? strict : loose
-      if (start === -1) continue
-      const pairs = pairsOf(text, start)
-      if (pairs.size === 0) continue
-      namespace = namespaceOf
-      english = pairs
-      break
+    /*
+     * The client bundle is not always in `lib/`: `dshmarket` ships it in `client/`, and
+     * a scan of `lib/` alone found there a host module's dictionary of 18 keys — not the
+     * interface dictionary. A vendored snapshot that is not the plugin's dictionary
+     * would make our translation look complete while covering a fraction of it, so the
+     * scan reads every published bundle the package ships.
+     */
+    const packageDir = join(work, 'package')
+    if (!existsSync(packageDir)) throw new Error('в архиве нет package/ — публикация устроена не так?')
+    const bundles = []
+    for (const directory of readdirSync(packageDir)) {
+      const path = join(packageDir, directory)
+      if (!statSync(path).isDirectory()) continue
+      for (const entry of readdirSync(path)) {
+        if (entry.endsWith('.js')) bundles.push(join(directory, entry))
+      }
     }
+    if (bundles.length === 0) throw new Error('в пакете нет собранных бандлей — опубликован только исходник?')
+    const texts = new Map(bundles.map(bundle => [bundle, readFileSync(join(packageDir, bundle), 'utf8')]))
+
+    /*
+     * The namespace comes from the registration call: `ctx.locale.register("pet", { zh,
+     * en })` is what the host actually sees. Its first argument may be a constant —
+     * `locale.register(LOCALE_NS, { zh, en })` — and the constant may live in another
+     * bundle of the same package, so the whole package answers the question.
+     */
+    const constantOf = identifier => {
+      for (const text of texts.values()) {
+        const found = new RegExp(`(?:const|var|let)\\s+${identifier}\\s*=\\s*["']([\\w.-]+)["']`, 'u').exec(text)
+        if (found !== null) return found[1]
+      }
+      return null
+    }
+    /** The namespace this package registers, and the bundle that registers it. */
+    const registration = (() => {
+      for (const [bundle, text] of texts) {
+        /*
+         * Two forms are in use: `locale.register("pet", { zh, en })` and
+         * `locale.register("pet", "en", en)` — the second registers one language at a
+         * time. Both name the namespace the same way, and the dictionary is the `en`
+         * object either way.
+         */
+        for (const call of text.matchAll(/locale\.register\(\s*(?:["']([\w.-]+)["']|([A-Za-z_$][\w$]*))\s*,\s*(?:\{([\s\S]{0,160})|"en"\s*,\s*en)/gu)) {
+          const [, literal, identifier, body] = call
+          if (body !== undefined && !/\ben\b/u.test(body)) continue
+          if (literal !== undefined) return { namespace: literal, bundle }
+          const constant = constantOf(identifier)
+          if (constant !== null) return { namespace: constant, bundle }
+        }
+      }
+      return null
+    })()
+    /*
+     * A package that registers through a constant the bundles do not define falls back
+     * to a namespace-shaped constant: `const BETTER_SIDEBAR_NS = "betterSidebar"`.
+     */
+    const fallback = (() => {
+      for (const text of texts.values()) {
+        const found = /(?:const|var|let)\s+\w*NS\w*\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
+        if (found !== null) return { namespace: found[1], bundle: null }
+      }
+      return null
+    })()
+    const namespace = registration?.namespace ?? fallback?.namespace ?? null
+
+    /*
+     * The English dictionary is the `en` object the registration hands over. A bundle
+     * split repeats the same object in several chunks, so the candidate with the most
+     * pairs is the dictionary and the smaller ones belong to other features.
+     */
+    const english = (() => {
+      const candidates = []
+      for (const [bundle, text] of texts) {
+        const strict = text.search(/\bconst en(?::[^=]+)?\s*=\s*\{/u)
+        const loose = text.search(/\b(?:const|var|let)?\s*en\s*[:=]\s*\{/u)
+        const start = strict !== -1 ? strict : loose
+        if (start === -1) continue
+        const pairs = pairsOf(text, start)
+        if (pairs.size > 0) candidates.push({ bundle, pairs })
+      }
+      if (candidates.length === 0) return null
+      const own = candidates.find(candidate => candidate.bundle === registration?.bundle)
+      return (own ?? candidates.reduce((best, candidate) => candidate.pairs.size > best.pairs.size ? candidate : best)).pairs
+    })()
     if (namespace === null || english === null) throw new Error('не нашёл namespace и английский словарь в бандле')
+
+    /*
+     * A plugin's own name lives in `locale/en.json` next to the package, and the loader
+     * reads it from there. It is vendored too: the name is what a user reads on the
+     * Plugins page, and a pack that translates a plugin's strings can translate its name
+     * only by carrying the name itself.
+     */
+    let descriptors = null
+    const localeFile = join(work, 'package', 'locale', 'en.json')
+    if (existsSync(localeFile)) {
+      try {
+        const locale = JSON.parse(readFileSync(localeFile, 'utf8'))
+        const meta = locale.meta ?? {}
+        if (typeof meta.title === 'string' || typeof meta.description === 'string') {
+          descriptors = {
+            ...(typeof meta.title === 'string' ? { title: meta.title } : {}),
+            ...(typeof meta.description === 'string' ? { description: meta.description } : {}),
+          }
+        }
+      } catch {
+        /* A broken locale file is the plugin's problem, not ours. */
+      }
+    }
 
     const record = {
       namespace,
@@ -146,6 +225,7 @@ for (const name of packages) {
       license: meta.license ?? null,
       repository: typeof meta.repository === 'object' ? meta.repository?.url ?? null : meta.repository ?? null,
       fetched: new Date().toISOString().slice(0, 10),
+      ...(descriptors === null ? {} : { meta: descriptors }),
       en: Object.fromEntries([...english.entries()].sort(([left], [right]) => left.localeCompare(right, 'en'))),
     }
     const file = join(OUT, `${namespace}.json`)

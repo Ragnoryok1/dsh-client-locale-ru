@@ -1,0 +1,15 @@
+{
+  "namespace": "personalDirective",
+  "package": "dsh-personal-directive",
+  "version": "0.2.11",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/PerryLink/dsh-personal-directive.git",
+  "fetched": "2026-10-19",
+  "en": {
+    "disabled": "Directive: Off",
+    "enabled": "Directive: On",
+    "failed": "Directive toggle connection failed",
+    "switching": "Switching…",
+    "title": "Toggle personal directive"
+  }
+}
