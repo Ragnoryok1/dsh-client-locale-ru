@@ -126,6 +126,9 @@ jobs:
       - name: Plugin manifest rules
         run: npm run check:manifest
 
+        - name: Marketplace metadata matches the package
+          run: npm run check:meta
+
       # The meta block promises a runtime range; a release is the moment that
       # promise is read, so it is checked here as well as on every push.
       - name: Compatibility promise

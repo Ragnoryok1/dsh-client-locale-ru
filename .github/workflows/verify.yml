@@ -54,6 +54,9 @@ jobs:
       - name: Plugin manifest rules
         run: npm run check:manifest
 
+        - name: Marketplace metadata matches the package
+          run: npm run check:meta
+
       - name: Committed bundle matches the build
         run: npm run check:built
 
