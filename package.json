@@ -98,7 +98,8 @@
     "check:descriptors": "node scripts/apply-descriptor-ru.mjs --check",
     "release:status": "node scripts/release-status.mjs",
     "check:meta": "node scripts/check-meta.mjs",
-    "check:workflow-yaml": "node scripts/check-workflow-yaml.mjs"
+    "check:workflow-yaml": "node scripts/check-workflow-yaml.mjs",
+    "check:release-race": "node scripts/check-release-race.mjs"
   },
   "license": "MIT",
   "peerDependencies": {
