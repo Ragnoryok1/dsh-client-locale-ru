@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 81 namespaces, 4949 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 81 namespaces, 4949 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -100,6 +100,10 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 Дальше при следующем старте `dsh web` в настройках появится **Русский**. Отдельно `pnpm add` в собранный `dsh web` не нужен — плагин тянет штатную локаль через сервис `locale`.
 
+Если pnpm отвечает `ERR_PNPM_NO_MATURE_MATCHING_VERSION` — это не поломка пакета, а
+политика зрелости: профиль не ставит версии, опубликованные меньше 48 часов назад.
+Подождите сутки-двое (имя версии в сообщении показывает, сколько осталось) или снимите
+ограничение `minimumReleaseAge` в настройках профиля.
 Манифест проверяется по правилам харнесса, а не на глаз (`npm run check:manifest`, входит в
 `verify`). Правила вычитаны из его исходников и каждое — это отказ, который иначе увидел бы
 пользователь: `parseDshClient` принимает `platform` любой строкой, но потребители отбирают

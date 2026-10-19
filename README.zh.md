@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface for the DeepSeek Harness web GUI: 81 namespaces, 4949 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 81 namespaces, 4949 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -32,6 +32,9 @@
 
 完整清单见 [NAMESPACES.md](NAMESPACES.md)：81 个 namespace、4949 条字符串，随包附带的插件词典单独标注。
 
+如果 pnpm 报 `ERR_PNPM_NO_MATURE_MATCHING_VERSION`，这不是包坏了，而是成熟度策略：配置文件
+不安装发布不足 48 小时的版本。等一两天（报错信息里写着版本号），或在配置文件设置里去掉
+`minimumReleaseAge` 限制。
 「插件」页面上的插件名称与说明无法由本包提供：harness 把她们放在每个包的 `locale/<语言>.json`
 里并据此拼出翻译映射，而 locale 服务的 `resolveText` 根本不查词典（原文注释：maps do not
 consult registered dictionaries）。221 个 harness 包带有 `locale/en.json`，其中 219 个带有
