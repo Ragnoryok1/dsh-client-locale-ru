@@ -1,0 +1,384 @@
+diff --git a/packages/client/ui-schedule/locale/ru.json b/packages/client/ui-schedule/locale/ru.json
+new file mode 100644
+index 0000000000..24305ae885
+--- /dev/null
++++ b/packages/client/ui-schedule/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Интерфейс задач",
++    "description": "Страница задач автоматизации в боковой панели, карточки задач и отметки напоминаний в сессиях."
++  }
++}
+diff --git a/packages/context/time-context/locale/ru.json b/packages/context/time-context/locale/ru.json
+new file mode 100644
+index 0000000000..e7f4ebb095
+--- /dev/null
++++ b/packages/context/time-context/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Ощущение времени",
++    "description": "Сообщает модели текущее время, часовой пояс браузера и время с предыдущего сообщения на каждом шаге."
++  }
++}
+diff --git a/packages/experimental/agent-team-profile/locale/ru.json b/packages/experimental/agent-team-profile/locale/ru.json
+new file mode 100644
+index 0000000000..3ca7cc0534
+--- /dev/null
++++ b/packages/experimental/agent-team-profile/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Команды агентов",
++    "description": "Включает командную работу, инструменты команды, список участников и общую доску задач."
++  }
++}
+diff --git a/packages/experimental/agent-team/locale/ru.json b/packages/experimental/agent-team/locale/ru.json
+new file mode 100644
+index 0000000000..344213a799
+--- /dev/null
++++ b/packages/experimental/agent-team/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Командная работа",
++    "description": "Управление участниками команды, сообщениями участников и общими задачами."
++  }
++}
+diff --git a/packages/experimental/api-speech-to-text/locale/ru.json b/packages/experimental/api-speech-to-text/locale/ru.json
+new file mode 100644
+index 0000000000..1fbcd509fd
+--- /dev/null
++++ b/packages/experimental/api-speech-to-text/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "API распознавания речи",
++    "description": "Даёт браузерным клиентам расшифровку речи в текст."
++  }
++}
+diff --git a/packages/experimental/auto-review/locale/ru.json b/packages/experimental/auto-review/locale/ru.json
+new file mode 100644
+index 0000000000..143988a8e3
+--- /dev/null
++++ b/packages/experimental/auto-review/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Автоматическая проверка разрешений",
++    "description": "Добавляет режим разрешений с автоматической проверкой: модель оценивает запрос перед каждым вызовом инструмента."
++  }
++}
+diff --git a/packages/experimental/badge-skill-bundle/locale/ru.json b/packages/experimental/badge-skill-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..9cb05f0a7d
+--- /dev/null
++++ b/packages/experimental/badge-skill-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Навык значка DSH",
++    "description": "Позволяет агентам добавлять значок «сделано на dsh» в документы, пул-реквесты и другие результаты."
++  }
++}
+diff --git a/packages/experimental/browser-use-chrome-devtools-mcp/locale/ru.json b/packages/experimental/browser-use-chrome-devtools-mcp/locale/ru.json
+new file mode 100644
+index 0000000000..d87dac7b0e
+--- /dev/null
++++ b/packages/experimental/browser-use-chrome-devtools-mcp/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Работа в браузере (Chrome DevTools)",
++    "description": "Позволяет модели просматривать веб-страницы и управлять ими через Chrome DevTools MCP в запущенном Chrome."
++  }
++}
+diff --git a/packages/experimental/browser-use-playwright-mcp/locale/ru.json b/packages/experimental/browser-use-playwright-mcp/locale/ru.json
+new file mode 100644
+index 0000000000..15785bd1ca
+--- /dev/null
++++ b/packages/experimental/browser-use-playwright-mcp/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Работа в браузере (Playwright)",
++    "description": "Позволяет модели просматривать веб-страницы и управлять ими через Playwright MCP в запущенном Chromium."
++  }
++}
+diff --git a/packages/experimental/client-ui-agent-team/locale/ru.json b/packages/experimental/client-ui-agent-team/locale/ru.json
+new file mode 100644
+index 0000000000..cbc912174f
+--- /dev/null
++++ b/packages/experimental/client-ui-agent-team/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Панель команды",
++    "description": "Показывает участников команды и общие задачи, позволяет переходить в разговоры участников."
++  }
++}
+diff --git a/packages/experimental/client-ui-cot-translation/locale/ru.json b/packages/experimental/client-ui-cot-translation/locale/ru.json
+new file mode 100644
+index 0000000000..58b601e0f2
+--- /dev/null
++++ b/packages/experimental/client-ui-cot-translation/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Машинный перевод рассуждений",
++    "description": "Показывает развёрнутые рассуждения на другом языке с помощью машинного перевода."
++  }
++}
+diff --git a/packages/experimental/client-ui-voice-input/locale/ru.json b/packages/experimental/client-ui-voice-input/locale/ru.json
+new file mode 100644
+index 0000000000..ecfd5c5ad0
+--- /dev/null
++++ b/packages/experimental/client-ui-voice-input/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Запись голоса",
++    "description": "Записывает речь и вставляет редактируемый текст в черновик сообщения."
++  }
++}
+diff --git a/packages/experimental/computer-use-cua-driver-mcp/locale/ru.json b/packages/experimental/computer-use-cua-driver-mcp/locale/ru.json
+new file mode 100644
+index 0000000000..0d324b3b0f
+--- /dev/null
++++ b/packages/experimental/computer-use-cua-driver-mcp/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Управление компьютером (Cua Driver MCP)",
++    "description": "Позволяет модели управлять рабочим столом через отдельно установленный исполняемый файл cua-driver."
++  }
++}
+diff --git a/packages/experimental/computer-use-cua-driver-native/locale/ru.json b/packages/experimental/computer-use-cua-driver-native/locale/ru.json
+new file mode 100644
+index 0000000000..fcc7985c74
+--- /dev/null
++++ b/packages/experimental/computer-use-cua-driver-native/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Управление компьютером (Cua Driver)",
++    "description": "Позволяет модели управлять рабочим столом встроенной средой Cua Driver; нужны разрешения рабочего стола для приложения, запускающего dsh."
++  }
++}
+diff --git a/packages/experimental/cot-translation-bundle/locale/ru.json b/packages/experimental/cot-translation-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..a3ca845485
+--- /dev/null
++++ b/packages/experimental/cot-translation-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Машинный перевод рассуждений",
++    "description": "Машинный перевод развёрнутых рассуждений; исходный текст отправляется в выбранную службу"
++  }
++}
+diff --git a/packages/experimental/inspector-profile/locale/ru.json b/packages/experimental/inspector-profile/locale/ru.json
+new file mode 100644
+index 0000000000..7b4b703c98
+--- /dev/null
++++ b/packages/experimental/inspector-profile/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Инструменты разработчика",
++    "description": "Просмотр и отладка сырых данных сессии, сгруппированных сообщений чата и серверной части на NodeJS."
++  }
++}
+diff --git a/packages/experimental/inspector/locale/ru.json b/packages/experimental/inspector/locale/ru.json
+new file mode 100644
+index 0000000000..dda8b11647
+--- /dev/null
++++ b/packages/experimental/inspector/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Инспектор NodeJS",
++    "description": "Открывает Chrome DevTools в нижней панели по Ctrl/Cmd+Shift+. для разработки и отладки."
++  }
++}
+diff --git a/packages/experimental/plugin-market-bundle/locale/ru.json b/packages/experimental/plugin-market-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..d8b26db7de
+--- /dev/null
++++ b/packages/experimental/plugin-market-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Свои магазины плагинов",
++    "description": "Добавляет в раздел «Плагины» вкладку «Обзор» для просмотра и установки наборов из указанных вами каталогов магазинов плагинов"
++  }
++}
+diff --git a/packages/experimental/ralph-bundle/locale/ru.json b/packages/experimental/ralph-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..d9197a49fd
+--- /dev/null
++++ b/packages/experimental/ralph-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Циклы Ralph",
++    "description": "Выполняет явно запрошенную повторяющуюся работу свежими агентами."
++  }
++}
+diff --git a/packages/experimental/session-inspector/locale/ru.json b/packages/experimental/session-inspector/locale/ru.json
+new file mode 100644
+index 0000000000..93bb99d226
+--- /dev/null
++++ b/packages/experimental/session-inspector/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Журнал сессии",
++    "description": "Включает разбор сырых данных текущей сессии и сгруппированных сообщений чата в боковой панели сессии."
++  }
++}
+diff --git a/packages/experimental/session-search/locale/ru.json b/packages/experimental/session-search/locale/ru.json
+new file mode 100644
+index 0000000000..802ee1064d
+--- /dev/null
++++ b/packages/experimental/session-search/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Поиск по сессиям",
++    "description": "Даёт агентам инструменты для поиска и чтения прежних сессий этой рабочей области."
++  }
++}
+diff --git a/packages/experimental/session-titles-bundle/locale/ru.json b/packages/experimental/session-titles-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..f2f655a611
+--- /dev/null
++++ b/packages/experimental/session-titles-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Названия, следующие за разговором",
++    "description": "Обновляет названия сессий по мере поступления новых запросов человека."
++  }
++}
+diff --git a/packages/experimental/skill-badge/locale/ru.json b/packages/experimental/skill-badge/locale/ru.json
+new file mode 100644
+index 0000000000..bf07a0f109
+--- /dev/null
++++ b/packages/experimental/skill-badge/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "DSH",
++    "description": "Даёт официальный навык со значком «сделано на DSH»."
++  }
++}
+diff --git a/packages/experimental/speech-to-text-sensevoice/locale/ru.json b/packages/experimental/speech-to-text-sensevoice/locale/ru.json
+new file mode 100644
+index 0000000000..60b3c9730d
+--- /dev/null
++++ b/packages/experimental/speech-to-text-sensevoice/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Локальное распознавание SenseVoice",
++    "description": "Расшифровывает записи в текст локально с помощью SenseVoice."
++  }
++}
+diff --git a/packages/experimental/speech-to-text/locale/ru.json b/packages/experimental/speech-to-text/locale/ru.json
+new file mode 100644
+index 0000000000..64210c364d
+--- /dev/null
++++ b/packages/experimental/speech-to-text/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Распознавание речи",
++    "description": "Управляет расшифровкой речи в текст и выбирает службу распознавания."
++  }
++}
+diff --git a/packages/experimental/terminal-bundle/locale/ru.json b/packages/experimental/terminal-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..f648d96694
+--- /dev/null
++++ b/packages/experimental/terminal-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Постоянные терминалы",
++    "description": "Сохраняет оболочки живыми между вызовами инструментов."
++  }
++}
+diff --git a/packages/experimental/tool-agent-team/locale/ru.json b/packages/experimental/tool-agent-team/locale/ru.json
+new file mode 100644
+index 0000000000..e3c2abaa52
+--- /dev/null
++++ b/packages/experimental/tool-agent-team/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Инструменты команды",
++    "description": "Даёт агентам инструменты для согласования участников, обмена сообщениями и управления общими задачами."
++  }
++}
+diff --git a/packages/experimental/tool-worktree/locale/ru.json b/packages/experimental/tool-worktree/locale/ru.json
+new file mode 100644
+index 0000000000..7e340c5fef
+--- /dev/null
++++ b/packages/experimental/tool-worktree/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Рабочие деревья Git",
++    "description": "Позволяет агенту создать новую ветку и рабочее дерево Git и продолжить работу в нём."
++  }
++}
+diff --git a/packages/experimental/voice-input-bundle/locale/ru.json b/packages/experimental/voice-input-bundle/locale/ru.json
+new file mode 100644
+index 0000000000..cddf9469a8
+--- /dev/null
++++ b/packages/experimental/voice-input-bundle/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Голосовой ввод",
++    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости"
++  }
++}
+diff --git a/packages/schedule/schedule/locale/ru.json b/packages/schedule/schedule/locale/ru.json
+new file mode 100644
+index 0000000000..656b0f3add
+--- /dev/null
++++ b/packages/schedule/schedule/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Планирование задач",
++    "description": "Хранит задачи автоматизации, запускает каждую в её исходной сессии по расписанию и даёт агенту инструменты управления."
++  }
++}
+diff --git a/packages/subagent/subagent-claude-code/locale/ru.json b/packages/subagent/subagent-claude-code/locale/ru.json
+new file mode 100644
+index 0000000000..e659bbf1a2
+--- /dev/null
++++ b/packages/subagent/subagent-claude-code/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Субагент Claude Code",
++    "description": "Передаёт одну задачу в Claude Code с его собственными настройками и авторизацией."
++  }
++}
+diff --git a/packages/subagent/subagent-codex/locale/ru.json b/packages/subagent/subagent-codex/locale/ru.json
+new file mode 100644
+index 0000000000..0a25e10718
+--- /dev/null
++++ b/packages/subagent/subagent-codex/locale/ru.json
+@@ -0,0 +1,6 @@
++{
++  "meta": {
++    "title": "Субагент Codex",
++    "description": "Передаёт одну задачу в Codex с его собственными настройками и авторизацией."
++  }
++}

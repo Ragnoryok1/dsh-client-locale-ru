@@ -121,5 +121,10 @@ jobs:
       - name: Plugin descriptor translations follow upstream
         run: npm run check:descriptors -- tree/packages
 
+      # The patch that goes to the harness must carry exactly the translations the pack
+      # holds; a stale patch would send upstream text the repository no longer has.
+      - name: The upstream patch carries the same translations
+        run: npm run check:descriptor-patch
+
       - name: Locale audit
         run: node scripts/audit.mjs tree/packages

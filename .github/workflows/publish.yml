@@ -143,6 +143,11 @@ jobs:
       - name: Plugin descriptor translations follow upstream
         run: npm run check:descriptors -- tree/packages
 
+      # The patch that goes to the harness must carry exactly the translations the pack
+      # holds; a stale patch would send upstream text the repository no longer has.
+      - name: The upstream patch carries the same translations
+        run: npm run check:descriptor-patch
+
       # The release path reads the same workflow files as CI; a check missing here is
       # a check that never runs before `npm publish`.
       - name: Workflows run the verify chain
