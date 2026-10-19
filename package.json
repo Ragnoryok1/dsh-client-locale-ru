@@ -80,7 +80,7 @@
     "check:built": "node scripts/check-built.mjs",
     "check:size": "node scripts/check-size.mjs",
     "audit": "node scripts/audit.mjs",
-    "verify": "npm run check:readmes && npm run check:readmes:pairs && npm run check:changelog && npm run check:manifest && npm run check:meta && npm run check:built && npm run check:size && npm run check:tarball && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:composition && npm run check:namespaces && npm run check:upstream && npm run check:peers && npm run check:workflows && npm run check:workflow-yaml && npm run check:release-race && npm run check:descriptors && node scripts/audit.mjs",
+    "verify": "npm run check:readmes && npm run check:readmes:pairs && npm run check:changelog && npm run check:manifest && npm run check:meta && npm run check:built && npm run check:size && npm run check:tarball && npm run check:typography && npm run check:typography:dom && npm run check:locale && npm run check:plural && npm run check:composition && npm run check:namespaces && npm run check:upstream && npm run check:peers && npm run check:workflows && npm run check:workflow-yaml && npm run check:release-race && npm run check:conflict-notice && npm run check:descriptors && node scripts/audit.mjs",
     "prepublishOnly": "npm run build",
     "check:composition": "node scripts/check-composition.mjs",
     "namespaces": "node scripts/namespaces.mjs",
@@ -99,7 +99,8 @@
     "release:status": "node scripts/release-status.mjs",
     "check:meta": "node scripts/check-meta.mjs",
     "check:workflow-yaml": "node scripts/check-workflow-yaml.mjs",
-    "check:release-race": "node scripts/check-release-race.mjs"
+    "check:release-race": "node scripts/check-release-race.mjs",
+    "check:conflict-notice": "node scripts/check-conflict-notice.mjs"
   },
   "license": "MIT",
   "peerDependencies": {

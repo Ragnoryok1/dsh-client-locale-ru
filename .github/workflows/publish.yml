@@ -157,6 +157,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: The pack says when it loses the language to another pack
+        run: npm run check:conflict-notice
+
       # What is committed is what a GitHub install runs, so the release ships the
       # bundle that this build produces — not an older one.
       - name: Committed bundle matches the build

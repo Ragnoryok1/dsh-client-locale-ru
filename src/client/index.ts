@@ -10,12 +10,23 @@ import { RU_DICTS, RU_LABEL } from './dicts.ts'
 import { startRussianPlurals } from './plural.ts'
 import { startRussianTypography } from './typography.ts'
 
-/** Skip only occupied slots; validation and unexpected service errors still fail. */
-function skipDuplicate(register: () => () => void, duplicateMessage: string): () => void {
+/**
+ * Skip only occupied slots; validation and unexpected service errors still fail.
+ *
+ * A skipped registration is remembered: the caller reports it, because a namespace that
+ * stayed with another pack is a difference the user can only notice by looking at the
+ * interface.
+ */
+function skipDuplicate(
+  register: () => () => void,
+  duplicateMessage: string,
+  onDuplicate: (what: string) => void,
+): () => void {
   try {
     return register()
   } catch (error) {
     if (!(error instanceof Error) || error.message !== duplicateMessage) throw error
+    onDuplicate(duplicateMessage)
     return () => {}
   }
 }
@@ -35,10 +46,25 @@ export const inject = ['locale']
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
+  /*
+   * The language and every namespace can already be taken: by an earlier Russian pack, or
+   * by a host that registers them itself. Either way the pack's own text is not what the
+   * user will read, and the console is the only place to say so.
+   */
+  let languageTaken = false
+  const lostNamespaces: string[] = []
+  const report = (what: string): void => {
+    if (what.includes('already registered')) {
+      languageTaken = true
+      return
+    }
+    lostNamespaces.push(what)
+  }
   ctx.effect(
     () => skipDuplicate(
       () => ctx.locale.addLanguage({ id: 'ru', label: RU_LABEL, fallback: 'en' }),
       'locale "ru" is already registered',
+      report,
     ),
     'locale-ru: language',
   )
@@ -47,8 +73,18 @@ export function apply(ctx: ClientContext): void {
       () => skipDuplicate(
         () => ctx.locale.register(ns, 'ru', dict),
         `locale namespace "${ns}" already has locale "ru"`,
+        report,
       ),
       `locale-ru: ${ns} dictionary`,
+    )
+  }
+  if (languageTaken || lostNamespaces.length > 0) {
+    const parts = [
+      languageTaken ? 'язык ru уже занят другим пакетом' : null,
+      lostNamespaces.length > 0 ? `наши словари не зарегистрированы в ${lostNamespaces.length} namespace` : null,
+    ].filter(part => part !== null)
+    console.warn(
+      `[dsh-client-locale-ru] ${parts.join('; ')}. В интерфейсе останется перевод другого пакета — оставьте в профиле один пакет с русским языком.`,
     )
   }
   ctx.effect(

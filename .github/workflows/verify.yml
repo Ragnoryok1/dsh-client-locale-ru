@@ -112,6 +112,9 @@ jobs:
       - name: Upstream tag watch
         run: npm run check:upstream
 
+      - name: The pack says when it loses the language to another pack
+        run: npm run check:conflict-notice
+
       # The plugin descriptors a user reads are translated from an English snapshot; this
       # fails when upstream rewrites one, which would leave a Russian title saying something
       # the English no longer says.
