@@ -151,6 +151,9 @@ jobs:
       - name: Workflow files are parsable
         run: npm run check:workflow-yaml
 
+
+      - name: A release never fails because its version is already out
+        run: npm run check:release-race
       - name: Build
         run: npm run build
 
