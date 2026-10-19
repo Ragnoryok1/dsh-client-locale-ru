@@ -1,7 +1,7 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
   "description": "Full Russian interface for the DeepSeek Harness web GUI: 81 namespaces, 4949 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
