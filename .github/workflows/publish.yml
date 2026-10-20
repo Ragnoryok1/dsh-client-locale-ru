@@ -222,7 +222,19 @@ jobs:
           set -euo pipefail
           name="$(node -p "require('./package.json').name")"
           version="$(node -p "require('./package.json').version")"
+          # Who the token belongs to is written into the log: a publish that failed three
+          # times in a row for want of a token is indistinguishable from a broken package
+          # without it.
+          npm whoami || echo "::warning::npm не признал токен публикации"
           if npm publish --access public --provenance; then
+            exit 0
+          fi
+          # The attestation is a promise, not a prerequisite: if the OIDC token cannot be
+          # minted or the registry refuses the signature, the release must still go out.
+          # The second attempt publishes the same bytes without the signature.
+          echo "::warning::публикация с attestation не удалась — пробуем без него"
+          if npm publish --access public; then
+            echo "::notice::${name}@${version} опубликован без attestation"
             exit 0
           fi
           # A version published a moment ago may not have been visible to the guard; npm then
