@@ -23,7 +23,13 @@ const windows = process.platform === 'win32'
 const build = windows
   ? spawnSync(process.env.ComSpec ?? 'cmd.exe', ['/d', '/s', '/c', 'npm run build'], { encoding: 'utf8' })
   : spawnSync('npm', ['run', 'build'], { encoding: 'utf8' })
-const git = (args) => spawnSync('git', args, { encoding: 'utf8' })
+/*
+ * The bundle grew past the 1 MiB that `spawnSync` allows by default: `git show` of
+ * a 1.2 MB `lib/client.js` was killed by the buffer limit and the check read the
+ * failure as «файла нет в HEAD» — a bundle of any size above the limit could never
+ * be verified.
+ */
+const git = (args) => spawnSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
 
 const insideRepository = git(['rev-parse', '--is-inside-work-tree'])
 if (insideRepository.status !== 0 || insideRepository.stdout.trim() !== 'true') {
