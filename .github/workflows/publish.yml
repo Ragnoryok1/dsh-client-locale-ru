@@ -176,6 +176,12 @@ jobs:
       - name: Plugin names are Russian in the interface
         run: npm run check:plugin-names
 
+      # The map of the third-party plugin names is built from the dictionaries;
+      # a map that drifted from them would translate a name the plugin no longer
+      # publishes.
+      - name: Plugin names match the dictionaries
+        run: npm run check:plugin-names:map
+
       - name: Advertised package size
         run: npm run check:size
 
