@@ -1801,7 +1801,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'image.dialog': 'Просмотр изображения',
     'image.close': 'Закрыть просмотр изображения',
     'settings.transcript.standard': 'Стандартный',
-    'settings.transcript.verbose': 'Подробный',
+    'settings.transcript.verbose': 'Развёрнутый',
     'message.toolAdded': 'Инструмент добавлен: {name}',
     'message.toolRemoved': 'Инструмент удалён: {name}',
     'message.toolsAdded': 'Добавлены: {names}',
