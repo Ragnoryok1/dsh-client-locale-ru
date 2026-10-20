@@ -22,7 +22,12 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const OUT = join(ROOT, 'plugins')
+/*
+ * Where the vendored dictionaries land. The default is the pack's own `plugins/`;
+ * `PLUGIN_DICT_OUT` points it elsewhere, which is how a wide sweep over the
+ * ecosystem is measured before anything is kept.
+ */
+const OUT = process.env.PLUGIN_DICT_OUT ?? join(ROOT, 'plugins')
 mkdirSync(OUT, { recursive: true })
 
 const packages = process.argv.slice(2).filter(argument => !argument.startsWith('-'))

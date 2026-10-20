@@ -711,6 +711,17 @@ const packPlurals = new Set([...packKeys].filter(k => pluralSuffix.test(k)))
 const deadNamespaces = [...packNamespaces]
   .filter(ns => !harnessNamespaces.has(ns) && !externalNamespaces.has(ns))
   .sort()
+/*
+ * A plugin dictionary that claims a namespace the harness owns.
+ *
+ * The locale service gives a namespace to whoever registers it first, so a plugin
+ * that registers `chat` under a name of its own would take the harness's screen
+ * away from the harness's own dictionary. A vendored dictionary is registered by
+ * this pack, and the pack must not stand between the harness and its own text.
+ */
+const namespaceCollisions = [...externalNamespaces.keys()]
+  .filter(namespace => harnessNamespaces.has(namespace))
+  .sort()
 const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort()
 /*
  * A pair the harness does not have is the pack's own augmentation: the harness
@@ -1880,6 +1891,7 @@ const report = (title, items) => {
 }
 
 report('namespace пака, объявленных дважды (перекрывают друг друга)', duplicateNamespaces)
+report('словари плагинов, занимающие namespace харнесса', namespaceCollisions)
 report('namespace пака, которых нет в харнессе (мёртвые)', deadNamespaces.map(ns => {
   const near = [...harnessNamespaces.keys()].filter(name => name.startsWith(ns.split('.')[0]))
   return `${ns}${near.length > 0 ? `  (похожие: ${near.join(', ')})` : ''}`
@@ -1925,7 +1937,7 @@ if (uncovered.size > 0) {
   for (const [file, keys] of uncovered) console.log(`  ${file}\n      ${keys.join(', ')}`)
 }
 
-const failures = duplicateNamespaces.length + deadNamespaces.length + missingPlurals.length
+const failures = duplicateNamespaces.length + deadNamespaces.length + namespaceCollisions.length + missingPlurals.length
   + extraPlurals.length + placeholderMismatches.length + cjkResidue.length + emptyResidue.length
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + staleLatinInValues.length + productNameCasing.length
