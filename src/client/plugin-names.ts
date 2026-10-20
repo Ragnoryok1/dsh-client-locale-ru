@@ -16,8 +16,15 @@
  *
  * The pass follows the active language like the typography pass: the names are Russian,
  * so an English interface must keep its English names.
+ *
+ * Two sources of names. `descriptor-ru.json` holds the plugins of the harness itself,
+ * whose descriptions the harness publishes. `plugin-names-ru.json` holds the
+ * third-party plugins whose dictionaries this pack carries: the English text comes
+ * from the plugin's own publication and the Russian from the same dictionary, so the
+ * pair is the plugin's own wording and not a guess.
  */
 import descriptors from './descriptor-ru.json'
+import pluginNames from './plugin-names-ru.json'
 import { SKIP_SELECTOR } from './typography.ts'
 
 /** One plugin's English text and the Russian text that replaces it. */
@@ -49,6 +56,13 @@ function collectTexts(): PluginText[] {
       if (english === undefined || russian === undefined || english === russian) continue
       texts.push({ english, russian })
     }
+  }
+  /* The third-party plugins: the English the plugin publishes and the Russian the
+     pack's own dictionary holds for the same text. */
+  const pairs = (pluginNames as { pairs?: Record<string, string> }).pairs ?? {}
+  for (const [english, russian] of Object.entries(pairs)) {
+    if (english === russian) continue
+    texts.push({ english, russian })
   }
   return texts.sort((left, right) => right.english.length - left.english.length)
 }

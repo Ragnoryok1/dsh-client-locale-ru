@@ -1,7 +1,7 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
   "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 123 namespaces, 12590 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
@@ -105,7 +105,7 @@ two (the message names the version) or drop the `minimumReleaseAge` limit in the
 settings.
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 693 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 695 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -175,11 +175,12 @@ resolves that map without consulting registered dictionaries — its own documen
 plugin's name: the pack has no access to another package's map, and the English name stays
 English until the plugin itself ships `locale/ru.json`.
 
-The pack carries those names itself: 59 plugins, each with the English title and description
-the translation was made from, and the Russian text. The rendered interface passes through a
-pass that puts the Russian text where the English was — in the plugin cards, in the rows of a
-bundle, on a plugin's page and in the settings inventory. The accessible name (`aria-label`)
-is replaced too, so a card is read in Russian as a whole.
+The pack carries those names itself: the names of the 32 harness plugins and the names and
+descriptions of 32 third-party plugins whose dictionaries it translates. Each comes with the
+English text the translation was made from and the Russian text. The rendered interface passes
+through a pass that puts the Russian text where the English was — in the plugin cards, in the
+rows of a bundle, on a plugin's page and in the settings inventory. The accessible name
+(`aria-label`) is replaced too, so a card is read in Russian as a whole.
 
 The pass matches exactly: a string is replaced only when the whole string is one of the titles
 or descriptions the pack knows. A sentence that merely mentions a name keeps its wording;
@@ -190,7 +191,11 @@ The same 32 names go to the harness as a patch (`docs/harness-descriptors-ru.pat
 harness interface the plugins are named in Russian, and the patch gets there first. The patch
 is a build artefact — it is built from the translations and the harness tree, and the gate
 `npm run check:descriptor-patch` fails when the built patch and the committed one differ.
-`npm run check:plugin-names` proves on a real document (jsdom, 11 cases) that the pass
+The third-party names live in `src/client/plugin-names-ru.json`: the file is built from the
+vendored plugin dictionaries (`npm run build:plugin-names`), and the gate
+`npm run check:plugin-names:map` fails when the map has drifted from the dictionaries. The same
+English name cannot be translated two ways — differently in the harness and in a plugin.
+`npm run check:plugin-names` proves on a real document (jsdom, 12 cases) that the pass
 translates the title, the description, the accessible name and a bundle row — and leaves what
 it must alone.
 

@@ -55,6 +55,17 @@ const detail = `
     </div>
   </div>`
 
+/** A third-party plugin's card: the name comes from the plugin's own publication. */
+const thirdPartyCard = `
+  <li data-plugin-package="@goodandready/dsh-live-canvas">
+    <div class="cardMain">
+      <div class="titleRow">
+        <button type="button" class="cardTitle cardOpen" aria-label="Открыть Live Canvas Preview">Live Canvas Preview</button>
+      </div>
+      <span class="cardDesc">Interactive in-browser canvas for real-time preview of HTML (with Tailwind CSS &amp; Lucide icons), React components, SVGs, and diagrams with workspace file discovery, session switcher, props controls, visual diffs, device matrix, AI mock data, 1-click Vite project packager, and Better Sidebar integration.</span>
+    </div>
+  </li>`
+
 /**
  * A window with the pack loaded and applied.
  *
@@ -225,4 +236,15 @@ test('the disposer stops the pass', async () => {
   body.appendChild(list)
   await settle()
   assert.equal(body.querySelector('button').textContent, 'Session search')
+})
+
+test('the name and the one-liner of a third-party plugin are translated', () => {
+  const { body, dispose } = setup(thirdPartyCard)
+  assert.equal(plain(body.querySelector('button').textContent), 'Предпросмотр живого холста')
+  assert.equal(
+    plain(body.querySelector('.cardDesc').textContent),
+    'Интерактивный холст прямо в браузере для предпросмотра в реальном времени: HTML (с Tailwind CSS и иконками Lucide), компоненты React, SVG и схемы, а также поиск файлов рабочей области, переключатель сессий, управление свойствами, визуальные различия, матрица устройств, фиктивные данные от ИИ, сборка проекта Vite в один клик и интеграция с Better Sidebar.',
+  )
+  assert.equal(plain(body.querySelector('button').getAttribute('aria-label')), 'Открыть Предпросмотр живого холста')
+  dispose()
 })

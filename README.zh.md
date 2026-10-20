@@ -1,7 +1,7 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
   "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 123 namespaces, 12590 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
@@ -90,7 +90,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 693 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 695 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -123,11 +123,11 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 插件的名称来自它自己的 `locale/<语言>.json` 文件，而本地化服务解析这张映射时不会去查已注册的词典——它自己的文档写着 «maps do not consult registered dictionaries»。因此词典无法翻译插件名称：本包拿不到别的包的映射，英文名称会一直是英文，直到插件自己带上 `locale/ru.json`。
 
-本包自带这些名称：59 个插件，每个都记着翻译所依据的英文标题与说明，以及俄文文本。已经渲染出来的界面会经过一个处理流程，把俄文放到英文的位置上：插件卡片、bundle 的组成行、插件详情页以及设置中的插件清单。朗读用的名称（`aria-label`）也会一并替换，因此整张卡片读起来都是俄文。
+本包自带这些名称：32 个 harness 插件的名称，以及 32 个第三方插件的名称与说明（这些插件的词典本包在翻译）。每一项都记着翻译所依据的英文文本和俄文文本。已经渲染出来的界面会经过一个处理流程，把俄文放到英文的位置上：插件卡片、bundle 的组成行、插件详情页以及设置中的插件清单。朗读用的名称（`aria-label`）也会一并替换，因此整张卡片读起来都是俄文。
 
 这个流程只做精确匹配：整段文本与本包知道的标题或说明完全相同时才会替换。只是提到了某个名称的句子保持原样；代码、输入框和对话不会被触碰。与排版流程一样，它只在俄文是当前语言时工作。
 
-同样这 32 个名称会作为补丁（`docs/harness-descriptors-ru.patch`）送到 harness：在 harness 自己的界面里插件也有俄文名称，而这个补丁先到。补丁是构建产物——它由翻译和 harness 目录树生成，门禁 `npm run check:descriptor-patch` 在生成的补丁与仓库里那份不一致时失败。`npm run check:plugin-names` 在真实文档上证明（jsdom，11 个用例）这个流程会翻译标题、说明、朗读名称和 bundle 的一行，而该不动的它不动。
+同样这 32 个名称会作为补丁（`docs/harness-descriptors-ru.patch`）送到 harness：在 harness 自己的界面里插件也有俄文名称，而这个补丁先到。补丁是构建产物——它由翻译和 harness 目录树生成，门禁 `npm run check:descriptor-patch` 在生成的补丁与仓库里那份不一致时失败。第三方插件的名称放在 `src/client/plugin-names-ru.json`：这个文件由插件词典生成（`npm run build:plugin-names`），门禁 `npm run check:plugin-names:map` 在它与词典不一致时失败。同一个英文名称不能有两种译法——harness 与插件各说各话。`npm run check:plugin-names` 在真实文档上证明（jsdom，12 个用例）这个流程会翻译标题、说明、朗读名称和 bundle 的一行，而该不动的它不动。
 
 
 ## 检查
