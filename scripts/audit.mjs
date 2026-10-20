@@ -710,8 +710,23 @@ const missingPlurals = [...harnessPlurals].filter(k => !packPlurals.has(k)).sort
  * as its base is translated; a pair whose base is missing too is drift.
  */
 const packKeySet = new Set(packKeys)
+/*
+ * A key that ends in `.one` or `.other` is a plural form only when its base is
+ * there too: the `foldPositions` plugin has a key `card.other` («Other clients»)
+ * with no `card` beside it, and reading it as a plural form called an ordinary
+ * key drift. The template answers the question — a form whose base the plugin does
+ * not have is an ordinary key of that plugin.
+ */
+const ordinaryExternalKeys = new Set()
+for (const [, byKey] of externalNamespaceEnglish) {
+  for (const key of byKey.keys()) {
+    if (!pluralSuffix.test(key)) continue
+    if (byKey.has(key.replace(pluralSuffix, ''))) continue
+    ordinaryExternalKeys.add(key)
+  }
+}
 const extraPlurals = [...packPlurals]
-  .filter(k => !harnessPlurals.has(k) && !packKeySet.has(k.replace(pluralSuffix, '')))
+  .filter(k => !harnessPlurals.has(k) && !packKeySet.has(k.replace(pluralSuffix, '')) && !ordinaryExternalKeys.has(k))
   .sort()
 const augmentedPlurals = [...packPlurals]
   .filter(k => !harnessPlurals.has(k) && packKeySet.has(k.replace(pluralSuffix, '')))

@@ -4,8 +4,9 @@
   "version": "0.3.7",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/dream-num/dsh-univer-office.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-19",
   "en": {
+    "collapse": "Collapse preview",
     "dock.close": "Close",
     "dock.currentVersion": "Current version",
     "dock.discard": "Discard",
@@ -36,11 +37,13 @@
     "dock.unit.conflict": "Conflict",
     "dock.unit.deleted": "D",
     "dock.unit.modified": "M",
+    "expand": "Expand preview",
     "gateway.checking": "Checking Univer Gatewayu2026",
     "gateway.failed": "Univer Gateway unavailable u2014 click to retry",
     "gateway.running": "Univer Gateway running",
     "gateway.starting": "Starting Univer Gatewayu2026",
     "gateway.stopped": "Univer Gateway stopped u2014 click to start",
+    "refresh": "Refresh",
     "settings.autoOpenLivePreview": "Open live previews automatically",
     "settings.autoOpenLivePreviewHint": "Show a floating preview while the agent edits a document. Conversation review cards remain available when this is off.",
     "settings.conversationReviewCards": "Show review cards in the conversation",
@@ -54,6 +57,7 @@
     "settings.saveFailed": "Could not save. Try again.",
     "settings.saving": "Savingu2026",
     "settings.title": "Univer Office",
+    "title": "Univer Preview",
     "viewer.missing": "This file is no longer in the current session workspace"
   }
 }

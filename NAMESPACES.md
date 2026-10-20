@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **90 namespace** — 6433 строк. Колонка «как это выглядит»
+Пакет переводит **96 namespace** — 9012 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -15,6 +15,7 @@
 | `agent-team` | Команда агентов | 25 | харнесс |
 | `approval` | — | 5 | харнесс |
 | `better-input` | — | 123 | dsh-better-input@0.2.6 |
+| `betterSidebar` | — | 627 | dsh-better-sidebar@0.28.0 |
 | `chat` | — | 200 | харнесс |
 | `claude-code-mods` | — | 4 | харнесс |
 | `command` | — | 28 | харнесс |
@@ -28,6 +29,9 @@
 | `documentHtml` | HTML | 4 | харнесс |
 | `documentMarkdown` | — | 4 | харнесс |
 | `dsh-cost-meter` | Счётчик расходов | 85 | @goodandready/dsh-cost-meter@0.8.22 |
+| `dsh-cron` | — | 396 | @goodandready/dsh-cron@0.3.14 |
+| `dsh-image-gen` | Студия ИИ-изображений | 330 | @goodandready/dsh-image-gen@0.12.8 |
+| `dsh-kanban` | Канбан | 420 | @goodandready/dsh-kanban@0.2.33 |
 | `dsh-market` | Магазин плагинов | 733 | dshmarket@1.66.44 |
 | `dsh-moa` | Ансамбль агентов (MoA) | 159 | @goodandready/dsh-moa@0.2.53 |
 | `dsh-remote-ssh` | — | 111 | @zhangfengshun/dsh-remote-ssh@2.4.33 |
@@ -35,12 +39,14 @@
 | `dsh-ssh` | — | 154 | @linxin666/dsh-ssh@0.4.7 |
 | `dsh-tts` | Речь | 226 | @goodandready/dsh-tts@0.4.34 |
 | `dsh-usage-guard` | Сторож расхода | 42 | @goodandready/dsh-usage-guard@0.1.19 |
+| `dsh-voice` | Голос | 321 | @goodandready/dsh-voice@0.9.39 |
 | `dsh-web-ui-market` | — | 106 | @linxin666/dsh-client-ui-market@0.4.7 |
 | `dsh-web-ui-preset-center` | — | 46 | @linxin666/dsh-client-ui-preset-center@0.4.7 |
 | `dsh-web-ui-session-archive` | — | 124 | @linxin666/dsh-session-archive@0.4.7 |
 | `dsh-web-ui-usage` | — | 63 | @linxin666/dsh-usage@0.4.7 |
 | `ego-browser` | ego-browser | 75 | dsh-ego-browser@0.8.6 |
 | `feedback` | — | 20 | харнесс |
+| `foldPositions` | — | 481 | billion-context@0.1.202 |
 | `git-graph` | — | 63 | @linxin666/dsh-client-ui-git-graph@0.4.7 |
 | `goal` | — | 12 | харнесс |
 | `inspectorPanel` | Инспектор Node.js | 4 | харнесс |
@@ -96,11 +102,11 @@
 | `task-board` | — | 437 | @linxin666/dsh-client-ui-task-board@0.4.7 |
 | `task-board-github` | — | 113 | @linxin666/dsh-client-ui-task-board-github@0.4.7 |
 | `trajectory` | — | 196 | харнесс |
-| `univer` | — | 49 | dsh-univer-office@0.3.7 |
+| `univer` | Просмотр Univer | 53 | dsh-univer-office@0.3.7 |
 | `update` | — | 43 | @linxin666/dsh-update@0.4.7 |
 | `voice-input` | — | 109 | харнесс |
 | `web-ui-plugins` | Веб-плагины | 1 | @linxin666/dsh-client-ui-web-ui-settings@0.4.7 |
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **90** namespace, **6433** строк.
+Итого: **96** namespace, **9012** строк.
