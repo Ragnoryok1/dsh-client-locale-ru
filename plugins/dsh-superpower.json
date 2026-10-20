@@ -1,0 +1,33 @@
+{
+  "namespace": "dsh-superpower",
+  "package": "@wenaixi/dsh-superpower",
+  "version": "8.0.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Wenaixi/dsh-superpower.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Superpowers Skill Suite",
+    "description": "DeepSeek Harness plugin: 15 obra/superpowers engineering skills, bilingual descriptions, per-skill toggles"
+  },
+  "en": {
+    "disableAll": "Disable all",
+    "disableAllHint": "Turn everything off: the model no longer sees these skills and you cannot invoke them by hand",
+    "empty": "No matching skill",
+    "enableAll": "Enable all",
+    "hostUnavailable": "The Host does not expose this bundle configuration channel; switches are unavailable",
+    "intro": "Control whether each of the 15 skills in this bundle is available. Off means the model no longer sees it and you cannot invoke it by hand. Changes take effect immediately; the running turn is unaffected.",
+    "invocable": "Enabled",
+    "invocableHint": "Off removes the skill from the model catalog, rejects skill tool calls, and removes it from slash-command completion and the CLI skill list",
+    "langAuto": "Follow host (auto)",
+    "langEn": "English",
+    "langNote": "Switches only skill descriptions (visible when typing \"/\" and to the model); skill bodies stay the English originals.",
+    "langTitle": "Skill introduction language (visible in \"/\" slash menu & model)",
+    "langUnsetHint": "Not set: follows host interface language ({lang}); switch explicitly above. Switches only skill descriptions (visible when typing \"/\" and to model); skill bodies stay English.",
+    "langZh": "中文",
+    "resetAll": "Restore defaults",
+    "resetHint": "Clear the override table; all 15 skills return to enabled by default",
+    "search": "Filter skills by name or description",
+    "title": "Skill switches",
+    "writeFailed": "Save failed"
+  }
+}

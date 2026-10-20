@@ -677,9 +677,18 @@ const namespaceAt = index => {
   return name
 }
 for (const entry of dictionaryEntries(packText)) {
-  if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
+  if (entry.value === null) continue
   const namespace = namespaceAt(entry.index)
   if (namespace === null) continue
+  /*
+   * `NOT_A_KEY` filters the harness's own sources, where `interface`, `type` and
+   * `key` are TypeScript constructs rather than locale keys. A vendored plugin
+   * dictionary has no such constructs and may legitimately name a locale key
+   * `name`, `key`, `type` or `interface` — four such values in
+   * `dsh-server-monitor` and `dsh-vision-bridge` were invisible to every rule
+   * of this file and were reported as keys the namespace does not carry.
+   */
+  if (!externalNamespaces.has(namespace) && NOT_A_KEY.has(entry.key)) continue
   if (!packKeysByNamespace.has(namespace)) packKeysByNamespace.set(namespace, new Set())
   packKeysByNamespace.get(namespace).add(entry.key)
   if (!packValuesByNamespace.has(namespace)) packValuesByNamespace.set(namespace, new Map())

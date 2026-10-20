@@ -6,6 +6,27 @@
 Пакет следует за харнессом: целевая версия — `dsh 0.2.1-alpha.1` и новее
 (`>=0.1.0-rc.2 <0.3.0` для `@deepseek-ai/dsh-client-locale`).
 
+## [0.2.11] — 2026-10-20
+
+### Добавлено
+
+- **Словари сторонних плагинов: 59.** За этот релиз их стало на 27 больше:
+  `@noob-stupid/dsh-plugin-console` (627 ключей), `@goodandready/dsh-subscriptions` (293 ключей), `@goodandready/dsh-key-rotation` (251 ключей), `@mars-sea/dsh-commandcode-provider` (224 ключей), `@goodandready/dsh-clinebot` (206 ключей), `@goodandready/dsh-remote-workspace` (201 ключей),
+  `@goodandready/dsh-server-monitor` (168 ключей), `@goodandready/dsh-model-sync` (167 ключей), `@goodandready/dsh-live-canvas` (161 ключей), `@goodandready/dsh-messenger-gateway` (138 ключей), `@goodandready/dsh-gitea` (132 ключей), `@goodandready/dsh-vision-bridge` (116 ключей),
+  `@goodandready/dsh-session-control` (113 ключей), `@goodandready/dsh-github-ops` (109 ключей), `@opencode2dsh/dsh-plugin` (102 ключей), `@goodandready/dsh-issue-reporter` (99 ключей), `@goodandready/dsh-goal` (97 ключей), `@goodandready/dsh-web-gateway` (95 ключей),
+  `@goodandready/dsh-shadow-auditor` (74 ключей), `@goodandready/dsh-grok-xsearch` (55 ключей), `@goodandready/dsh-time-machine` (41 ключей), `@goodandready/dsh-approval-gate` (30 ключей), `@goodandready/dsh-smart-restart` (29 ключей), `@wenaixi/dsh-superpower` (19 ключей),
+  `@goodandready/dsh-lanmode` (18 ключей), `@goodandready/dsh-context-lens` (11 ключей), `@vlln/dsh-navbar` (2 ключей).
+  Всего 123 namespace и 12 590 строк, из них 9 557 — в словарях плагинов,
+  3 033 — в namespace самого харнесса.
+
+### Исправлено
+
+- **Аудит больше не теряет ключи словарей плагинов.** Слова `name`, `key`, `type` и
+  `interface` отфильтровывались как конструкции TypeScript, но в словаре плагина это
+  обычные ключи локализации: четыре значения в `dsh-server-monitor` и `dsh-vision-bridge`
+  не проверялись ни одним правилом аудита и считались отсутствующими в своём namespace.
+  Теперь фильтр применяется только к namespace самого харнесса.
+
 ## [0.2.10] — 2026-10-19
 
 ### Добавлено

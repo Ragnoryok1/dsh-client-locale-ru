@@ -1,0 +1,12 @@
+{
+  "namespace": "pin",
+  "package": "@vlln/dsh-navbar",
+  "version": "0.4.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/vlln/dsh-navbar.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "action.pin": "Pin",
+    "action.unpin": "Unpin"
+  }
+}

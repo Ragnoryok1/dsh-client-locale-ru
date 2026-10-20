@@ -1,0 +1,21 @@
+{
+  "namespace": "dsh-context-lens",
+  "package": "@goodandready/dsh-context-lens",
+  "version": "0.1.34",
+  "license": "MIT",
+  "repository": "git+https://github.com/GooDAnDReaDY/dsh-context-lens.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "compress": "Compress",
+    "depth": "AST max depth",
+    "mode": "Compression mode",
+    "placeholder": "Paste test or build log here…",
+    "preview": "Log preview",
+    "previewApprox": "Local preview",
+    "ready": "Ready",
+    "saving": "Saving…",
+    "sub": "AST code skeletons and test log compression",
+    "threshold": "Auto-compress threshold (chars)",
+    "title": "Context Lens"
+  }
+}

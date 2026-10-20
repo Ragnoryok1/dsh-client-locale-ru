@@ -1,0 +1,28 @@
+{
+  "namespace": "dsh-lanmode",
+  "package": "@goodandready/dsh-lanmode",
+  "version": "0.8.48",
+  "license": "MIT",
+  "repository": "git+https://github.com/GooDAnDReaDY/dsh-lanmode.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "authenticating": "Authenticating...",
+    "direct": "🌐 Direct Mode",
+    "instance": "Instance:",
+    "invalid": "Invalid username or password",
+    "netError": "Network error: ",
+    "noResponse": "server not responding",
+    "password": "Password",
+    "placeholderPassword": "••••••••",
+    "remember": "Remember for 30 days",
+    "secured": "🔒 HTTPS Secured",
+    "showPassword": "Show password",
+    "submit": "Sign In",
+    "subtitle": "Agent Management System Login",
+    "success": "Success!",
+    "title": "DeepSeek Harness",
+    "tooMany": "Too many attempts. Please wait ",
+    "tooManySec": " sec.",
+    "username": "Username"
+  }
+}
