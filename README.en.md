@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 123 namespaces, 12590 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 130 namespaces, 14086 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -21,17 +21,17 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-123-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-12590-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-130-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-14086-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 123 namespaces, 12,590 strings, built against dsh `0.2.1-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface — 64 namespaces (3 033 strings) — plus the dictionaries of 59 third-party plugins, translated from the English each plugin publishes (9 557 strings in total). MIT, community-maintained, not affiliated with DeepSeek.
+Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 130 namespaces, 14,086 strings, built against dsh `0.2.1-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface — 64 namespaces (3 033 strings) — plus the dictionaries of 59 third-party plugins, translated from the English each plugin publishes (9 557 strings in total). MIT, community-maintained, not affiliated with DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
 
 ---
 
-The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 123 namespaces, 12,590 strings, with the bundled plugin dictionaries marked.
+The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 130 namespaces, 14,086 strings, with the bundled plugin dictionaries marked.
 
 The plugin names and descriptions on the Plugins page cannot come from this pack: the harness
 keeps them in `locale/<language>.json` inside each package, builds a translation map from them,
@@ -105,7 +105,7 @@ two (the message names the version) or drop the `minimumReleaseAge` limit in the
 settings.
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 695 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 724 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -176,7 +176,7 @@ plugin's name: the pack has no access to another package's map, and the English 
 English until the plugin itself ships `locale/ru.json`.
 
 The pack carries those names itself: the names of the 32 harness plugins and the names and
-descriptions of 32 third-party plugins whose dictionaries it translates. Each comes with the
+descriptions of 33 third-party plugins whose dictionaries it translates. Each comes with the
 English text the translation was made from and the Russian text. The rendered interface passes
 through a pass that puts the Russian text where the English was — in the plugin cards, in the
 rows of a bundle, on a plugin's page and in the settings inventory. The accessible name
@@ -373,7 +373,7 @@ The report is advisory — the same key name can mean different things in differ
 (`list.aria` is "Active reminders" in the catalog and "Background jobs" in jobs), so a
 translation is copied across namespaces only where one dictionary serves both. On the pinned
 tag the report is empty: every string the harness renders in a namespace we register lives in
-that namespace. All 123 of the pack's namespaces are compared — the link comes both from a
+that namespace. All 130 of the pack's namespaces are compared — the link comes both from a
 dictionary imported beside the registration and from the names that registration passes
 (`locale.register(NS, { zh, en })`); without the second rule `common` and `settings.locale`,
 whose dictionaries sit in a neighbouring directory, would stay uncovered. The other direction is
@@ -384,7 +384,7 @@ settings page.
 
 ## Coverage scope: the harness and plugin dictionaries
 The package translates **the harness client's own namespaces** — 64 namespaces reconciled
-against the pinned tag — and **the dictionaries of third-party plugins**: 59 plugins whose
+against the pinned tag — and **the dictionaries of third-party plugins**: 66 plugins whose
 English text is vendored from their own publication, with the version and the licence.
 
 Plugin dictionaries were out of scope before, and there was a reason: `dshmarket` is already
@@ -466,7 +466,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (123 namespaces, 12,590 translations, ~13,000 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries (130 namespaces, 14,086 translations, ~15,000 lines). This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).

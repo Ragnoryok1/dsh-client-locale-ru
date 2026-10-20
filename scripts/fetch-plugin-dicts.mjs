@@ -37,8 +37,17 @@ if (packages.length === 0) {
  * A key is either a quoted string (`"cancel": "Cancel"`) or a bare identifier
  * (`cancel: "Cancel"`) — a bundler that keeps the source shape writes the second, and
  * a dictionary read only in the first form came back empty for every such package.
+ *
+ * A dictionary may also be assembled from parts — `const en = { ...enCommon, ...enSkills }` —
+ * and then the parts are merged in through `resolve`, which answers with the pairs of
+ * the named object.
+ *
+ * @param text - the source the object lives in.
+ * @param start - where the object literal begins.
+ * @param resolve - the pairs of a named object, when a part is spread into it.
+ * @returns the pairs of the object, the spread parts included.
  */
-function pairsOf(text, start) {
+function pairsOf(text, start, resolve) {
   const pairs = new Map()
   let index = text.indexOf('{', start)
   if (index === -1) return pairs
@@ -83,6 +92,19 @@ function pairsOf(text, start) {
         if (identifier !== null) {
           key = identifier[1]
           cursor += identifier[0].length
+          continue
+        }
+      }
+      /*
+       * A spread part: `...enCommon`. The dictionary is assembled from parts, and the
+       * part's own pairs belong to the dictionary.
+       */
+      if (before === '.' && resolve !== undefined) {
+        const spread = /^\.\.\.([A-Za-z_$][\w$]*)/u.exec(text.slice(cursor - 3, cursor + 60))
+        if (spread !== null) {
+          const part = resolve(spread[1])
+          if (part !== undefined && part !== null) for (const [partKey, partValue] of part) pairs.set(partKey, partValue)
+          cursor += spread[0].length - 3
           continue
         }
       }
@@ -134,29 +156,93 @@ for (const name of packages) {
      * en })` is what the host actually sees. Its first argument may be a constant —
      * `locale.register(LOCALE_NS, { zh, en })` — and the constant may live in another
      * bundle of the same package, so the whole package answers the question.
+     *
+     * A minified bundle names both the constant and the value differently: the
+     * namespace is `let Au=\`dsh-context\`` — a template literal, not a quoted string —
+     * and the identifier is a single letter reused for everything else in the file.
      */
     const constantOf = identifier => {
+      const pattern = new RegExp(`(?<![.\\w$])${identifier}\\s*=\\s*["'\`]([\\w.-]+)["'\`]`, 'u')
       for (const text of texts.values()) {
-        const found = new RegExp(`(?:const|var|let)\\s+${identifier}\\s*=\\s*["']([\\w.-]+)["']`, 'u').exec(text)
+        const found = pattern.exec(text)
         if (found !== null) return found[1]
       }
       return null
     }
-    /** The namespace this package registers, and the bundle that registers it. */
+    /**
+     * The object literal an identifier holds, wherever it is defined.
+     *
+     * A minified bundle hands the dictionary over by name — `h={"tab.context":…}` — and
+     * the same letter is reused for local variables, so the candidate with the most
+     * pairs is the dictionary and the rest are not. A dictionary assembled from parts
+     * (`{ ...enCommon, ...enSkills }`) answers with the parts merged in.
+     *
+     * @param identifier - the name the object is bound to.
+     * @param seen - the names already read, so a cycle cannot run forever.
+     * @returns the pairs of the object, or null when the name holds no object.
+     */
+    const objectOf = (identifier, seen = new Set()) => {
+      if (seen.has(identifier)) return null
+      seen.add(identifier)
+      const pattern = new RegExp(`(?<![.\\w$])${identifier}\\s*=\\s*(?:Object\\.freeze\\(\\s*)?\\{`, 'gu')
+      let best = null
+      for (const text of texts.values()) {
+        for (const match of text.matchAll(pattern)) {
+          const pairs = pairsOf(text, match.index + match[0].length - 1, name => objectOf(name, seen))
+          if (pairs.size > 0 && (best === null || pairs.size > best.size)) best = pairs
+        }
+      }
+      return best
+    }
+    /**
+     * The namespace this package registers, and the bundle that registers it.
+     *
+     * The first argument of `locale.register` is the namespace, and it is read from
+     * every call whatever the rest of the arguments look like: a plugin may register
+     * one language at a time (`register(NS, "en", en)`), hand over both
+     * (`register(NS, { zh, en })`) or wrap the call in a helper of its own
+     * (`addLocale("en", KL_en)` → `register(NS, locale, dictionary)`).
+     */
     const registration = (() => {
       for (const [bundle, text] of texts) {
-        /*
-         * Two forms are in use: `locale.register("pet", { zh, en })` and
-         * `locale.register("pet", "en", en)` — the second registers one language at a
-         * time. Both name the namespace the same way, and the dictionary is the `en`
-         * object either way.
-         */
-        for (const call of text.matchAll(/locale\.register\(\s*(?:["']([\w.-]+)["']|([A-Za-z_$][\w$]*))\s*,\s*(?:\{([\s\S]{0,160})|"en"\s*,\s*en)/gu)) {
-          const [, literal, identifier, body] = call
-          if (body !== undefined && !/\ben\b/u.test(body)) continue
-          if (literal !== undefined) return { namespace: literal, bundle }
+        for (const call of text.matchAll(/locale\.register\(\s*(?:["'`]([\w.-]+)["'`]|([A-Za-z_$][\w$]*))\s*(?=[,)])/gu)) {
+          const [, literal, identifier] = call
+          if (literal !== undefined) return { namespace: literal, bundle, body: null }
           const constant = constantOf(identifier)
-          if (constant !== null) return { namespace: constant, bundle }
+          if (constant !== null) return { namespace: constant, bundle, body: null }
+        }
+      }
+      return null
+    })()
+    /**
+     * The English dictionary the registration hands over.
+     *
+     * Three shapes carry it: the object of the `en` property
+     * (`register(NS, { zh, en })`), the object named by the third argument
+     * (`register(NS, "en", KL_en)`) and the shorthand (`register(NS, { zh, en })` where
+     * `en` is a variable of its own).
+     */
+    const englishOfRegistration = (() => {
+      for (const [bundle, text] of texts) {
+        for (const call of text.matchAll(/locale\.register\(\s*(?:["'`]([\w.-]+)["'`]|([A-Za-z_$][\w$]*))\s*,\s*(?:\{([\s\S]{0,200})|"en"\s*,\s*([A-Za-z_$][\w$]*))/gu)) {
+          const [, , , body, named] = call
+          if (named !== undefined) {
+            const pairs = objectOf(named)
+            if (pairs !== null) return pairs
+          }
+          if (body === undefined) continue
+          if (!/\ben\b/u.test(body)) continue
+          const property = /\ben\s*:\s*([A-Za-z_$][\w$]*)/u.exec(body)
+          if (property !== null) {
+            const pairs = objectOf(property[1])
+            if (pairs !== null) return pairs
+          }
+          if (/(?:^|[{,]\s*)en\s*[,}]/u.test(body) || /(?:^|[{,]\s*)en\s*[,}][\s\S]*$/u.test(body)) {
+            const pairs = objectOf('en')
+            if (pairs !== null) return pairs
+          }
+          const inline = pairsOf(text, call.index + call[0].length - 1, name => objectOf(name))
+          if (inline.size > 0) return inline
         }
       }
       return null
@@ -180,18 +266,33 @@ for (const name of packages) {
      * pairs is the dictionary and the smaller ones belong to other features.
      */
     const english = (() => {
+      if (englishOfRegistration !== null) return englishOfRegistration
       const candidates = []
       for (const [bundle, text] of texts) {
         const strict = text.search(/\bconst en(?::[^=]+)?\s*=\s*\{/u)
         const loose = text.search(/\b(?:const|var|let)?\s*en\s*[:=]\s*\{/u)
         const start = strict !== -1 ? strict : loose
         if (start === -1) continue
-        const pairs = pairsOf(text, start)
+        const pairs = pairsOf(text, start, name => objectOf(name))
         if (pairs.size > 0) candidates.push({ bundle, pairs })
       }
-      if (candidates.length === 0) return null
-      const own = candidates.find(candidate => candidate.bundle === registration?.bundle)
-      return (own ?? candidates.reduce((best, candidate) => candidate.pairs.size > best.pairs.size ? candidate : best)).pairs
+      if (candidates.length > 0) {
+        const own = candidates.find(candidate => candidate.bundle === registration?.bundle)
+        return (own ?? candidates.reduce((best, candidate) => candidate.pairs.size > best.pairs.size ? candidate : best)).pairs
+      }
+      /*
+       * A plugin that registers through a helper of its own — `addLocale("en", KL_en)` —
+       * keeps the dictionary in a name of its own. The name that ends in `en` and holds
+       * the most text is the English dictionary.
+       */
+      let best = null
+      for (const text of texts.values()) {
+        for (const match of text.matchAll(/(?<![.\w$])([A-Za-z_$][\w$]*en)\s*=\s*(?:Object\.freeze\(\s*)?\{/giu)) {
+          const pairs = objectOf(match[1])
+          if (pairs !== null && pairs.size > 0 && (best === null || pairs.size > best.size)) best = pairs
+        }
+      }
+      return best
     })()
     if (namespace === null || english === null) throw new Error('не нашёл namespace и английский словарь в бандле')
 

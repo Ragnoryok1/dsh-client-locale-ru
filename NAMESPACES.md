@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **123 namespace** — 12590 строк. Колонка «как это выглядит»
+Пакет переводит **130 namespace** — 14086 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -12,6 +12,7 @@
 
 | namespace | как это выглядит | строк | источник |
 |---|---|---|---|
+| `agency` | — | 94 | @michengai/dsh-agency-agents@1.2.8 |
 | `agent-team` | Команда агентов | 25 | харнесс |
 | `approval` | — | 5 | харнесс |
 | `better-input` | — | 123 | dsh-better-input@0.2.6 |
@@ -30,6 +31,7 @@
 | `documentMarkdown` | — | 4 | харнесс |
 | `dsh-approval-gate` | Шлюз подтверждений | 30 | @goodandready/dsh-approval-gate@0.1.30 |
 | `dsh-clinebot` | ClineBot | 206 | @goodandready/dsh-clinebot@0.5.33 |
+| `dsh-context` | — | 595 | dsh-context@0.73.3 |
 | `dsh-context-lens` | Линза контекста | 11 | @goodandready/dsh-context-lens@0.1.34 |
 | `dsh-cost-meter` | Счётчик расходов | 85 | @goodandready/dsh-cost-meter@0.8.22 |
 | `dsh-cron` | — | 396 | @goodandready/dsh-cron@0.3.14 |
@@ -40,6 +42,7 @@
 | `dsh-image-gen` | Студия ИИ-изображений | 330 | @goodandready/dsh-image-gen@0.12.8 |
 | `dsh-issue-reporter` | Отчёты о проблемах | 99 | @goodandready/dsh-issue-reporter@0.1.14 |
 | `dsh-kanban` | Канбан | 420 | @goodandready/dsh-kanban@0.2.33 |
+| `dsh-key-limits` | Лимиты ключей | 140 | @goodandready/dsh-key-limits@0.2.28 |
 | `dsh-key-rotation` | Ротация ключей | 251 | @goodandready/dsh-key-rotation@0.8.69 |
 | `dsh-lanmode` | DeepSeek Harness | 18 | @goodandready/dsh-lanmode@0.8.48 |
 | `dsh-live-canvas` | Предпросмотр живого холста | 161 | @goodandready/dsh-live-canvas@0.2.30 |
@@ -53,12 +56,14 @@
 | `dsh-session-control` | — | 113 | @goodandready/dsh-session-control@0.2.10 |
 | `dsh-shadow-auditor` | Теневой аудитор безопасности | 74 | @goodandready/dsh-shadow-auditor@0.2.35 |
 | `dsh-skill-explorer` | — | 75 | @linxin666/dsh-client-ui-skill-explorer@0.4.7 |
+| `dsh-skill-hub` | — | 262 | dsh-skill-hub@0.3.26 |
 | `dsh-ssh` | — | 154 | @linxin666/dsh-ssh@0.4.7 |
 | `dsh-subscriptions` | Подписки | 293 | @goodandready/dsh-subscriptions@0.6.72 |
 | `dsh-superpower` | Переключатели навыков | 19 | @wenaixi/dsh-superpower@8.0.0 |
 | `dsh-time-machine` | Машина времени и точки отката | 41 | @goodandready/dsh-time-machine@0.1.30 |
 | `dsh-tts` | Речь | 226 | @goodandready/dsh-tts@0.4.34 |
 | `dsh-usage-guard` | Сторож расхода | 42 | @goodandready/dsh-usage-guard@0.1.19 |
+| `dsh-usage-stats` | — | 210 | @xfqz86/dsh-usage-stats@0.5.1 |
 | `dsh-vision-bridge` | Зрение | 116 | @goodandready/dsh-vision-bridge@0.6.21 |
 | `dsh-voice` | Голос | 321 | @goodandready/dsh-voice@0.9.39 |
 | `dsh-web-gateway` | Веб-шлюз | 95 | @goodandready/dsh-web-gateway@0.2.1 |
@@ -83,6 +88,7 @@
 | `pet` | — | 81 | @linxin666/dsh-pet@0.4.7 |
 | `pin` | — | 2 | @vlln/dsh-navbar@0.4.0 |
 | `plan` | — | 17 | харнесс |
+| `plugin-store` | — | 77 | dsh-plugins-store@0.1.4 |
 | `pluginManager` | Плагины | 227 | харнесс |
 | `pluginMarket` | Обзор плагинов | 78 | харнесс |
 | `question` | — | 31 | харнесс |
@@ -124,6 +130,7 @@
 | `sidebarRight` | — | 34 | харнесс |
 | `sidebarTerminal` | Терминал | 28 | харнесс |
 | `skill` | — | 8 | харнесс |
+| `skills-manager` | — | 118 | @michengai/dsh-skills-manager@1.2.8 |
 | `slash.menu` | — | 9 | харнесс |
 | `subagent` | — | 79 | харнесс |
 | `task-board` | — | 437 | @linxin666/dsh-client-ui-task-board@0.4.7 |
@@ -136,4 +143,4 @@
 | `workflowRun` | — | 20 | харнесс |
 | `workspace` | — | 131 | харнесс |
 
-Итого: **123** namespace, **12590** строк.
+Итого: **130** namespace, **14086** строк.

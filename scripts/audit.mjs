@@ -1621,16 +1621,27 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   const external = externalNamespaceEnglish.get(namespace)
   const english = external ?? namespaceEnglishOnly.get(namespace) ?? new Map()
   for (const [key, value] of byKey) {
-    if (!value.includes('\\n')) {
-      for (const [title, test] of HYGIENE_RULES) {
-        if (title === 'неразрывный пробел в значении' && key === 'number.groupSeparator') continue
-        if (test(value)) hygiene.push(`${namespace} · ${key} — ${title}`)
-      }
-    }
     const variants = englishVariantsByKey.get(key)
     const template = external === undefined
       ? english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
       : english.get(key)
+    if (!value.includes('\\n')) {
+      for (const [title, test] of HYGIENE_RULES) {
+        if (title === 'неразрывный пробел в значении' && key === 'number.groupSeparator') continue
+        /*
+         * A quote the plugin opens and closes itself is not ours to close: the
+         * `deleteConfirm` of a plugin reads «Удалить ключ «» + label + «»?» — the
+         * closing quote is added by the code, so a Russian value that leaves it
+         * open mirrors the English, and one that closed it would show the label
+         * twice. A template with an unpaired quote of its own excuses ours.
+         */
+        if (title === 'непарные « »' && template !== undefined) {
+          const templatePaired = (template.match(/«/gu)?.length ?? 0) === (template.match(/»/gu)?.length ?? 0)
+          if (!templatePaired) continue
+        }
+        if (test(value)) hygiene.push(`${namespace} · ${key} — ${title}`)
+      }
+    }
     if (template === undefined) continue
     if (/^ /u.test(value) !== /^ /u.test(template) || / $/u.test(value) !== / $/u.test(template)) {
       edgeSpaces.push(`${namespace} · ${key} — у нас ${JSON.stringify(value)} | шаблон ${JSON.stringify(template)}`)
