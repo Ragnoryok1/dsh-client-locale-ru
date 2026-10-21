@@ -37,6 +37,83 @@ if (packages.length === 0) {
 }
 
 /**
+ * Where a comment begins at `cursor`, and where it ends.
+ *
+ * A bundle explains itself in comments, and a comment holds an apostrophe as
+ * often as a word: `// the Session's cwd`. A reader that takes every quote for
+ * the start of a string loses the thread of the whole file from there on and
+ * ends up in the wrong object.
+ *
+ * @param text - the source the comment lives in.
+ * @param cursor - where the comment may begin.
+ * @returns the offset past the comment, or -1 when there is no comment there.
+ */
+function commentEnd(text, cursor) {
+  if (text[cursor] !== '/') return -1
+  if (text[cursor + 1] === '/') {
+    const end = text.indexOf('\n', cursor)
+    return end === -1 ? text.length : end + 1
+  }
+  if (text[cursor + 1] === '*') {
+    const end = text.indexOf('*/', cursor + 2)
+    return end === -1 ? text.length : end + 2
+  }
+  return -1
+}
+
+/**
+ * Where the object literal of a property begins, inside the object at `start`.
+ *
+ * The property is looked for at the top level of that object: `en: {…}` of
+ * `L = { zh: {…}, en: {…} }` begins at the `{` after the colon, and a
+ * property of a nested object does not answer for the outer one.
+ *
+ * @param text - the source the object lives in.
+ * @param start - the `{` of the object that holds the property.
+ * @param property - the name of the property to find.
+ * @returns the offset of the property's `{`, or -1 when the object has no such property.
+ */
+function propertyStart(text, start, property) {
+  let depth = 0
+  let cursor = start
+  while (cursor < text.length) {
+    const char = text[cursor]
+    if (char === '{' || char === '[' || char === '(') {
+      depth += 1
+      cursor += 1
+      continue
+    }
+    if (char === '}' || char === ']' || char === ')') {
+      depth -= 1
+      if (depth === 0) return -1
+      cursor += 1
+      continue
+    }
+    if (char === '"' || char === "'" || char === '`') {
+      const quote = char
+      let end = cursor + 1
+      while (end < text.length && text[end] !== quote) {
+        if (text[end] === '\\') end += 1
+        end += 1
+      }
+      cursor = end + 1
+      continue
+    }
+    const comment = commentEnd(text, cursor)
+    if (comment !== -1) {
+      cursor = comment
+      continue
+    }
+    if (depth === 1) {
+      const match = new RegExp(`^\\s*${property}\\s*:\\s*\\{`, 'u').exec(text.slice(cursor, cursor + 80))
+      if (match !== null) return cursor + match[0].length - 1
+    }
+    cursor += 1
+  }
+  return -1
+}
+
+/**
  * Every string-literal pair of an object literal starting at `start`, flattened.
  *
  * A key is either a quoted string (`"cancel": "Cancel"`) or a bare identifier
@@ -70,7 +147,30 @@ function pairsOf(text, start, resolve) {
       let end = cursor + 1
       let value = ''
       while (end < text.length) {
-        if (text[end] === '\\') { value += text[end + 1] ?? ''; end += 2; continue }
+        if (text[end] === '\\') {
+          /*
+           * The escape has to be decoded, not merely unescaped. A bundle writes its
+           * Chinese keys as `"\u4E2A\u540C\u540D"`; a reader that drops the
+           * backslash and keeps the letters produces the key `u4E2Au540Cu540D`,
+           * which the plugin never looks up — and a Russian value under it would
+           * never reach the screen.
+           */
+          const escape = text[end + 1] ?? ''
+          if (escape === 'u' && /^[0-9A-Fa-f]{4}$/u.test(text.slice(end + 2, end + 6))) {
+            value += String.fromCharCode(Number.parseInt(text.slice(end + 2, end + 6), 16))
+            end += 6
+            continue
+          }
+          const simple = { n: '\n', t: '\t', r: '\r', b: '\b', f: '\f', v: '\v', 0: '\0' }[escape]
+          if (simple !== undefined) {
+            value += simple
+            end += 2
+            continue
+          }
+          value += escape
+          end += 2
+          continue
+        }
         if (text[end] === quote) break
         value += text[end]
         end += 1
@@ -85,6 +185,18 @@ function pairsOf(text, start, resolve) {
       }
       cursor = end + 1
       continue
+    } else if (char === '/') {
+      /*
+       * A comment is not code and not text. A bundle explains itself in comments,
+       * and a comment holds an apostrophe as often as a word: `// the Session's
+       * cwd`. A reader that takes every quote for the start of a string loses the
+       * thread of the file from there on.
+       */
+      const comment = commentEnd(text, cursor)
+      if (comment !== -1) {
+        cursor = comment
+        continue
+      }
     } else if (/[A-Za-z_$]/u.test(char)) {
       /*
        * A bare key, and only where an object member can start: after `{` or `,`.
@@ -120,6 +232,7 @@ function pairsOf(text, start, resolve) {
 }
 
 const report = []
+const conflicts = []
 for (const name of packages) {
   const work = mkdtempSync(join(tmpdir(), 'plugin-dict-'))
   try {
@@ -200,6 +313,35 @@ for (const name of packages) {
       return best
     }
     /**
+     * The object a property of another object holds: `L.en` of `L = { zh: {…}, en: {…} }`.
+     *
+     * A plugin keeps both languages in one object and hands the English half to the
+     * locale service: `locale.register(NS, { zh: L.zh, en: L.en })`. Reading the
+     * whole `L` instead takes the Chinese half and the neighbours of the object
+     * along with it — a theme, a set of style tokens — and every one of them looks
+     * like a dictionary entry.
+     *
+     * @param identifier - the name the outer object is bound to.
+     * @param property - the name of the property to read.
+     * @param seen - the names already read, so a cycle cannot run forever.
+     * @returns the pairs of the property, or null when it holds no object.
+     */
+    const propertyOf = (identifier, property, seen = new Set()) => {
+      if (seen.has(`${identifier}.${property}`)) return null
+      seen.add(`${identifier}.${property}`)
+      const pattern = new RegExp(`(?<![.\\w$])${identifier}\\s*=\\s*(?:Object\\.freeze\\(\\s*)?\\{`, 'gu')
+      for (const text of texts.values()) {
+        for (const match of text.matchAll(pattern)) {
+          const at = match.index + match[0].length - 1
+          const inner = propertyStart(text, at, property)
+          if (inner === -1) continue
+          const pairs = pairsOf(text, inner, name => objectOf(name, seen))
+          if (pairs.size > 0) return pairs
+        }
+      }
+      return null
+    }
+    /**
      * The namespace this package registers, and the bundle that registers it.
      *
      * The first argument of `locale.register` is the namespace, and it is read from
@@ -237,6 +379,15 @@ for (const name of packages) {
           }
           if (body === undefined) continue
           if (!/\ben\b/u.test(body)) continue
+          /*
+           * `en: L.en` — the English half of an object that holds both languages.
+           * Reading the whole `L` would take the Chinese half with it.
+           */
+          const member = /\ben\s*:\s*([A-Za-z_$][\w$]*)\.([A-Za-z_$][\w$]*)/u.exec(body)
+          if (member !== null) {
+            const pairs = propertyOf(member[1], member[2])
+            if (pairs !== null) return pairs
+          }
           const property = /\ben\s*:\s*([A-Za-z_$][\w$]*)/u.exec(body)
           if (property !== null) {
             const pairs = objectOf(property[1])
@@ -335,6 +486,19 @@ for (const name of packages) {
       en: Object.fromEntries([...english.entries()].sort(([left], [right]) => left.localeCompare(right, 'en'))),
     }
     const file = join(OUT, `${namespace}.json`)
+    /*
+     * Two plugins may claim one namespace. The locale service gives it to whoever
+     * registers first, and this pack registers before any plugin does — so a
+     * vendored dictionary would take the namespace away from the plugin that owns
+     * it. The clash is recorded, and the second claim is left out: the namespace
+     * belongs to the plugin that got there first.
+     */
+    if (existsSync(file)) {
+      const previous = JSON.parse(readFileSync(file, 'utf8'))
+      conflicts.push({ namespace, kept: previous.package, dropped: name })
+      report.push(`${namespace}: ПРОТИВОРЕЧИЕ — ${name}@${meta.version} и ${previous.package}@${previous.version}; оставлен ${previous.package}`)
+      continue
+    }
     writeFileSync(file, `${JSON.stringify(record, null, 2)}\n`, 'utf8')
     report.push(`${namespace}: ${Object.keys(record.en).length} ключей из ${name}@${meta.version}`)
   } catch (error) {
@@ -344,3 +508,9 @@ for (const name of packages) {
   }
 }
 console.log(report.join('\n'))
+if (conflicts.length > 0) {
+  const file = join(OUT, '_conflicts.json')
+  const previous = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : []
+  writeFileSync(file, `${JSON.stringify([...previous, ...conflicts], null, 2)}\n`, 'utf8')
+  console.log(`противоречий по namespace: ${conflicts.length}`)
+}
