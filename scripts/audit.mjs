@@ -1364,6 +1364,8 @@ for (const [token, ids] of Object.entries(terminology.latinInValues ?? {})) {
 const latinInValuesUsed = new Set()
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
+    /* A deliberate example keeps its own Latin: the sample of code is the point. */
+    if (KEEP_CJK.has(`${namespace} · ${key}`)) continue
     /*
      * Only real escape sequences are taken out of the value: a Windows path
      * (`D:\cloud\dsh-memory`) is not an escape, and stripping `\c` from it left
@@ -1523,6 +1525,12 @@ capitalizedAddress.sort()
 const typographicValues = []
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
+    /*
+     * A value without a single Cyrillic letter is not Russian prose: it is a
+     * fragment of CSS, a sample of code or a format, and its punctuation is
+     * its own. The rules below are about the Russian text a reader sees.
+     */
+    if (!/\p{Script=Cyrillic}/u.test(value)) continue
     const defects = []
     if (/["„“”]/u.test(value)) defects.push('прямые кавычки')
     if (/(?:^|\s)-(?:\s|$)/u.test(value)) defects.push('дефис вместо тире')
@@ -1736,8 +1744,15 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       ? english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
       : english.get(key)
     if (!value.includes('\n')) {
+      /*
+       * A value the policy declares as a deliberate example (a Chinese sample
+       * of the plugin's own text, a fragment of code) keeps its own punctuation:
+       * the spacing and the quotes in it are part of what is being shown.
+       */
+      const deliberateExample = KEEP_CJK.has(`${namespace} · ${key}`)
       for (const [title, test] of HYGIENE_RULES) {
         if (title === 'неразрывный пробел в значении' && key === 'number.groupSeparator') continue
+        if (deliberateExample) continue
         /*
          * A quote the plugin opens and closes itself is not ours to close: the
          * `deleteConfirm` of a plugin reads «Удалить ключ «» + label + «»?» — the

@@ -10,5 +10,16 @@
   "agentStudio · section.customNote": "подставляемый плагином китайский ключ в шаблоне",
   "dsh-auto-title · typeSchemeRows": "имя колонки редактора, которую печатает китайский заголовок",
   "dsh-auto-title · typeSchemeRowsHint": "имя колонки редактора, которую печатает китайский заголовок",
-  "dsh-auto-title · localeZh": "имя китайского языка на его собственном письме"
+  "dsh-auto-title · localeZh": "имя китайского языка на его собственном письме",
+  "dsh-fonttune · preview.code": "образец кода в подсказке",
+  "dsh-fonttune · preview.sample": "образец латиницы в подсказке",
+  "dsh-fonttune · preview.sampleSecond": "образец китайского текста в подсказке",
+  "settings.model-capability · langZh": "имя китайского языка на его собственном письме",
+  "settings.tokenUsage · unitZh": "имя китайского языка на его собственном письме",
+  "apiDashboard · settings.title": "имя продукта в китайском письме",
+  "apiDashboard · title": "имя продукта в китайском письме",
+  "dsh-perm-gate · card.description": "имя режима согласования в китайском письме",
+  "dsh-perm-gate · card.permissive": "имя режима согласования в китайском письме",
+  "dsh-perm-gate · card.title": "имя режима согласования в китайском письме",
+  "dsh-perm-gate · card.yoloHint": "имя режима согласования в китайском письме"
 }

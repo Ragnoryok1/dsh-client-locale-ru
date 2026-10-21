@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 67.** За этот релиз их стало на 133, а пакет
-  покрывает 197 namespace и 37 677 строк (из них 2 996 — namespace самого харнесса,
-  34 681 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 97.** За этот релиз их стало на 163, а пакет
+  покрывает 227 namespace и 42 562 строк (из них 2 996 — namespace самого харнесса,
+  39 566 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -32,7 +32,7 @@
   `dsh-auto-title` (209), `settings.pluginManagerPro` (209), `webSearchEnhanced` (207),
   `voice-mode` (205), `agentlex-moot-court` (202), `settings.kinich-theme` (200),
   `settings.packyCodeApi` (200), `solution-explorer` (194), `usage` (194),
-  `whale-pet` (186). Английский текст каждого словаря выгружен из его собственной
+  `whale-pet` (186), `dsh-perm-gate` (184), `themeManager` (178), `settings.opencode-go` (177), `settings.tokenUsage` (176), `reverse-proxy` (175), `dsh-skillbox` (173), `retrace` (172), `settings.dsh-autostart-workbuddy` (171), `settings.model-capability` (170), `settings.pluginCapabilities` (169), `llm-qoder` (168), `apiDashboard` (166), `settings.subusage` (164), `version-update` (164), `betterWorkspace` (163), `settings.codebuddy-cli` (162), `settings.mcpManager` (160), `token-ledger` (160), `dsh-llm-hub` (159), `dsh-mnemosyne` (159), `xrn1997-dsh-novel` (159), `dsh-fonttune` (158), `dsh-vsceditor` (158), `dsh-bill` (154), `dsh-decision-layer` (152), `dsh-pentester-view` (152), `misakanet.panel.density.v1` (148), `dsh-update-copilot` (146), `dsh-pdf-mineru` (141), `workload-report` (141). Английский текст каждого словаря выгружен из его собственной
   публикации (`npm run fetch:plugins`) вместе с версией и лицензией, перевод сделан
   с этого английского текста, а не с чужого пакета локали.
 - **Переведены надписи, оставшиеся на английском.** 88 значений в словарях плагинов
