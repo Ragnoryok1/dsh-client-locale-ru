@@ -7,7 +7,7 @@
   "fetched": "2026-10-20",
   "en": {
     "cancel": "Cancel",
-    "clearDone": "Cleared u201c{topic}u201d: {papers} papers / {files} files u2192 moved to trash",
+    "clearDone": "Cleared “{topic}”: {papers} papers / {files} files → moved to trash",
     "clearPartialFailText": "The operation did not finish: {n} file(s) could not be rolled back and are still in the trash (the paper may look gone in the tree): {names}",
     "clearRecoveryHint": "To recover: move those files from {where}/ back into the original topic folder",
     "defaultTopic": "Default",
@@ -30,7 +30,7 @@
     "delTopicClearFiles": "{n} files",
     "delTopicClearHidden": "Hidden entries {names} are moved to the trash too (never destroyed)",
     "delTopicClearPlanFail": "Could not fetch the clear plan",
-    "delTopicClearTitle": "Clear u201c{topic}u201d and delete",
+    "delTopicClearTitle": "Clear “{topic}” and delete",
     "delTopicNotEmpty": "Topic still has {n} papers — use bulk clear, or delete them one by one",
     "delTopicTypeName": "Type the topic name \"{name}\" to confirm",
     "delToTrash": "Move to trash",

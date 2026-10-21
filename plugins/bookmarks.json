@@ -4,7 +4,7 @@
   "version": "0.1.5",
   "license": "MIT",
   "repository": "git+https://github.com/penguin-oo/dsh-bookmarks.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "en": {
     "action.bookmark": "Bookmark this reply",
     "action.delete": "Delete",
@@ -17,7 +17,7 @@
     "center.empty": "No bookmarks yet. Hover an assistant reply and click the archive icon to bookmark it.",
     "center.export": "Export Markdown",
     "center.noResults": "No matching bookmarks",
-    "center.search": "Search bookmarksu2026",
+    "center.search": "Search bookmarks…",
     "center.title": "Bookmarks",
     "error.conflict": "This bookmark changed elsewhere; the latest state is shown",
     "error.generic": "Could not save bookmark",

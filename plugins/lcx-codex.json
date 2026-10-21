@@ -35,7 +35,7 @@
     "mediaVideoFailed": "Video cannot be played",
     "save": "Save",
     "saveError": "Could not confirm settings were saved. Changes are kept; retry or discard to view current settings.",
-    "saving": "Savingu2026",
+    "saving": "Saving…",
     "summary": "GPT Responses route and search capabilities",
     "title": "Responses / Codex capabilities",
     "usageSession": "Search usage",

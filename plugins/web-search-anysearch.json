@@ -4,7 +4,7 @@
   "version": "0.2.0-rc.2",
   "license": "MIT",
   "repository": "git+https://github.com/VinciBeans/dsh-web-search-anysearch.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "en": {
     "apiKey": "API key",
     "apiKeyHint": "Stored outside the settings file. Leave blank to keep the current key.",
@@ -26,7 +26,7 @@
     "reset": "Reset",
     "save": "Save",
     "saveFailed": "The save did not land; your draft is kept for correction.",
-    "saving": "Savingu2026",
+    "saving": "Saving…",
     "title": "AnySearch search service",
     "unsaved": "Unsaved"
   }

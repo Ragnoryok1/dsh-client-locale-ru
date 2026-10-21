@@ -4,7 +4,7 @@
   "version": "3.1.0",
   "license": "MIT",
   "repository": "git+https://github.com/dsh-plugin-lab/dsh-ds-balance.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "meta": {
     "title": "DeepSeek Balance",
     "description": "Shows the DeepSeek account balance in the sidebar: a status ring at a glance, the exact amounts in its popover."
@@ -54,7 +54,7 @@
     "settings.readOnly": "This configuration is read-only.",
     "settings.reset": "Reset",
     "settings.save": "Save",
-    "settings.saving": "Savingu2026",
+    "settings.saving": "Saving…",
     "settings.sources.account": "Account sign-in",
     "settings.sources.accountNoService": "This deployment ships no account service, so this source is unavailable.",
     "settings.sources.groupNote": "Both sources follow the official setup: the key comes from the official Models page, the account is the one signed in to the host. This plugin stores no credential of its own.",
@@ -68,7 +68,7 @@
     "settings.test.noKey": "No credential available",
     "settings.test.notSignedIn": "Not signed in",
     "settings.test.ok": "{ms}ms",
-    "settings.testing": "Testingu2026",
+    "settings.testing": "Testing…",
     "settings.unsaved": "Unsaved",
     "sidebar.aria.mismatch": "Shown currency differs from your selection",
     "sidebar.aria.refresh": "Refresh balance",

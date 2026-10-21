@@ -38,7 +38,7 @@
     "regionNeeded": "Region inspection needs a region",
     "regionPlaceholder": "Region: 0.1,0.2,0.8,0.9 or 'top right'",
     "removeImage": "Remove image",
-    "running": "Runningu2026",
+    "running": "Running…",
     "tooLarge": "An image exceeds 8MB",
     "tooMany": "Select up to 8 images"
   }

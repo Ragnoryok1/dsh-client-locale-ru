@@ -44,7 +44,7 @@
     "confirmResetTitle": "Reset cooldowns for {p}?",
     "cooldown": "Cooldown after failure (ms)",
     "currentVersion": "Current version",
-    "desc": "Per-provider API key rotation. For each provider, list its API keys (env names, stored in DSH credentials). The plugin routes a model through that provideru2019s keys in order and switches to the next on a quota/rate-limit failure.",
+    "desc": "Per-provider API key rotation. For each provider, list its API keys (env names, stored in DSH credentials). The plugin routes a model through that provider’s keys in order and switches to the next on a quota/rate-limit failure.",
     "detectedLimitsLabel": "Upstream: {rpm} RPM · {tpm} TPM",
     "dialogLabel": "Confirmation",
     "discard": "Discard",

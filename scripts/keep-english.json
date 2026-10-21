@@ -369,5 +369,7 @@
   "usageBilling · relayKindNewApi": "название продукта",
   "usageBilling · relayKindSub2Api": "идентификатор",
   "voice-input · sourceHuggingFace": "название службы распознавания",
-  "xiaomi-mimo-tts · settings.providerXiaomi": "название продукта"
+  "xiaomi-mimo-tts · settings.providerXiaomi": "название продукта",
+  "dsh-live-voice · dsh-live-voice.recognition.qwen.label": "название модели и протокола",
+  "dsh-live-voice · dsh-live-voice.recognition.whisper.label": "название модели и протокола"
 }

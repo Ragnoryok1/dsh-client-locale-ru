@@ -4,13 +4,13 @@
   "version": "2.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/dsh-plugin-lab/dsh-zhihu-search.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "meta": {
     "title": "Zhihu Search",
     "description": "Zhihu in-site search, global web search, and Zhida answers for the model, over the official Zhihu Open Platform API."
   },
   "en": {
-    "hideNativeWebHint": "Visibility only u2014 tool-web still loads. Takes effect next request; no restart.",
+    "hideNativeWebHint": "Visibility only — tool-web still loads. Takes effect next request; no restart.",
     "hideNativeWebLabel": "Hide native web search (web_search / web_fetch)",
     "hideNativeWebOff": "Native web search stays visible to the model.",
     "hideNativeWebOn": "The model sees only the three Zhihu tools.",
@@ -21,7 +21,7 @@
     "reset": "Reset",
     "save": "Save",
     "saveRejected": "The Host refused this write: the configuration changed elsewhere. Reopen this page and try again.",
-    "saving": "Savingu2026",
+    "saving": "Saving…",
     "secretConfigured": "Configured",
     "secretHintAfter": ". Stored outside the settings file. Leave blank to keep the current secret.",
     "secretHintBefore": "From the ",

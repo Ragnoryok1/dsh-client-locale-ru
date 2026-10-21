@@ -15,7 +15,7 @@
     "customizing": "New PIN (8–64 chars, letters/digits): ",
     "developer": "Developer: 少北晨 (shaobeichen)",
     "disclaimerAgree": "I understand and agree",
-    "disclaimerBody": "Enabling public access exposes this computeru2019s DSH (which can execute code) to the internet. Anyone with the public link and PIN can reach — and operate — your computer. Please confirm: ① use a strong custom PIN or keep the auto-generated one safe; ② turn public access OFF as soon as youu2019re done; ③ on a corporate/classified network, confirm compliance first.",
+    "disclaimerBody": "Enabling public access exposes this computer’s DSH (which can execute code) to the internet. Anyone with the public link and PIN can reach — and operate — your computer. Please confirm: ① use a strong custom PIN or keep the auto-generated one safe; ② turn public access OFF as soon as you’re done; ③ on a corporate/classified network, confirm compliance first.",
     "disclaimerHint": "Check \"I understand\" before enabling public access",
     "disclaimerTitle": "⚠️ Security disclaimer",
     "downloading": "⏳ Downloading cloudflared (first run ~20-50MB, usually 1-2 min; instant afterward) · {s}s elapsed",

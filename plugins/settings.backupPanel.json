@@ -1,9 +1,9 @@
 {
   "namespace": "settings.backupPanel",
-  "package": "@xiaoyuyu6420/dsh-backup@0.13.4",
+  "package": "@xiaoyuy搠/dsh-backup@0.13.4",
   "version": "0.13.4",
   "license": "MIT",
-  "repository": "git+https://github.com/xiaoyuyu6420/dsh-backup.git",
+  "repository": "git+https://github.com/xiaoyuy搠/dsh-backup.git",
   "fetched": "2026-10-20",
   "en": {
     "label": "tab",

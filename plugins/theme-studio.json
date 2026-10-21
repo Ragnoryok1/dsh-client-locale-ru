@@ -7,7 +7,7 @@
   "fetched": "2026-10-20",
   "en": {
     "accentApplying": "Currently applied:",
-    "accentHint": "Custom accent color u2014 drives buttons, links, the active nav item and hover tints",
+    "accentHint": "Custom accent color — drives buttons, links, the active nav item and hover tints",
     "accentPlaceholder": "#4d6bfe",
     "accentSection": "Accent Color",
     "animations": "UI Animations",
@@ -27,7 +27,7 @@
     "densityHint": "Writes the official Appearance font size directly ({px}px now), so it always agrees with that control",
     "densitySection": "Density",
     "export": "Export Theme",
-    "exportFailed": "Copy failed u2014 filled into the box below",
+    "exportFailed": "Copy failed — filled into the box below",
     "exportSuccess": "Theme copied to clipboard",
     "fontMono": "Monospace",
     "fontSection": "Font Family",
@@ -56,6 +56,6 @@
     "subtitle": "Customize the dsh UI appearance",
     "text": "Sample text for previewing size and font family.",
     "title": "Theme Studio",
-    "writeBackFailed": "Theme tokens did not reach body u2014 the override had no effect"
+    "writeBackFailed": "Theme tokens did not reach body — the override had no effect"
   }
 }

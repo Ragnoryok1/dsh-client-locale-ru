@@ -25,7 +25,7 @@
     "filterHelp": "Filters use the exact names reported by DSH; the plugin does not define provider aliases.",
     "input": "Input",
     "lastUpdated": "Last successful update",
-    "loading": "Loading token usageu2026",
+    "loading": "Loading token usage…",
     "model": "Model",
     "modelFilter": "Model",
     "noClassified": "No classified usage in this range.",

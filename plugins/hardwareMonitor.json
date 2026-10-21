@@ -4,7 +4,7 @@
   "version": "0.1.15",
   "license": "MIT",
   "repository": "git+https://github.com/JoblessJoe/dsh-vitals.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "en": {
     "cpu.cores": "Per-core",
     "cpu.overall": "Overall",
@@ -14,7 +14,7 @@
     "gpu.power": "Power",
     "gpu.temp": "Temp",
     "gpu.util": "Load",
-    "loading": "Loadingu2026",
+    "loading": "Loading…",
     "mem.used": "Used",
     "mini.open": "Open hardware monitor",
     "retry": "Retry",

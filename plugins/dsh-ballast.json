@@ -4,7 +4,7 @@
   "version": "0.5.0",
   "license": "MIT",
   "repository": "git+https://github.com/xswt442-cmd/dsh-ballast.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "en": {
     "age.hours": "{count}h ago",
     "age.minutes": "{count}m ago",
@@ -25,7 +25,7 @@
     "cold.measureFailed": "measurement failed",
     "cold.measureTitle": "Read this session's complete log and measure it the same way a live session is (reads from disk)",
     "cold.measuring": "Measuring…",
-    "cold.pressureTitle": "From the projection cache; it can be as old as that sessionu2019s last write",
+    "cold.pressureTitle": "From the projection cache; it can be as old as that session’s last write",
     "cold.sizeTitle": "Bytes of stored session log",
     "cold.unreadable": "This host cannot read its stored session directory",
     "dock.label": "Context ballast",

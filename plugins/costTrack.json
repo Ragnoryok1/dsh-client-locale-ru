@@ -19,7 +19,7 @@
     "enforceHint": "When checked, requests over the cap are rejected",
     "exportCSV": "Export CSV",
     "failed": "Failed to load",
-    "loading": "Loadingu2026",
+    "loading": "Loading…",
     "model": "Model",
     "modelBreakdown": "Model breakdown",
     "month": "This month",

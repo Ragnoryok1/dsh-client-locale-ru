@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "license": "MIT",
   "repository": "git+https://github.com/EPCN-fla/dsh-custom-headers.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "en": {
     "addHeader": "Add header",
     "addProfile": "Add profile",
@@ -35,7 +35,7 @@
     "removeProfile": "Delete profile",
     "save": "Save",
     "saveFailed": "The deployment did not accept these values; they were left for you to correct.",
-    "saving": "Savingu2026",
+    "saving": "Saving…",
     "unsaved": "Unsaved"
   }
 }

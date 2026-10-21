@@ -4,7 +4,7 @@
   "version": "0.11.4",
   "license": "MIT",
   "repository": "git+https://github.com/snailium/dsh-repeat-tool-breaker.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-21",
   "meta": {
     "title": "Repeat tool breaker",
     "description": "Break stuck agent turns: repetitive tool calls, runaway loops, and consecutive execution failures."
@@ -47,7 +47,7 @@
     "reset": "Reset",
     "save": "Save",
     "saveFailed": "The Host refused part of the change. Drafts were kept; check the logs.",
-    "saving": "Savingu2026",
+    "saving": "Saving…",
     "shellHttpBlock": "Commands to refuse",
     "shellHttpBlockHint": "Comma-separated commands the block refuses, such as curl and wget. An interpreter program naming a request API is refused too.",
     "summarizeAt": "Summary threshold",

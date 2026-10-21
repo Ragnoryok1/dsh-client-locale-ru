@@ -21,7 +21,7 @@
     "enterpriseUser": "Enterprise user",
     "expired": "Your session has expired. Please sign in again.",
     "intro": "Sign in with your Tencent CodeBuddy account.",
-    "loading": "Loadingu2026",
+    "loading": "Loading…",
     "modelEmpty": "No models available.",
     "modelLoadError": "Failed to load the model list.",
     "modelPrefs": "Model selection",
@@ -41,7 +41,7 @@
     "showUsage": "Show usage allowance",
     "showUsageDesc": "Display the used-allowance progress above the Settings button at the sidebar foot.",
     "signInCn": "Sign in (China)",
-    "signingIn": "Signing inu2026",
+    "signingIn": "Signing in…",
     "signInIntl": "Sign in (Intl)",
     "signOut": "Sign out",
     "timeout": "Sign-in timed out. Please try again.",
@@ -50,6 +50,6 @@
     "unitUsd": "USD",
     "usageResets": "Resets at",
     "usageUsed": "Usage",
-    "waiting": "Waiting for the browser sign-in to completeu2026"
+    "waiting": "Waiting for the browser sign-in to complete…"
   }
 }
