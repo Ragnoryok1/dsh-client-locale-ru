@@ -589,7 +589,22 @@
     "repeatcount": "имя функции плагина",
     "skipcodeblocks": "имя параметра конфигурации",
     "babeldoc": "название продукта",
-    "mstar": "название продукта"
+    "mstar": "название продукта",
+    "nodeinfolist": "имя поля API",
+    "extend": "имя ключа конфигурации",
+    "override": "имя ключа конфигурации",
+    "backgroundjobtool": "имя параметра конфигурации",
+    "compactioninstruction": "имя параметра конфигурации",
+    "compactionscope": "имя параметра конфигурации",
+    "compactionthreshold": "имя параметра конфигурации",
+    "contextcompaction": "имя параметра конфигурации",
+    "emptyoutputguard": "имя параметра конфигурации",
+    "networkretrycount": "имя параметра конфигурации",
+    "networkretrytokens": "имя параметра конфигурации",
+    "subagentaggregation": "имя параметра конфигурации",
+    "toolfailureguard": "имя параметра конфигурации",
+    "toolfailureprefixes": "имя параметра конфигурации",
+    "pwsh": "имя оболочки"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
@@ -619,6 +634,28 @@
     ],
     "icon": [
       "session-complete-notify · icon"
+    ],
+    "appexit": [
+      "dsh-instance-manager · stopTitleManaged"
+    ],
+    "agents": [
+      "dsh-skills-manager-plus · sourceProjectAgents",
+      "dsh-skills-manager-plus · sourceUserAgents"
+    ],
+    "ghbdtn": [
+      "russian-lang · layoutConversionDesc"
+    ],
+    "subagent": [
+      "harden · api.compactionScopeInvalid"
+    ],
+    "systemprompt": [
+      "russian-lang · secAgentPromptDesc"
+    ],
+    "tokenmeter": [
+      "dsh-ballast · availability.unavailable"
+    ],
+    "memory": [
+      "meow-memory · settings.title"
     ]
   }
 }

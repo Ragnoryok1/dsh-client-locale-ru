@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 127.** За этот релиз их стало на 193, а пакет
-  покрывает 257 namespace и 46 157 строк (из них 2 996 — namespace самого харнесса,
-  43 161 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 157.** За этот релиз их стало на 223, а пакет
+  покрывает 287 namespace и 48 914 строк (из них 2 996 — namespace самого харнесса,
+  45 918 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -35,6 +35,9 @@
   `whale-pet` (186), `dsh-perm-gate` (184), `themeManager` (178), `settings.opencode-go` (177), `settings.tokenUsage` (176), `reverse-proxy` (175), `dsh-skillbox` (173), `retrace` (172), `settings.dsh-autostart-workbuddy` (171), `settings.model-capability` (170), `settings.pluginCapabilities` (169), `llm-qoder` (168), `apiDashboard` (166), `settings.subusage` (164), `version-update` (164), `betterWorkspace` (163), `settings.codebuddy-cli` (162), `settings.mcpManager` (160), `token-ledger` (160), `dsh-llm-hub` (159), `dsh-mnemosyne` (159), `xrn1997-dsh-novel` (159), `dsh-fonttune` (158), `dsh-vsceditor` (158), `dsh-bill` (154), `dsh-decision-layer` (152), `dsh-pentester-view` (152), `misakanet.panel.density.v1` (148), `dsh-update-copilot` (146), `dsh-pdf-mineru` (141), `workload-report` (141). Английский текст каждого словаря выгружен из его собственной
   публикации (`npm run fetch:plugins`) вместе с версией и лицензией, перевод сделан
   с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 44).** `dsh-skills-manager-plus` (102), `dsh-message-ops` (101), `quota` (99), `settings.runninghub` (98), `model-pricing` (97), `dsh-scheduler` (96), `dsh-web-search` (96), `pocketMobileNav` (96), `net-proxy` (95), `settings.acp` (95), `git-panel` (94), `russian-lang` (94), `dsh-prompt-manager` (93), `settings.dshopencodego` (93), `cost-meter` (92), `dsh-ballast` (92), `dsh-instance-manager` (92), `harden` (92), `meow-memory` (92), `token-meter-panel` (92), `free-proxy` (88), `hermes-loop` (88), `balance` (87), `dsh-delete-session` (87), `notify-sounds` (87), `dsh-jev-advisor` (85), `dsh-session-steward` (85), `dsh-pomodoro` (83), `dsh-project-memory` (83), `memory-porter` (83). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина
   терял обратную косую черту у перевода строки: `\n` читался как буква «n». В английском
   тексте, который мы выгружаем из публикации плагина, это 16 значений — и в двух из них

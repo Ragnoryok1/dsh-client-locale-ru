@@ -19,8 +19,8 @@ url: https://github.com/Ragnoryok1/dsh-client-locale-ru
 name: Ragnoryok1/dsh-client-locale-ru
 category: ui
 description:
-  en: 'Russian (ru) language pack for the dsh web GUI: 167 namespaces and 30735 strings, including 103 third-party plugin dictionaries and ru plural forms.'
-  zh: '为 dsh Web 界面提供俄语 (ru) 语言包：167 个命名空间、30735 条文案，含 103 个第三方插件词典与俄语复数形式。'
+  en: 'Russian (ru) language pack for the dsh web GUI: 287 namespaces and 48914 strings, including 223 third-party plugin dictionaries and ru plural forms.'
+  zh: '为 dsh Web 界面提供俄语 (ru) 语言包：287 个命名空间、48914 条文案，含 223 个第三方插件词典与俄语复数形式。'
 ```
 
 ## Файл 2 — диагностика плагинов
@@ -47,7 +47,7 @@ description:
 - **Описания в кавычках** — в обоих есть `: ` (двоеточие с пробелом); `contributing.md`
   предупреждает, что без кавычек YAML прочитает это как вложенный ключ.
 - **Никаких превосходных степеней.** Правила: «описания говорят, что плагин делает — без
-  суперлативов», и заявленное сверяется с кодом. 167 namespace, 30735 строк, 103 словарей — факты
+  суперлативов», и заявленное сверяется с кодом. 287 namespace, 48914 строк, 223 словарей — факты
   из `NAMESPACES.md` и `plugins/`; у doctor — из его README.
 
 ## Автоматические условия пройдены
