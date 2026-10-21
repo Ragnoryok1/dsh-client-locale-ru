@@ -1650,12 +1650,26 @@ advertisedWrong.sort()
  * its own namespace does. `number.groupSeparator` is the one value that exists
  * to hold a non-breaking space.
  */
+
+/**
+ * Whether the brackets of a text come in pairs.
+ *
+ * The full-width forms count as brackets: a plugin that writes its closing
+ * bracket as `）` has an unbalanced value by its own account, and the Russian
+ * of it has to answer with the same kind of bracket.
+ */
+const bracketsBalanced = text => {
+  const open = (text.match(/[(（]/gu)?.length ?? 0)
+  const close = (text.match(/[)）]/gu)?.length ?? 0)
+  return open === close
+}
+
 const HYGIENE_RULES = [
   ['двойной пробел', value => / {2,}/u.test(value)],
   ['пробел перед знаком препинания', value => / [,.!?;:]/u.test(value) && !/ \.[a-z]/u.test(value)],
   ['пробел после « или перед »', value => /«\s|\s»/u.test(value)],
   ['непарные « »', value => (value.match(/«/gu)?.length ?? 0) !== (value.match(/»/gu)?.length ?? 0)],
-  ['непарные скобки', value => (value.match(/\(/gu)?.length ?? 0) !== (value.match(/\)/gu)?.length ?? 0)],
+  ['непарные скобки', value => !bracketsBalanced(value)],
   ['неразрывный пробел в значении', value => /[\u00A0\u202F]/u.test(value)],
 ]
 const hygiene = []
@@ -1688,6 +1702,14 @@ for (const [namespace, byKey] of packValuesByNamespace) {
         if (title === 'непарные « »' && template !== undefined) {
           const templatePaired = (template.match(/«/gu)?.length ?? 0) === (template.match(/»/gu)?.length ?? 0)
           if (!templatePaired) continue
+        }
+        /*
+         * The same goes for a bracket the plugin closes on its own: `mk.scopeClose`
+         * of a plugin is a lone closing bracket, and the Russian of it answers with
+         * the same lone bracket — a template that is unbalanced excuses ours.
+         */
+        if (title === 'непарные скобки' && template !== undefined) {
+          if (!bracketsBalanced(template)) continue
         }
         if (test(value)) hygiene.push(`${namespace} · ${key} — ${title}`)
       }

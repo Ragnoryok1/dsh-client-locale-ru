@@ -6,5 +6,8 @@
   "sessions · settings.languageDesc": "имя китайского языка в списке доступных языков",
   "sessions · settings.languageZh": "имя китайского языка на его собственном письме",
   "settings.codexSubscription · voiceLang_ja": "имя японского языка на его собственном письме",
-  "settings.codexSubscription · voiceLang_zh": "имя китайского языка на его собственном письме"
+  "settings.codexSubscription · voiceLang_zh": "имя китайского языка на его собственном письме",
+  "agentStudio · section.customNote": "подставляемый плагином китайский ключ в шаблоне",
+  "dsh-auto-title · typeSchemeRows": "имя колонки редактора, которую печатает китайский заголовок",
+  "dsh-auto-title · typeSchemeRowsHint": "имя колонки редактора, которую печатает китайский заголовок"
 }
