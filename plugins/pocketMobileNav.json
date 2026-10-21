@@ -58,7 +58,7 @@
     "pinInvalid": "PIN must be 8–64 characters (letters and digits only)",
     "pinLabel": "Access PIN",
     "refresh": "Refresh",
-    "resetBody": "This clears and restores defaults:n① Switches: LAN access on, access PIN on, mobile right sidebar on, LAN address auton② Public: mode back to random URL, Tunnel Token and fixed domain cleared, and any running tunnel is stoppedn③ PINs: both public and LAN become new random 8-character PINs (old ones stop working; the phone must re-enter)nnYour DSH sessions, models and plugin config are untouched. This cannot be undone.",
+    "resetBody": "This clears and restores defaults:\n① Switches: LAN access on, access PIN on, mobile right sidebar on, LAN address auto\n② Public: mode back to random URL, Tunnel Token and fixed domain cleared, and any running tunnel is stopped\n③ PINs: both public and LAN become new random 8-character PINs (old ones stop working; the phone must re-enter)\n\nYour DSH sessions, models and plugin config are untouched. This cannot be undone.",
     "resetConfirm": "Reset",
     "resetDone": "✅ Factory reset done: settings cleared and PINs re-rolled (re-enter the PIN on your phone)",
     "resetFactory": "🧹 Factory reset",
@@ -98,6 +98,9 @@
     "wanOffHint": "Reachable from any network once enabled (a disclaimer is confirmed on each enable)",
     "wanPin": "🔐 PIN: {pin} (changes each time the tunnel is enabled; required on the phone)",
     "wanPinCustom": "🔐 PIN: {pin} (custom — not rotated on tunnel start)",
-    "wanTitle": "🌐 Anywhere (public)"
+    "wanTitle": "🌐 Anywhere (public)",
+    "off": "Off",
+    "ok": "Got it",
+    "on": "On"
   }
 }

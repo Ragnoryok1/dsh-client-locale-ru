@@ -34,7 +34,7 @@
     "fieldCommandDescriptionHint": "Shown in the / command menu.",
     "fieldContent": "Body (Markdown)",
     "fieldContentPlaceholderCommand": "The prompt to save. Invoking /<command> sends it as a user message.",
-    "fieldContentPlaceholderSkill": "# Skill instructionsnnConcrete steps for the model…",
+    "fieldContentPlaceholderSkill": "# Skill instructions\n\nConcrete steps for the model…",
     "fieldDescription": "Description",
     "fieldDescriptionHint": "How the model decides when to use the skill; shown in the catalog.",
     "fieldName": "Name",
@@ -106,6 +106,7 @@
     "tabGlobal": "Global",
     "tabProject": "Project",
     "taken": "name taken",
-    "title": "Skills & Commands"
+    "title": "Skills & Commands",
+    "nav": "Skills & Commands"
   }
 }

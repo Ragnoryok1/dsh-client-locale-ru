@@ -63,7 +63,7 @@
     "diag.resynced_msg": "Provider re-synced to DSH Models ({count} models)",
     "diag.resyncing": "Syncing…",
     "diag.smoke_btn": "Run Smoke Test (Ping)",
-    "diag.smoke_result": "✅ Latency: {latency} ms | Model: {model}nResponse: {preview}",
+    "diag.smoke_result": "✅ Latency: {latency} ms | Model: {model}\nResponse: {preview}",
     "diag.smoke_testing": "Testing…",
     "diag.title": "Diagnostics & Auto-Registration",
     "diag.unregister_btn": "Unregister from DSH",

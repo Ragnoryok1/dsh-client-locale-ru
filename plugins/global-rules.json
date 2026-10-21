@@ -15,7 +15,7 @@
     "label": "Global Rules",
     "loading": "Loading…",
     "notExists": "File does not exist yet; saving will create it.",
-    "placeholder": "# Global RulesnnWrite instructions here that take effect across every session…",
+    "placeholder": "# Global Rules\n\nWrite instructions here that take effect across every session…",
     "readError": "Failed to read: {error}",
     "save": "Save",
     "saved": "Saved. New sessions take effect immediately; current session will detect new rules after the next file operation.",

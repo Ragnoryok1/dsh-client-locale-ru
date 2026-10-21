@@ -582,7 +582,14 @@
     "xlsx": "формат файла",
     "xterm": "имя терминала",
     "yaml": "имя формата",
-    "zcode": "имя продукта"
+    "zcode": "имя продукта",
+    "failonstartuperror": "имя параметра конфигурации",
+    "toolcalltimeoutms": "имя параметра конфигурации",
+    "ghproxy": "название сервиса прокси",
+    "repeatcount": "имя функции плагина",
+    "skipcodeblocks": "имя параметра конфигурации",
+    "babeldoc": "название продукта",
+    "mstar": "название продукта"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
@@ -600,6 +607,18 @@
     ],
     "config": [
       "settings.tokenUsage · remoteDenied"
+    ],
+    "disabled": [
+      "settings.mcpPanel · removeConfirm"
+    ],
+    "slug": [
+      "expertSources · custom.form.slug"
+    ],
+    "girl": [
+      "session-complete-notify · neko"
+    ],
+    "icon": [
+      "session-complete-notify · icon"
     ]
   }
 }

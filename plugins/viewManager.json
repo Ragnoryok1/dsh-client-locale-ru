@@ -11,7 +11,7 @@
     "checkFailed": "Update check failed",
     "checkFailedDetail": "Cannot reach the npm registry. Check your network and retry.",
     "close": "Close",
-    "confirmBody": "Will run:n{command}nnA Web UI restart is required afterwards. Your session is not lost — you can resume it from the session list after restart.",
+    "confirmBody": "Will run:\n{command}\n\nA Web UI restart is required afterwards. Your session is not lost — you can resume it from the session list after restart.",
     "confirmTitle": "Confirm update",
     "confirmUpdate": "Confirm update",
     "defaultLabel": "Default",
@@ -45,6 +45,7 @@
     "updateSuccess": "Update complete",
     "updateSuccessDetail": "Updated to v{version}. Restart the Web UI to apply.",
     "updating": "Updating…",
-    "viewLog": "View log"
+    "viewLog": "View log",
+    "sub": "Manage the view tabs shown in the session header (Chat / Trajectory / …). Disabling only hides the tab; the view itself is unaffected. All settings are stored in this browser (localStorage)."
   }
 }

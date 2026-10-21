@@ -61,7 +61,7 @@
     "dockRunningCount": "{count} running",
     "dockTooltip": "Open Actions in the sidebar",
     "error": "Unable to read the DSH Actions service",
-    "fixPrompt": "Fix the errors in this actions.json config file (read the file to locate the problems first):nPath: {path}nErrors:",
+    "fixPrompt": "Fix the errors in this actions.json config file (read the file to locate the problems first):\nPath: {path}\nErrors:",
     "focusRun": "View run output",
     "folderEmptyTip": "No .dsh/actions.json in this directory",
     "loading": "Reading actions…",
@@ -124,6 +124,8 @@
     "tvRunRejected": "Rejected",
     "tvRunStarted": "Started",
     "workspaceCollapse": "Collapse run area",
-    "workspaceExpand": "Expand run area"
+    "workspaceExpand": "Expand run area",
+    "nav": "Actions",
+    "run": "Run"
   }
 }

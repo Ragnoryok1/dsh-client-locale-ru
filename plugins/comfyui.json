@@ -184,7 +184,7 @@
     "wfBypassed": "bypassed nodes",
     "wfCancel": "Cancel",
     "wfComfyuiEmpty": "No workflows detected on the ComfyUI server",
-    "wfComfyuiHint": "Auto-detects workflows saved in ComfyUI.nNote: these are UI graphs, not directly runnable — extract them into API workflows, or import an API workflow instead.",
+    "wfComfyuiHint": "Auto-detects workflows saved in ComfyUI.\nNote: these are UI graphs, not directly runnable — extract them into API workflows, or import an API workflow instead.",
     "wfComfyuiSection": "ComfyUI workflows",
     "wfComponentLabel": "Component",
     "wfComponents": "components",

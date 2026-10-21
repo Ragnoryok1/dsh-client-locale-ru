@@ -24,7 +24,7 @@
     "modeOrder": "Try in order (provider.order)",
     "modeOrderHint": "Providers are tried in list order, falling back to the default OpenRouter routing when none is available (allow_fallbacks=true).",
     "providers": "Providers (provider slugs)",
-    "providersPlaceholder": "One provider per line, for example:nDeepInfranTogether",
+    "providersPlaceholder": "One provider per line, for example:\nDeepInfra\nTogether",
     "proxy": "billion-context compression proxy",
     "proxyActive": "Proxy in use: {origin}",
     "proxyAuto": "Auto: route through the proxy when one is detected",

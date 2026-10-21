@@ -189,7 +189,7 @@
     "sessions.unread": "Unread",
     "sessions.waitingAnswer": "Waiting for answer",
     "sessions.waitingApproval": "Waiting for approval",
-    "sessionTitle.system": "Generate a title for a coding-assistant conversation.nOutput exactly one line with two parts: Type｜ThemenType must be one of: {types}nThe theme must be a concrete subject and must not repeat the type. Do not write dates, emoji, quotes, prefixes, explanations, or Markdown.nWrite the theme in the language of the user message.",
+    "sessionTitle.system": "Generate a title for a coding-assistant conversation.\nOutput exactly one line with two parts: Type｜Theme\nType must be one of: {types}\nThe theme must be a concrete subject and must not repeat the type. Do not write dates, emoji, quotes, prefixes, explanations, or Markdown.\nWrite the theme in the language of the user message.",
     "sessionTitle.type.design": "Design",
     "sessionTitle.type.docs": "Docs",
     "sessionTitle.type.explore": "Explore",

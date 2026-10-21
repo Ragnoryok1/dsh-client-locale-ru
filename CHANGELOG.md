@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 97.** За этот релиз их стало на 163, а пакет
-  покрывает 227 namespace и 42 562 строк (из них 2 996 — namespace самого харнесса,
-  39 566 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 127.** За этот релиз их стало на 193, а пакет
+  покрывает 257 namespace и 46 157 строк (из них 2 996 — namespace самого харнесса,
+  43 161 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -34,6 +34,19 @@
   `settings.packyCodeApi` (200), `solution-explorer` (194), `usage` (194),
   `whale-pet` (186), `dsh-perm-gate` (184), `themeManager` (178), `settings.opencode-go` (177), `settings.tokenUsage` (176), `reverse-proxy` (175), `dsh-skillbox` (173), `retrace` (172), `settings.dsh-autostart-workbuddy` (171), `settings.model-capability` (170), `settings.pluginCapabilities` (169), `llm-qoder` (168), `apiDashboard` (166), `settings.subusage` (164), `version-update` (164), `betterWorkspace` (163), `settings.codebuddy-cli` (162), `settings.mcpManager` (160), `token-ledger` (160), `dsh-llm-hub` (159), `dsh-mnemosyne` (159), `xrn1997-dsh-novel` (159), `dsh-fonttune` (158), `dsh-vsceditor` (158), `dsh-bill` (154), `dsh-decision-layer` (152), `dsh-pentester-view` (152), `misakanet.panel.density.v1` (148), `dsh-update-copilot` (146), `dsh-pdf-mineru` (141), `workload-report` (141). Английский текст каждого словаря выгружен из его собственной
   публикации (`npm run fetch:plugins`) вместе с версией и лицензией, перевод сделан
+  с этого английского текста, а не с чужого пакета локали.
+- **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина
+  терял обратную косую черту у перевода строки: `\n` читался как буква «n». В английском
+  тексте, который мы выгружаем из публикации плагина, это 16 значений — и в двух из них
+  («Удалить рабочую область …», «Пентест ещё не запущен») повреждение дошло до русского
+  перевода, который читатель видел на экране. Теперь английский сверяется с той
+  публикацией, из которой он выгружен, а перевод приводится в соответствие.
+- **Ключи, которые выгрузка теряла, возвращены.** Чтение бандла нашло ключи, которых
+  не было в снимке: у `dsh-actions` — подпись боковой панели и кнопка запуска, у
+  `dsh-skills-manager-plus`, `pocketMobileNav` и `viewManager` — ещё по одному-двум.
+  Теперь эти надписи есть и в английском тексте, и в переводе.
+- **Ещё 30 словарей плагинов.** `settings.security` (138), `auto-continue` (137), `comfyui-tools.panel` (135), `mstar-panel` (134), `dsh-balance` (131), `dsh-proactive` (129), `settings.mcpPanel` (129), `expertSources` (128), `dsh-tavily-pool` (126), `settings.workbuddy2api` (126), `dsh-model-router` (125), `dsh-plugin-rollout-scout` (124), `dsh-updater-npm` (124), `dsh-task-ledger` (122), `dsh-actions` (121), `dsh-zh-settings` (121), `settings.awiki` (121), `ui-enhancer` (120), `atlas` (119), `settings.meme` (113), `dshRemoteExplorer` (111), `h3.internal.event.` (110), `settings.pluginHub` (110), `hypatia-auto-memory` (109), `dsh-dupguard` (108), `session-complete-notify` (107), `dsh-paper-reader` (106), `dsh-notify-me` (105), `dsh-vibedev` (103), `dsh.localLink` (102). Английский текст каждого словаря выгружен из его
+  собственной публикации (`npm run fetch:plugins`) вместе с версией и лицензией, перевод сделан
   с этого английского текста, а не с чужого пакета локали.
 - **Переведены надписи, оставшиеся на английском.** 88 значений в словарях плагинов
   были помечены как «сознательно оставленные», но оказались обычными надписями:
