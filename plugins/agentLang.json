@@ -1,0 +1,35 @@
+{
+  "namespace": "agentLang",
+  "package": "dsh-agent-lang@0.12.0",
+  "version": "0.12.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/KannaKuron/dsh-agent-lang.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Language Control",
+    "description": "One runtime directive that writes tool-call descriptions, model thinking, and replies in the GUI language (or a forced tag) - each channel independently auto / force / off; no preset or tool schema is touched."
+  },
+  "en": {
+    "cardDesc": "Tool descriptions, model thinking, and replies — each follows the GUI language or a fixed one",
+    "chan.desc": "Tool descriptions",
+    "chan.output": "Replies",
+    "chan.think": "Model thinking",
+    "chosen": "Explicit choice (Settings → General)",
+    "error": "Write failed",
+    "hint": "Three independent channels: follow GUI / force a tag / off (thinking and replies default to off, preserving current behavior). Detection order: the explicit Settings → General → Language choice over the browser report. Changes apply on the next request; the minimal preset seals its prompt and is out of scope.",
+    "mode.auto": "Follow GUI language",
+    "mode.force": "Force a language",
+    "mode.off": "Off",
+    "none": "—",
+    "quick.offAll": "Turn all off",
+    "quick.syncAll": "Sync all to GUI",
+    "reported": "Browser report",
+    "sec.channels": "Language channels",
+    "sub.hint": "Agent-team teammates and ordinary subagents carry the same language directive by default; \"Main agent only\" withholds it from every child agent. A forked teammate still inherits the main agent's already-committed history snapshot, which this switch does not rewrite.Subagents that bring their own prompt (codex / claude-code, …) and the sealed minimal prompt never pass through this channel, so the switch does not affect them.",
+    "sub.off": "Main agent only",
+    "sub.on": "Same directive",
+    "sub.title": "Teammates & subagents",
+    "title": "Language Control",
+    "undetected": "No language detected (nothing injected)"
+  }
+}

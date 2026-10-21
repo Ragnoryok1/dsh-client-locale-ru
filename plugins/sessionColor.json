@@ -1,0 +1,27 @@
+{
+  "namespace": "sessionColor",
+  "package": "@idoall/dsh-session-colors@0.1.11",
+  "version": "0.1.11",
+  "license": "MIT",
+  "repository": "git+https://github.com/idoall/dsh-session-colors.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "addMine": "Save the current colour",
+    "alpha": "Alpha",
+    "chip": "Colour marked",
+    "clear": "Clear mark",
+    "current": "Session colour: ${hex} · A ${alpha}%",
+    "custom": "Custom colour",
+    "eyedrop": "Pick a colour from the screen",
+    "hint": "Open the picker with “Colour mark”.",
+    "layer": "Session colour marks",
+    "mark": "Colour mark",
+    "mine": "My colours",
+    "none": "This Session has no colour mark",
+    "offline": "Colour marks cannot reach the Host settings yet: this device may still run a cached client. Hard-refresh (Cmd+Shift+R).",
+    "panelTitle": "Choose a Session colour",
+    "saturation": "Saturation and brightness",
+    "saved": "A mark stores only the Session id and colour value: it never copies, moves, or reorders a Session.",
+    "theme": "Theme colours"
+  }
+}

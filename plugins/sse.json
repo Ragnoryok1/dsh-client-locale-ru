@@ -1,0 +1,16 @@
+{
+  "namespace": "sse",
+  "package": "@jcy2387/dsh-codex-provider@0.1.7-rc.2.1",
+  "version": "0.1.7-rc.2.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/DamonBao/dsh-codex-suite.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "OpenAI Codex",
+    "description": "Connect a ChatGPT account, choose a proxy, and view usage and reset credits."
+  },
+  "en": {
+    "name": "OpenAI Codex OAuth",
+    "source": "OAuth"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "namespace": "dsh-llm-provider",
+  "package": "@dsh-one/dsh-llm-provider@0.2.2",
+  "version": "0.2.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/imchangchang/dsh-llm-provider.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "addProvider": "＋ Add Provider",
+    "oauthAuthorized": "Authorized — credential saved",
+    "oauthCancel": "Cancel",
+    "oauthCancelled": "Cancelled",
+    "oauthCopied": "Copied",
+    "oauthCopyLink": "Copy",
+    "oauthDialogTitle": "{label} · OAuth sign-in",
+    "oauthFailed": "Sign-in failed: {error}",
+    "oauthGithubCom": "Continuing with github.com",
+    "oauthInFlight": "Sign-in in progress…",
+    "oauthSelectPlaceholder": "Choose…",
+    "oauthSignIn": "Sign in with OAuth",
+    "oauthSignInMethod": "Sign in with OAuth ({label})",
+    "oauthSubmit": "Submit",
+    "oauthUseEnterprise": "Use GitHub Enterprise",
+    "tabProviders": "Provider"
+  }
+}

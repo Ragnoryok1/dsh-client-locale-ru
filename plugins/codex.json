@@ -1,0 +1,15 @@
+{
+  "namespace": "codex",
+  "package": "@shuind/dsh-codex-harness@0.2.21",
+  "version": "0.2.21",
+  "license": "MIT",
+  "repository": "git+https://github.com/shuind/dsh-codex-harness.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "detail": "compactLocalHint",
+    "kind": "popupSelect",
+    "label": "compactLocal",
+    "name": "compact",
+    "onSelect": "this session is not materialized yet"
+  }
+}

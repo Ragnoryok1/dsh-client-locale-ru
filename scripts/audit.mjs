@@ -802,7 +802,17 @@ const augmentedBases = new Set([...packPlurals]
   .map(key => key.replace(pluralSuffix, '')))
 for (const [namespace, packKeysHere] of packKeysByNamespace) {
   for (const base of augmentedBases) {
-    if (!packKeysHere.has(`${base}.one`) && !packKeysHere.has(`${base}.other`)) continue
+    /*
+     * A count pair needs the singular form: the harness asks for `<base>.one` when
+     * the count is one and `<base>.other` otherwise, so a dictionary that carries
+     * only one of them has no pair to inflect — `theone` ships `settings.other`
+     * («Другое») as an ordinary option next to `settings.none`, and its plugin
+     * asks for no count at all. A namespace that already carries one of our own
+     * forms is a pair by definition, so that one counts as the trigger too.
+     */
+    const hasOne = packKeysHere.has(`${base}.one`)
+    const hasOwnForm = packKeysHere.has(`${base}.few`) || packKeysHere.has(`${base}.many`)
+    if (!hasOne && !hasOwnForm) continue
     for (const form of ['few', 'many']) {
       if (!packKeysHere.has(`${base}.${form}`)) missingRussianForms.push(`${namespace} · ${base}.${form}`)
     }
@@ -990,6 +1000,27 @@ const KEEP_ENGLISH = (() => {
   return new Map(entries)
 })()
 
+/**
+ * The values whose Chinese stays, with the reason.
+ *
+ * The gate of the residues treats every Chinese character in a Russian value as
+ * a defect. Two kinds of value are not defects: the name of a language in its
+ * own script («中文», «日本語») and a command the user is told to type in a
+ * Chinese session. They are written down here, the way `keep-english.json`
+ * writes down the English that stays.
+ */
+const KEEP_CJK = (() => {
+  const path = new URL('./keep-cjk.json', import.meta.url)
+  if (!existsSync(path)) return new Set()
+  const parsed = JSON.parse(readFileSync(path, 'utf8'))
+  const entries = Object.entries(parsed).filter(([key]) => !key.startsWith('_'))
+  if (entries.length === 0) {
+    console.error('keep-cjk.json не дал ни одной записи — политика не загрузилась')
+    process.exit(2)
+  }
+  return new Set(entries.map(([key]) => key))
+})()
+
 const keepsEnglish = (id) => {
   if (KEEP_ENGLISH.has(id)) return id
   for (const pattern of KEEP_ENGLISH.keys()) {
@@ -1019,7 +1050,15 @@ const copiesNeedingDecision = new Set()
 let residueValuesChecked = 0
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
-    if (/[\u4e00-\u9fff]/u.test(value)) cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
+    /*
+     * A Chinese character in a Russian value is a defect — unless the value
+     * names a language in its own script or quotes a command the user types.
+     * Those decisions are written down in `keep-cjk.json`, the way
+     * `keep-english.json` writes down the English that stays.
+     */
+    if (!KEEP_CJK.has(`${namespace} · ${key}`) && /[\u4e00-\u9fff]/u.test(value)) {
+      cjkResidue.push(`${namespace} · ${key} — ${JSON.stringify(value)}`)
+    }
     /*
      * Every template of the key, not only the English-scope ones: a dictionary
      * whose `en` block the scope detector did not see used to make its keys

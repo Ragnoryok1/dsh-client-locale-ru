@@ -1,0 +1,23 @@
+{
+  "namespace": "dsh-conversation-outline",
+  "package": "@chestnut23/dsh-conversation-outline@0.2.2",
+  "version": "0.2.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/lzbaclz/dsh-conversation-outline.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "barLabel": "Jump to question {n}",
+    "close": "Close",
+    "copied": "Copied",
+    "copy": "Copy",
+    "count": "{count} questions",
+    "empty": "No questions in this conversation yet",
+    "jumpFailed": "Jump failed: target message not found",
+    "loadingOlder": "Loading…",
+    "loadOlder": "Load older",
+    "moreBars": "{count} more earlier questions",
+    "searchPlaceholder": "Search questions…",
+    "steerTag": "steer",
+    "title": "Outline"
+  }
+}

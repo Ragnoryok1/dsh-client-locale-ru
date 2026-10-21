@@ -1,0 +1,22 @@
+{
+  "namespace": "publish",
+  "package": "dsh-ab-publish@0.1.12",
+  "version": "0.1.12",
+  "license": "MIT",
+  "repository": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "row.empty": "No publish result yet",
+    "row.failed": "Publish call failed",
+    "row.running": "Publishing",
+    "row.screenshot": "Screenshot",
+    "row.status.failed": "Failed",
+    "row.status.login_required": "Login required",
+    "row.status.needs_human": "Needs human",
+    "row.status.published": "Published",
+    "row.status.validation_error": "Invalid arguments",
+    "row.steps": "Steps",
+    "row.title": "Publish",
+    "row.url": "Target"
+  }
+}

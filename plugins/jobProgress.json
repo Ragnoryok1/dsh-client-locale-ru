@@ -1,0 +1,30 @@
+{
+  "namespace": "jobProgress",
+  "package": "dsh-job-progress@1.0.5",
+  "version": "1.0.5",
+  "license": "MIT",
+  "repository": "git+https://github.com/Rice00/dsh-job-progress.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "ball.title": "Long-running tasks and their progress (draggable)",
+    "clear.button": "Clear finished",
+    "clear.done": "Cleared {count}",
+    "clear.failed": "Clear failed: host not ready",
+    "clear.hint": "{count} finished",
+    "clear.none": "Nothing finished yet",
+    "count.live": "{count} running",
+    "count.total": "{count} task(s)",
+    "empty": "No long-running tasks in this session",
+    "eta.left": "{d} left",
+    "list.aria": "Task progress for this session",
+    "phase.merging": "merging",
+    "phase.verifying": "verifying",
+    "status.completed": "done",
+    "status.done": "done",
+    "status.failed": "failed",
+    "status.killed": "cancelled",
+    "status.lost": "lost",
+    "status.running": "running",
+    "status.stopping": "stopping"
+  }
+}

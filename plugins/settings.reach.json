@@ -1,0 +1,27 @@
+{
+  "namespace": "settings.reach",
+  "package": "dsh-reach@0.1.22",
+  "version": "0.1.22",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/PerryLink/dsh-reach.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "account": "Bot",
+    "allowFrom": "Allowlist (comma-separated user ids)",
+    "crossSession": "Cross-session decision push",
+    "hint": "After a fresh login, send the bot any message (e.g. /status) before it can push.",
+    "logout": "Log out",
+    "pending": "Pending cards",
+    "phase": "Channel phase",
+    "queue": "Outbound queue",
+    "queueLabel": "queue",
+    "queueMode": "Busy delivery",
+    "save": "Save",
+    "scan": "Re-scan QR",
+    "silent": "Silent mode",
+    "steerLabel": "steer",
+    "taskEvents": "Background completion notices",
+    "title": "dsh-reach bridge",
+    "user": "Bound user"
+  }
+}

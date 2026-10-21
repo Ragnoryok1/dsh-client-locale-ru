@@ -1,0 +1,25 @@
+{
+  "namespace": "tradeSearch",
+  "package": "dsh-ab-market-research@0.2.12",
+  "version": "0.2.12",
+  "license": "MIT",
+  "repository": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "row.empty": "No sources",
+    "row.failed": "Trade search call failed",
+    "row.failed_fetch": "fetch failed",
+    "row.failures": "failures",
+    "row.file": "Snapshot",
+    "row.more": "More candidates remain",
+    "row.pending": "not retrieved",
+    "row.queries": "queries",
+    "row.report": "Report",
+    "row.retrieved": "retrieved",
+    "row.rounds": "rounds",
+    "row.running": "Searching and retrieving sources",
+    "row.sources": "sources",
+    "row.tier": "tier",
+    "row.title": "Trade search"
+  }
+}

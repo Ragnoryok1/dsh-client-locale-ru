@@ -1,0 +1,15 @@
+{
+  "namespace": "settings.neu",
+  "package": "dsh-neu-theme@0.1.2",
+  "version": "0.1.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/Lhy723/dsh-neu-theme.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "skin.caption": "Soft UI · gentle depth",
+    "skin.default": "Default",
+    "skin.neu-dark": "Dark",
+    "skin.neu-light": "Light",
+    "skin.title": "Neumorphism theme"
+  }
+}

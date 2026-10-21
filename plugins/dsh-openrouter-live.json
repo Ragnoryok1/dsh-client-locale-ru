@@ -1,0 +1,13 @@
+{
+  "namespace": "dsh-openrouter-live",
+  "package": "dsh-openrouter-live@0.2.2",
+  "version": "0.2.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/Boomerangz/dsh-openrouter-live.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "aria": "OpenRouter spend {total}",
+    "tooltip": "OpenRouter spend in this session: {total} ({requests} requests)",
+    "tooltipSplit": "OpenRouter spend in this session: {total}. This agent: {own}; subagents: {subagents} in {sessions} session(s)."
+  }
+}

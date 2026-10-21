@@ -1,0 +1,12 @@
+{
+  "namespace": "agent-shell-consent",
+  "package": "dsh-agent-shell@0.4.0",
+  "version": "0.4.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Mrtime-gege/dsh-agent-shell.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "hint": "chain-head",
+    "reason": "hash-mismatch"
+  }
+}

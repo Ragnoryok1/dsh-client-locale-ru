@@ -1,0 +1,24 @@
+{
+  "namespace": "markdown-preview",
+  "package": "dsh-markdown-preview@0.4.0",
+  "version": "0.4.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/GitHubJiKe/dsh-markdown-preview.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "preview.close": "Close",
+    "preview.collapse": "Collapse",
+    "preview.copied": "Copied",
+    "preview.copy": "Copy content",
+    "preview.error": "Preview failed",
+    "preview.fullscreen": "Fullscreen",
+    "preview.loading": "Loading preview…",
+    "preview.openInApp": "Open in system app",
+    "preview.truncated": "Large file: showing the first 1 MiB",
+    "produced.label": "Produced",
+    "produced.more": "+ {count} files",
+    "produced.moreOne": "+ 1 file",
+    "produced.open": "Open {name}",
+    "produced.showInFolder": "Show in folder"
+  }
+}

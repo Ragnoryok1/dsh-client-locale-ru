@@ -1,0 +1,24 @@
+{
+  "namespace": "dsh-model-search",
+  "package": "@goodandready/dsh-model-search@0.1.12",
+  "version": "0.1.12",
+  "license": "MIT",
+  "repository": "git+https://github.com/GooDAnDReaDY/dsh-model-search.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "clear": "Clear search",
+    "desc": "Searchable model selector for DeepSeek Harness WebUI",
+    "empty": "No matching models",
+    "placeholder": "Search model or provider…",
+    "title": "Model Search",
+    "updater_check": "Check for updates",
+    "updater_checking": "Checking…",
+    "updater_current": "Current version",
+    "updater_failed": "Failed to check or install update",
+    "updater_restart_notice": "Update installed. Restart DSH to apply.",
+    "updater_up_to_date": "Up to date",
+    "updater_update_available": "New release available: v{version}",
+    "updater_update_now": "Update now",
+    "updater_updating": "Updating…"
+  }
+}

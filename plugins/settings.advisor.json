@@ -1,0 +1,37 @@
+{
+  "namespace": "settings.advisor",
+  "package": "dsh-advisor@0.6.0",
+  "version": "0.6.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/omdsh-dev/dsh-advisor.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Advisor",
+    "description": "Configure the advisor reviewer model that observes the primary transcript and injects severity-ranked advice."
+  },
+  "en": {
+    "immuneTurns": "Immune turns",
+    "loadFailed": "Loading advisor settings failed",
+    "maxDeltaMessages": "Max delta messages",
+    "model": "Model",
+    "modelPlaceholder": "Select a model",
+    "modelRequired": "Model is required.",
+    "noModels": "This provider has no available models. Configure models for it on the Models page.",
+    "noProviders": "No configured providers. Configure one on the Models page first.",
+    "proseFallback": "Prose fallback",
+    "proseFallbackHint": "When no JSON frame is found, deliver the prose reply as a low-severity note u2014 for models that answer in prose instead of JSON.",
+    "provider": "Provider",
+    "providerPlaceholder": "Select a provider",
+    "providerRequired": "Provider is required.",
+    "reasoningEffort": "Thinking effort",
+    "reasoningEffortAuto": "Automatic (smallest)",
+    "reasoningEffortHint": "Leave empty to use the smallest thinking effort the selected model declares.",
+    "reasoningEffortStale": "The stored thinking effort is not declared by the selected model. Reselect one or keep the stored value.",
+    "reasoningEffortUnavailable": "Thinking-effort options are currently unavailable for the selected model u2014 only automatic is available.",
+    "retry": "Retry",
+    "staleModel": "The stored model is no longer available for this provider. Reselect one or keep the stored value.",
+    "staleProvider": "The stored provider is no longer configured. Reselect one or keep the stored value.",
+    "systemPrompt": "System prompt",
+    "systemPromptHint": "Leave empty to use the default system prompt"
+  }
+}

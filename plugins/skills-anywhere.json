@@ -1,0 +1,14 @@
+{
+  "namespace": "skills-anywhere",
+  "package": "dsh-skills-anywhere@0.19.0",
+  "version": "0.19.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/noteflowai/dsh-skills-anywhere.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "body": "{}",
+    "content-type": "application/json",
+    "credentials": "same-origin",
+    "method": "POST"
+  }
+}

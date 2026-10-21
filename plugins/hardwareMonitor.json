@@ -1,0 +1,28 @@
+{
+  "namespace": "hardwareMonitor",
+  "package": "dsh-vitals@0.1.15",
+  "version": "0.1.15",
+  "license": "MIT",
+  "repository": "git+https://github.com/JoblessJoe/dsh-vitals.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "cpu.cores": "Per-core",
+    "cpu.overall": "Overall",
+    "error": "Read failed",
+    "gpu.mem": "VRAM",
+    "gpu.none": "No NVIDIA GPU detected",
+    "gpu.power": "Power",
+    "gpu.temp": "Temp",
+    "gpu.util": "Load",
+    "loading": "Loadingu2026",
+    "mem.used": "Used",
+    "mini.open": "Open hardware monitor",
+    "retry": "Retry",
+    "section.cpu": "CPU",
+    "section.gpu": "GPU",
+    "section.mem": "Memory",
+    "section.temp": "CPU Temp",
+    "tab.title": "Hardware",
+    "temp.max": "Max"
+  }
+}

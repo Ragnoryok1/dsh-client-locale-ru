@@ -1,0 +1,33 @@
+{
+  "namespace": "diff-stat",
+  "package": "dsh-diff-stat@0.1.9",
+  "version": "0.1.9",
+  "license": "MIT",
+  "repository": "git+https://github.com/HaoyueQin/dsh-diff-stat.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "card.copyAbs": "Copy absolute path",
+    "card.copyRel": "Copy relative path",
+    "card.filesChanged": "{count} files changed",
+    "card.open": "Open",
+    "card.openInVscode": "Open in VS Code",
+    "card.openMore": "More ways to open",
+    "card.openSystem": "Open with system",
+    "card.peek": "View inline",
+    "card.review": "Review",
+    "card.showInExplorer": "Show in Explorer",
+    "card.undo": "Undo",
+    "card.undoFailed": "Undo failed",
+    "card.undoFailedTitle": "Undo failed: files may have changed outside this turn",
+    "card.undoing": "Undoing…",
+    "card.undone": "Undone",
+    "card.undoTitle": "Revert this turn's file changes to their pre-turn state",
+    "peek.binary": "Binary file ({size} bytes); no preview",
+    "peek.bytes": "{size} bytes",
+    "peek.close": "Close",
+    "peek.hostUnavailable": "host API unavailable",
+    "peek.loading": "Loading…",
+    "peek.readFailed": "Read failed",
+    "peek.truncated": "truncated (head of the read cap)"
+  }
+}

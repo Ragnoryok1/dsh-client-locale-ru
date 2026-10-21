@@ -1,0 +1,17 @@
+{
+  "namespace": "chat-timeline",
+  "package": "dsh-chat-timeline@0.1.5",
+  "version": "0.1.5",
+  "license": "MIT",
+  "repository": "git+https://github.com/jjxjjjjiik-bot/dsh-chat-timeline.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "mark": "Mark as key point",
+    "marksOnly": "★ Marked only",
+    "noMarks": "No marked key points",
+    "noText": "(no text)",
+    "railLabel": "Chat timeline",
+    "roleUser": "User",
+    "unmark": "Unmark key point"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "namespace": "dsh-whale-particles",
+  "package": "dsh-whale-particles@0.6.0",
+  "version": "0.6.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/fewoot/dsh-whale-particles.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "auto": "Auto: 360-degree waves + full-screen breathing, usable as a screensaver",
+    "intro": "Every knob for the dot-matrix backdrop; changes apply instantly and save themselves.",
+    "manual": "Manual: the cursor disturbs nearby dots, they settle back when it leaves",
+    "title": "Whale particle background"
+  }
+}

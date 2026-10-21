@@ -1,0 +1,18 @@
+{
+  "namespace": "devDashboard",
+  "package": "dsh-plugin-control-your-development@0.6.2",
+  "version": "0.6.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/HaoyanZhang123/dsh-plugin-control-your-development.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Dev Dashboard",
+    "description": "Turns engineering progress into a product-level dashboard: feature map, current progress and pending decisions, inside DSH."
+  },
+  "en": {
+    "guide.desc": "Features, progress and pending decisions",
+    "guide.title": "Dev Dashboard",
+    "map.tab": "Feature Map",
+    "title": "Dev Dashboard"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "namespace": "agent-schedule",
+  "package": "dsh-agent-toolkit@0.4.11",
+  "version": "0.4.11",
+  "license": "MIT",
+  "repository": "git+https://github.com/EsonXie/dsh-agent-toolkit.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "name": "tool.call.toolview"
+  }
+}

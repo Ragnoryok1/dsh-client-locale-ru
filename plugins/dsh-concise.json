@@ -1,0 +1,13 @@
+{
+  "namespace": "dsh-concise",
+  "package": "dsh-concise@0.11.3",
+  "version": "0.11.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/hoyyang/dsh-concise.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "toggleAria": "Toggle concise output style",
+    "tooltip": "Concise output style: results first, no filler — same work depth (this session only, affects new replies)",
+    "unknown": "…"
+  }
+}

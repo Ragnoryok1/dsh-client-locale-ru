@@ -1,0 +1,17 @@
+{
+  "namespace": "chart",
+  "package": "dsh-ab-chart@0.1.19",
+  "version": "0.1.19",
+  "license": "MIT",
+  "repository": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "row.empty": "No chart data",
+    "row.failed": "Chart call failed",
+    "row.points": "points",
+    "row.running": "Rendering chart",
+    "row.saved": "Saved to",
+    "row.series": "series",
+    "row.title": "Chart"
+  }
+}

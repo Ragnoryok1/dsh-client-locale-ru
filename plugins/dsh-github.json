@@ -1,0 +1,22 @@
+{
+  "namespace": "dsh-github",
+  "package": "@perrylink/dsh-github@0.7.24",
+  "version": "0.7.24",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/PerryLink/dsh-github.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "discard": "Discard",
+    "githubDescription": "GitHub pull requests, issues, and CI through the agent.",
+    "githubTitle": "GitHub",
+    "readOnly": "This deployment stores settings read-only.",
+    "save": "Save",
+    "saveFailed": "The deployment did not accept this value; it was left for you to correct.",
+    "saving": "Saving…",
+    "tokenHint": "Stored in the credentials file, not here. Applied immediately; leave blank to keep the current token.",
+    "tokenLabel": "GitHub token",
+    "tokenSet": "A token is configured.",
+    "tokenUnset": "No token is configured; GitHub tools are unavailable until one is.",
+    "unsaved": "Unsaved"
+  }
+}

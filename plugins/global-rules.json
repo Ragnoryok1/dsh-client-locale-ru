@@ -1,0 +1,26 @@
+{
+  "namespace": "global-rules",
+  "package": "dsh-global-rules@0.2.2",
+  "version": "0.2.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/badai147/dsh-global-rules.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Global Rules",
+    "description": "Edit the user-global AGENTS.md ($DSH_HOME/AGENTS.md) from the web settings panel."
+  },
+  "en": {
+    "authFailed": "Session authentication failed, please refresh the page and try again",
+    "desc": "Edit {path} global rules; takes effect immediately upon saving.",
+    "label": "Global Rules",
+    "loading": "Loading…",
+    "notExists": "File does not exist yet; saving will create it.",
+    "placeholder": "# Global RulesnnWrite instructions here that take effect across every session…",
+    "readError": "Failed to read: {error}",
+    "save": "Save",
+    "saved": "Saved. New sessions take effect immediately; current session will detect new rules after the next file operation.",
+    "saveError": "Failed to save: {error}",
+    "saving": "Saving…",
+    "unknownError": "Unknown error"
+  }
+}

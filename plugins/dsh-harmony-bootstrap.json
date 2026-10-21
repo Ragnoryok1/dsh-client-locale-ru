@@ -1,0 +1,15 @@
+{
+  "namespace": "dsh-harmony-bootstrap",
+  "package": "dsh-harmony@0.8.18",
+  "version": "0.8.18",
+  "license": "MIT",
+  "repository": "git+https://github.com/memorax-ai/dsh-harmony.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "failed": "Restart failed. Try again.",
+    "message": "The Harmony launcher was restored. Restart to enable patches.",
+    "restart": "Restart now",
+    "restarting": "Restarting…",
+    "retry": "Retry"
+  }
+}

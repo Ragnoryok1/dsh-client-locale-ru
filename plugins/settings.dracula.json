@@ -1,0 +1,14 @@
+{
+  "namespace": "settings.dracula",
+  "package": "dsh-dracula-theme@1.1.0",
+  "version": "1.1.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/ossFrankFrank/dsh-dracula-theme.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "skin.default": "Default",
+    "skin.dracula": "Dracula",
+    "skin.dracula-soft": "Dracula Soft",
+    "skin.title": "Dracula theme"
+  }
+}

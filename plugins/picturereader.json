@@ -1,0 +1,13 @@
+{
+  "namespace": "picturereader",
+  "package": "picturereader@3.3.3",
+  "version": "3.3.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/jing-hy/picturereader.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "privacy": "Privacy",
+    "smart": "Smart",
+    "strict": "Strict"
+  }
+}

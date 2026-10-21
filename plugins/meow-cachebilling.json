@@ -1,0 +1,12 @@
+{
+  "namespace": "meow-cachebilling",
+  "package": "meow-cachebilling@0.8.0",
+  "version": "0.8.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Phant0Meow/dsh-meow-cachebilling.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "source": "",
+    "type": "scalar"
+  }
+}

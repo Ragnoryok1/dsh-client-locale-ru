@@ -1,0 +1,11 @@
+{
+  "namespace": "dsh-thoughtdag",
+  "package": "dsh-thoughtdag@0.5.20",
+  "version": "0.5.20",
+  "license": "MIT",
+  "repository": "git+https://github.com/chenxiachan/thoughtdag.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "panel": "ThoughtDAG"
+  }
+}

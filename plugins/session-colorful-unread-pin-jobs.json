@@ -1,0 +1,22 @@
+{
+  "namespace": "session-colorful-unread-pin-jobs",
+  "package": "dsh-session-colorful-unread-pin-jobs@2.0.0",
+  "version": "2.0.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/enterhalf/dsh-session-colorful-unread-pin-jobs.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "menu.markRead": "Mark as read",
+    "menu.markUnread": "Mark as unread",
+    "section.clearOnSend": "Also clear the unread mark when I send a message in that session (off by default; when off, only switching away, clicking the current row again, or \"Mark as read\" clears it)",
+    "section.count": "Unread: {count}",
+    "section.empty": "No unread sessions.",
+    "section.label": "Session unread",
+    "section.loading": "Loading…",
+    "section.markRead": "Mark read",
+    "section.note": "A session is marked unread the moment the model produces content in it (message text, reasoning, or a tool result) — including the session you are currently viewing. Titles then run a brand-color gradient: blue while the session is running, green once it is idle. Opening or staying in a session never clears the mark; switching to another session, clicking the current session row again, or using \"Mark as read\" below does. The row \"…\" menu also offers a manual toggle. Pinning is provided by DSH itself (menu entry, pin icon, pinned-first ordering); this plugin only reads the official pinned set to tint pinned titles yellow, composed with unread as \"pin yellow on the left → unread blue/green on the right\". The unread set lives on the server and survives reloads.",
+    "section.refresh": "Refresh",
+    "section.running": "Running",
+    "section.unnamed": "(untitled session)"
+  }
+}

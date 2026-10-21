@@ -1,0 +1,20 @@
+{
+  "namespace": "traceCompare",
+  "package": "dsh-maze@2.4.0",
+  "version": "2.4.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/lamost423/dsh-maze.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "live.empty": "No execution trace to visualize in this session yet",
+    "settings.sidebarEntry": "Sidebar entry",
+    "settings.sidebarEntry.hint": "Show the Maze entry at the bottom of the sidebar. The Live Maze tab is not affected. Saved per browser.",
+    "subtitle": "Upload session logs to see how the agent really worked, with analysis",
+    "surface.close": "Close (Esc)",
+    "title": "Maze",
+    "trigger": "Maze",
+    "trigger.close": "Close Maze",
+    "trigger.open": "Open Maze",
+    "view.live": "Live Maze"
+  }
+}

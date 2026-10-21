@@ -1,0 +1,11 @@
+{
+  "namespace": "dshSidebarPlus",
+  "package": "dsh-sidebar-plus@0.4.4",
+  "version": "0.4.4",
+  "license": "MIT",
+  "repository": "git+https://github.com/sailoumili/dsh-sidebar-plus.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "name": "sidebar.right.tab.document"
+  }
+}

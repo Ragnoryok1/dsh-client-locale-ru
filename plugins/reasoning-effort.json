@@ -1,0 +1,24 @@
+{
+  "namespace": "reasoning-effort",
+  "package": "dsh-reasoning-effort@0.2.8",
+  "version": "0.2.8",
+  "license": "MIT",
+  "repository": "git+https://github.com/Mu-scorpio/dsh-reasoning-effort.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "aria": "Reasoning effort: {effort}",
+    "capable": "More capable",
+    "chooseModel": "Choose a model",
+    "efficient": "More efficient",
+    "empty": "No models available.",
+    "error": "Unable to update effort: {message}",
+    "hint": "Open the model menu to adjust reasoning effort",
+    "label": "Reasoning",
+    "loading": "Refreshing models…",
+    "menu": "Model and reasoning effort",
+    "model": "Model",
+    "providerCount": "{count} models",
+    "supported": "Supported effort",
+    "unsupported": "Unavailable"
+  }
+}

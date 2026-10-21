@@ -1,0 +1,11 @@
+{
+  "namespace": "computer-use",
+  "package": "@crazy_th/dsh-computer-use@0.2.4",
+  "version": "0.2.4",
+  "license": "MIT",
+  "repository": "git+https://github.com/ThreeBody6666/dsh-computer-use.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "name": "settings.plugin.item"
+  }
+}

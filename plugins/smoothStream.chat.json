@@ -1,0 +1,12 @@
+{
+  "namespace": "smoothStream.chat",
+  "package": "dsh-smooth-stream@0.7.0",
+  "version": "0.7.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Laplace-bit/dsh-smooth-stream.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "image.serviceUnavailable": "Image service unavailable",
+    "message.think": "Think"
+  }
+}

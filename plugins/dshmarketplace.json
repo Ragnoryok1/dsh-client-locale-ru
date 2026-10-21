@@ -1,0 +1,32 @@
+{
+  "namespace": "dshmarketplace",
+  "package": "dshmarketplace-plugin@0.2.0",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/DshMarketPlace/dsh-plugins-store.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "cancel": "Cancel",
+    "confirm": "Install anyway",
+    "details": "Details",
+    "empty": "Nothing matched. Try a capability u2014 memory, vision, terminal. Only install-tested plugins are listed here; the full catalogue is on dshmarketplace.dev.",
+    "error": "Could not reach the catalogue.",
+    "failed": "Install failed",
+    "install": "Install",
+    "installed": "Installed",
+    "installing": "Installingu2026",
+    "loading": "Loading the catalogueu2026",
+    "needsAllowBuilds": "This plugin installs from GitHub, and pnpm blocks a git-hosted package's build script until you allow it. Run the install once in a terminal u2014 `dsh plugin --profile web add <source>` u2014 and pnpm prints the exact key to add under `allowBuilds` in ~/.dsh/profiles/web/pnpm-workspace.yaml. Plugins published to npm install here without that step.",
+    "registry": "In the community registry",
+    "retry": "Retry",
+    "risk": "This plugin reaches:",
+    "riskNote": "Plugins run with your agent's permissions. Detection is heuristic u2014 an empty list is not a clean bill of health.",
+    "search": "Search by capability, name or authoru2026",
+    "settings.tab": "Plugin store",
+    "source": "Source",
+    "stars": "stars",
+    "subtitle": "DeepSeek Harness plugins u2014 every one here installed in a clean sandbox",
+    "title": "DSH Marketplace",
+    "topicOnly": "From the dsh-plugin topic"
+  }
+}

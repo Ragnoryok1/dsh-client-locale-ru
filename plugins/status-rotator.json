@@ -1,0 +1,14 @@
+{
+  "namespace": "status-rotator",
+  "package": "dsh-status-rotator@0.37.0",
+  "version": "0.37.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/01Virex/dsh-status-rotator.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "idle": "idle",
+    "long": "long",
+    "running": "running",
+    "thinking": "thinking"
+  }
+}

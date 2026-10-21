@@ -1,0 +1,43 @@
+{
+  "namespace": "dsh-argp",
+  "package": "dsh-argp@1.10.1",
+  "version": "1.10.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/yoza10635/dsh-argp.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "dsh-argp",
+    "description": "Guarded context compaction for DeepSeek Harness (dsh): the LLM proposes, deterministic guards dispose — eager per-atom shrink (extract/summary/false under verbatim guards) + lazy reference-graph eviction (0-LLM) + byte-exact recall from an append-only log. 压缩率精确兑现，历史永不销毁。"
+  },
+  "en": {
+    "advanced": "Advanced",
+    "argpDescription": "Automatically trims a long conversation to free up room. Changes apply live, no restart.",
+    "argpTitle": "ARGP context compaction",
+    "collapse": "Hide settings",
+    "discard": "Discard",
+    "expand": "Show settings",
+    "invalidNumber": "Enter a number, or leave blank to use the default.",
+    "maxPasses": "Prune pass limit",
+    "maxPassesHint": "Safety cap on the prune loop; it normally stops at the compression target, when nothing is left to prune, or on a no-progress pass u2014 this only bounds extreme spin",
+    "overridden": "Changed",
+    "readOnly": "This deployment stores settings read-only.",
+    "recencyGuard": "Recent protection (messages)",
+    "recencyGuardHint": "Newest N messages are never pruned",
+    "reset": "Reset to default",
+    "retainRatio": "Compression rate",
+    "retainRatioHint": "Ratio of the conversation window",
+    "save": "Save",
+    "saveFailed": "These values were not accepted; they were left for you to correct.",
+    "saving": "Savingu2026",
+    "sortMode": "Prune priority",
+    "sortModeChain": "Density + version chaining",
+    "sortModeDensity": "By information density (recommended)",
+    "sortModeHint": "Density = drop big, low-info spans first (recommended); +chain = repeated versions pruned sooner; In order = legacy",
+    "sortModeLegacy": "In order of appearance",
+    "turnGuard": "Recent protection (turns)",
+    "turnGuardHint": "Last N turns are never pruned",
+    "unsaved": "Unsaved",
+    "windowRatio": "Prune trigger threshold",
+    "windowRatioHint": "Ratio of the context limit"
+  }
+}

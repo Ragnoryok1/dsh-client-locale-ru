@@ -1,0 +1,22 @@
+{
+  "namespace": "peakIndicator",
+  "package": "dsh-peak-indicator@0.1.32",
+  "version": "0.1.32",
+  "license": "MIT",
+  "repository": "git+https://github.com/future007s/dsh-peak-indicator.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "badge.cost": " · {symbol}{amount}",
+    "badge.next": " · switches in {countdown}",
+    "badge.offpeak": "🌙 Off-peak",
+    "badge.other": "🌿 Other",
+    "badge.peak": "⚡ Peak",
+    "tip.loading": "Loading model",
+    "tip.price": "Input {symbol}{input} · Output {symbol}{output} · Cache {symbol}{cacheHitInput} / 1M tokens",
+    "tip.scope": "Known tokens only; excludes Search/Fetch",
+    "tip.unavailable": "Current model unavailable",
+    "tip.unknown": "Model rate unavailable",
+    "turn.cost": "Turn {symbol}{amount}",
+    "turn.tip": "Estimated token cost for this turn"
+  }
+}

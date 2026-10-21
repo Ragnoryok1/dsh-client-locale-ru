@@ -1,0 +1,16 @@
+{
+  "namespace": "dsh-model-capability",
+  "package": "dsh-model-capability@1.0.1",
+  "version": "1.0.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/WJZ-P/dsh-model-capabilities.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "hint": "Used by Harness to validate attachments before sending.",
+    "image": "Image",
+    "inherit": "Inherit provider default",
+    "label": "Input modalities",
+    "text": "Text",
+    "textImage": "Text + image"
+  }
+}

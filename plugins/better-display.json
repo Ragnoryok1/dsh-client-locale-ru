@@ -1,0 +1,28 @@
+{
+  "namespace": "better-display",
+  "package": "dsh-better-display@0.3.8",
+  "version": "0.3.8",
+  "license": "MIT",
+  "repository": "git+https://github.com/aa2246740/dsh-better-display.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "foldDescription": "Default on: collapses earlier steps when new thoughts appear. Turn off to keep all thinking and tools expanded in full.",
+    "foldNone": "Off",
+    "foldStandard": "On",
+    "foldSummary": "Summary",
+    "foldTitle": "Auto-fold process",
+    "glassDescription": "Off by default: reading chrome stays opaque, matching the current Host look. Turn this on to let wallpaper and skins show through the panel; path and count chips stay clear until hover or focus.",
+    "glassTitle": "Translucent frosted glass",
+    "openDescription": "Off by default: chips and inline file mentions open in the system app. Turn this on to preview them in the right Sidebar, matching official chat. Reveal and folder actions still use the system file manager.",
+    "openTitle": "Open deliverables in built-in panel",
+    "skillChecking": "Checking…",
+    "skillInstall": "Copy the whole generative-mcpapps folder (including references and examples) into .dsh/skills or .agents/skills — in your home or the project, you choose — then Re-check. There is no one-click install that works on every host.",
+    "skillInstalled": "Installed",
+    "skillMissing": "Not detected",
+    "skillPluginNote": "Shipping the pack inside this plugin repository does not install it into the harness skill catalog.",
+    "skillPurpose": "This install is for model auto-selection of MCP Apps. Reader already renders mcp-app fences when the model emits them.",
+    "skillRecheck": "Re-check",
+    "skillTitle": "generative-mcpapps skill",
+    "skillUnavailable": "Could not query the host skill catalog. Copy into .dsh/skills or .agents/skills (home or project), then Re-check."
+  }
+}

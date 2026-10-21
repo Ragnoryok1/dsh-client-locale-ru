@@ -1,0 +1,25 @@
+{
+  "namespace": "inline-comments",
+  "package": "dsh-inline-comments@0.1.2",
+  "version": "0.1.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/zenvertao/dsh-inline-comments.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "afford": "Add comment",
+    "cancel": "Cancel",
+    "commentLabel": "Comment",
+    "delete": "Delete",
+    "detailCm": "Comment: {comment}",
+    "detailHead": "{n} comments · details",
+    "detailQt": "{i}. Selected: {text}",
+    "lostTip": "{n} comment(s) lost their anchor because the text changed (the note itself is kept)",
+    "missTag": "anchor lost",
+    "noComment": "(none)",
+    "origLabel": "Original",
+    "pill": "notes",
+    "placeholder": "Add optional comment… (Shift+Enter for a new line)",
+    "save": "Save",
+    "trash": "Delete comment"
+  }
+}

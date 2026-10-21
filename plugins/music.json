@@ -1,0 +1,16 @@
+{
+  "namespace": "music",
+  "package": "@doitian/dsh-music@1.2.0",
+  "version": "1.2.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/doitian/dsh-music.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "iframeTitle": "NetEase Cloud Music player",
+    "panel": "Music",
+    "unreachableBody": "The music plugin route did not answer. Check that the plugin is enabled in this profile, then ",
+    "unreachableLink": "open the player directly",
+    "unreachableSuffix": ".",
+    "unreachableTitle": "Music is not reachable"
+  }
+}

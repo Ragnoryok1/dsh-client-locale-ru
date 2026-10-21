@@ -1,0 +1,21 @@
+{
+  "namespace": "quote-followup",
+  "package": "dsh-quote-followup@0.2.10",
+  "version": "0.2.10",
+  "license": "MIT",
+  "repository": "git+https://github.com/tr1v3r/dsh-quote-followup.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "button.label": "❐ Quote",
+    "button.title": "Quote the selection into the composer (repeatable; editable before sending)",
+    "conversation.role": "conversation",
+    "conversation.role.assistant": "assistant",
+    "conversation.role.user": "user",
+    "notice.composer-locked": "Composer is unavailable; excerpt saved. Select the original text to retry.",
+    "notice.composer-missing": "Composer not found; excerpt saved. Select the original text to retry.",
+    "notice.insert-failed": "Quote could not be inserted; excerpt saved. Select the original text to retry.",
+    "quote.header": "Quote",
+    "quote.truncated": "truncated",
+    "quote.turn": "turn {n}"
+  }
+}

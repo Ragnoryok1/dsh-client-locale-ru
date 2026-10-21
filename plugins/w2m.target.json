@@ -1,0 +1,22 @@
+{
+  "namespace": "w2m.target",
+  "package": "@twinsearth/w2m-dsh-plugin@1.2.6",
+  "version": "1.2.6",
+  "license": "MIT",
+  "repository": "git+https://github.com/TwinsEarth/dsh-windows2macos.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "costAll": "Work from this session goes to every online machine",
+    "costOne": "Work from this session goes to {name}",
+    "empty": "the fleet lists no machines",
+    "fleetUnreadable": "the fleet could not be read",
+    "local": "This machine",
+    "machine": "Machine",
+    "noRoster": "no roster",
+    "online": "online",
+    "routeMissing": "this host does not serve the W2M target route",
+    "targetLabel": "target machine: {name}",
+    "unconfirmed": " (not confirmed online)",
+    "unreachable": "the plugin could not be reached"
+  }
+}

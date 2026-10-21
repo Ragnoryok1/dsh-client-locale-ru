@@ -1,0 +1,33 @@
+{
+  "namespace": "conversation-anchors",
+  "package": "@biggerboy123/dsh-conversation-anchors@0.1.21",
+  "version": "0.1.21",
+  "license": "MIT",
+  "repository": "git+https://github.com/biggerboy/dsh-conversation-anchors.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "drainCapped": "Stopped at {max} history pages",
+    "drainProgress": "Loading earlier… {page}/{max}",
+    "drainWait": "Loading earlier…",
+    "empty": "No messages",
+    "image": "Image",
+    "jumping": "Loading turn {n}…",
+    "jumpLoad": "Load and jump to turn {n}",
+    "process": "Thinking",
+    "processCollapse": "Collapse thinking",
+    "processExpand": "Expand thinking",
+    "railKeys": "Arrow keys or j/k to jump, Home/End for ends",
+    "stepAtFirst": "Already at the first turn",
+    "stepAtLast": "Already at the last turn",
+    "stepDown": "Next turn",
+    "steps": "· {count} steps",
+    "stepUp": "Previous turn",
+    "styleCodex": "Codex (left)",
+    "styleDeepseek": "DeepSeek (right)",
+    "styleDesc": "Codex left-rail by default. DSH built-in uses the native right rail (DSH 0.1.2+). DeepSeek expands a title panel.",
+    "styleOfficial": "DSH built-in (right)",
+    "styleTitle": "Anchor style",
+    "title": "Anchors",
+    "turnN": "Turn {n}"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "namespace": "remix-router-transitions",
+  "package": "dsh-eteams@0.2.22",
+  "version": "0.2.22",
+  "license": "MIT",
+  "repository": "git+https://github.com/2507483326/dsh-eteams.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "lineSuffix": "hardBreakTrailing"
+  }
+}

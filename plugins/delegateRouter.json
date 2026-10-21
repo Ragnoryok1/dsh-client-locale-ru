@@ -1,0 +1,11 @@
+{
+  "namespace": "delegateRouter",
+  "package": "dsh-delegate-router@0.4.5",
+  "version": "0.4.5",
+  "license": "MIT",
+  "repository": "git+https://github.com/penguin-oo/dsh-delegate-router.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "name": "shell.overlay"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "namespace": "liang.skin",
+  "package": "dsh-client-liang-intensity-skin@0.1.6",
+  "version": "0.1.6",
+  "license": null,
+  "repository": "git+https://github.com/kingOfSoySauce/dsh-liang-skin.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "appearance.dark": "Dark",
+    "appearance.liang": "Slider",
+    "appearance.light": "Light",
+    "appearance.system": "System",
+    "appearance.title": "Appearance"
+  }
+}

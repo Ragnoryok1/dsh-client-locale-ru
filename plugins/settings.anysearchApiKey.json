@@ -1,0 +1,33 @@
+{
+  "namespace": "settings.anysearchApiKey",
+  "package": "@aiwayds/dsh-web-search-anysearch@0.8.0",
+  "version": "0.8.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/fan56/dsh-web-search-anysearch.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "dsh-web-search-anysearch",
+    "description": "AnySearch web search provider: serves the harness /web tool through your AnySearch credentials."
+  },
+  "en": {
+    "apiKey": "API key",
+    "apiKeyHint": "Stores the ANYSEARCH_API_KEY credential; leave blank to keep the current key.",
+    "clear": "Clear key",
+    "clearCancel": "Cancel",
+    "clearConfirm": "Clear it",
+    "cleared": "Key cleared; searches are back to the anonymous limits.",
+    "clearFailed": "Clear failed: ",
+    "keySet": "A key is configured",
+    "keyUnset": "No key (anonymous limits)",
+    "loadFailed": "Could not read the credential state.",
+    "loading": "Reading credential state…",
+    "readOnly": "The credential source is read-only, so a key cannot be written here.",
+    "save": "Save",
+    "saved": "Saved; it applies to the next search.",
+    "saveFailed": "The deployment refused it; nothing was written.",
+    "saving": "Saving…",
+    "summary": "Drives web_search with your own AnySearch credential (anonymous works too, at lower limits).",
+    "uiUnavailable": "This dsh web frontend does not serve the UI components (client-ui-primitives) this page renders with; upgrade dsh and retry.",
+    "unavailable": "This deployment serves no credential service, so a key cannot be written here."
+  }
+}

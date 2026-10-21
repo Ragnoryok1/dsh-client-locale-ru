@@ -1,0 +1,12 @@
+{
+  "namespace": "dsh-novel-solo",
+  "package": "dsh-novel-solo@0.2.1",
+  "version": "0.2.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/Tkingxiao/dsh-novel-solo.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "desc": "Max subagents the novel-solo preset may fan out in parallel (1-12). The main agent stops and waits for their report. Restart the host to render the new cap into the persona.",
+    "title": "Subagent count"
+  }
+}

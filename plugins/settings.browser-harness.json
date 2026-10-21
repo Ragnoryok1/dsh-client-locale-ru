@@ -1,0 +1,19 @@
+{
+  "namespace": "settings.browser-harness",
+  "package": "dsh-browser-harness@0.4.4",
+  "version": "0.4.4",
+  "license": "MIT",
+  "repository": "git+https://github.com/chaserchan/dsh-browser-harness.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "error": "Failed to save",
+    "placeholder": "Paste key; takes effect immediately after saving",
+    "saved": "Saved",
+    "saving": "Saving…",
+    "textModelHint": "Optional. OpenAI-compatible key for Jev's fallback text model (e.g. DeepSeek).",
+    "textModelTitle": "Text model API key",
+    "title": "Browser automation",
+    "typesafeHint": "When set, enables the goal-driven browser_autopilot tool (Jev). Leave empty to disable.",
+    "typesafeTitle": "TypeSafe API key"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "namespace": "approvalVoice",
+  "package": "dsh-approval-voice@0.3.0",
+  "version": "0.3.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/ZIye1208/dsh-approval-voice.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "desc": "Play a chime / spoken notice when an approval or question is waiting for you",
+    "mode.beep": "Chime only",
+    "mode.both": "Chime + speech",
+    "mode.label": "Alert mode",
+    "mode.speech": "Speech only",
+    "preview": "Preview",
+    "save.failed": "Could not save — the setting did not take effect (see console for details).",
+    "save.quota": "Could not save: browser storage quota exceeded, the setting did not take effect. Pick a shorter clip (under 1MB) or clear browser data and retry.",
+    "scope.all": "All sessions",
+    "scope.current": "Current session only",
+    "scope.label": "Alert scope",
+    "sound.choose": "Choose audio file",
+    "sound.default": "Reset to default",
+    "sound.label": "Alert sound",
+    "sound.set": "Custom",
+    "sound.toolarge": "Sound file too large (>2MB). Pick a shorter clip.",
+    "title": "Approval voice alerts",
+    "volume.label": "Volume"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "namespace": "settings.shop",
+  "package": "dsh-plugin-shop@0.8.7",
+  "version": "0.8.7",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/LivXue/dsh-plugin-shop.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "catalog": "Plugin catalog",
+    "catalogStats": "{count} packages · built {date}",
+    "error": "The catalog is temporarily unavailable.",
+    "installedError": "The installed list is temporarily unavailable.",
+    "intro": "Browse, install, and update plugins from the catalog.",
+    "loading": "Reading the catalog…",
+    "retry": "Retry",
+    "search": "Search plugins",
+    "tabCrashed": "The plugin shop hit an error while showing this page.",
+    "title": "Plugin shop"
+  }
+}

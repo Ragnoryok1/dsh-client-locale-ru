@@ -1,0 +1,13 @@
+{
+  "namespace": "style",
+  "package": "dsh-output-styles@0.8.1",
+  "version": "0.8.1",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/PerryLink/dsh-output-styles.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "option.injectionDisabled": "Core outputStyles is active; this plugin's prompt injection is disabled",
+    "option.off": "Off (default)",
+    "option.offDetail": "Restore the project default output style"
+  }
+}

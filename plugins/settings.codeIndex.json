@@ -1,0 +1,22 @@
+{
+  "namespace": "settings.codeIndex",
+  "package": "dsh-code-index@0.10.2",
+  "version": "0.10.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/lemonxiny55/dsh-code-index.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "autoInject": "Inject repo map",
+    "autoInjectHint": "Add a compact ranked map of the current project to the system prompt.",
+    "codeHealth": "Code health tool",
+    "codeHealthHint": "Register code_health for dependency cycles and orphan modules (restart required).",
+    "collapse": "Collapse settings",
+    "description": "Project-aware live structural context: symbol search, repo map, and call graph.",
+    "discard": "Discard changes",
+    "expand": "Expand settings",
+    "mapFiles": "Map files",
+    "mapFilesHint": "Maximum number of files shown in each repo map.",
+    "save": "Save",
+    "unavailable": "Settings service unavailable."
+  }
+}

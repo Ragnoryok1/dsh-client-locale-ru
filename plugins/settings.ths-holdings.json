@@ -1,0 +1,27 @@
+{
+  "namespace": "settings.ths-holdings",
+  "package": "dsh-ths-holdings@0.3.2",
+  "version": "0.3.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/PM25000/dsh-ths-holdings.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "componentsDisabled": "Enable Portfolio report Skill or P&L card in Plugins first.",
+    "conflict": "Settings were not saved. Check the current values and retry.",
+    "connection": "Sign-in and portfolio",
+    "description": "Control the portfolio P&L card and its automatic refresh.",
+    "failed": "Could not save settings. Please retry.",
+    "invalid": "Enter a whole number of milliseconds between 1000 and 2147483647.",
+    "loading": "Loading settings…",
+    "pollHint": "Default: 20000 ms (20 seconds). Minimum: 1000 ms. Changes apply when saved.",
+    "pollMs": "Refresh interval (milliseconds)",
+    "readOnly": "These settings are read-only.",
+    "save": "Save",
+    "saved": "Saved",
+    "saving": "Saving…",
+    "showCard": "Show portfolio P&L card",
+    "showCardHint": "Hiding the card stops its polling. The Portfolio report Skill component is enabled separately.",
+    "title": "Tonghuashun holdings",
+    "unavailable": "Settings are unavailable. Check that the plugin is enabled and reopen Settings."
+  }
+}

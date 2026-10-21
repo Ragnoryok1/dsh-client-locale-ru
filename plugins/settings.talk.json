@@ -1,0 +1,26 @@
+{
+  "namespace": "settings.talk",
+  "package": "dsh-talk@0.3.25",
+  "version": "0.3.25",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/PerryLink/dsh-talk.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "announceEnabled": "Event announcements",
+    "announceOnApproval": "Announce pending approvals",
+    "announceOnError": "Announce errors",
+    "announceOnTurnEnd": "Announce turn completion",
+    "interrupt": "Talking stops playback",
+    "language": "Language (BCP-47 or auto)",
+    "micError": "Recording failed",
+    "micHotkeyHint": "Speak; the text lands in the composer",
+    "micRecording": "Recording… click to stop",
+    "micTranscribing": "Transcribing…",
+    "reloadNote": "Reload the profile to apply settings.",
+    "save": "Save settings",
+    "saved": "Settings appended to the profile patch; reload to apply.",
+    "saveFailed": "Could not save settings",
+    "sttEngine": "Speech-to-text engine",
+    "ttsEngine": "Text-to-speech engine"
+  }
+}

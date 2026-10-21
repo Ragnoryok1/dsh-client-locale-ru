@@ -1,0 +1,33 @@
+{
+  "namespace": "dsh-rerun-turn",
+  "package": "dsh-rerun-turn@0.1.27",
+  "version": "0.1.27",
+  "license": "MIT",
+  "repository": "git+https://github.com/DDDMUC/dsh-rerun-turn.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "action.rerun": "Rerun this turn",
+    "confirm.body": "The reply and everything after it leave the model context first; the turn's own prompt is sent again, and the later turns are replayed verbatim. The next call will read A B C1 D E F G.",
+    "confirm.no": "Cancel",
+    "confirm.title": "Rerun this turn?",
+    "confirm.yes": "Rerun",
+    "error.already-retired": "This reply is no longer in the current context.",
+    "error.attachments-unsupported": "The turn's prompt carries file attachments, which a rerun cannot re-admit yet.",
+    "error.busy": "This session is still replying; wait for it to finish.",
+    "error.dev-timeout": "The dev session timed out.",
+    "error.dev-unavailable": "The dev routes are unavailable.",
+    "error.forbidden": "The request origin is not allowed.",
+    "error.generic": "The rerun failed; try again.",
+    "error.internal": "The host hit an internal error; try again shortly.",
+    "error.invalid": "Invalid request; refresh and try again.",
+    "error.method": "The request method is not accepted; refresh and try again.",
+    "error.not-rerunnable": "This reply cannot be rerun.",
+    "error.rerun-not-found": "No rerun record was found for this id.",
+    "error.rerunning": "A rerun is already in flight.",
+    "error.session-not-active": "This session is not open in DSH; open it first.",
+    "error.session-not-found": "No session log was found for this id.",
+    "error.stale": "The session just changed; try again.",
+    "notice.deferred": "Rerun interrupted: the replay of the later turns will resume automatically once the session is idle.",
+    "notice.loadError": "Loading the state failed; try again shortly."
+  }
+}

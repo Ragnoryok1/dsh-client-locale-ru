@@ -1,0 +1,15 @@
+{
+  "namespace": "settings.blue-whale",
+  "package": "dsh-blue-whale@0.1.0",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/starslittle/dsh-blue-whale.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "close": "Turn off",
+    "hint": "Sidebar whale, hero whale, tab favicon, and brand tokens use DeepSeek Chat blue #4D6BFE. Light and dark follow the built-in appearance.",
+    "open": "Turn on",
+    "statusOn": "On",
+    "title": "Blue Whale"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "namespace": "inlineMedia",
+  "package": "@wisdoverse/dsh-inline-media-viewer@1.0.12",
+  "version": "1.0.12",
+  "license": "MIT",
+  "repository": "git+https://github.com/Wisdoverse/dsh-inline-media-viewer-plugin.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "autoRender": "Auto-render detected media",
+    "autoRenderHint": "When off, mentions are still scanned but nothing is shown.",
+    "comfyUrl": "ComfyUI address (optional)",
+    "comfyUrlError": "Invalid address; use the http://host:8188 form.",
+    "comfyUrlHint": "Used only for ComfyUI links. Leave empty when not using ComfyUI; local files and regular web URLs work independently.",
+    "displayCap": "Max items per turn",
+    "displayCapHint": "1–30",
+    "imageMaxPx": "Max media height (px)",
+    "imageMaxPxHint": "160–1200",
+    "intro": "Tune how inline media is previewed in conversations. Changes persist to the active profile configuration.",
+    "reset": "Reset to defaults",
+    "writable": "This connection cannot write settings: values are session-local until a loopback connection is used."
+  }
+}

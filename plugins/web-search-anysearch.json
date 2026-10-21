@@ -1,0 +1,33 @@
+{
+  "namespace": "web-search-anysearch",
+  "package": "@wenqi_bian/dsh-web-search-anysearch@0.2.0-rc.2",
+  "version": "0.2.0-rc.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/VinciBeans/dsh-web-search-anysearch.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "apiKey": "API key",
+    "apiKeyHint": "Stored outside the settings file. Leave blank to keep the current key.",
+    "apiKeySet": "A key is configured.",
+    "apiKeyUnset": "No key is configured; anonymous AnySearch access still works, a key raises the rate limit.",
+    "backendAnysearch": "AnySearch",
+    "backendDeepseek": "Official DeepSeek search",
+    "backendHint": "The selected backend serves the next web_search; any unsaved fields below apply to AnySearch only.",
+    "backendLabel": "Search service",
+    "collapse": "Collapse",
+    "description": "Switch web_search between AnySearch and the official DeepSeek search endpoint.",
+    "discard": "Discard",
+    "endpoint": "Endpoint",
+    "endpointHint": "Leave blank to use the provider default.",
+    "expand": "Expand",
+    "invalidNumber": "Not a number",
+    "overridden": "Overridden",
+    "readOnly": "This settings document is read-only.",
+    "reset": "Reset",
+    "save": "Save",
+    "saveFailed": "The save did not land; your draft is kept for correction.",
+    "saving": "Savingu2026",
+    "title": "AnySearch search service",
+    "unsaved": "Unsaved"
+  }
+}

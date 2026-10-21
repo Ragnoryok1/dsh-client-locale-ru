@@ -1,0 +1,28 @@
+{
+  "namespace": "theme-gallery",
+  "package": "dsh-theme-gallery@0.8.3",
+  "version": "0.8.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/renjie2026/dsh-theme-gallery.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "applied": "Applied",
+    "count": "{count} skins (+ built-in light/dark, pet-widget, mood-greeting and menu-collapse cards)",
+    "current": "Current",
+    "diagNote": "The lines below are intentional diagnostics of the live skin state, ",
+    "empty": "Reading the theme registry…",
+    "hint": "Click to switch; the choice is remembered",
+    "menuCollapsed": "Collapsed",
+    "menuHint": "When on, the sidebar no longer shows this entry; Settings → General (below the Agent preset) has a lightweight entry to open the panel or restore the sidebar. Off by default.",
+    "menuPillLabel": "Sidebar entry",
+    "menuShown": "In sidebar",
+    "openPanel": "Open the theme panel",
+    "petOff": "Off",
+    "petOn": "On",
+    "restoreSidebar": "Show the sidebar entry",
+    "sectionHint": "Skins, the pet and the greeting live in the full main-area panel where the effect is visible; this is a one-click entry.",
+    "sectionSidebarLabel": "Sidebar entry: ",
+    "sectionSkinLabel": "Current skin: ",
+    "title": "Theme skins"
+  }
+}

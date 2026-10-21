@@ -1,0 +1,11 @@
+{
+  "namespace": "relay.session-import",
+  "package": "relay-dsh-plugin-session-import@0.2.3",
+  "version": "0.2.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/yangbobo2021/relay-dsh-plugin-session-import.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "importSessions": "Import sessions..."
+  }
+}

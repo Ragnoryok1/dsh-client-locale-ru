@@ -1,0 +1,42 @@
+{
+  "namespace": "dsh-image-viewer",
+  "package": "dsh-image-viewer@0.1.15",
+  "version": "0.1.15",
+  "license": "MIT",
+  "repository": "git+https://github.com/WSL043/dsh-image-viewer.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Image Viewer",
+    "description": "Zoom, browse, and annotate images. Send selected regions and notes to your draft."
+  },
+  "en": {
+    "actual": "100%",
+    "addingDraft": "Adding image and notes to draft…",
+    "annotate": "Mark region",
+    "cancel": "Cancel",
+    "cancelAnnotate": "Cancel marking",
+    "cancelDownload": "Cancel download",
+    "close": "Close",
+    "closeWithoutDraft": "Close without adding",
+    "copied": "Copied",
+    "copyFailed": "Copy failed. Try again.",
+    "copyNotes": "Copy notes",
+    "dialog": "Image viewer",
+    "download": "Download",
+    "draftFailed": "Could not add to draft. Return to the original session and keep the composer editable, then close to retry.",
+    "failed": "Could not prepare this image.",
+    "hideNotes": "Hide notes",
+    "loadFailed": "Image could not be loaded.",
+    "loading": "Loading image…",
+    "next": "Next image",
+    "note": "Region {value}",
+    "notePlaceholder": "Describe what should change here…",
+    "preparing": "Preparing…",
+    "previous": "Previous image",
+    "regionHint": "Click a point on the image, then add a note.",
+    "regions": "Region notes",
+    "removeNote": "Remove region note",
+    "retry": "Retry",
+    "zoomHint": "Wheel to zoom · drag to pan · double-click for 100%"
+  }
+}

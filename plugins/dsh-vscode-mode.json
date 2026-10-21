@@ -1,0 +1,20 @@
+{
+  "namespace": "dsh-vscode-mode",
+  "package": "dsh-vscode-mode@0.17.0",
+  "version": "0.17.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Lenonss/DSH_VsCodeMode.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "VSCodeMode",
+    "description": "VSCode-like coding on DSH: Monaco editor with tabs and QuickOpen, command palette, agent edit review, SVN integration, and LSP smartness."
+  },
+  "en": {
+    "guide.description": "Monaco file editor: chat and editing side by side (diff review, jump, outline)",
+    "guide.title": "File editor",
+    "slot.diff": "Diff",
+    "slot.fileEditor": "File editor",
+    "slot.sessionSize": "Session size",
+    "slot.settings": "VSCodeMode"
+  }
+}

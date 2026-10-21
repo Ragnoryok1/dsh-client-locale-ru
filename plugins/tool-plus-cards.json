@@ -1,0 +1,16 @@
+{
+  "namespace": "tool-plus-cards",
+  "package": "@xiaoso/dsh-tool-plus@0.1.15",
+  "version": "0.1.15",
+  "license": "MIT",
+  "repository": "git+https://github.com/xiaoso456/dsh-tool-plus.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Oh My Pi Tools",
+    "description": "Persistent bash, structured read, multi-mode edit, atomic write and safe delete — one plugin that takes over the stock file and shell tools."
+  },
+  "en": {
+    "label": "nav",
+    "name": "settings.section"
+  }
+}

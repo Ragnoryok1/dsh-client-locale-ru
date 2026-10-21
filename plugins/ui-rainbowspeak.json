@@ -1,0 +1,32 @@
+{
+  "namespace": "ui-rainbowspeak",
+  "package": "@kenz1117/dsh-ui-rainbowspeak@0.0.2",
+  "version": "0.0.2",
+  "license": "MIT",
+  "repository": "git+https://github.com/kenz1117/dsh-ui-rainbowspeak.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "breathe": "Breathing",
+    "enable": "Enable effect",
+    "enableDesc": "A rainbow ring flowing along the composer border",
+    "palette": "Color scheme",
+    "paletteAurora": "Aurora",
+    "paletteCyberpunk": "Cyberpunk",
+    "paletteOcean": "Ocean",
+    "palettePeach": "Peach",
+    "paletteRainbow": "Rainbow",
+    "paletteSunset": "Sunset",
+    "paletteTheme": "Follow theme",
+    "period": "Flow speed",
+    "reset": "Reset to defaults",
+    "reverse": "Reverse flow",
+    "side": "Placement",
+    "sideAll": "All sides",
+    "sideBottom": "Bottom only",
+    "sideTop": "Top only",
+    "stateNote": "Speeds up while running, amber while awaiting approval, red on errors",
+    "unitPerLoop": "s/loop",
+    "unitPx": "px",
+    "width": "Ring width"
+  }
+}

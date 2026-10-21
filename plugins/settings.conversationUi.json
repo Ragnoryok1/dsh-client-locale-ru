@@ -1,0 +1,37 @@
+{
+  "namespace": "settings.conversationUi",
+  "package": "@jcy2387/dsh-conversation-ui@0.1.7-rc.2.1",
+  "version": "0.1.7-rc.2.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/DamonBao/dsh-codex-suite.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Conversation UI",
+    "description": "Codex-style streaming, thinking blocks, tool activity, and deliverable previews."
+  },
+  "en": {
+    "description": "Codex-style progress, tool activity, and final answers.",
+    "developmentBuild": "Linked source; updates are managed in the checkout.",
+    "developmentVersion": "Development version {version}",
+    "discard": "Discard",
+    "loading": "Loading plugin settings…",
+    "readOnly": "This deployment stores settings read-only.",
+    "restartRequired": "Updated. Restart Harness to load the new version.",
+    "retry": "Retry",
+    "save": "Save",
+    "saveFailed": "The deployment did not accept these values; they were left for you to correct.",
+    "saving": "Saving…",
+    "thinkAutoExpand": "Auto-expand thinking",
+    "thinkAutoExpandHint": "Open the thinking block while it streams. Turn off to keep it collapsed.",
+    "title": "Conversation UI",
+    "unavailable": "Plugin settings are unavailable in this connection.",
+    "unsaved": "Unsaved",
+    "update": "Update",
+    "updateFailed": "The package update failed; your current version is unchanged.",
+    "updateHint": "Install the newest npm version, then restart Harness.",
+    "updates": "Updates",
+    "updateUnavailable": "Updates are available only for an npm profile installation.",
+    "updating": "Updating…",
+    "version": "Version {version}"
+  }
+}

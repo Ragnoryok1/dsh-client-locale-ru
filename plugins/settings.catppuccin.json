@@ -1,0 +1,22 @@
+{
+  "namespace": "settings.catppuccin",
+  "package": "dsh-catppuccin@0.2.3",
+  "version": "0.2.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/zhijun-dai/Catppuccin-dsh-theme.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "skin.catppuccin-frappe": "Frappé",
+    "skin.catppuccin-latte": "Latte",
+    "skin.catppuccin-macchiato": "Macchiato",
+    "skin.catppuccin-mocha": "Mocha",
+    "skin.checkUpdate": "Check for updates",
+    "skin.default": "Default",
+    "skin.title": "Catppuccin theme",
+    "skin.updateCurrent": "Current",
+    "skin.updateError": "Update check failed",
+    "skin.updateLatest": "Latest",
+    "skin.updateUpToDate": "You're up to date",
+    "skin.updating": "Checking…"
+  }
+}

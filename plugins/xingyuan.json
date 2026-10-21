@@ -1,0 +1,18 @@
+{
+  "namespace": "xingyuan",
+  "package": "@starwish-ai/xingyuan-dsh@0.6.7",
+  "version": "0.6.7",
+  "license": "MIT",
+  "repository": "git+https://github.com/starwish-ai/xingyuan-dsh.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "XingYuan Wishes",
+    "description": "Wish and habit companion for dsh: create wishes and tasks in chat, check in on scheduled days, micro-actions, memories and growth charts."
+  },
+  "en": {
+    "daily": "daily",
+    "monthly": "monthly",
+    "once": "once",
+    "weekly": "weekly"
+  }
+}

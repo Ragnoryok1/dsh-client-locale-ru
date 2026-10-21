@@ -1,0 +1,17 @@
+{
+  "namespace": "dsh-film-studio",
+  "package": "dsh-film@0.6.1",
+  "version": "0.6.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/VibeDev-Si/dsh-film.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "app.failed": "Film Studio did not start.",
+    "app.hint": "If it keeps failing, check that the VibeDev account plugin is enabled.",
+    "app.loading": "Loading Film Studio",
+    "app.lost": "The workbench service dropped several times in two minutes, so automatic reconnection stopped. Press Retry to open it again; if it keeps dropping, send us the newest log from the data directory.",
+    "app.retry": "Retry",
+    "tab.guide.description": "Novel breakdown, screenplay, storyboard, director desk and editing, on the signed-in VibeDev account",
+    "tab.title": "Film Studio"
+  }
+}

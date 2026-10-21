@@ -1,0 +1,12 @@
+{
+  "namespace": "dsh-engram",
+  "package": "dsh-engram@0.7.4",
+  "version": "0.7.4",
+  "license": "MIT",
+  "repository": "git+https://github.com/skepsun/dsh-engram.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "error": "Load failed",
+    "refresh": "Refresh"
+  }
+}

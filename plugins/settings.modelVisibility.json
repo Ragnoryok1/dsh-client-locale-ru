@@ -1,0 +1,26 @@
+{
+  "namespace": "settings.modelVisibility",
+  "package": "dsh-model-visibility@0.2.1",
+  "version": "0.2.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/Lzh3070/dsh-model-visibility.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "allHiddenWarning": "Every model is hidden; the model selector will be empty.",
+    "empty": "No provider advertises any model.",
+    "hideAll": "Hide all",
+    "intro": "Control which models appear in the conversation model selector. Hiding a model a session already uses never interrupts that session or touches your provider config.",
+    "loadFailed": "Failed to load the model catalog: {message}",
+    "loading": "Loading the model catalog…",
+    "noMatch": "No model matches.",
+    "providerRow": "{visible} / {total} visible in this provider",
+    "readOnly": "The settings document is read-only; toggles are disabled.",
+    "retry": "Retry",
+    "searchPlaceholder": "Search models…",
+    "showAll": "Show all",
+    "showAllProviders": "Reset all",
+    "title": "Model visibility",
+    "unavailable": "Model visibility is unavailable: this connection does not share the Host settings.",
+    "visibleCount": "{visible} / {total} visible"
+  }
+}

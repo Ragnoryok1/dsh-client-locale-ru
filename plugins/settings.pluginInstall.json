@@ -1,0 +1,35 @@
+{
+  "namespace": "settings.pluginInstall",
+  "package": "dsh-plugin-install@0.4.12",
+  "version": "0.4.12",
+  "license": "MIT",
+  "repository": "git+https://github.com/qinyre/dsh-plugin-install.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Plugin Manager",
+    "description": "Install, remove, and update dsh plugins from Settings."
+  },
+  "en": {
+    "badgeUpdate": "{version} available",
+    "confirmUninstall": "Confirm force uninstall?",
+    "confirmUninstallHint": "Click again to confirm; this cannot be undone",
+    "forceUninstall": "Force uninstall",
+    "forceUninstallHint": "Remove directly, bypassing the publish cooldown u2014 for when the official uninstall is blocked by it",
+    "integrityBroken": "Dependencies broken",
+    "newCommits": "New commits",
+    "reliefBusy": "Switchingu2026",
+    "reliefDisable": "Restore cooldown",
+    "reliefEnable": "Unlock official page",
+    "reliefHintOff": "While this profile holds a version published within the last 24 hours, every official-page plugin operation is refused by the release-cooldown audit of pnpm. Enabling writes minimumReleaseAge: 0 into this profile, restoring the official page at once.",
+    "reliefHintOn": "Release-cooldown enforcement is disabled for this profile (minimumReleaseAge: 0). Click to restore the default 24-hour supply-chain hold.",
+    "restartShort": "Restart",
+    "restartTrayLabel": "Updated u2014 restart pending",
+    "restartTrayTitle": "Restart the client via Restart Service in the desktop tray menu",
+    "uninstallFailed": "Uninstall failed",
+    "uninstalling": "Uninstallingu2026",
+    "updateAvailable": "Update available",
+    "updateBtn": "Update",
+    "updateFailed": "Update failed",
+    "updating": "Updatingu2026"
+  }
+}

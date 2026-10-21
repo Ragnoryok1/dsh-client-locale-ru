@@ -1,0 +1,15 @@
+{
+  "namespace": "schedule-attention-enhancer",
+  "package": "@stolyarovmn/dsh-client-ui-schedule-tab@0.8.0",
+  "version": "0.8.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Stolyarovmn/dsh-schedule-tab.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "Automation Tasks Attention",
+    "description": "Adds unread delivery attention and popup notifications to the native Automation Tasks UI."
+  },
+  "en": {
+    "name": "plugins.detail.section"
+  }
+}

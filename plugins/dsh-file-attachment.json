@@ -1,0 +1,28 @@
+{
+  "namespace": "dsh-file-attachment",
+  "package": "@wszhoho/dsh-file-attachment@0.6.4",
+  "version": "0.6.4",
+  "license": "MIT",
+  "repository": "git+https://github.com/wszhoho/dsh-file-attachment.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "card.description": "Drag, paste or upload files and images. Configure file types and multimodal recognition.",
+    "card.title": "File Attachments",
+    "code.title": "Code",
+    "config.title": "Config Files",
+    "doc.title": "Documents",
+    "save": "Save",
+    "saved": "Saved",
+    "saving": "Saving…",
+    "settings.hint": "Set which file types can be sent in chat. Images are always allowed; the lists below gate documents / code / config files by extension (no dot, lowercase, e.g. pdf, py).",
+    "settings.title": "File Attachments",
+    "vlm.apiKey": "API Key",
+    "vlm.baseURL": "Base URL",
+    "vlm.hint": "Model capability is checked at session start and on model switch: text-only models get the describe_image tool (routed through this VLM) while the native read_image is hidden for them (it would always error); image-capable models have describe_image hidden and read images directly; unknown capability keeps both.",
+    "vlm.model": "Model",
+    "vlm.thinking": "Enable thinking mode (disabled by default)",
+    "vlm.timeout": "Timeout (s)",
+    "vlm.timeoutHint": "Image recognition timeout, default 60s; increase if recognition is slow or hangs",
+    "vlm.title": "Multimodal VLM"
+  }
+}

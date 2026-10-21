@@ -1,0 +1,32 @@
+{
+  "namespace": "formatforge",
+  "package": "@tianbuyu-wwx/dsh-formatforge@3.0.0",
+  "version": "3.0.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Tianbuyu-wwx/DSH-FormatForge.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "panel.apiRejected": "Host rejected the request (HTTP 400, empty body): the plugin Node half did not load on this boot — fully quit DSH (including the tray) and reopen.",
+    "panel.apiStale": "API not ready (HTTP 404): the plugin updated but the host still runs the old Node half — fully quit DSH (including the tray) and reopen.",
+    "panel.close": "Collapse",
+    "panel.copied": "Copied",
+    "panel.copyPath": "Copy path",
+    "panel.delete": "Hide",
+    "panel.deleted": "Hidden (files kept on disk)",
+    "panel.empty": "No artifacts yet — drop a file onto the window.",
+    "panel.emptyQuery": "No artifact matches that query.",
+    "panel.error": "Request failed",
+    "panel.guide": "FormatForge inbox",
+    "panel.guideDesc": "Search, preview and re-forge converted artifacts",
+    "panel.limit": "Page size",
+    "panel.loading": "Loading…",
+    "panel.more": "Truncated — use ff_result for the full text",
+    "panel.preview": "Content preview",
+    "panel.refresh": "Refresh",
+    "panel.retry": "Re-forge",
+    "panel.retryQueued": "Queued for re-forge (next scan tick)",
+    "panel.search": "Search artifacts (substring, CJK friendly)",
+    "panel.stats": "{total} artifacts · source {source}",
+    "panel.title": "FormatForge"
+  }
+}

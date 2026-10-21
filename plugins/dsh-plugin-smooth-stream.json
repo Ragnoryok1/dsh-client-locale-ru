@@ -1,0 +1,29 @@
+{
+  "namespace": "dsh-plugin-smooth-stream",
+  "package": "dsh-plugin-smooth-stream@1.3.0",
+  "version": "1.3.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/SpookySandwich/dsh-plugin-smooth-stream.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "batch": "Batch size",
+    "batchHint": "How much text accumulates before a paragraph batch reveals. Smaller feels more live; larger reads calmer.",
+    "batchUnit": "chars",
+    "duration": "Animation duration",
+    "enabled": "Enable Smooth Stream",
+    "enabledHint": "Off hands rendering back to the built-in view — handy for comparing.",
+    "follow": "Smooth scroll-follow while streaming",
+    "opt.dissolve": "Dissolve",
+    "opt.fade": "Fade",
+    "opt.focus": "Focus",
+    "opt.glow": "Glow",
+    "opt.iris": "Iris",
+    "opt.rise": "Rise",
+    "opt.soak": "Soak",
+    "opt.wipe": "Wipe",
+    "perStyleHint": "Duration and batch size are remembered per animation style; defaults are tuned per style.",
+    "replay": "Replay preview",
+    "reset": "Reset to defaults",
+    "reveal": "Reveal animation"
+  }
+}

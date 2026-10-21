@@ -1,0 +1,34 @@
+{
+  "namespace": "settings.composerLayout",
+  "package": "dsh-composer-layout@0.1.24",
+  "version": "0.1.24",
+  "license": "MIT",
+  "repository": "git+https://github.com/lavapapa/dsh-composer-layout.git",
+  "fetched": "2026-10-20",
+  "meta": {
+    "title": "DSH Composer Layout",
+    "description": "Switch between Bottom, Right, and Automatic Composer layouts, with responsive sizing and space-aware controls."
+  },
+  "en": {
+    "auto": "Automatic",
+    "autoThreshold": "Automatic-layout threshold",
+    "autoThresholdHint": "Use the right pane when the main area width divided by its height reaches this value.",
+    "bottom": "Bottom",
+    "bottomHandleHoverOnly": "Show the bottom handle only on hover",
+    "bottomHandleHoverOnlyHint": "The right-layout divider always remains hover-only.",
+    "defaultPlacement": "Default placement",
+    "defaultPlacementHint": "Used when a conversation opens.",
+    "defaultWidthPreset": "Default right-pane width",
+    "defaultWidthPresetHint": "Choose a relative width that adapts to the conversation window.",
+    "description": "Choose how Chat and Composer share the conversation window.",
+    "guideAlt": "Use the right-edge rail to switch the Composer layout, then resize the right pane.",
+    "guideLocale": "en",
+    "medium": "Medium",
+    "narrow": "Narrow",
+    "rememberPlacement": "Remember this session layout",
+    "rememberPlacementHint": "Keep this sessionu2019s Composer position and width when you return.",
+    "right": "Right",
+    "title": "Composer Layout",
+    "wide": "Wide"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "namespace": "dsh-git-badge",
+  "package": "dsh-git-badge@0.20.1",
+  "version": "0.20.1",
+  "license": "MIT",
+  "repository": "git+https://github.com/Kevin-McIsaac/dsh-workspace-git-badge.git",
+  "fetched": "2026-10-20",
+  "en": {
+    "namespace": "git-badge"
+  }
+}
