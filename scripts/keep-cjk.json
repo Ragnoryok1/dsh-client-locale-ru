@@ -9,5 +9,6 @@
   "settings.codexSubscription · voiceLang_zh": "имя китайского языка на его собственном письме",
   "agentStudio · section.customNote": "подставляемый плагином китайский ключ в шаблоне",
   "dsh-auto-title · typeSchemeRows": "имя колонки редактора, которую печатает китайский заголовок",
-  "dsh-auto-title · typeSchemeRowsHint": "имя колонки редактора, которую печатает китайский заголовок"
+  "dsh-auto-title · typeSchemeRowsHint": "имя колонки редактора, которую печатает китайский заголовок",
+  "dsh-auto-title · localeZh": "имя китайского языка на его собственном письме"
 }

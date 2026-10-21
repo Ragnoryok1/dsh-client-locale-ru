@@ -111,6 +111,36 @@ function dictionaryKeys(text) {
   return keys
 }
 
+/**
+ * Decode the escape sequences of a string literal.
+ *
+ * The audit reads the source of the pack and of the harness, and a literal in
+ * the source is not yet the text a reader sees: `\n` is a line break, `u2026`
+ * is an ellipsis. Comparing the raw source made a value with a line break
+ * look like the two words around it had been glued together (`npm install
+ * lodash\nnpm i lodash` read as `nnpm`), and it hid the typography of every
+ * value that carries one.
+ *
+ * @param {string} text - the text between the quotes.
+ * @returns {string} the text as it is at runtime.
+ */
+function decodeStringLiteral(text) {
+  return text.replace(/\\(?:u([0-9A-Fa-f]{4})|x([0-9A-Fa-f]{2})|(.))/gsu, (whole, unicode, byte, other) => {
+    if (unicode !== undefined) return String.fromCharCode(Number.parseInt(unicode, 16))
+    if (byte !== undefined) return String.fromCharCode(Number.parseInt(byte, 16))
+    switch (other) {
+      case 'n': return '\n'
+      case 't': return '\t'
+      case 'r': return '\r'
+      case 'b': return '\b'
+      case 'f': return '\f'
+      case 'v': return '\v'
+      case '0': return '\0'
+      default: return other
+    }
+  })
+}
+
 /** Read one quoted literal at `at`, with the offset just past it. */
 function readQuoted(text, at) {
   const quote = text[at]
@@ -121,7 +151,7 @@ function readQuoted(text, at) {
     if (text[end] === quote) break
     end += 1
   }
-  return { value: text.slice(at + 1, end), end: end + 1 }
+  return { value: decodeStringLiteral(text.slice(at + 1, end)), end: end + 1 }
 }
 
 /** Read an identifier at `at`, with the offset just past it. */
@@ -1334,7 +1364,13 @@ for (const [token, ids] of Object.entries(terminology.latinInValues ?? {})) {
 const latinInValuesUsed = new Set()
 for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
-    const cleaned = value.replace(/\{[^}]*\}/gu, ' ').replace(/\\[a-z]/gu, ' ')
+    /*
+     * Only real escape sequences are taken out of the value: a Windows path
+     * (`D:\cloud\dsh-memory`) is not an escape, and stripping `\c` from it left
+     * the word «loud» in the middle of the path.
+     */
+    const cleaned = value.replace(/\{[^}]*\}/gu, ' ')
+      .replace(/\\(?:[nrtbfv0'"\\]|u[0-9A-Fa-f]{4}|x[0-9A-Fa-f]{2})/gu, ' ')
     for (const match of cleaned.matchAll(/[A-Za-z][A-Za-z0-9._+-]*/gu)) {
       const token = match[0]
       // Whole lowercase words only: capitalised names are product terms, and a
@@ -1343,13 +1379,23 @@ for (const [namespace, byKey] of packValuesByNamespace) {
       if (token.length < 4 || /[._/+-]/u.test(token)) continue
       /*
        * A token inside a path segment (`$DSH_HOME/worktrees/`,
-       * `feature/git-branch-switcher`) or inside angle brackets (`wt/<name>`) is part of
-       * an example the reader types, not prose — the same reason the gate skips a token
+       * `feature/git-branch-switcher`, `D:\cloud\dsh-memory`) or inside angle
+       * brackets (`wt/<name>`, `<working directory>`) is part of an example the
+       * reader types, not prose — the same reason the gate skips a token
        * that carries punctuation itself.
        */
       const before = match.index === 0 ? '' : cleaned[match.index - 1]
       const after = cleaned[match.index + token.length] ?? ''
-      if (before === '/' || after === '/' || (before === '<' && after === '>')) continue
+      if (before === '/' || after === '/' || before === '\\') continue
+      if (before === '<' && after === '>') continue
+      /*
+       * Everything between the angle brackets belongs to the example, not to
+       * the prose: `<working directory>` is one placeholder the reader fills
+       * in, and its words are not English the pack forgot to translate.
+       */
+      const open = cleaned.lastIndexOf('<', match.index)
+      const close = cleaned.indexOf('>', match.index)
+      if (open >= 0 && close > match.index) continue
       if (allowedLatin[token.toLowerCase()] !== undefined) continue
       /*
        * A per-value allowance is consulted before the structural exemptions: an entry
@@ -1689,7 +1735,7 @@ for (const [namespace, byKey] of packValuesByNamespace) {
     const template = external === undefined
       ? english.get(key) ?? (variants?.size === 1 ? variants.values().next().value : undefined)
       : english.get(key)
-    if (!value.includes('\\n')) {
+    if (!value.includes('\n')) {
       for (const [title, test] of HYGIENE_RULES) {
         if (title === 'неразрывный пробел в значении' && key === 'number.groupSeparator') continue
         /*
@@ -1701,6 +1747,7 @@ for (const [namespace, byKey] of packValuesByNamespace) {
          */
         if (title === 'непарные « »' && template !== undefined) {
           const templatePaired = (template.match(/«/gu)?.length ?? 0) === (template.match(/»/gu)?.length ?? 0)
+            && (template.match(/“/gu)?.length ?? 0) === (template.match(/”/gu)?.length ?? 0)
           if (!templatePaired) continue
         }
         /*
@@ -1727,7 +1774,12 @@ for (const [namespace, byKey] of packValuesByNamespace) {
      */
     const trimmedValue = value.trimEnd()
     const trimmedTemplate = template.trimEnd()
-    const abbreviation = /[а-яё]{1,5}\.$/iu.test(trimmedValue)
+    /*
+     * An abbreviation keeps its own sign: «стр.» and the numero sign «№» are
+     * labels, not sentences, and the point of the English "No." is the sign
+     * itself rather than a full stop that ends a thought.
+     */
+    const abbreviation = /^(?:[а-яё]{1,5}\.|№)$/iu.test(trimmedValue)
     if (/[.!?…]$/u.test(trimmedTemplate) && !/[.!?…]$/u.test(trimmedValue) && !abbreviation) {
       style.push(`${namespace} · ${key} — потерян знак в конце: у нас ${JSON.stringify(trimmedValue.slice(-30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(-30))}`)
     }
@@ -1744,6 +1796,15 @@ for (const [namespace, byKey] of packValuesByNamespace) {
          */
         const templateCapitalised = firstTemplate !== firstTemplate.toLowerCase()
         const valueLowercase = firstValue === firstValue.toLowerCase()
+        /*
+         * The address to the user is the one case the two rules disagree about:
+         * the English writes "You" with a capital, and Russian writes the
+         * address in lower case — the capital spelling is the one the pack
+         * forbids. A value that is the address itself keeps the lower case.
+         */
+        if (value.trim() === 'вы') continue
+        /* The numero sign is a sign, not a word, and has no case to mirror. */
+        if (value.trim() === '№') continue
         if (templateCapitalised && valueLowercase) {
           style.push(`${namespace} · ${key} — регистр: у нас ${JSON.stringify(value.slice(0, 30))} | шаблон ${JSON.stringify(trimmedTemplate.slice(0, 30))}`)
         }
@@ -1772,7 +1833,7 @@ for (const [namespace, byKey] of packValuesByNamespace) {
     const template = english.get(key)
     if (template === undefined) continue
     if (template.length < 6 || template.length > 28) continue
-    if (template.includes('{') || value.includes('{') || value.includes('\\n')) continue
+    if (template.includes('{') || value.includes('{') || value.includes('\n')) continue
     const ratio = value.length / template.length
     if (ratio < 2.8) continue
     grownShortStrings.push({ id: `${namespace} · ${key}`, ratio, template, value })
@@ -1852,7 +1913,7 @@ for (const [namespace, byKey] of packValuesByNamespace) {
   for (const [key, value] of byKey) {
     const template = english.get(key)
     if (template === undefined) continue
-    if (value.includes('\\n') || template.includes('\\n')) continue
+    if (value.includes('\n') || template.includes('\n')) continue
     if (template.split(/\s+/u).length < 4) continue
     if (!renderingsByTemplate.has(template)) renderingsByTemplate.set(template, new Map())
     const renderings = renderingsByTemplate.get(template)
