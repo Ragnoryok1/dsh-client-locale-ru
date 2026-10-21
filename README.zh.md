@@ -24,13 +24,13 @@
 [![namespaces](https://img.shields.io/badge/namespaces-197-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-37677-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 167 个 namespace、37,677 条翻译，基于 dsh `0.2.1-rc.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围是 harness 自带的客户端界面（64 个 namespace，2 996 条翻译），以及 103 个第三方插件的词典——它们各自发布的英文原文都被取来翻译（共 34681 条）。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 197 个 namespace、37,677 条翻译，基于 dsh `0.2.1-rc.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围是 harness 自带的客户端界面（64 个 namespace，2 996 条翻译），以及 103 个第三方插件的词典——它们各自发布的英文原文都被取来翻译（共 34681 条）。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
 
 > **如果这个包对你有用，请给仓库点一颗 star。** 这是表明「有人需要这份翻译」的唯一信号，它也决定了接下来优先做哪些部分。
 
 ---
 
-完整清单见 [NAMESPACES.md](NAMESPACES.md)：167 个 namespace、37,677 条字符串，随包附带的插件词典单独标注。
+完整清单见 [NAMESPACES.md](NAMESPACES.md)：197 个 namespace、37,677 条字符串，随包附带的插件词典单独标注。
 
 如果 pnpm 报 `ERR_PNPM_NO_MATURE_MATCHING_VERSION`，这不是包坏了，而是成熟度策略：配置文件
 不安装发布不足 48 小时的版本。等一两天（报错信息里写着版本号），或在配置文件设置里去掉
@@ -236,7 +236,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## 内容
 
-- `src/client/dicts.ts`——俄语词典（167 个 namespace、37,677 条翻译、约 38000 行）。这正是本包的核心价值。
+- `src/client/dicts.ts`——俄语词典（197 个 namespace、37,677 条翻译、约 38000 行）。这正是本包的核心价值。
 - `src/client/index.ts`——客户端插件入口（注册 `ru` 和词典）。
 - `src/index.ts`——空的宿主部分（`apply()`）。
 - `cordis.patch.yml`——profile 补丁（`- insert:` 客户端条目 `locale-ru`）。
