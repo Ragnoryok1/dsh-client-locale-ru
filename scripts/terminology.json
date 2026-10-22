@@ -416,6 +416,7 @@
     "promptpack": "имя ключа конфигурации",
     "protectedtools": "имя ключа конфигурации",
     "provider": "термин API",
+    "provideraliases": "имя ключа конфигурации",
     "proxy": "имя компонента",
     "ptc": "имя режима",
     "pull": "имя команды git",
@@ -622,7 +623,8 @@
       "settings.tokenUsage · remoteDenied"
     ],
     "config": [
-      "settings.tokenUsage · remoteDenied"
+      "settings.tokenUsage · remoteDenied",
+      "fallbacks · usage"
     ],
     "disabled": [
       "settings.mcpPanel · removeConfirm",
@@ -680,10 +682,37 @@
       "dsh-skins.ui · personalization.uefi.art"
     ],
     "list": [
-      "prompt-library · soft control"
+      "prompt-library · soft control",
+      "artifact · row.cmd.list"
     ],
     "taskkill": [
       "dsh-treekeeper · confirmBody"
+    ],
+    "breaker": [
+      "repeat-tool-breaker.card · title"
+    ],
+    "credentials": [
+      "labnana · keySrcCredentials"
+    ],
+    "d6bfe": [
+      "theme-studio · accentPlaceholder"
+    ],
+    "delete": [
+      "artifact · row.cmd.delete"
+    ],
+    "fallbacks": [
+      "fallbacks · configEdit"
+    ],
+    "ff0000": [
+      "theme-studio · customCssPlaceholder"
+    ],
+    "servername": [
+      "dsh-mcp-market · serverName",
+      "mcp-skill-manager · mcp.formErrorName",
+      "mcp-skill-manager · mcp.formName"
+    ],
+    "taskid": [
+      "labnana · toolTaskId"
     ]
   }
 }

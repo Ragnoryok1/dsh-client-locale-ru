@@ -14,7 +14,7 @@
     "animationsHint": "Turn off to reduce motion (a stylesheet compresses transition durations to near-zero so events still fire)",
     "behaviorSection": "Behavior",
     "customCssHint": "Override dsh tokens, one `--dsw-* or --dsh-*: value;` per line",
-    "customCssPlaceholder": "--dsw-alias-brand-primary: #ff0000;n--dsw-alias-label-primary: #111111;",
+    "customCssPlaceholder": "--dsw-alias-brand-primary: #ff0000;\n--dsw-alias-label-primary: #111111;",
     "customCssSection": "Custom CSS",
     "darkAccentHint": "Accent used in dark mode; leave empty to reuse the color above",
     "darkAccentSection": "Dark Mode Accent",

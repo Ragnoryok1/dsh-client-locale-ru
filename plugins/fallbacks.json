@@ -56,6 +56,6 @@
     "switchLine": "{from} → {to} (role={role}, reason={reason})",
     "title": "Session fallback diagnostics (read-only)",
     "trigger-code": "trigger-code",
-    "usage": "  /fallbacks config   ${CONFIG_SUBCOMMAND_DESCRIPTION.en}n  /fallbacks config revert-seed <role-id>   ${REVERT_SEED_SUBCOMMAND_DESCRIPTION.en}"
+    "usage": "  /fallbacks config   ${CONFIG_SUBCOMMAND_DESCRIPTION.en}\n  /fallbacks config revert-seed <role-id>   ${REVERT_SEED_SUBCOMMAND_DESCRIPTION.en}"
   }
 }
