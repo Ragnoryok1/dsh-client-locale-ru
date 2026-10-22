@@ -105,7 +105,7 @@ two (the message names the version) or drop the `minimumReleaseAge` limit in the
 settings.
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 2018 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 2020 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 
@@ -386,6 +386,14 @@ settings page.
 The package translates **the harness client's own namespaces** — 64 namespaces reconciled
 against the pinned tag — and **the dictionaries of third-party plugins**: 520 plugins whose
 English text is vendored from their own publication, with the version and the licence.
+
+Searching the npm registry — six queries instead of one «dsh» — found 40 more plugins with
+a dictionary of their own. 39 are translated; three names (`dsh-automation`, `remote`,
+`settings.ip-pool`) are already taken by other plugins' dictionaries and stay with their
+owners, so that nobody's product gets somebody else's translation. As of 22 October 2026:
+**584 namespaces, 67 724 values, 520 dictionaries, 48 086 distinct Russian strings** in the
+built package. The competitor measurement, by the same method —
+[docs/competitors.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/competitors.md).
 
 Plugin dictionaries were out of scope before, and there was a reason: `dshmarket` is already
 at version 1.66.44, its keys change independently of the harness, and a silent promise of
