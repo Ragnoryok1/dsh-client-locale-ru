@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 307.** За этот релиз их стало на 373, а пакет
-  покрывает 437 namespace и 56 853 строк (из них 2 996 — namespace самого харнесса,
-  53 857 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 337.** За этот релиз их стало на 403, а пакет
+  покрывает 467 namespace и 57 574 строк (из них 2 996 — namespace самого харнесса,
+  54 578 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -51,6 +51,9 @@
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 49).** `orbit-model` (36), `plugin.intellijMcp` (36), `settings.dshProxy` (36), `settings.subagentModel` (36), `dsh-context-imports` (35), `lcx-codex` (35), `settings.budget` (35), `vision` (35), `costTrack` (34), `dsh-desktop` (34), `win-pilot` (34), `autoReviewPanel` (33), `dsh-jev-tools` (33), `dsh-llm-trace` (33), `dsh-movein` (33), `openrouter-providers` (33), `vision-recognizer` (33), `dsh-doc-impact` (32), `dsh-plugin-message-tree` (32), `settings.llm-proxy` (32), `custom-headers` (31), `dsh-theme` (31), `stepTrace` (31), `bookmarks` (30), `dsh-mineru` (30), `image-pathify` (30), `select-quote` (30), `ui-background` (30), `dsh-argp` (29), `dsh-improve-prompt` (29). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 50).** `verdict` (29), `web-fetch-playwright` (29), `daruma` (28), `dsh-chatgpt-subscription` (28), `dsh-image-viewer` (28), `windowsComputerUse.settings` (28), `workbuddy-console` (28), `modelSelector` (27), `promptVcs` (27), `dsh.eval-control` (25), `modelArena` (25), `toolStats` (25), `draw` (24), `conversation-anchors` (23), `diff-stat` (23), `dsh-rerun-turn` (23), `markdown-input` (23), `settings.advisor` (23), `settings.conversationUi` (23), `settings.dsh-zhipu` (23), `web-search-anysearch` (23), `dshmarketplace` (22), `formatforge` (22), `ui-rainbowspeak` (22), `agentLang` (21), `settings.pluginInstall` (21), `jobProgress` (20), `settings.composerLayout` (20), `dsh-plugin-smooth-stream` (19), `settings.anysearchApiKey` (19). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина

@@ -861,5 +861,16 @@
   "ui-background · background.uploadMediaTypes": "формат",
   "vision · chAntigravity": "идентификатор",
   "vision · regionPlaceholder": "формат",
-  "win-pilot · title": "название продукта"
+  "win-pilot · title": "название продукта",
+  "dsh.eval-control · patchBody": "формат",
+  "dshmarketplace · title": "название продукта",
+  "formatforge · panel.title": "название продукта",
+  "modelArena · title": "название продукта",
+  "promptVcs · title": "название продукта",
+  "settings.composerLayout · guideLocale": "код языка",
+  "settings.dsh-zhipu · zreadDesc": "идентификатор",
+  "toolStats · title": "название продукта",
+  "ui-rainbowspeak · unitPerLoop": "формат",
+  "ui-rainbowspeak · unitPx": "формат",
+  "web-search-anysearch · backendAnysearch": "название продукта"
 }

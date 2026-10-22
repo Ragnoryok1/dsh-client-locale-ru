@@ -629,7 +629,8 @@
     ],
     "config": [
       "settings.tokenUsage · remoteDenied",
-      "fallbacks · usage"
+      "fallbacks · usage",
+      "dsh.eval-control · patchBody"
     ],
     "disabled": [
       "settings.mcpPanel · removeConfirm",
@@ -768,6 +769,23 @@
     ],
     "right": [
       "vision · regionPlaceholder"
+    ],
+    "aeval": [
+      "dsh.eval-control · controlRowNote",
+      "dsh.eval-control · label",
+      "dsh.eval-control · title"
+    ],
+    "export": [
+      "dsh.eval-control · stepEnv"
+    ],
+    "stderr": [
+      "dsh.eval-control · stepFailed"
+    ],
+    "learn": [
+      "verdict · empty"
+    ],
+    "verdict": [
+      "verdict · empty"
     ]
   }
 }
