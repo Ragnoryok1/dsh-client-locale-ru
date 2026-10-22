@@ -1,0 +1,20 @@
+{
+  "namespace": "update.install.exec",
+  "package": "dsh-im-companion",
+  "version": "0.2.19",
+  "license": "MIT",
+  "repository": "git+https://github.com/FeatherHunter/dsh-im-companion.git",
+  "fetched": "2026-10-22",
+  "en": {
+    "agentCol": "Home ＼ Channel",
+    "close": "Close",
+    "drillHint": "Click for details",
+    "emptySub": "Create a home and bind a bot for an assistant, and the matrix will appear here",
+    "emptyTitle": "No homes yet",
+    "loading": "Loading",
+    "refresh": "Refresh",
+    "staleNote": "(stale)",
+    "summaryCol": "Summary",
+    "title": "Fleet Radar"
+  }
+}

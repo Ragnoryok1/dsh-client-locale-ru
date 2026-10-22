@@ -1,0 +1,24 @@
+{
+  "namespace": "dsh-canvas-tsx-sidebar",
+  "package": "dsh-canvas-tsx-sidebar",
+  "version": "0.7.3",
+  "license": "MIT",
+  "repository": "git+https://github.com/drscrewdriver/dsh-canvas-tsx-sidebar.git",
+  "fetched": "2026-10-22",
+  "en": {
+    "action.open": "Open",
+    "error.outsideWorkspace": "That absolute path is outside the session workspace, so it was refused. Use a workspace-relative path.",
+    "input.placeholder": ".canvas.tsx path, e.g. try/report.canvas.tsx",
+    "mode.code": "Code",
+    "mode.label": "Display mode",
+    "mode.preview": "Preview",
+    "state.error": "Read failed",
+    "state.loading": "Reading…",
+    "state.noPath": "No file given",
+    "state.noPathHint": "Type the path to a .canvas.tsx above and press Enter to render it here as an HTML page.",
+    "state.parseFailed": "Parse failed",
+    "tab.desc": "Render a .canvas.tsx report as an HTML page",
+    "tab.title": "Canvas Report",
+    "viewer.title": "Canvas Report"
+  }
+}

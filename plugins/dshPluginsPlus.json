@@ -1,0 +1,16 @@
+{
+  "namespace": "dshPluginsPlus",
+  "package": "@sidleo3/dsh-plugins-plus",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/sidleo/dsh-plugins-plus.git",
+  "fetched": "2026-10-22",
+  "meta": {
+    "title": "DSH Plugins Plus",
+    "description": "Built-in plugin replacements, one switchable component each: per-preset takeover of agent instructions and skill discovery, configured in Settings."
+  },
+  "en": {
+    "bundle": "DSH Plus",
+    "nav": "DSH Plus"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "namespace": "tavernManager",
+  "package": "dsh-tavern",
+  "version": "2.7.20",
+  "license": "PolyForm-Noncommercial-Copyleft-1.0.0",
+  "repository": "git+https://github.com/chen731215-dev/dsh-tavern-v2.git",
+  "fetched": "2026-10-22",
+  "en": {
+    "intro": "Character cards / world books / presets / story background / memory module",
+    "nav": "🍺 Tavern Manager"
+  }
+}

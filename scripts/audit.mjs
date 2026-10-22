@@ -1761,8 +1761,14 @@ for (const [namespace, byKey] of packValuesByNamespace) {
          * twice. A template with an unpaired quote of its own excuses ours.
          */
         if (title === 'непарные « »' && template !== undefined) {
+          /*
+           * The templates of glue dictionaries write a quote as a bare `"` —
+           * `If "` opens a label that the code finishes. Such a quote is just as
+           * unpaired as our «, so it excuses ours the same way a «» pair does.
+           */
           const templatePaired = (template.match(/«/gu)?.length ?? 0) === (template.match(/»/gu)?.length ?? 0)
             && (template.match(/“/gu)?.length ?? 0) === (template.match(/”/gu)?.length ?? 0)
+            && (template.match(/"/gu)?.length ?? 0) % 2 === 0
           if (!templatePaired) continue
         }
         /*

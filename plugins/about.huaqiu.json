@@ -1,0 +1,19 @@
+{
+  "namespace": "about.huaqiu",
+  "package": "@huaqiu/dsh-huaqiu-about",
+  "version": "0.6.6",
+  "license": null,
+  "repository": null,
+  "fetched": "2026-10-22",
+  "en": {
+    "builtinPluginLabel": "Builtin plugin version",
+    "copied": "Metadata copied",
+    "copyMetadata": "Copy metadata",
+    "copyright": "© 2026 Shenzhen Huaqiu Zhilian Co., Ltd.",
+    "distributionLabel": "Distribution",
+    "nav": "About",
+    "poweredBy": "Powered by DSH",
+    "runtimeLabel": "DSH Runtime",
+    "slogan": "Electronic Design Agent Platform"
+  }
+}

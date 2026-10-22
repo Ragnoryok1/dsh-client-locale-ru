@@ -1,10 +1,10 @@
 {
   "namespace": "magpie-connect",
-  "package": "dsh-magpie-connect@0.4.1",
+  "package": "dsh-magpie-connect",
   "version": "0.4.1",
   "license": "MIT",
   "repository": "git+https://github.com/bitxeno/dsh-magpie-connect.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "allRemoved": "No model is offered right now — fetch available models to add some, or restore defaults.",
     "apiKey": "API key",
@@ -34,6 +34,7 @@
     "modelsCustomized": "{count} models offered by the picker.",
     "modelsInherited": "Using the gateway’s full catalog.",
     "modelsSaved": "Models saved — the picker is up to date.",
+    "nav": "Magpie",
     "notConfigured": "Not fully configured: the model picker stays empty and calls fail until both fields are saved.",
     "pluginVersion": "Plugin version:",
     "reasoning": "reasoning",

@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.14",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 545 namespaces, 61236 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 584 namespaces, 67724 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -21,16 +21,16 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-545-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-61236-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-67724-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 545 个 namespace、61,236 条翻译，基于 dsh `0.2.1-rc.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围是 harness 自带的客户端界面（64 个 namespace，2 996 条翻译），以及 481 个第三方插件的词典——它们各自发布的英文原文都被取来翻译（共 58240 条）。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 584 个 namespace、67,724 条翻译，基于 dsh `0.2.1-rc.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围是 harness 自带的客户端界面（64 个 namespace，2 996 条翻译），以及 520 个第三方插件的词典——它们各自发布的英文原文都被取来翻译（共 64728 条）。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
 
 > **如果这个包对你有用，请给仓库点一颗 star。** 这是表明「有人需要这份翻译」的唯一信号，它也决定了接下来优先做哪些部分。
 
 ---
 
-完整清单见 [NAMESPACES.md](NAMESPACES.md)：545 个 namespace、61,236 条字符串，随包附带的插件词典单独标注。
+完整清单见 [NAMESPACES.md](NAMESPACES.md)：584 个 namespace、67,724 条字符串，随包附带的插件词典单独标注。
 
 如果 pnpm 报 `ERR_PNPM_NO_MATURE_MATCHING_VERSION`，这不是包坏了，而是成熟度策略：配置文件
 不安装发布不足 48 小时的版本。等一两天（报错信息里写着版本号），或在配置文件设置里去掉
@@ -90,7 +90,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 1843 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 2018 KB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -158,7 +158,7 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 
 审计在 CI（`.github/workflows/verify.yml`）中针对**锁定的 harness 标签**运行，而不是针对随便一份本地 checkout。同一次运行还会**每周按计划**触发一次：即使没人改动，译文也会腐坏——上游继续前进，本地一切正常，而偏差只在用户构建时才浮现。门禁覆盖完整性（key 与 namespace）、复数形式、占位符、英文与中文残留、术语、正文中的拉丁词、文本卫生、首尾空格、风格、取值的排版、«ё»、组合短语、设置侧栏标签的长度以及对外宣称的数字——每一项都已经抓到过真实缺陷。除此之外，审计还会打印**参考报告**——它们不是门禁，因为需要人来判断：比对了多少个 namespace、哪些无法建立对应关系、是否还留有「数字 + 需变格的名词」，以及短字符串是否长到英文的 2.8 倍以上（排版风险——«Effort» → «Уровень рассуждения» 是俄语的正常长度，不是缺陷）。
 
-审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 1843 KB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
+审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 2018 KB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
 
 - **无效 namespace**——包注册的每一个 namespace 都必须在 harness 中存在。在 0.1.6 中，日程目录的翻译被注册在 `schedule.manager` 名下，而读取它们的是 `schedule.catalog`：此时按 key 做的覆盖率检查还报告「全部已翻译」；
 - **复数形式配对**——`.one`/`.other` 的集合必须一致，因为客户端按 `count === 1 ? '.one' : '.other'` 选择形式。这对俄语还不够：每一对还需要 `.few` 与 `.many`，否则包装层会悄悄退回中性的 `.other`，本该是 «2 дня» 的地方显示成 «2 д»。该检查**按 namespace** 进行——包装层在提问的那个 namespace 里查找形式，因此「某个界面上有、另一个界面上缺」这种情况否则不会被发现。它找到了四个时间单位（`schedule.catalog` 中的 `unit.day/hour/minute/second`）和任务管理器里的 `trigger`；同时这些单位不再是缩写（«д»、«ч»、«мин»），而是带正确格位的完整形式——«через 2 дня»、«через 5 часов»，而 «Каждые 2 дня» 现在写作 «Раз в 2 дня»。同样的要求也覆盖本包自己添加的 key（`terminal.expand` 及其同类：harness 会把计数传给它，却从不配对）——这些形式只由我们维护，少一个不会有任何其他检查发现；
@@ -169,11 +169,11 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 
 标签的新旧由单独的 workflow 盯守：`watch-upstream` 每周把锁定的标签与 harness 的标签比对一次，出现更新的标签就开一个 issue（内含操作步骤）并把运行标红——让「落后」按计划被发现，而不是靠用户的截图。版本比较无需网络即可验证（`npm run check:upstream`，五个用例），并且纳入 `verify`：正式版本必须比自己的预发布版本更新，否则盯守会永远报警。
 
-覆盖率数字不是门禁：有些分区是有意保留英文的。紧随其后，审计会打印**按 namespace** 的报告：它根据注册方重建「namespace → 词典」的对应关系（`NS` 声明，或 `locale.register` 里的字面量；`bind` 与 `PropsLocale` 只是读取 namespace），并列出既不在自己 namespace、也不在运行时回退所用的 `common` 词典中的 key。全局比较 key 名称看不到这类空洞：放在别的 namespace 下的翻译会被算作已覆盖，而那个界面实际显示英文。该报告仅供参考——同名 key 在不同 namespace 下含义可能不同（`list.aria` 在提醒目录里是「活动提醒」，在任务里是「后台任务」），因此只有在两个 namespace 由同一份词典提供服务时才会跨 namespace 搬运翻译。在锁定的标签上，该报告为空：harness 在我们注册的 namespace 里渲染的每一条字符串，都位于该 namespace。本包的全部 545 个 namespace 都会被比对——对应关系既来自紧邻注册处的词典导入，也来自注册语句本身传入的名称（`locale.register(NS, { zh, en })`）；若没有第二条规则，词典位于相邻目录的 `common` 与 `settings.locale` 就会落在检查之外。反方向是硬失败而不是参考报告：harness 注册并填充了 key、而本包从不注册的 namespace，会让那个界面停留在英文，而按 key 名称统计的覆盖率看起来依然完整。`settings.sessionLog` 正是这样被发现的——通用设置页上的「上传 Session Log」开关。
+覆盖率数字不是门禁：有些分区是有意保留英文的。紧随其后，审计会打印**按 namespace** 的报告：它根据注册方重建「namespace → 词典」的对应关系（`NS` 声明，或 `locale.register` 里的字面量；`bind` 与 `PropsLocale` 只是读取 namespace），并列出既不在自己 namespace、也不在运行时回退所用的 `common` 词典中的 key。全局比较 key 名称看不到这类空洞：放在别的 namespace 下的翻译会被算作已覆盖，而那个界面实际显示英文。该报告仅供参考——同名 key 在不同 namespace 下含义可能不同（`list.aria` 在提醒目录里是「活动提醒」，在任务里是「后台任务」），因此只有在两个 namespace 由同一份词典提供服务时才会跨 namespace 搬运翻译。在锁定的标签上，该报告为空：harness 在我们注册的 namespace 里渲染的每一条字符串，都位于该 namespace。本包的全部 584 个 namespace 都会被比对——对应关系既来自紧邻注册处的词典导入，也来自注册语句本身传入的名称（`locale.register(NS, { zh, en })`）；若没有第二条规则，词典位于相邻目录的 `common` 与 `settings.locale` 就会落在检查之外。反方向是硬失败而不是参考报告：harness 注册并填充了 key、而本包从不注册的 namespace，会让那个界面停留在英文，而按 key 名称统计的覆盖率看起来依然完整。`settings.sessionLog` 正是这样被发现的——通用设置页上的「上传 Session Log」开关。
 
 ## 覆盖范围：harness 与插件词典
 本包翻译 **harness 客户端自有的 namespace**——共 64 个 namespace，已与锁定标签核对——以及
-**第三方插件的词典**：481 个插件，其英文文本连同版本与许可证一起从它们自己的发布物中提取。
+**第三方插件的词典**：520 个插件，其英文文本连同版本与许可证一起从它们自己的发布物中提取。
 
 此前插件词典不在范围内，理由是：`dshmarket` 已经到 1.66.44 版本，它的 key 变化与 harness
 无关，而「全部都覆盖了」这种无声承诺不是承诺，是一笔没人能讨的债。答案其实很简单：把
@@ -236,7 +236,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## 内容
 
-- `src/client/dicts.ts`——俄语词典（545 个 namespace、61,236 条翻译、约 61 000 行）。这正是本包的核心价值。
+- `src/client/dicts.ts`——俄语词典（584 个 namespace、67,724 条翻译、约 68 000 行）。这正是本包的核心价值。
 - `src/client/index.ts`——客户端插件入口（注册 `ru` 和词典）。
 - `src/index.ts`——空的宿主部分（`apply()`）。
 - `cordis.patch.yml`——profile 补丁（`- insert:` 客户端条目 `locale-ru`）。

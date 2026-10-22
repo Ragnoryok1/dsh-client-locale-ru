@@ -650,7 +650,9 @@
     ],
     "agents": [
       "dsh-skills-manager-plus · sourceProjectAgents",
-      "dsh-skills-manager-plus · sourceUserAgents"
+      "dsh-skills-manager-plus · sourceUserAgents",
+      "dshAdmin · 用户 .agents",
+      "dshAdmin · 项目 .agents"
     ],
     "ghbdtn": [
       "russian-lang · layoutConversionDesc"
@@ -713,7 +715,8 @@
     "servername": [
       "dsh-mcp-market · serverName",
       "mcp-skill-manager · mcp.formErrorName",
-      "mcp-skill-manager · mcp.formName"
+      "mcp-skill-manager · mcp.formName",
+      "dshAdmin · serverName（模型命名空间）"
     ],
     "taskid": [
       "labnana · toolTaskId"
@@ -752,18 +755,21 @@
       "autoReviewPanel · denies"
     ],
     "deny": [
-      "autoReviewPanel · decisionDeny"
+      "autoReviewPanel · decisionDeny",
+      "dshAdmin · 钩子载荷以 JSON 从 stdin 传入；退出码 2 或输出 deny 阻止动作。"
     ],
     "pipeline": [
       "dsh-mineru · backend.hybrid-engine",
-      "dsh-mineru · backend.pipeline"
+      "dsh-mineru · backend.pipeline",
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
     ],
     "only": [
       "dsh-mineru · backend.vlm-engine",
       "dsh-mineru · parse.txt"
     ],
     "model": [
-      "image-pathify · modelPlaceholder"
+      "image-pathify · modelPlaceholder",
+      "dshAdmin · 模型标识（model）"
     ],
     "agentapi": [
       "vision · chAntigravity"
@@ -790,11 +796,13 @@
     ],
     "steer": [
       "dsh-conversation-outline · steerTag",
-      "settings.reach · steerLabel"
+      "settings.reach · steerLabel",
+      "dshAdmin · steer（插入到下一步之前，勾选后 agent 当前步骤完成后立即处理）"
     ],
     "report": [
       "settings.ths-holdings · componentsDisabled",
-      "settings.ths-holdings · showCardHint"
+      "settings.ths-holdings · showCardHint",
+      "dshAdmin · //       phase(title) / log(msg) / report(key, value) / shell(cmd)"
     ],
     "compactlocalhint": [
       "codex · detail"
@@ -821,7 +829,8 @@
       "status-rotator · idle"
     ],
     "running": [
-      "status-rotator · running"
+      "status-rotator · running",
+      "wallpaper-engine · 开启后每秒记录一次渲染页心跳读数（fps / running / 暂停原因）与准备、领养、判失败事件；同时写入浏览器控制台和宿主诊断缓冲（GET /wallpaper-engine/diag-log）。排查 live 掉帧/降级时用，平时关着。"
     ],
     "thinking": [
       "status-rotator · thinking"
@@ -880,6 +889,281 @@
     ],
     "proto3": [
       "settings.subusage · grokHelp"
+    ],
+    "append": [
+      "clawock · queue.brief.readOnly"
+    ],
+    "openclaw": [
+      "clawock · queue.receiptLegend"
+    ],
+    "clawock": [
+      "clawock · trace.unreadable"
+    ],
+    "exepath": [
+      "cpa-panel · foreignNoticeHint",
+      "cpa-panel · setupNote"
+    ],
+    "cdpmode": [
+      "dsh-browser-cdp · linksCliRemoteWarn",
+      "dsh-browser-cdp · linksLpRemoteWarn"
+    ],
+    "about": [
+      "dsh-browser-cdp · noScreenshot"
+    ],
+    "blank": [
+      "dsh-browser-cdp · noScreenshot"
+    ],
+    "qrcode": [
+      "dsh-console · qr.missing"
+    ],
+    "null": [
+      "dsh-electro-lab · returnsVoidHint",
+      "dshAdmin · // 顶层 return 返回结果；单步失败 agent() 返回 null，脚本继续。"
+    ],
+    "result": [
+      "dsh-electro-lab · returnsVoidHint"
+    ],
+    "void": [
+      "dsh-electro-lab · returnsVoidHint"
+    ],
+    "latexmk": [
+      "dsh-electro-lab · toolchainMissing"
+    ],
+    "texify": [
+      "dsh-electro-lab · toolchainMissing"
+    ],
+    "xelatex": [
+      "dsh-electro-lab · toolchainMissing"
+    ],
+    "domain": [
+      "dsh-winrm · form.userHint"
+    ],
+    "webhook": [
+      "dshAdmin ·  webhook 运行时",
+      "dshAdmin · Webhook 触发",
+      "dshAdmin · ⚡ 安装并挂载 webhook 运行时"
+    ],
+    "ping": [
+      "dshAdmin ·  xB7 初始化成功但 ping 失败"
+    ],
+    "phase": [
+      "dshAdmin · //       phase(title) / log(msg) / report(key, value) / shell(cmd)"
+    ],
+    "title": [
+      "dshAdmin · //       phase(title) / log(msg) / report(key, value) / shell(cmd)"
+    ],
+    "value": [
+      "dshAdmin · //       phase(title) / log(msg) / report(key, value) / shell(cmd)"
+    ],
+    "items": [
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
+    ],
+    "opts": [
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
+    ],
+    "parallel": [
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
+    ],
+    "stages": [
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
+    ],
+    "thunks": [
+      "dshAdmin · // 可用：agent(prompt, opts?) / parallel(thunks) / pipeline(items, ...stages)"
+    ],
+    "return": [
+      "dshAdmin · TypeScript / JavaScript，顶层 return 返回结果"
+    ],
+    "args": [
+      "dshAdmin · args 不是合法 JSON：",
+      "dshAdmin · args 必须包含 {prompt} 占位符（提示词将替换该占位符传入 CLI）",
+      "dshAdmin · args 必须是 1-20 个非空片段（单条 ≤ 256 字符），用 {prompt} 占位提示词",
+      "dshAdmin · args（JSON 对象）",
+      "dshAdmin · args（空格分隔，{prompt} 占位提示词）",
+      "dshAdmin · args（空格分隔，可选）"
+    ],
+    "command": [
+      "dshAdmin · command 不能包含空格（PATH 命令名或绝对路径）",
+      "dshAdmin · command（PATH 命令名或绝对路径）",
+      "dshAdmin · command（启动命令）"
+    ],
+    "continuable": [
+      "dshAdmin · continuable（可持续会话）"
+    ],
+    "disposegracems": [
+      "dshAdmin · disposeGraceMs 必须是非负整数（毫秒）",
+      "dshAdmin · disposeGraceMs（进程树终止宽限，毫秒）"
+    ],
+    "headers": [
+      "dshAdmin · headers（每行 KEY=VALUE，可选）"
+    ],
+    "configpath": [
+      "dshAdmin · hooks 桥已安装并写入 profile（configPath 指向 ",
+      "dshAdmin · ⚠️ 桥挂载行的 configPath 指向 "
+    ],
+    "missing": [
+      "dshAdmin · npm install -g 全局安装缺失包："
+    ],
+    "package": [
+      "dshAdmin · npm install -g 全局安装缺失包："
+    ],
+    "stdout": [
+      "dshAdmin · one-shot 纯文本：stdout 即委托结果，非零退出记为失败；prompt 经 {prompt} 传入"
+    ],
+    "permissionmode": [
+      "dshAdmin · permissionMode（CLI 权限模式）"
+    ],
+    "providername": [
+      "dshAdmin · providerName 必须是 1-48 位小写字母/数字/下划线/中划线且字母开头",
+      "dshAdmin · providerName（执行后端注册名）"
+    ],
+    "settings": [
+      "dshAdmin · u{1F501} 切换 provider / 安装 / 卸载 后需重启 dsh 生效；⚙ 配置里带 settings 命名空间的 provider 保存后即时生效，写 cordis 行的需重启",
+      "dshAdmin · u{1F5C4} 存储：dsh settings 命名空间 `"
+    ],
+    "diff": [
+      "dshAdmin · 复制完整 git diff（HEAD vs 工作区）"
+    ],
+    "researcher": [
+      "dshAdmin · 如 researcher、code-reviewer"
+    ],
+    "inputschema": [
+      "dshAdmin · 工具参数（JSON 对象，键名以该工具的 inputSchema 为准）"
+    ],
+    "toolfilter": [
+      "dshAdmin · 工具约束（toolFilter，留空则不限制；可搜索和手动输入，仅当前候选工具可保存）"
+    ],
+    "persona": [
+      "dshAdmin · 提示词（persona，留空继承部署默认）"
+    ],
+    "maxdepth": [
+      "dshAdmin · 最大委托深度（maxDepth，0 = 禁止再委托）"
+    ],
+    "usage": [
+      "dshAdmin · 本次会话 token 用量（输入 / 输出 / 缓存读）——来自模型适配器上报的 usage 折叠"
+    ],
+    "agentoptions": [
+      "dshAdmin · 模型指定（agentOptions，留空字段继承父代理当前路由）"
+    ],
+    "aider": [
+      "dshAdmin · 添加自定义 CLI：输入命令名或绝对路径，如 aider（挂载为 one-shot 后端）"
+    ],
+    "optirouter": [
+      "dshAdmin · 留空继承，如 optirouter / deepseek-official"
+    ],
+    "stdin": [
+      "dshAdmin · 钩子载荷以 JSON 从 stdin 传入；退出码 2 或输出 deny 阻止动作。"
+    ],
+    "worktreeinclude": [
+      "git-worktree · cardPostCreateCopyFilesHint"
+    ],
+    "logprobs": [
+      "llm-verifier · field.autoProcessSelection.everyStepWarning"
+    ],
+    "coding": [
+      "llm-verifier · field.criteriaFile.help",
+      "llm-verifier · probe.rubricFallback"
+    ],
+    "pytest": [
+      "llm-verifier · field.criteriaPreset.sampleA"
+    ],
+    "openrouter": [
+      "llm-verifier · field.priceProviderOverride.help"
+    ],
+    "name": [
+      "remote-sessions · machines.plugins"
+    ],
+    "version": [
+      "remote-sessions · machines.plugins"
+    ],
+    "supportsreasoningeffort": [
+      "thinking-levels · card.capabilities.apiUnsupported",
+      "thinking-levels · card.capabilities.thinkingNative"
+    ],
+    "message": [
+      "thinking-levels · card.capabilities.developerRoleHint"
+    ],
+    "role": [
+      "thinking-levels · card.capabilities.developerRoleHint"
+    ],
+    "ultra": [
+      "thinking-levels · card.capabilities.hint",
+      "thinking-levels · card.capabilities.wirePlaceholder"
+    ],
+    "extrainputs": [
+      "thinking-levels · card.capabilities.mediaHint"
+    ],
+    "input": [
+      "thinking-levels · card.capabilities.mediaHint"
+    ],
+    "estimate": [
+      "thinking-levels · card.defaultPricing.estimate"
+    ],
+    "quarantine": [
+      "undo · boot.crash.session"
+    ],
+    "scan": [
+      "undo · boot.crash.session"
+    ],
+    "canvas": [
+      "wallpaper-engine · Edge 下视频壁纸走 canvas 渲染",
+      "wallpaper-engine · Edge 兼容：视频壁纸改用 canvas 渲染，避免浏览器自带的「下载 / 投屏」悬浮工具栏；关闭则始终使用原生 <video>"
+    ],
+    "json": [
+      "wallpaper-engine · 下载 .json",
+      "wallpaper-engine · 从「导出」得到的 .json 导入一份字体集",
+      "wallpaper-engine · 从「导出」得到的 .json 导入一份预设（导入后不会立刻应用 —— 去列表里点它）",
+      "wallpaper-engine · 把已有预设导出成 .json（可分享 / 可再导入）—— 先选导出哪一份，再选带哪些资产",
+      "wallpaper-engine · 按上面勾选的资产，把这份预设下载成 .json（可分享 / 可再导入）",
+      "wallpaper-engine · 读不出这个文件（换一个 .json 再试）",
+      "wallpaper-engine · 这不是 JSON 文件（字体集是导出出来的 .json）",
+      "wallpaper-engine · 这不是 JSON 文件（预设是导出出来的 .json）"
+    ],
+    "contentrating": [
+      "wallpaper-engine · 对应 Wallpaper Engine 的内容分级（project.json contentrating）"
+    ],
+    "pauseonhidden": [
+      "wallpaper-engine · 标签页隐藏(pauseOnHidden)"
+    ],
+    "pauseonbattery": [
+      "wallpaper-engine · 电池供电(pauseOnBattery)"
+    ],
+    "pauseonblur": [
+      "wallpaper-engine · 窗口失焦(pauseOnBlur)"
+    ],
+    "pauseonocclusion": [
+      "wallpaper-engine · 窗口被完全遮挡(pauseOnOcclusion)"
+    ],
+    "terminalfontfamily": [
+      "wallpaper-engine · 终端字体：① 对话里的终端块（走官方 --dsl-terminal-font 钩子）② 侧栏 / SSH 终端面板（走 dsh-ssh 给皮肤留的 --dsh-ssh-terminal-font 钩子）；「跟随」= 都不覆盖，各用它们自己的默认。⚠️ 若在 dsh-ssh 的设置里填过 terminalFontFamily，那个值优先级更高"
+    ],
+    "hecoococ": [
+      "wallpaper-engine · 🌟 还有 SiriLee、libiwolve、0-007pro、jujubaoj646-star、xiahou001、wilianyichen、hecoococ、ShamSky88、Rekk0、Y1X1n 等贡献者，以及所有通过 issue 反馈与 PR 参与改进的朋友 —— 谢谢你们！"
+    ],
+    "libiwolve": [
+      "wallpaper-engine · 🌟 还有 SiriLee、libiwolve、0-007pro、jujubaoj646-star、xiahou001、wilianyichen、hecoococ、ShamSky88、Rekk0、Y1X1n 等贡献者，以及所有通过 issue 反馈与 PR 参与改进的朋友 —— 谢谢你们！"
+    ],
+    "wilianyichen": [
+      "wallpaper-engine · 🌟 还有 SiriLee、libiwolve、0-007pro、jujubaoj646-star、xiahou001、wilianyichen、hecoococ、ShamSky88、Rekk0、Y1X1n 等贡献者，以及所有通过 issue 反馈与 PR 参与改进的朋友 —— 谢谢你们！"
+    ],
+    "xiahou001": [
+      "wallpaper-engine · 🌟 还有 SiriLee、libiwolve、0-007pro、jujubaoj646-star、xiahou001、wilianyichen、hecoococ、ShamSky88、Rekk0、Y1X1n 等贡献者，以及所有通过 issue 反馈与 PR 参与改进的朋友 —— 谢谢你们！"
+    ],
+    "yuxilao": [
+      "wallpaper-engine · 🎨 yuxilao —— scene-gl 的 Linux 实时渲染管线（WebGL2 官方 shader 驱动）、轮换交接与 GPU 帧回填"
+    ],
+    "oneincase": [
+      "wallpaper-engine · 🧩 oneincase —— 内置 WebWallGL 实时渲染引擎与 media-bridge 媒体中间件的作者：场景 / 网页壁纸的实时渲染，以及 Windows / macOS / Linux 三平台的原生媒体链路，都建立在它们之上"
+    ],
+    "repair": [
+      "worktree · error.worktreeIdentityChanged",
+      "worktree · error.worktreeNotFound",
+      "worktree · worktree.repairGuidance"
+    ],
+    "worktree": [
+      "worktree · error.worktreeIdentityChanged",
+      "worktree · error.worktreeNotFound",
+      "worktree · error.worktreeSessionRepairRequired",
+      "worktree · worktree.repairGuidance"
     ]
   }
 }
