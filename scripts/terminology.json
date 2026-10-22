@@ -794,6 +794,48 @@
     "report": [
       "settings.ths-holdings · componentsDisabled",
       "settings.ths-holdings · showCardHint"
+    ],
+    "compactlocalhint": [
+      "codex · detail"
+    ],
+    "popupselect": [
+      "codex · kind"
+    ],
+    "compactlocal": [
+      "codex · label"
+    ],
+    "background": [
+      "dsh-whale-particles · title"
+    ],
+    "particle": [
+      "dsh-whale-particles · title"
+    ],
+    "player": [
+      "music · iframeTitle"
+    ],
+    "assistant": [
+      "quote-followup · conversation.role.assistant"
+    ],
+    "idle": [
+      "status-rotator · idle"
+    ],
+    "running": [
+      "status-rotator · running"
+    ],
+    "thinking": [
+      "status-rotator · thinking"
+    ],
+    "daily": [
+      "xingyuan · daily"
+    ],
+    "monthly": [
+      "xingyuan · monthly"
+    ],
+    "once": [
+      "xingyuan · once"
+    ],
+    "weekly": [
+      "xingyuan · weekly"
     ]
   }
 }

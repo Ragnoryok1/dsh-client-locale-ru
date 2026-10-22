@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 367.** За этот релиз их стало на 433, а пакет
-  покрывает 497 namespace и 58 013 строк (из них 2 996 — namespace самого харнесса,
-  55 017 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 397.** За этот релиз их стало на 463, а пакет
+  покрывает 527 namespace и 58 172 строк (из них 2 996 — namespace самого харнесса,
+  55 176 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -57,6 +57,9 @@
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 51).** `zhihu-search` (19), `approvalVoice` (18), `better-display` (18), `dsh-file-attachment` (18), `hardwareMonitor` (18), `theme-gallery` (18), `sessionColor` (17), `settings.reach` (17), `settings.ths-holdings` (17), `dsh-llm-provider` (16), `settings.modelVisibility` (16), `settings.talk` (16), `inline-comments` (15), `tradeSearch` (15), `dsh-model-search` (14), `markdown-preview` (14), `reasoning-effort` (14), `cursor-effect` (13), `dsh-conversation-outline` (13), `ERR_UNSAFE_PROFILING_DIRECTORY` (13), `dsh-github` (12), `global-rules` (12), `inlineMedia` (12), `peakIndicator` (12), `ptcCordis` (12), `publish` (12), `session-colorful-unread-pin-jobs` (12), `settings.catppuccin` (12), `settings.codeIndex` (12), `w2m.target` (12). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 52).** `quote-followup` (11), `settings.shop` (10), `traceCompare` (10), `dsh-task-worktree` (9), `settings.browser-harness` (9), `chart` (7), `chat-timeline` (7), `dsh-film-studio` (7), `dsh-model-capability` (6), `dsh-vscode-mode` (6), `music` (6), `codex` (5), `dsh-harmony-bootstrap` (5), `liang.skin` (5), `settings.blue-whale` (5), `settings.neu` (5), `devDashboard` (4), `dsh-whale-particles` (4), `mimo` (4), `settings.dracula` (4), `skills-anywhere` (4), `status-rotator` (4), `xingyuan` (4), `dsh-concise` (3), `dsh-openrouter-live` (3), `picturereader` (3), `style` (3), `.ndjson.zst` (2), `agent-shell-consent` (2), `dsh-engram` (2). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина
