@@ -34,7 +34,7 @@
 
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json` 记录包名、版本、许可证，以及从其 bundle 中提取的字符串。安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，找出每个插件自己的词典并与我们的对照；没有词典的插件会照实标注——在它请求翻译之前无从翻译。
 
-`@linxin666` 这一族值得单独说明：十三个词典、1,513 条字符串，每一个都已完整翻译。
+`@linxin666` 这一族值得单独说明：十三个词典，每一个都已完整翻译——从几十条到四百条不等。
 
 | 词典 | 包 | 条数 |
 |---|---|---|
@@ -51,6 +51,7 @@ harness 树之外的插件用同样的方式翻译，但英文取自它们自己
 | `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
 | `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
 | `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+| **合计** | 13 个词典 | **1,513** |
 
 「插件」页面上的插件名称与说明无法由本包提供：harness 把她们放在每个包的 `locale/<语言>.json` 里并据此拼出翻译映射，而 locale 服务的 `resolveText` 根本不查词典。221 个 harness 包带有 `locale/en.json`，其中 219 个带有 `locale/zh.json`，**没有一个带 `locale/ru.json`**，所以这 261 行在任何语言包下都保持英文。这个缺口由 `scripts/descriptor-coverage.mjs` 单独统计；机制说明与 32 份已备好的译文见 [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md)。
 

@@ -10,6 +10,18 @@ import { RU_DICTS, RU_LABEL } from './dicts.ts'
 import { startRussianPlurals } from './plural.ts'
 import { startRussianPluginNames } from './plugin-names.ts'
 import { startRussianTypography } from './typography.ts'
+import { readBootOptions, type Options } from '../options.ts'
+
+/** The switches, resolved from the host half's global and from any config passed in. */
+export type Config = Options
+
+/*
+ * The browser half never receives the profile row's config — the client boot graph
+ * carries none — so the host half publishes the switches as a global (see
+ * `src/index.ts`) and this reads it. A config argument still wins when a host passes
+ * one, which keeps the shape the loader documents for client plugins.
+ */
+const HOST_OPTIONS = readBootOptions()
 
 /**
  * Skip only occupied slots; validation and unexpected service errors still fail.
@@ -35,71 +47,13 @@ function skipDuplicate(
 /** Required service: the locale registry that owns languages and dictionaries. */
 export const inject = ['locale']
 
-/**
- * Switches for the passes the pack runs on top of its dictionaries.
- *
- * The pack is more than a dictionary: it substitutes Russian plural forms, rewrites
- * plugin titles the harness cannot translate, and applies Russian screen typography.
- * Each of those is a deliberate extra, and each can disagree with a reader who wants
- * only the translation — typography in particular rewrites text the user may have
- * written. A switch turns one pass off without touching the dictionaries, so the
- * interface stays Russian and only the extra behaviour disappears.
- *
- * Omitted means «on»: the pack behaves as before unless a switch says otherwise, so an
- * existing profile needs no edit.
+/*
+ * The browser half never receives the profile row's config — the client boot graph
+ * carries none — so the host half publishes the switches as a global and this reads
+ * it. A config argument still wins when a host passes one, which keeps the shape the
+ * loader documents for client plugins.
  */
-export interface Config {
-  /** Russian screen typography: «ёлочки», em dashes, ellipses, non-breaking spaces. */
-  typography?: boolean
-  /** Russian plural forms picked by `Intl.PluralRules('ru')` instead of the neutral label. */
-  plurals?: boolean
-  /** Russian titles and descriptions for plugins whose own package ships no Russian locale. */
-  pluginNames?: boolean
-}
-
-/** The switches, by their name in the config. */
-const SWITCHES = ['typography', 'plurals', 'pluginNames'] as const
-
-/** What a Standard Schema validation answers: the normalized config, or the reasons it is not one. */
-type ValidationResult = { value: Config } | { issues: { message: string }[] }
-
-/**
- * Config schema without a runtime dependency.
- *
- * The loader accepts any Standard Schema (`~standard.validate`), and this pack ships no
- * dependencies on purpose — a language pack that pulls a validator into every profile
- * to read three booleans is a bad trade. An unknown switch is an error rather than a
- * silent no-op: a typo in `typografy: false` would otherwise leave the pass running and
- * look like the option does not work.
- */
-export const Config = {
-  '~standard': {
-    version: 1 as const,
-    vendor: 'dsh-client-locale-ru',
-    validate(value: unknown): ValidationResult {
-      if (value === undefined || value === null) return { value: {} }
-      if (typeof value !== 'object' || Array.isArray(value)) {
-        return { issues: [{ message: `опции пакета — объект: ${SWITCHES.join(', ')}` }] }
-      }
-      const source = value as Record<string, unknown>
-      const unknown = Object.keys(source).filter(key => !SWITCHES.includes(key as typeof SWITCHES[number]))
-      if (unknown.length > 0) {
-        return { issues: [{ message: `неизвестные опции: ${unknown.join(', ')}; известны: ${SWITCHES.join(', ')}` }] }
-      }
-      const normalized: Config = {}
-      for (const key of SWITCHES) {
-        const raw = source[key]
-        if (raw === undefined) continue
-        if (typeof raw !== 'boolean') {
-          return { issues: [{ message: `${key} — true или false, получено ${typeof raw}` }] }
-        }
-        normalized[key] = raw
-      }
-      return { value: normalized }
-    },
-  },
-}
-
+const HOST_OPTIONS = readBootOptions()
 /**
  * Run a Russian-only pass while Russian is the active language, and stop it on a switch.
  *

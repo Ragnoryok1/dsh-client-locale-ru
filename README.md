@@ -24,7 +24,7 @@
 [![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-67724-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский (`ru`) язык для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`). Пакет регистрирует `ru` как выбираемый язык клиента через сервис локали (`ctx.locale.addLanguage`) и везёт по словарю на каждый namespace — 584 namespace, 67 724 строки, сборка под dsh `0.2.1-rc.2`. Установка: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, затем **Русский** в Settings → General. Недостающие ключи падают в английский, поэтому более новый харнесс продолжает работать. Область — собственный интерфейс харнесса (64 namespace, 2 996 строк) и словари 520 сторонних плагинов, переведённые с английского, который публикует сам плагин (64 728 строк всего). MIT, поддерживается сообществом, не связан с DeepSeek.
+Русский (`ru`) язык для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`). Пакет регистрирует `ru` как выбираемый язык клиента через сервис локали (`ctx.locale.addLanguage`) и везёт по словарю на каждый namespace — 584 namespace, 67 724 строки, сборка под dsh `0.2.1-rc.2`. Установка: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, затем **Русский** в Settings → General. Недостающие ключи падают в английский, поэтому более новый харнесс продолжает работать. Область — собственный интерфейс харнесса (64 namespace и 2 996 строк) и словари 520 сторонних плагинов, переведённые с английского, который публикует сам плагин (64 728 строк всего). MIT, поддерживается сообществом, не связан с DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
@@ -35,7 +35,7 @@
 
 Плагины за пределами дерева харнесса переводятся так же, но их английский текст берётся из собственной публикации: `plugins/<namespace>.json` хранит пакет, версию, лицензию и строки, выгруженные из бандла. Что осталось английским в вашей установке, покажет `npm run report:plugins`: он обходит `node_modules` профиля, находит у каждого плагина его собственный словарь и сверяет ключи с нашими, а плагин без словаря так и помечает — переводить нечего, пока он не спросит перевод.
 
-Отдельно стоит сказать про семейство `@linxin666`: тринадцать словарей, 1 513 строк, и каждый переведён целиком.
+Отдельно стоит сказать про семейство `@linxin666`: тринадцать словарей, и каждый переведён целиком — от нескольких десятков строк до четырёх сотен.
 
 | Словарь | Пакет | Строк |
 |---|---|---|
@@ -52,6 +52,7 @@
 | `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
 | `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
 | `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+| **Итого** | 13 словарей | **1 513** |
 
 Названия и описания самих плагинов на странице «Плагины» пакет перевести не может: харнесс хранит их в `locale/<язык>.json` внутри каждого пакета и собирает из них карту перевода, а `resolveText` в сервисе локали словари не спрашивает вовсе. У 221 пакета есть `locale/en.json`, у 219 — `locale/zh.json`, и **ни у одного нет `locale/ru.json`**: эти 261 строка остаются английскими при любом языковом пакете. Разрыв считает `scripts/descriptor-coverage.mjs`, разбор механизма и 32 готовых перевода — в [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md).
 

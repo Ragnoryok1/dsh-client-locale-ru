@@ -35,7 +35,7 @@ The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 584 namespaces, 67,
 
 Plugins outside the harness tree are translated the same way, but their English text comes from their own publication: `plugins/<namespace>.json` records the package, the version, the licence and the strings extracted from its bundle. What is still English in your installation is shown by `npm run report:plugins`: it walks the profile's `node_modules`, finds each plugin's own dictionary and compares its keys with ours, and a plugin without a dictionary is reported as such — there is nothing to translate until it asks for one.
 
-One family deserves a word of its own, `@linxin666`: thirteen dictionaries, 1,513 strings, each translated in full.
+One family deserves a word of its own, `@linxin666`: thirteen dictionaries, each translated in full — from a few dozen strings to four hundred.
 
 | Dictionary | Package | Strings |
 |---|---|---|
@@ -52,6 +52,7 @@ One family deserves a word of its own, `@linxin666`: thirteen dictionaries, 1,51
 | `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
 | `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
 | `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+| **Total** | 13 dictionaries | **1,513** |
 
 The names and descriptions of the plugins themselves on the Plugins page cannot come from this pack: the harness keeps them in `locale/<language>.json` inside each package and builds a translation map from them, and `resolveText` in the locale service does not consult dictionaries at all. 221 packages ship `locale/en.json`, 219 ship `locale/zh.json`, and **none ships `locale/ru.json`**: those 261 strings stay English with any language pack. `scripts/descriptor-coverage.mjs` counts that gap; the mechanism and the 32 prepared translations are in [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md).
 
