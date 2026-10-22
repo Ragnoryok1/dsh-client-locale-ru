@@ -468,7 +468,7 @@ The workflow also has a manual run with a «только проверки, бе�
 
 ## Contents
 
-- `src/client/dicts.ts` — the Russian dictionaries (584 namespaces, 67,724 translations, ~46 000 lines). This is where the main value lies.
+- `src/client/dicts.ts` — the Russian dictionaries: 584 namespaces, 67,724 strings, 71,506 lines of file. This is where the main value lies.
 - `src/client/index.ts` — the client plugin entry point (registration of `ru` + the dictionaries).
 - `src/index.ts` — the empty host half (`apply()`).
 - `cordis.patch.yml` — the profile patch (`- insert:` of the client entry `locale-ru`).

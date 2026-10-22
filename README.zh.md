@@ -239,7 +239,7 @@ npm run verify -- путь/к/дереву/харнесса
 
 ## 内容
 
-- `src/client/dicts.ts`——俄语词典（584 个 namespace、67,724 条翻译、约 68 000 行）。这正是本包的核心价值。
+- `src/client/dicts.ts`——俄语词典：584 个 namespace、67,724 条字符串，文件 71,506 行。这正是本包的核心价值。
 - `src/client/index.ts`——客户端插件入口（注册 `ru` 和词典）。
 - `src/index.ts`——空的宿主部分（`apply()`）。
 - `cordis.patch.yml`——profile 补丁（`- insert:` 客户端条目 `locale-ru`）。
