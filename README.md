@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.14",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 584 namespaces, 67724 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67724 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -24,49 +24,38 @@
 [![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-67724-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский язык для веб-интерфейса DeepSeek Harness: 584 namespaces, 67724 перевод, экранная типографика и аудит локализации в CI.
+Русский (`ru`) язык для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`). Пакет регистрирует `ru` как выбираемый язык клиента через сервис локали (`ctx.locale.addLanguage`) и везёт по словарю на каждый namespace — 584 namespace, 67 724 строки, сборка под dsh `0.2.1-rc.2`. Установка: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, затем **Русский** в Settings → General. Недостающие ключи падают в английский, поэтому более новый харнесс продолжает работать. Область — собственный интерфейс харнесса (64 namespace, 2 996 строк) и словари 520 сторонних плагинов, переведённые с английского, который публикует сам плагин (64 728 строк всего). MIT, поддерживается сообществом, не связан с DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
 
 ---
 
-Полный список того, что переведено, — в [NAMESPACES.md](NAMESPACES.md): 584 namespaces, 67 724 строк, с пометкой у словарей плагинов.
+Полный список переведённого — в [NAMESPACES.md](NAMESPACES.md): 584 namespace, 67 724 строки, словари плагинов помечены отдельно.
 
- Плагины за пределами дерева харнесса переводятся так же, но их английский текст берётся
-из их собственной публикации: `plugins/<namespace>.json` хранит пакет, версию, лицензию и
-английские строки, выгруженные из бандла (`npm run fetch:plugins`). Что ещё осталось
-Отдельно он предупреждает и о другом: если в профиле есть ещё один пакет, который сам
-регистрирует русский, язык достаётся тому, кто зарегистрировал его первым, — второй молча
-пропустит свои namespace, и в интерфейсе окажется перевод чужого пакета.
-английским в вашей установке, показывает `npm run report:plugins`: он обходит
-`node_modules` профиля, находит в каждом плагине его собственный словарь и сравнивает
-ключи с нашим. Плагин без словаря он так и называет — переводить нечего, пока плагин не
-спросит перевод, — а плагин, который уже несёт свой русский, отмечает отдельно. Так
-переводятся
-словари, которых у нас не было бы вовсе, — сейчас это `update` (43 строки) для
-`@linxin666/dsh-update`, `git-graph` (63 строки) для `@linxin666/dsh-client-ui-git-graph`,
-`dsh-web-ui-usage` (63 строки) для `@linxin666/dsh-usage`, `dsh-web-ui-session-archive`
-(124 строки) для `@linxin666/dsh-session-archive`, `pet` (81 строка) для
-`@linxin666/dsh-pet`, `remote` (115 строк) для `@linxin666/dsh-remote-web-ui` и
-`dsh-skill-explorer` (75 строк) для `@linxin666/dsh-client-ui-skill-explorer` и
-`dsh-web-ui-market` (106 строк) для `@linxin666/dsh-client-ui-market`, `liangshen`
-(42 строки) для `@linxin666/dsh-liangshen` и `dsh-web-ui-preset-center` (46 строк) для
-`@linxin666/dsh-client-ui-preset-center`, `dsh-ssh` (154 строки) для `@linxin666/dsh-ssh` и
-`task-board` (437 строк) для `@linxin666/dsh-client-ui-task-board` и `task-board-github`
-(113 строк) для `@linxin666/dsh-client-ui-task-board-github` — это все тринадцать
-выгружаемых словарей семейства, и каждый переведён целиком.
-Названия и описания самих плагинов на странице «Плагины» пакет перевести не может: харнесс
-хранит их в `locale/<язык>.json` внутри каждого пакета и собирает из них карту перевода,
-а `resolveText` в сервисе локали словари не спрашивает вовсе — «maps do not consult
-registered dictionaries». У 221 пакета харнесса есть `locale/en.json`, у 219 из них —
-`locale/zh.json`, и **ни у одного нет `locale/ru.json`**; поэтому эти 261 строка
-остаются английскими при любом языковом пакете, и закрыть их можно только файлами
-`locale/ru.json` на стороне харнесса. Скрипт `scripts/descriptor-coverage.mjs` считает
-этот разрыв, чтобы он не смешивался с нашим покрытием словарей; разбор механизма и 32 готовых
-перевода — в `docs/descriptor-upstream.md`.
-Чужой перевод мы не копируем: сверять его было бы не с чем, а аудит сравнивает наше
-значение с английским шаблоном того же плагина.
+Плагины за пределами дерева харнесса переводятся так же, но их английский текст берётся из собственной публикации: `plugins/<namespace>.json` хранит пакет, версию, лицензию и строки, выгруженные из бандла. Что осталось английским в вашей установке, покажет `npm run report:plugins`: он обходит `node_modules` профиля, находит у каждого плагина его собственный словарь и сверяет ключи с нашими, а плагин без словаря так и помечает — переводить нечего, пока он не спросит перевод.
+
+Отдельно стоит сказать про семейство `@linxin666`: тринадцать словарей, 1 513 строк, и каждый переведён целиком.
+
+| Словарь | Пакет | Строк |
+|---|---|---|
+| `update` | `@linxin666/dsh-update` | 43 |
+| `git-graph` | `@linxin666/dsh-client-ui-git-graph` | 63 |
+| `dsh-web-ui-usage` | `@linxin666/dsh-usage` | 67 |
+| `dsh-web-ui-session-archive` | `@linxin666/dsh-session-archive` | 124 |
+| `pet` | `@linxin666/dsh-pet` | 81 |
+| `remote` | `@linxin666/dsh-remote-web-ui` | 117 |
+| `dsh-skill-explorer` | `@linxin666/dsh-client-ui-skill-explorer` | 114 |
+| `dsh-web-ui-market` | `@linxin666/dsh-client-ui-market` | 106 |
+| `liangshen` | `@linxin666/dsh-liangshen` | 42 |
+| `dsh-web-ui-preset-center` | `@linxin666/dsh-client-ui-preset-center` | 46 |
+| `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
+| `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
+| `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+
+Названия и описания самих плагинов на странице «Плагины» пакет перевести не может: харнесс хранит их в `locale/<язык>.json` внутри каждого пакета и собирает из них карту перевода, а `resolveText` в сервисе локали словари не спрашивает вовсе. У 221 пакета есть `locale/en.json`, у 219 — `locale/zh.json`, и **ни у одного нет `locale/ru.json`**: эти 261 строка остаются английскими при любом языковом пакете. Разрыв считает `scripts/descriptor-coverage.mjs`, разбор механизма и 32 готовых перевода — в [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md).
+
+Чужой перевод мы не копируем: сверять его было бы не с чем, а аудит сравнивает наше значение с английским шаблоном того же плагина. И одно предупреждение на будущее: если в профиле окажется второй пакет, который сам регистрирует русский, язык достанется тому, кто зарегистрировал его первым, — второй молча пропустит свои namespace, и в интерфейсе будет чужой перевод.
 
 ## Как это выглядит
 

@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.14",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 584 namespaces, 67724 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67724 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -32,33 +32,29 @@
 
 完整清单见 [NAMESPACES.md](NAMESPACES.md)：584 个 namespace、67,724 条字符串，随包附带的插件词典单独标注。
 
-如果 pnpm 报 `ERR_PNPM_NO_MATURE_MATCHING_VERSION`，这不是包坏了，而是成熟度策略：配置文件
-不安装发布不足 48 小时的版本。等一两天（报错信息里写着版本号），或在配置文件设置里去掉
-`minimumReleaseAge` 限制。
-「插件」页面上的插件名称与说明无法由本包提供：harness 把她们放在每个包的 `locale/<语言>.json`
-里并据此拼出翻译映射，而 locale 服务的 `resolveText` 根本不查词典（原文注释：maps do not
-consult registered dictionaries）。221 个 harness 包带有 `locale/en.json`，其中 219 个带有
-`locale/zh.json`，**没有一个带 `locale/ru.json`**，所以这 261 行在任何语言包下都保持英文，只能由
-harness 侧的 `locale/ru.json` 文件补上。`scripts/descriptor-coverage.mjs` 单独统计这个缺口，
-不与我们的词典覆盖率混在一起；机制说明与 32 份已备好的译文见 `docs/descriptor-upstream.md`。
-harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json`
-记录包名、版本、许可证，以及从其 bundle 中提取的英文字符串（`npm run fetch:plugins`）。
-它还会提醒另一件事：如果配置文件里还有另一个自己注册俄语的包，语言就归先注册的那个——
-第二个会静默跳过自己的 namespace，界面上出现的就是别人的译文。
-安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，
-读出每个插件自己的词典并与我们的对照。没有词典的插件会照实标注——在它请求翻译之前无从翻译；
-自带俄语的插件单独标出。
-这样也能覆盖本来完全不存在的词典——目前是 `@linxin666/dsh-update` 的 `update`（43 条）、`@linxin666/dsh-client-ui-git-graph`
-的 `git-graph`（63 条）、`@linxin666/dsh-usage` 的 `dsh-web-ui-usage`（63 条）与
-`@linxin666/dsh-session-archive` 的 `dsh-web-ui-session-archive`（124 条）、`@linxin666/dsh-pet` 的 `pet`（81 条）与
-`@linxin666/dsh-remote-web-ui` 的 `remote`（115 条）与 `@linxin666/dsh-client-ui-skill-explorer`
-的 `dsh-skill-explorer`（75 条）与 `@linxin666/dsh-client-ui-market` 的 `dsh-web-ui-market`
-（106 条）、`@linxin666/dsh-liangshen` 的 `liangshen`（42 条）与
-`@linxin666/dsh-client-ui-preset-center` 的 `dsh-web-ui-preset-center`（46 条）、
-`@linxin666/dsh-ssh` 的 `dsh-ssh`（154 条）与 `@linxin666/dsh-client-ui-task-board` 的
-`task-board`（437 条）与 `@linxin666/dsh-client-ui-task-board-github` 的 `task-board-github`
-（113 条）——该家族可提取的全部十三个词典，每一个都已完整翻译。我们不复制别的包的俄语译文：那样无从核对，
-而审计是把我们的取值与同一个插件的英文模板作比较。
+harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json` 记录包名、版本、许可证，以及从其 bundle 中提取的字符串。安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，找出每个插件自己的词典并与我们的对照；没有词典的插件会照实标注——在它请求翻译之前无从翻译。
+
+`@linxin666` 这一族值得单独说明：十三个词典、1,513 条字符串，每一个都已完整翻译。
+
+| 词典 | 包 | 条数 |
+|---|---|---|
+| `update` | `@linxin666/dsh-update` | 43 |
+| `git-graph` | `@linxin666/dsh-client-ui-git-graph` | 63 |
+| `dsh-web-ui-usage` | `@linxin666/dsh-usage` | 67 |
+| `dsh-web-ui-session-archive` | `@linxin666/dsh-session-archive` | 124 |
+| `pet` | `@linxin666/dsh-pet` | 81 |
+| `remote` | `@linxin666/dsh-remote-web-ui` | 117 |
+| `dsh-skill-explorer` | `@linxin666/dsh-client-ui-skill-explorer` | 114 |
+| `dsh-web-ui-market` | `@linxin666/dsh-client-ui-market` | 106 |
+| `liangshen` | `@linxin666/dsh-liangshen` | 42 |
+| `dsh-web-ui-preset-center` | `@linxin666/dsh-client-ui-preset-center` | 46 |
+| `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
+| `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
+| `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+
+「插件」页面上的插件名称与说明无法由本包提供：harness 把她们放在每个包的 `locale/<语言>.json` 里并据此拼出翻译映射，而 locale 服务的 `resolveText` 根本不查词典。221 个 harness 包带有 `locale/en.json`，其中 219 个带有 `locale/zh.json`，**没有一个带 `locale/ru.json`**，所以这 261 行在任何语言包下都保持英文。这个缺口由 `scripts/descriptor-coverage.mjs` 单独统计；机制说明与 32 份已备好的译文见 [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md)。
+
+我们不复制别的包的俄语译文：那样无从核对，而审计是把我们的取值与同一个插件的英文模板作比较。另外提醒一点：如果配置文件里还有另一个自己注册俄语的包，语言就归先注册的那个——第二个会静默跳过自己的 namespace，界面上出现的就是别人的译文。
 
 ## 效果展示
 

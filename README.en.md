@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.14",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian interface (i18n) for the DeepSeek Harness web GUI: 584 namespaces, 67724 translated strings, Russian screen typography, and a locale audit in CI pinned to a harness tag. Includes the automation-task manager and the reminder catalog.",
+  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67724 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -33,36 +33,29 @@ Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deeps
 
 The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 584 namespaces, 67,724 strings, with the bundled plugin dictionaries marked.
 
-The plugin names and descriptions on the Plugins page cannot come from this pack: the harness
-keeps them in `locale/<language>.json` inside each package, builds a translation map from them,
-and its locale service resolves that map without consulting dictionaries at all — «maps do not
-consult registered dictionaries». 221 harness packages ship `locale/en.json`, 219 of them ship
-`locale/zh.json`, and **none ships `locale/ru.json`**, so those 261 strings stay English with any
-language pack; only `locale/ru.json` files on the harness side can close them.
-`scripts/descriptor-coverage.mjs` counts that gap so it is not mixed into our dictionary coverage; the mechanism and the 32 prepared translations are in `docs/descriptor-upstream.md`.
-Plugins outside the harness tree are translated the same way, but their English comes from
-their own publication: `plugins/<namespace>.json` records the package, version, licence and the
-English strings extracted from its bundle (`npm run fetch:plugins`). `npm run report:plugins`
-It also warns about another thing: when the profile holds a second pack that registers
-Russian itself, the language belongs to whoever registered it first — the other one silently
-skips its namespaces, and the interface ends up showing someone else's translation.
-shows what in your installation is still English: it walks the profile's `node_modules`, reads
-each plugin's own dictionary and compares its keys with ours. A plugin without a dictionary is
-reported as such — there is nothing to translate until it asks for one — and a plugin that
-already carries its own Russian is marked separately. That is how dictionaries
-that would otherwise not exist at all get covered — today `update` (43 strings) for
-`@linxin666/dsh-update`, `git-graph` (63 strings) for `@linxin666/dsh-client-ui-git-graph`,
-`dsh-web-ui-usage` (63 strings) for `@linxin666/dsh-usage` and `dsh-web-ui-session-archive`
-(124 strings) for `@linxin666/dsh-session-archive`, `pet` (81 strings) for `@linxin666/dsh-pet`
-`remote` (115 strings) for `@linxin666/dsh-remote-web-ui`, `dsh-skill-explorer`
-(75 strings) for `@linxin666/dsh-client-ui-skill-explorer` and `dsh-web-ui-market`
-(106 strings) for `@linxin666/dsh-client-ui-market`, `liangshen` (42 strings) for
-`@linxin666/dsh-liangshen` and `dsh-web-ui-preset-center` (46 strings) for
-`@linxin666/dsh-client-ui-preset-center`, `dsh-ssh` (154 strings) for `@linxin666/dsh-ssh` and
-`task-board` (437 strings) for `@linxin666/dsh-client-ui-task-board` and `task-board-github`
-(113 strings) for `@linxin666/dsh-client-ui-task-board-github` — all thirteen extractable
-dictionaries of that family, each translated in full. Another pack's Russian is never copied: there would be nothing to verify it
-against, while the audit compares our value with the English template of that same plugin.
+Plugins outside the harness tree are translated the same way, but their English text comes from their own publication: `plugins/<namespace>.json` records the package, the version, the licence and the strings extracted from its bundle. What is still English in your installation is shown by `npm run report:plugins`: it walks the profile's `node_modules`, finds each plugin's own dictionary and compares its keys with ours, and a plugin without a dictionary is reported as such — there is nothing to translate until it asks for one.
+
+One family deserves a word of its own, `@linxin666`: thirteen dictionaries, 1,513 strings, each translated in full.
+
+| Dictionary | Package | Strings |
+|---|---|---|
+| `update` | `@linxin666/dsh-update` | 43 |
+| `git-graph` | `@linxin666/dsh-client-ui-git-graph` | 63 |
+| `dsh-web-ui-usage` | `@linxin666/dsh-usage` | 67 |
+| `dsh-web-ui-session-archive` | `@linxin666/dsh-session-archive` | 124 |
+| `pet` | `@linxin666/dsh-pet` | 81 |
+| `remote` | `@linxin666/dsh-remote-web-ui` | 117 |
+| `dsh-skill-explorer` | `@linxin666/dsh-client-ui-skill-explorer` | 114 |
+| `dsh-web-ui-market` | `@linxin666/dsh-client-ui-market` | 106 |
+| `liangshen` | `@linxin666/dsh-liangshen` | 42 |
+| `dsh-web-ui-preset-center` | `@linxin666/dsh-client-ui-preset-center` | 46 |
+| `dsh-ssh` | `@linxin666/dsh-ssh` | 158 |
+| `task-board` | `@linxin666/dsh-client-ui-task-board` | 439 |
+| `task-board-github` | `@linxin666/dsh-client-ui-task-board-github` | 113 |
+
+The names and descriptions of the plugins themselves on the Plugins page cannot come from this pack: the harness keeps them in `locale/<language>.json` inside each package and builds a translation map from them, and `resolveText` in the locale service does not consult dictionaries at all. 221 packages ship `locale/en.json`, 219 ship `locale/zh.json`, and **none ships `locale/ru.json`**: those 261 strings stay English with any language pack. `scripts/descriptor-coverage.mjs` counts that gap; the mechanism and the 32 prepared translations are in [docs/descriptor-upstream.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/descriptor-upstream.md).
+
+Another pack's Russian is never copied: there would be nothing to verify it against, while the audit compares our value with the English template of that same plugin. And one warning for the future: if the profile holds a second pack that registers Russian itself, the language belongs to whoever registered it first — the other one silently skips its namespaces, and the interface ends up showing someone else's translation.
 
 ## What it looks like
 
