@@ -95,7 +95,9 @@ const external = new Map()
 try {
   for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json'))) {
     const record = JSON.parse(readFileSync(new URL(name, pluginsDir), 'utf8'))
-    external.set(record.namespace, `${record.package}@${record.version}`)
+    /* в записи некоторых словарей поле package уже содержит версию */
+    const origin = record.package.endsWith(`@${record.version}`) ? record.package : `${record.package}@${record.version}`
+    external.set(record.namespace, origin)
   }
 } catch {
   /* No vendored plugins: the inventory is the harness alone. */
