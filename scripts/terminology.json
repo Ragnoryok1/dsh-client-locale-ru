@@ -625,7 +625,8 @@
       "settings.tokenUsage · remoteDenied"
     ],
     "disabled": [
-      "settings.mcpPanel · removeConfirm"
+      "settings.mcpPanel · removeConfirm",
+      "prompt-library · soft control"
     ],
     "slug": [
       "expertSources · custom.form.slug"
@@ -674,6 +675,15 @@
     ],
     "force": [
       "bgjobs · force.ask.confirm.title"
+    ],
+    "circuit": [
+      "dsh-skins.ui · personalization.uefi.art"
+    ],
+    "list": [
+      "prompt-library · soft control"
+    ],
+    "taskkill": [
+      "dsh-treekeeper · confirmBody"
     ]
   }
 }

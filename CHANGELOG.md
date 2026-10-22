@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 187.** За этот релиз их стало на 253, а пакет
-  покрывает 317 namespace и 51 193 строк (из них 2 996 — namespace самого харнесса,
-  48 197 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 217.** За этот релиз их стало на 283, а пакет
+  покрывает 347 namespace и 53 130 строк (из них 2 996 — namespace самого харнесса,
+  50 134 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -39,6 +39,9 @@
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 45).** `im-gateway` (82), `lume` (82), `pluginTopology` (82), `settings.grokSubscription` (82), `catppuccin` (81), `clutch.title` (80), `fileExplorer` (79), `noletme` (79), `settings.codexAuth` (79), `settings.kimiSubscription` (78), `settings.multi2api` (78), `genui` (77), `gitbashShell` (77), `settings.modelProxy` (77), `settings.openai-codex-auth` (77), `dsh-ding` (75), `settings.modelContextCatalog` (75), `tokenLedger` (75), `usage-state` (75), `autoMemory` (73), `skill-center` (73), `capability-panel` (72), `dsh-desktop-restart` (72), `dsh-service-console` (72), `usage-meter` (72), `bgjobs` (71), `ds-balance` (71), `file-review` (71), `oomol.settings` (71), `settings.dreamSkin` (71). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 46).** `.runs.json` (70), `dsh-skins.ui` (69), `settings.lanProxy` (69), `settings.qoderCredential` (69), `dsh-provider-veark` (68), `quota-panel` (68), `dsh-tree-view` (67), `settings.researchMarket` (67), `skillManager` (67), `dsh-canvas` (66), `personaDafeiyu` (66), `prompt-library` (66), `completion-alert` (65), `dsh-session-toolbox` (65), `dsh-speak` (65), `dsh-treekeeper` (65), `dsh-emoji` (64), `dsh-mcp-manager-plus` (64), `harness-channel-config` (64), `dsh-ppt` (63), `nested-followups` (63), `office-ppt` (63), `relay.codex` (63), `harbor-evolution` (62), `baize-rules` (61), `dsh-prompt-history` (61), `task-runner` (61), `settings.cursorSubscription` (59), `whale-meter` (59), `codex-navigation-enhancer` (58). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина

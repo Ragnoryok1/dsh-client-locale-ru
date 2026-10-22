@@ -40,7 +40,7 @@
     "loadFailed": "Failed to load",
     "loading": "Loading…",
     "manualHint": "Paste an MCP configuration from any of these tools as-is — no rewriting: Claude Code, Cursor, VS Code, Codex, OpenCode, Continue, Pi, Cherry Studio, Windsurf, Qoder, CodeBuddy, TRAE, ZCode and DeepSeek Harness (TOML and JSON-with-comments included).",
-    "manualPlaceholder": "// Example: Claude Code / Cursor / Windsurf / Qoder etc.n{n  \"mcpServers\": {n    \"example-server\": {n      \"command\": \"npx\",n      \"args\": [\"-y\", \"mcp-server-example\"]n    }n  }n}nn// VS Code uses \"servers\", Codex uses TOML [mcp_servers.x],n// OpenCode uses \"mcp\" with type:\"local\"/\"remote\" — paste any of them.",
+    "manualPlaceholder": "// Example: Claude Code / Cursor / Windsurf / Qoder etc.\n{\n  \"mcpServers\": {\n    \"example-server\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"mcp-server-example\"]\n    }\n  }\n}\n\n// VS Code uses \"servers\", Codex uses TOML [mcp_servers.x],\n// OpenCode uses \"mcp\" with type:\"local\"/\"remote\" — paste any of them.",
     "manualTitle": "Manual configuration",
     "manualWarn": "Verify the source and assess the risk before configuring.",
     "modeForm": "Form",
