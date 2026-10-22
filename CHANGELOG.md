@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 157.** За этот релиз их стало на 223, а пакет
-  покрывает 287 namespace и 48 914 строк (из них 2 996 — namespace самого харнесса,
-  45 918 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 187.** За этот релиз их стало на 253, а пакет
+  покрывает 317 namespace и 51 193 строк (из них 2 996 — namespace самого харнесса,
+  48 197 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -36,6 +36,9 @@
   публикации (`npm run fetch:plugins`) вместе с версией и лицензией, перевод сделан
   с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 44).** `dsh-skills-manager-plus` (102), `dsh-message-ops` (101), `quota` (99), `settings.runninghub` (98), `model-pricing` (97), `dsh-scheduler` (96), `dsh-web-search` (96), `pocketMobileNav` (96), `net-proxy` (95), `settings.acp` (95), `git-panel` (94), `russian-lang` (94), `dsh-prompt-manager` (93), `settings.dshopencodego` (93), `cost-meter` (92), `dsh-ballast` (92), `dsh-instance-manager` (92), `harden` (92), `meow-memory` (92), `token-meter-panel` (92), `free-proxy` (88), `hermes-loop` (88), `balance` (87), `dsh-delete-session` (87), `notify-sounds` (87), `dsh-jev-advisor` (85), `dsh-session-steward` (85), `dsh-pomodoro` (83), `dsh-project-memory` (83), `memory-porter` (83). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 45).** `im-gateway` (82), `lume` (82), `pluginTopology` (82), `settings.grokSubscription` (82), `catppuccin` (81), `clutch.title` (80), `fileExplorer` (79), `noletme` (79), `settings.codexAuth` (79), `settings.kimiSubscription` (78), `settings.multi2api` (78), `genui` (77), `gitbashShell` (77), `settings.modelProxy` (77), `settings.openai-codex-auth` (77), `dsh-ding` (75), `settings.modelContextCatalog` (75), `tokenLedger` (75), `usage-state` (75), `autoMemory` (73), `skill-center` (73), `capability-panel` (72), `dsh-desktop-restart` (72), `dsh-service-console` (72), `usage-meter` (72), `bgjobs` (71), `ds-balance` (71), `file-review` (71), `oomol.settings` (71), `settings.dreamSkin` (71). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина

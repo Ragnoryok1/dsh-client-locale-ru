@@ -604,7 +604,8 @@
     "subagentaggregation": "имя параметра конфигурации",
     "toolfailureguard": "имя параметра конфигурации",
     "toolfailureprefixes": "имя параметра конфигурации",
-    "pwsh": "имя оболочки"
+    "pwsh": "имя оболочки",
+    "v2rayn": "имя программы V2rayN"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
@@ -656,6 +657,23 @@
     ],
     "memory": [
       "meow-memory · settings.title"
+    ],
+    "factor": [
+      "pluginTopology · serviceBusFactor"
+    ],
+    "bgjobs": [
+      "bgjobs · ball.title",
+      "bgjobs · footer.hide",
+      "bgjobs · footer.show",
+      "bgjobs · settings.intro",
+      "bgjobs · settings.title"
+    ],
+    "notify": [
+      "bgjobs · notify.done.title",
+      "bgjobs · notify.pending.title"
+    ],
+    "force": [
+      "bgjobs · force.ask.confirm.title"
     ]
   }
 }

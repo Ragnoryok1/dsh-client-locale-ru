@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **287 namespace** — 48914 строк. Колонка «как это выглядит»
+Пакет переводит **317 namespace** — 51193 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -22,13 +22,18 @@
 | `archive-manager-workspace` | — | 272 | @michengai/dsh-archive-manager@1.1.6@1.1.6 |
 | `atlas` | — | 119 | @sidequest-007/dsh-atlas@1.0.9@1.0.9 |
 | `auto-continue` | — | 137 | dsh-client-auto-continue@0.15.0@0.15.0 |
+| `autoMemory` | Постоянная память | 73 | dsh-auto-memory@0.9.0@0.9.0 |
 | `balance` | — | 87 | @alanzhao/dsh-balance-monitor@0.8.2@0.8.2 |
 | `better-input` | — | 123 | dsh-better-input@0.2.6 |
 | `betterSidebar` | — | 627 | dsh-better-sidebar@0.28.0 |
 | `betterWorkspace` | Рабочие области | 163 | dsh-better-workspace@0.32.2@0.32.2 |
+| `bgjobs` | — | 71 | bgjobs@0.2.6@0.2.6 |
+| `capability-panel` | — | 72 | dsh-capability-panel@1.4.2@1.4.2 |
+| `catppuccin` | — | 81 | @nonamelego/dsh-catppuccin@0.6.3@0.6.3 |
 | `chaos` | — | 239 | @hanxuanliang/dsh-chaos@0.1.2@0.1.2 |
 | `chat` | — | 200 | харнесс |
 | `claude-code-mods` | — | 4 | харнесс |
+| `clutch.title` | Название шаблона | 80 | @cerbur/clutch-dsh-title@0.1.7@0.1.7 |
 | `comfyui` | — | 268 | dsh-comfyui@0.5.5@0.5.5 |
 | `comfyui-tools.panel` | — | 135 | @liaozhi/dsh-comfyui-based-tools@0.8.7@0.8.7 |
 | `command` | — | 28 | харнесс |
@@ -43,6 +48,7 @@
 | `deliverables` | — | 60 | харнесс |
 | `documentHtml` | HTML | 4 | харнесс |
 | `documentMarkdown` | — | 4 | харнесс |
+| `ds-balance` | — | 71 | dsh-ds-balance@3.1.0@3.1.0 |
 | `ds-harness-remote` | — | 270 | ds-harness-remote@0.5.14@0.5.14 |
 | `dsh-actions` | DSH Actions | 121 | dsh-actions@0.4.1@0.4.1 |
 | `dsh-agent-extension-preset` | Плагины агента | 464 | dsh-agent-plugins-market@0.11.0@0.11.0 |
@@ -60,6 +66,8 @@
 | `dsh-database` | — | 218 | dsh-database-explorer@0.9.25@0.9.25 |
 | `dsh-decision-layer` | Слой решений | 152 | dsh-decision-layer@0.6.4@0.6.4 |
 | `dsh-delete-session` | Удалить сессию | 87 | dsh-delete-session@0.2.1@0.2.1 |
+| `dsh-desktop-restart` | — | 72 | @luoshuizhiwei/dsh-desktop-restart@0.4.2@0.4.2 |
+| `dsh-ding` | — | 75 | dsh-ding@1.0.6@1.0.6 |
 | `dsh-dupguard` | Защита от повторов | 108 | dsh-dupguard@1.10.0@1.10.0 |
 | `dsh-fonttune` | — | 158 | dsh-fonttune@0.7.1@0.7.1 |
 | `dsh-gitea` | Gitea | 132 | @goodandready/dsh-gitea@0.7.36 |
@@ -104,6 +112,7 @@
 | `dsh-remote-workspace` | Удалённая рабочая область | 201 | @goodandready/dsh-remote-workspace@0.3.17 |
 | `dsh-scheduler` | — | 96 | dsh-scheduler@2026.9.192@2026.9.192 |
 | `dsh-server-monitor` | Монитор серверов | 168 | @goodandready/dsh-server-monitor@0.1.19 |
+| `dsh-service-console` | — | 72 | @jiyr0119/dsh-service-console@0.7.0@0.7.0 |
 | `dsh-session-control` | — | 113 | @goodandready/dsh-session-control@0.2.10 |
 | `dsh-session-steward` | — | 85 | dsh-session-steward@0.5.5@0.5.5 |
 | `dsh-shadow-auditor` | Теневой аудитор безопасности | 74 | @goodandready/dsh-shadow-auditor@0.2.35 |
@@ -148,23 +157,29 @@
 | `engram` | Дворец памяти | 402 | @kenz1117/dsh-engram@0.9.3@0.9.3 |
 | `expertSources` | — | 128 | dsh-expert-orchestrator@2.9.8@2.9.8 |
 | `feedback` | — | 20 | харнесс |
+| `file-review` | — | 71 | dsh-file-review@0.8.10@0.8.10 |
+| `fileExplorer` | — | 79 | @jaxzhou/dsh-file-explorer@0.1.11@0.1.11 |
 | `foldPositions` | — | 481 | billion-context@0.1.202 |
 | `free-proxy` | — | 88 | dsh-freeroute@0.8.24@0.8.24 |
+| `genui` | — | 77 | dsh-plugin-genui@0.15.1@0.15.1 |
 | `git-graph` | — | 63 | @linxin666/dsh-client-ui-git-graph@0.4.7 |
 | `git-panel` | — | 94 | @fengbinmov/dsh-git-panel@0.1.1@0.1.1 |
 | `git-review` | — | 322 | dsh-git-review@0.1.8@0.1.8 |
+| `gitbashShell` | Диалект путей Git Bash | 77 | dsh-gitbash-shell@0.42.2@0.42.2 |
 | `goal` | — | 12 | харнесс |
 | `goodandready-smart-restart` | Сторож перезапуска | 29 | @goodandready/dsh-smart-restart@0.1.9 |
 | `h3.internal.event.` | — | 110 | dsh-mcp-studio@1.0.6@1.0.6 |
 | `harden` | — | 92 | dsh-harden@0.0.2@0.0.2 |
 | `hermes-loop` | — | 88 | @weibaohui/hermes-loop@0.3.0@0.3.0 |
 | `hypatia-auto-memory` | Hypatia Auto Memory | 109 | dsh-hypatia-auto-memory@2.4.1@2.4.1 |
+| `im-gateway` | — | 82 | @lijian-ui/dsh-im-gateway@0.3.5@0.3.5 |
 | `inspectorPanel` | Инспектор Node.js | 4 | харнесс |
 | `instruction-memory` | — | 269 | dsh-instruction-memory@1.4.0@1.4.0 |
 | `job` | — | 50 | харнесс |
 | `liangshen` | — | 42 | @linxin666/dsh-liangshen@0.4.7 |
 | `llm-qoder` | — | 168 | @eghrhegpe/dsh-connect-qoder@0.7.3@0.7.3 |
 | `local.vcs` | Изменения VCS | 251 | @feng0531/dsh-vcs@0.4.10@0.4.10 |
+| `lume` | — | 82 | lume-dsh-plugin@0.9.0@0.9.0 |
 | `memory-porter` | — | 83 | dsh-memory-porter@0.1.0@0.1.0 |
 | `meow-memory` | — | 92 | meow-memory@0.31.0@0.31.0 |
 | `michengai.codexUi` | — | 293 | @michengai/dsh-codex-ui@1.1.42 |
@@ -175,8 +190,10 @@
 | `modeltester` | — | 212 | dsh-modeltester@0.0.7-alpha.6@0.0.7-alpha.6 |
 | `mstar-panel` | — | 134 | @mstar-harness/dsh@4.0.4@4.0.4 |
 | `net-proxy` | — | 95 | dsh-net-proxy@0.8.0@0.8.0 |
+| `noletme` | — | 79 | dsh-noletme@0.3.9@0.3.9 |
 | `notifier` | — | 260 | @wingsky-1/dsh-notifier@0.2.9@0.2.9 |
 | `notify-sounds` | Звуки уведомлений | 87 | dsh-plugin-notify-sounds@1.8.4@1.8.4 |
+| `oomol.settings` | Подключения OOMOL | 71 | dsh-oomol@1.0.0@1.0.0 |
 | `open-in-app` | — | 45 | харнесс |
 | `permission.access` | Права доступа | 20 | харнесс |
 | `personalDirective` | Переключение личной директивы | 5 | dsh-personal-directive@0.2.11 |
@@ -186,6 +203,7 @@
 | `plugin-store` | — | 77 | dsh-plugins-store@0.1.4 |
 | `pluginManager` | Плагины | 227 | харнесс |
 | `pluginMarket` | Обзор плагинов | 78 | харнесс |
+| `pluginTopology` | Топология плагинов | 82 | @sleetdrop/dsh-plugin-topology@0.7.0@0.7.0 |
 | `pocketMobileNav` | 📱 Доступ с телефона | 96 | dsh-pocket@2.12.0@2.12.0 |
 | `providerUsage` | — | 293 | @wingsky-1/dsh-provider-usage@0.2.9@0.2.9 |
 | `question` | — | 31 | харнесс |
@@ -214,13 +232,17 @@
 | `settings.archived-chats` | Архив чатов | 344 | dsh-archived-chats@1.5.2@1.5.2 |
 | `settings.awiki` | — | 121 | @awiki/dsh-plugin@0.3.18@0.3.18 |
 | `settings.codebuddy-cli` | Подключение DSH CodeBuddy CLI | 162 | dsh-codebuddy-cli@0.4.3@0.4.3 |
+| `settings.codexAuth` | GPT Auth | 79 | dsh-codex-auth@0.3.2@0.3.2 |
 | `settings.codexSubscription` | Подписка Codex | 841 | dsh-codex-subscription@3.1.3@3.1.3 |
 | `settings.commandcode` | Command Code | 224 | @mars-sea/dsh-commandcode-provider@0.14.3 |
 | `settings.deeppilot` | — | 215 | dsh-deeppilot@0.9.8@0.9.8 |
+| `settings.dreamSkin` | — | 71 | dsh-dream-skin@10.16.0@10.16.0 |
 | `settings.dsh-autostart-workbuddy` | Модели WorkBuddy | 171 | @zhiqiangme/dsh-autostart-workbuddy@26.10.20@26.10.20 |
 | `settings.dshopencodego` | — | 93 | @dan-ai-studio/dshopencodego@0.1.46@0.1.46 |
 | `settings.grok-build` | Учётные записи и модели | 337 | dsh-coding-subscription-oauth@0.8.5@0.8.5 |
+| `settings.grokSubscription` | Подписка Grok | 82 | dsh-grok-subscription@2.0.9@2.0.9 |
 | `settings.ip-pool` | Пул IP (opencode2dsh) | 102 | @opencode2dsh/dsh-plugin@0.3.13 |
+| `settings.kimiSubscription` | Подписка Kimi Code | 78 | dsh-kimi-subscription@1.3.10@1.3.10 |
 | `settings.kinich-theme` | Ваша джунглевая рабочая область | 200 | dsh-kinich-theme@2.0.2@2.0.2 |
 | `settings.knowledge` | Знания | 449 | dsh-knowledge@0.5.2@0.5.2 |
 | `settings.locale` | — | 1 | харнесс |
@@ -228,8 +250,12 @@
 | `settings.mcpPanel` | — | 129 | dsh-mcp-panel@0.6.29@0.6.29 |
 | `settings.meme` | — | 113 | @liaozhi/dsh-meme-gen@0.9.2@0.9.2 |
 | `settings.model-capability` | — | 170 | dsh-plugin-model-capability@1.4.0@1.4.0 |
+| `settings.modelContextCatalog` | Контекстные окна моделей | 75 | dsh-model-context-catalog@0.4.3@0.4.3 |
+| `settings.modelProxy` | Прокси моделей | 77 | dsh-plugin-model-proxy@0.1.6@0.1.6 |
 | `settings.models` | Модели | 134 | харнесс |
+| `settings.multi2api` | Аккаунты Multi2API | 78 | dsh-multi2api@0.1.9@0.1.9 |
 | `settings.openai-codex` | Codex Connect | 340 | dsh-codex-connect@0.2.0-alpha.1@0.2.0-alpha.1 |
+| `settings.openai-codex-auth` | OpenAI Codex | 77 | dsh-openai-codex-auth@0.6.3@0.6.3 |
 | `settings.opencode-go` | OpenCode Go | 177 | dsh-opencode-go@0.1.24@0.1.24 |
 | `settings.packyCodeApi` | — | 200 | dsh-packycode-api@1.3.6@1.3.6 |
 | `settings.permission` | Права доступа | 20 | харнесс |
@@ -267,6 +293,7 @@
 | `sidebarRight` | — | 34 | харнесс |
 | `sidebarTerminal` | Терминал | 28 | харнесс |
 | `skill` | — | 8 | харнесс |
+| `skill-center` | Центр навыков | 73 | @restregular/dsh-skill-center@0.3.11@0.3.11 |
 | `skills-manager` | — | 118 | @michengai/dsh-skills-manager@1.2.8 |
 | `slash.menu` | — | 9 | харнесс |
 | `solution-explorer` | — | 194 | dsh-solution-explorer@1.0.2@1.0.2 |
@@ -279,6 +306,7 @@
 | `token-ledger` | Обзор использования токенов | 160 | @chenmiao8563/dsh-token-ledger@1.1.2@1.1.2 |
 | `token-meter-panel` | Расход токенов | 92 | dsh-token-meter-panel@0.6.4@0.6.4 |
 | `token-monitor` | — | 231 | dsh-token-monitor@1.0.12@1.0.12 |
+| `tokenLedger` | — | 75 | dsh-tokenledger@0.1.0@0.1.0 |
 | `tracescope` | — | 611 | @rebornace/dsh-tracescope@0.3.5@0.3.5 |
 | `trajectory` | — | 196 | харнесс |
 | `trust` | — | 246 | dsh-trust-check@0.2.4@0.2.4 |
@@ -287,6 +315,8 @@
 | `univer` | Просмотр Univer | 53 | dsh-univer-office@0.3.7 |
 | `update` | — | 43 | @linxin666/dsh-update@0.4.7 |
 | `usage` | Статистика расходов | 194 | dsh-local-usage@0.8.0@0.8.0 |
+| `usage-meter` | — | 72 | dsh-plugin-usage-meter@1.10.0@1.10.0 |
+| `usage-state` | Состояние использования | 75 | dsh-usage-state@0.4.8@0.4.8 |
 | `usageBilling` | Расход | 351 | @kenz1117/dsh-ui-usage-billing@1.6.5@1.6.5 |
 | `version-update` | Текущая установка | 164 | dsh-version-update@1.4.4@1.4.4 |
 | `voice-input` | — | 109 | харнесс |
@@ -300,4 +330,4 @@
 | `xiaomi-mimo-tts` | — | 303 | dsh-xiaomi-tts@4.0.1@4.0.1 |
 | `xrn1997-dsh-novel` | — | 159 | @xrn1997/dsh-novel@0.7.0@0.7.0 |
 
-Итого: **287** namespace, **48914** строк.
+Итого: **317** namespace, **51193** строк.
