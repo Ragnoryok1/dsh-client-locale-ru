@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 397.** За этот релиз их стало на 463, а пакет
-  покрывает 527 namespace и 58 172 строк (из них 2 996 — namespace самого харнесса,
-  55 176 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 414.** За этот релиз их стало на 480, а пакет
+  покрывает 544 namespace и 58 195 строк (из них 2 996 — namespace самого харнесса,
+  55 199 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -60,6 +60,9 @@
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 52).** `quote-followup` (11), `settings.shop` (10), `traceCompare` (10), `dsh-task-worktree` (9), `settings.browser-harness` (9), `chart` (7), `chat-timeline` (7), `dsh-film-studio` (7), `dsh-model-capability` (6), `dsh-vscode-mode` (6), `music` (6), `codex` (5), `dsh-harmony-bootstrap` (5), `liang.skin` (5), `settings.blue-whale` (5), `settings.neu` (5), `devDashboard` (4), `dsh-whale-particles` (4), `mimo` (4), `settings.dracula` (4), `skills-anywhere` (4), `status-rotator` (4), `xingyuan` (4), `dsh-concise` (3), `dsh-openrouter-live` (3), `picturereader` (3), `style` (3), `.ndjson.zst` (2), `agent-shell-consent` (2), `dsh-engram` (2). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 17 словарей плагинов (партия 53).** `dsh-novel-solo` (2), `meow-cachebilling` (2), `settings.backupPanel` (2), `smoothStream.chat` (2), `sse` (2), `tool-plus-cards` (2), `agent-community` (1), `agent-schedule` (1), `computer-use` (1), `delegateRouter` (1), `dsh-chat-tidy` (1), `dsh-git-badge` (1), `dsh-thoughtdag` (1), `dshSidebarPlus` (1), `relay.session-import` (1), `remix-router-transitions` (1), `schedule-attention-enhancer` (1). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина

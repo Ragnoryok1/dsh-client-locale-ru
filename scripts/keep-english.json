@@ -928,5 +928,22 @@
   "xingyuan · daily": "идентификатор",
   "xingyuan · monthly": "идентификатор",
   "xingyuan · once": "идентификатор",
-  "xingyuan · weekly": "идентификатор"
+  "xingyuan · weekly": "идентификатор",
+  "agent-schedule · name": "идентификатор",
+  "computer-use · name": "идентификатор",
+  "delegateRouter · name": "идентификатор",
+  "dsh-chat-tidy · name": "идентификатор",
+  "dsh-git-badge · namespace": "идентификатор",
+  "dsh-thoughtdag · panel": "название продукта",
+  "dshSidebarPlus · name": "идентификатор",
+  "meow-cachebilling · type": "идентификатор",
+  "remix-router-transitions · lineSuffix": "идентификатор",
+  "schedule-attention-enhancer · name": "идентификатор",
+  "settings.backupPanel · label": "идентификатор",
+  "settings.backupPanel · name": "идентификатор",
+  "sse · name": "название продукта",
+  "sse · source": "технический термин",
+  "tool-plus-cards · label": "идентификатор",
+  "tool-plus-cards · name": "идентификатор",
+  "agent-community · panel": "текст плагина оставлен на китайском"
 }

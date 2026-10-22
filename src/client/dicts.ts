@@ -61551,4 +61551,146 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'once': 'once',
     'weekly': 'weekly',
   },
+  /*
+   * @dsh-plugin-agent-community/ui-agent-community@0.3.8@0.3.8 — словарь плагина agent-community (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'agent-community': {
+    'panel': 'Bots团队',
+  },
+  /*
+   * dsh-agent-toolkit@0.4.11@0.4.11 — словарь плагина agent-schedule (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'agent-schedule': {
+    'name': 'tool.call.toolview',
+  },
+  /*
+   * @crazy_th/dsh-computer-use@0.2.4@0.2.4 — словарь плагина computer-use (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'computer-use': {
+    'name': 'settings.plugin.item',
+  },
+  /*
+   * dsh-delegate-router@0.4.5@0.4.5 — словарь плагина delegateRouter (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'delegateRouter': {
+    'name': 'shell.overlay',
+  },
+  /*
+   * dsh-chat-tidy@0.4.0@0.4.0 — словарь плагина dsh-chat-tidy (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'dsh-chat-tidy': {
+    'name': 'conversation.session.header.utilities',
+  },
+  /*
+   * dsh-git-badge@0.20.1@0.20.1 — словарь плагина dsh-git-badge (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'dsh-git-badge': {
+    'namespace': 'git-badge',
+  },
+  /*
+   * dsh-novel-solo@0.2.1@0.2.1 — словарь плагина dsh-novel-solo (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'dsh-novel-solo': {
+    'desc': 'Максимум субагентов, которых пресет novel-solo может распараллелить (1–12). Главный агент останавливается и ждёт их отчёта. Перезапустите хост, чтобы новое ограничение применилось к персоне.',
+    'title': 'Число субагентов',
+  },
+  /*
+   * dsh-thoughtdag@0.5.20@0.5.20 — словарь плагина dsh-thoughtdag (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'dsh-thoughtdag': {
+    'panel': 'ThoughtDAG',
+  },
+  /*
+   * dsh-sidebar-plus@0.4.4@0.4.4 — словарь плагина dshSidebarPlus (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'dshSidebarPlus': {
+    'name': 'sidebar.right.tab.document',
+  },
+  /*
+   * meow-cachebilling@0.8.0@0.8.0 — словарь плагина meow-cachebilling (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'meow-cachebilling': {
+    'source': '',
+    'type': 'scalar',
+  },
+  /*
+   * relay-dsh-plugin-session-import@0.2.3@0.2.3 — словарь плагина relay.session-import (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'relay.session-import': {
+    'importSessions': 'Импорт сессий…',
+  },
+  /*
+   * dsh-eteams@0.2.22@0.2.22 — словарь плагина remix-router-transitions (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'remix-router-transitions': {
+    'lineSuffix': 'hardBreakTrailing',
+  },
+  /*
+   * @stolyarovmn/dsh-client-ui-schedule-tab@0.8.0@0.8.0 — словарь плагина schedule-attention-enhancer (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'schedule-attention-enhancer': {
+    'name': 'plugins.detail.section',
+  },
+  /*
+   * @xiaoyuy搠/dsh-backup@0.13.4@0.13.4 — словарь плагина settings.backupPanel (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'settings.backupPanel': {
+    'label': 'tab',
+    'name': 'settings.plugins.tab',
+  },
+  /*
+   * dsh-smooth-stream@0.7.0@0.7.0 — словарь плагина smoothStream.chat (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'smoothStream.chat': {
+    'image.serviceUnavailable': 'Сервис изображений недоступен',
+    'message.think': 'Размышление',
+  },
+  /*
+   * @jcy2387/dsh-codex-provider@0.1.7-rc.2.1@0.1.7-rc.2.1 — словарь плагина sse (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'sse': {
+    'name': 'OpenAI Codex OAuth',
+    'source': 'OAuth',
+  },
+  /*
+   * @xiaoso/dsh-tool-plus@0.1.15@0.1.15 — словарь плагина tool-plus-cards (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'tool-plus-cards': {
+    'label': 'nav',
+    'name': 'settings.section',
+  },
 }
