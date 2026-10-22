@@ -1,10 +1,10 @@
 {
   "namespace": "agent-community",
-  "package": "@dsh-plugin-agent-community/ui-agent-community@0.3.8",
-  "version": "0.3.8",
+  "package": "@dsh-plugin-agent-community/ui-agent-community",
+  "version": "0.3.9",
   "license": "MIT",
   "repository": "git+https://github.com/Leo-sail/dsh-plugin-agent-collaboration.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "panel": "Bots团队"
   }

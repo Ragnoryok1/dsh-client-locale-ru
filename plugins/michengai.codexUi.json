@@ -1,10 +1,14 @@
 {
   "namespace": "michengai.codexUi",
   "package": "@michengai/dsh-codex-ui",
-  "version": "1.1.42",
+  "version": "1.1.47",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/MichengAI/dsh-codex-ui.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
+  "meta": {
+    "title": "Codex UI",
+    "description": "Codex-style sidebar, workspace tree, global search, and turn navigation."
+  },
   "en": {
     "about.checking": "Checking…",
     "about.checkUpdate": "Check for updates",
@@ -238,9 +242,9 @@
     "sidebar.mainMenu": "Main menu",
     "sidebar.marketplace": "Plugin Market",
     "sidebar.newTask": "New task",
-    "sidebar.overviewTab": "Task overview",
+    "sidebar.overviewTab": "Tasks",
     "sidebar.plugins": "Plugin manager",
-    "sidebar.runsTab": "Run history",
+    "sidebar.runsTab": "Records",
     "sidebar.schedule": "Scheduled tasks",
     "sidebar.scheduleTab": "Schedule",
     "sidebar.search": "Search conversations",

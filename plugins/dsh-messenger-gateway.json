@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-messenger-gateway",
   "package": "@goodandready/dsh-messenger-gateway",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-messenger-gateway.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "advanced": "Connection & Polling Internals",
     "agent": "Agent & Reasoning Execution",

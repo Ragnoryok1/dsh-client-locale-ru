@@ -731,7 +731,8 @@
       "context-zip · opacity"
     ],
     "apikey": [
-      "settings.plugins.zai · literalKey"
+      "settings.plugins.zai · literalKey",
+      "searchPool · desc"
     ],
     "idea": [
       "plugin.intellijMcp · commandHint"
@@ -842,6 +843,43 @@
     ],
     "hardbreaktrailing": [
       "remix-router-transitions · lineSuffix"
+    ],
+    "forge": [
+      "acp_turn_sep_ · det.auto_mode_forge_short"
+    ],
+    "agentvisible": [
+      "dsh-actions · badgeTipVisibility"
+    ],
+    "sudo": [
+      "dsh-kanban · field.remoteSudoUser",
+      "dsh-kanban · hint.remoteSudoUser"
+    ],
+    "allowserviceworkers": [
+      "dsh-notify-me · bridgeOffDesktop"
+    ],
+    "maxoverflowretries": [
+      "dsh-session-kit · compactionConfigOverflowRetries"
+    ],
+    "compactionretries": [
+      "dsh-session-kit · compactionConfigRetries"
+    ],
+    "prod": [
+      "dsh-subscriptions · tagsPlaceholder"
+    ],
+    "team": [
+      "dsh-subscriptions · tagsPlaceholder"
+    ],
+    "kubernetes": [
+      "dsh-voice · jargonPlaceholder"
+    ],
+    "apikeyenv": [
+      "searchPool · desc"
+    ],
+    "grpc": [
+      "settings.subusage · grokHelp"
+    ],
+    "proto3": [
+      "settings.subusage · grokHelp"
     ]
   }
 }

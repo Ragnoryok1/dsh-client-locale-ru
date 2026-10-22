@@ -1,11 +1,24 @@
 {
   "namespace": "web-ui-plugins",
   "package": "@linxin666/dsh-client-ui-web-ui-settings",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": "https://github.com/zhu1090093659/dsh-web.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
+    "settings.collapse": "Collapse",
+    "settings.discard": "Discard changes",
+    "settings.expand": "Expand",
+    "settings.notExposed": "Section not exposed (host namespace missing)",
+    "settings.readOnly": "Read only",
+    "settings.save": "Save",
+    "settings.saveFailed": "Save failed",
+    "settings.saving": "Saving…",
+    "settings.unsaved": "Unsaved changes",
+    "telemetry.description": "One anonymous heartbeat a day listing the family plugins in use here",
+    "telemetry.dnt": "This browser sends a Do Not Track request, so the heartbeat has already stopped; the switch on the right only records a preference on this machine.",
+    "telemetry.meta": "Turning it off stops the browser half of every family plugin from reporting; the Workshop and online updates keep working.",
+    "telemetry.title": "Anonymous install telemetry",
     "title": "Web Plugins"
   }
 }

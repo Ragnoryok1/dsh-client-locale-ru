@@ -1,10 +1,10 @@
 {
   "namespace": "settings.nico",
-  "package": "dsh-nico-theme@0.3.8",
-  "version": "0.3.8",
+  "package": "dsh-nico-theme",
+  "version": "0.3.9",
   "license": "MIT",
   "repository": "git+https://github.com/more-nico/dsh-nico-theme.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "aqua.background": "Backdrop",
     "aqua.backgroundFluid": "Fluid",

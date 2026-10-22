@@ -1,10 +1,10 @@
 {
   "namespace": "agency",
   "package": "@michengai/dsh-agency-agents",
-  "version": "1.2.8",
+  "version": "1.2.10",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/MichengAI/dsh-agency-agents.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Agency Agents",
     "description": "321 summonable domain experts for DeepSeek Harness."

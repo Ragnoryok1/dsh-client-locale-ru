@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-delete-session",
-  "package": "dsh-delete-session@0.2.1",
-  "version": "0.2.1",
+  "package": "dsh-delete-session",
+  "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/DDDMUC/dsh-delete-session.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "artifactAutoNote": "${n} file(s) will move to quarantine on delete",
     "artifactAutoOnly": "Produced files move to quarantine automatically; they are not listed here.",
@@ -40,6 +40,7 @@
     "failed": "Delete failed: ",
     "menu": "Delete session",
     "moveBadResult": "Move result is missing fields: ${fields}",
+    "Moved ${ok}, ${fail} failed": "Moved ${ok}",
     "moveSelected": "Move",
     "multiSelect": "Select multiple",
     "notFound": "Session not found (it may already be deleted).",

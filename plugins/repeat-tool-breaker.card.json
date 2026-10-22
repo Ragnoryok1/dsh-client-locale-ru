@@ -1,10 +1,10 @@
 {
   "namespace": "repeat-tool-breaker.card",
-  "package": "dsh-repeat-tool-breaker@0.11.4",
-  "version": "0.11.4",
+  "package": "dsh-repeat-tool-breaker",
+  "version": "0.11.6",
   "license": "MIT",
   "repository": "git+https://github.com/snailium/dsh-repeat-tool-breaker.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Repeat tool breaker",
     "description": "Break stuck agent turns: repetitive tool calls, runaway loops, and consecutive execution failures."

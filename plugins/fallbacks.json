@@ -1,10 +1,10 @@
 {
   "namespace": "fallbacks",
-  "package": "dsh-llm-fallbacks@0.6.7",
-  "version": "0.6.7",
+  "package": "dsh-llm-fallbacks",
+  "version": "0.6.8",
   "license": null,
   "repository": "git+https://github.com/omdsh-dev/dsh-llm-fallbacks.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Fallbacks",
     "description": "Automatic provider/model fallback chains that keep agent steps running when LLM requests keep failing (auth, quota, rate limit)."

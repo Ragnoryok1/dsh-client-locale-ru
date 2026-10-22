@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-vision-bridge",
   "package": "@goodandready/dsh-vision-bridge",
-  "version": "0.6.21",
+  "version": "0.6.22",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-vision-bridge.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "addChannel": "Add channel",
     "advanced": "Advanced",

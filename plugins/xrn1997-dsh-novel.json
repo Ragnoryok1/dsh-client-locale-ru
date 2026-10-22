@@ -1,10 +1,10 @@
 {
   "namespace": "xrn1997-dsh-novel",
-  "package": "@xrn1997/dsh-novel@0.7.0",
-  "version": "0.7.0",
+  "package": "@xrn1997/dsh-novel",
+  "version": "0.8.0",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/xrn1997/dsh-novel.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Novel",
     "description": "Read web novels in DeepSeek Harness (DSH): import legado book sources, search across them, keep a bookshelf, and read with continuous scrolling, with six AI assistant tools for search and reading."
@@ -53,6 +53,8 @@
     "job.kind.import": "Import",
     "job.kind.probe": "Verification",
     "job.progress": "{kind} in progress…",
+    "sources.auth.actionDone": "Button action executed",
+    "sources.auth.actionFailed": "Button action failed: {detail}",
     "sources.auth.cookieLabel": "cookie for {name}",
     "sources.auth.cookiePlaceholder": "cookie: token=abc; sid=def",
     "sources.auth.go": "Sign in",
@@ -166,7 +168,6 @@
     "sources.verify.startFailed": "Failed to start the verification: {detail}",
     "status.dismissError": "Dismiss this error",
     "status.locate": "Locate →",
-    "status.saving": "Saving {n} items…",
     "status.stale": "Connection problem, retrying… (task status refresh failed; showing the last frame)",
     "status.viewTask": "View task →"
   }

@@ -1,16 +1,18 @@
 {
   "namespace": "dsh-session-steward",
-  "package": "dsh-session-steward@0.5.5",
-  "version": "0.5.5",
+  "package": "dsh-session-steward",
+  "version": "0.5.6",
   "license": "MIT",
   "repository": "git+https://github.com/drscrewdriver/dsh-session-steward.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Session Steward",
     "description": "Session history files (archive browsing & cleanup) and session health checks (checkup → prescription → discharge) — reversible operations only, no touching of session logs."
   },
   "en": {
     "card.desc": "History files · Health check",
+    "card.directDelete": "Direct delete entry",
+    "card.directDelete.desc": "When on, result rows in the search panel get a Delete button (two-step confirm, same pipeline as the manage view). Off by default.",
     "card.enabled": "Enable Session Steward",
     "card.enabled.desc": "When off, no API is registered and the sidebar entry disappears.",
     "card.health": "Health check",
@@ -89,6 +91,8 @@
     "history.unarchive": "Unarchive state ({n})",
     "history.unarchiving": "Unarchiving…",
     "history.unselectAll": "Clear selection",
+    "menu.deleteSession": "Delete session",
+    "menu.deleteSession.confirm": "Confirm delete",
     "panel.close": "Close",
     "panel.tab.health": "Checkup",
     "panel.tab.history": "Retirement Home",

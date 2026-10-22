@@ -1,10 +1,10 @@
 {
   "namespace": "pet",
   "package": "@linxin666/dsh-pet",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/zhu1090093659/dsh-pet.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "pet.collapseSessions": "Collapse session bubbles",
     "pet.confirm": "OK",

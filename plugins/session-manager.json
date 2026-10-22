@@ -1,10 +1,10 @@
 {
   "namespace": "session-manager",
-  "package": "dsh-session-manager@0.7.4",
-  "version": "0.7.4",
+  "package": "dsh-session-manager",
+  "version": "0.7.5",
   "license": "MIT",
   "repository": "git+https://github.com/hkkz9522/dsh-session-manager.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "en": {
     "bulk.archive": "Archive",
     "bulk.archive.actionText": "Archive",
@@ -168,6 +168,7 @@
     "migrate.same": "Choose a target preset different from the current preset",
     "migrate.target": "Target preset",
     "migrate.title": "Migrate Agent preset",
+    "move.restartRequired": "Session moved to target workspace successfully, but working directory will take effect after restarting DSH.",
     "notice.workspaceReAdded": "Workspace restored to view, but previous sessions remain archived.",
     "panel.archived": "Archived",
     "panel.close": "Close",

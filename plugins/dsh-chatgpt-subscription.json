@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-chatgpt-subscription",
-  "package": "@eddyskywalker/dsh-chatgpt-subscription@0.31.0",
-  "version": "0.31.0",
+  "package": "@eddyskywalker/dsh-chatgpt-subscription",
+  "version": "0.36.2",
   "license": "MIT",
   "repository": "git+https://github.com/Aa728848/dsh-chatgpt-subscription.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "markdownCopied": "Copied",
     "markdownCopy": "Copy",

@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-server-monitor",
   "package": "@goodandready/dsh-server-monitor",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-server-monitor.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "active": "Active",
     "add": "Add server",

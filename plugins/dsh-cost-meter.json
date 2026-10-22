@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-cost-meter",
   "package": "@goodandready/dsh-cost-meter",
-  "version": "0.8.22",
+  "version": "0.8.25",
   "license": "MIT",
   "repository": null,
-  "fetched": "2026-10-19",
+  "fetched": "2026-10-22",
   "en": {
     "action.copied": "Copied!",
     "action.copy_report": "Copy Summary",

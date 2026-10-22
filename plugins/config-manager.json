@@ -1,10 +1,10 @@
 {
   "namespace": "config-manager",
   "package": "dsh-config-manager",
-  "version": "0.1.78",
+  "version": "0.1.79",
   "license": "MIT",
   "repository": "git+https://github.com/xiajiajun516/dsh-config-manager.git",
-  "fetched": "2026-10-19",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Config Manager",
     "description": "Back up, restore, export, import, migrate and sync your complete DSH configuration: settings, plugins, MCP servers, skills, agent presets and workspaces."

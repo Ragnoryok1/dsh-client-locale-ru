@@ -1,10 +1,10 @@
 {
   "namespace": "expertSources",
-  "package": "dsh-expert-orchestrator@2.9.8",
-  "version": "2.9.8",
+  "package": "dsh-expert-orchestrator",
+  "version": "2.9.9",
   "license": "MIT",
   "repository": "git+https://github.com/mario841859784/dsh-expert-orchestrator.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "add.invalid": "Enter a GitHub repository URL or a local path.",
     "add.placeholder": "GitHub repository URL (https://github.com/owner/repo) or local path",
@@ -90,7 +90,6 @@
     "rec.willEnableOnly": "Will enable (already downloaded):",
     "settings.desc": "Manage expert source packages: enable, download, update and remove.",
     "settings.loading": "Loading sources…",
-    "settings.nav": "dsh-expert-orchestrator",
     "settings.reload": "Reload",
     "settings.subtitle": "Expert source management",
     "settings.title": "dsh-expert-orchestrator",

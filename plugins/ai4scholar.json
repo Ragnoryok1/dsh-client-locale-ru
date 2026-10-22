@@ -1,10 +1,10 @@
 {
   "namespace": "ai4scholar",
-  "package": "dsh-ai4scholar@0.3.7",
-  "version": "0.3.7",
+  "package": "dsh-ai4scholar",
+  "version": "0.3.8",
   "license": "MIT",
   "repository": "git+https://github.com/literaf/dsh-ai4scholar.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "apiKeyHint": "Stored in the dsh credentials store (never shown again, never sent to the model). Takes effect on the next tool call.",
     "apiKeyLabel": "API key",
@@ -30,6 +30,8 @@
     "save": "Save",
     "saved": "Key saved.",
     "saving": "Saving…",
+    "settingsIntro": "Save your key to enable academic search. Check its status and credit balance here.",
+    "settingsTitle": "AI4Scholar API key",
     "sourceEnv": "environment",
     "sourceFile": "credentials file",
     "sourceProjectEnv": "project .env",

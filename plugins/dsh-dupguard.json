@@ -1,14 +1,16 @@
 {
   "namespace": "dsh-dupguard",
-  "package": "dsh-dupguard@1.10.0",
-  "version": "1.10.0",
+  "package": "dsh-dupguard",
+  "version": "1.11.0",
   "license": "MIT",
   "repository": "git+https://github.com/zqh260619/dsh-dupguard.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
-    "description": "Stops DeepSeek Harness generation as soon as the same string repeats >=10 times in a row, and commits the partial answer. Fenced, inline and indented code share one relaxed threshold (threshold x codeBlockMultiplier); repeat counts can follow unit length through a piecewise table or a JS module; the whitelist, the detection window and the table-derived unit lengths are written back automatically, so settings changes need no restart. Verified on DSH 0.2.0-rc.2 (CLI and desktop), host API >= 0.1.1."
+    "title": "Repetition Guard",
+    "description": "Stops DeepSeek Harness generation as soon as the same string repeats >=10 times in a row and commits the partial answer. Fenced, inline and indented code share one relaxed threshold (threshold x codeBlockMultiplier); repeat counts can follow unit length through a piecewise table or a JS module; the whitelist, detection window and table-derived unit lengths are written back automatically, so settings changes need no restart. Stop notices offer an optional continue instruction and an opt-in browser system notification. Verified on DSH 0.2.1-rc.2 (CLI and desktop), host API >= 0.1.1."
   },
   "en": {
+    "add": "Add",
     "addPlaceholder": "Characters or substrings (separate with spaces / commas)",
     "addRow": "Add row",
     "advanced": "Repeat counts (when to stop)",
@@ -55,6 +57,7 @@
     "monitorReasoningHint": "Repeats inside reasoning burn tokens too, so they are monitored by default.",
     "monitorToolArguments": "Monitor tool-call arguments",
     "monitorToolArgumentsHint": "Off by default: repeated characters are common in JSON / base64 arguments.",
+    "nav": "Dupguard",
     "note": "\"Reset to defaults\" clears every user setting on this page and restores the code defaults.",
     "noticeCodeRegion": "inside a code region (relaxed by the multiplier)",
     "noticeDetail": "repeated {count}× in a row｜span {span} chars",
@@ -81,6 +84,8 @@
     "notifyOnStop": "Show a notice when generation is stopped",
     "notifyOnStopHint": "Shows a notice when generation is stopped, with the workspace, session name and repeated string of the stopped session — regardless of which session you are viewing — and lets you send a continue instruction.",
     "params": "Detection scope and switches",
+    "persistStopLog": "Record stop log",
+    "persistStopLogHint": "Appends one JSON line per stop to ~/.dsh/dupgard/stops.jsonl (rotated after 2MB; npm resident build only). Redacted by default (no repeated content, session title or workspace path); set DSH_DUPGUARD_STOP_LOG_REDACT=0 for full content; DSH_DUPGUARD_STOP_LOG=off forces it off.",
     "remoteHint": "Settings editing requires a local connection: open the DSH page through the local address (127.0.0.1) and retry. On remote browsers, or when this DSH build disables settings writes, detection keeps the host configuration.",
     "reset": "Reset to defaults",
     "riskAcknowledge": "I understand the risks and want to continue",
@@ -95,7 +100,7 @@
     "stripWhitespaceHint": "Remove all whitespace (newlines included) before detection, so separated repeats are still recognized.",
     "systemNotify": "Also send a system notification",
     "systemNotifyBody": "Repeated output detected and generation stopped. Click to open.",
-    "systemNotifyHint": "Sends an extra system notification (browser notification → Windows toast / macOS Notification Center) when generation is stopped. Only fires while the DSH page is hidden; the text never includes the workspace or session name. The browser asks for permission the first time you enable it.",
+    "systemNotifyHint": "Sends an extra system notification (browser notification → Windows toast / macOS Notification Center) when generation is stopped. Only fires while the DSH page is not in the foreground (background tab, minimized window, or unfocused window); the text never includes the workspace or session name. The browser asks for permission the first time you enable it.",
     "systemNotifyPermissionDefault": "Browser notification permission: not granted yet (toggle it off and on to ask again)",
     "systemNotifyPermissionDenied": "Browser notification permission: denied (allow it in the browser site settings)",
     "systemNotifyPermissionGranted": "Browser notification permission: granted",

@@ -1,15 +1,16 @@
 {
   "namespace": "image-pathify",
-  "package": "dsh-image-pathify@0.2.1",
-  "version": "0.2.1",
+  "package": "dsh-image-pathify",
+  "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/dami9527/dsh-image-pathify.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Image Pathify",
     "description": "Lets text-only models handle pasted chat images, with a native vision experience, batch image viewing, and a built-in OpenAI-compatible analyze_image tool; vision-capable models are unaffected."
   },
   "en": {
+    "add": "Add",
     "apiKey": "API key",
     "apiKeyHint": "Stored outside the settings file. Leave blank to keep the current key.",
     "apiKeySet": "A key is configured.",

@@ -1,10 +1,10 @@
 {
   "namespace": "agentlex-moot-court",
-  "package": "dsh-legal-suite@0.2.25",
-  "version": "0.2.25",
+  "package": "dsh-legal-suite",
+  "version": "0.2.26",
   "license": "GPL-3.0",
   "repository": null,
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "actor.clerk": "Clerk",
     "actor.judge": "Judge",

@@ -1,10 +1,10 @@
 {
   "namespace": "settings.researchMarket",
-  "package": "dsh-research@0.4.3",
-  "version": "0.4.3",
+  "package": "dsh-research",
+  "version": "0.4.4",
   "license": "MIT",
   "repository": "git+https://github.com/dsh-research/dsh-research.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "allCategories": "All",
     "catLiterature": "Literature",
@@ -41,6 +41,7 @@
     "intro": "Hand-picked research plugins, installed into the profile you are running",
     "loading": "Reading the catalog…",
     "more": "What it actually does →",
+    "nav": "Research plugins",
     "noNpm": "repository install only",
     "ours": "by AI4Scholar",
     "profileNote": "Profile: ",

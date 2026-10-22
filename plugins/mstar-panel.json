@@ -1,10 +1,10 @@
 {
   "namespace": "mstar-panel",
-  "package": "@mstar-harness/dsh@4.0.4",
-  "version": "4.0.4",
+  "package": "@mstar-harness/dsh",
+  "version": "4.0.5",
   "license": "MIT",
   "repository": "git+https://github.com/btspoony/mstar-harness.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Morning Star Harness",
     "description": "Morning Star harness engine gates for dsh: status, dispatch and lease enforcement for agent workflows."

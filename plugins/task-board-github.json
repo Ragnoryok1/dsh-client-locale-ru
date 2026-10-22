@@ -1,10 +1,10 @@
 {
   "namespace": "task-board-github",
   "package": "@linxin666/dsh-client-ui-task-board-github",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": "https://github.com/zhu1090093659/dsh-web.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "card.openIssue": "Open {reference} on GitHub",
     "common.cancel": "Cancel",

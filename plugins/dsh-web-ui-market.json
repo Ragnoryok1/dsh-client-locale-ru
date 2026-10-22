@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-web-ui-market",
   "package": "@linxin666/dsh-client-ui-market",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/zhu1090093659/dsh-web.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "badge.market": "dsh-market.com",
     "cancel": "Cancel",

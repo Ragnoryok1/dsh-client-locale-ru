@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-balance",
-  "package": "@pinkbanana/dsh-balance@0.10.2",
-  "version": "0.10.2",
+  "package": "@pinkbanana/dsh-balance",
+  "version": "0.10.3",
   "license": "MIT",
   "repository": "git+https://github.com/crazywoola/dsh-balance.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "action.loading": "Loading…",
     "balance.available": "This account has available balance",

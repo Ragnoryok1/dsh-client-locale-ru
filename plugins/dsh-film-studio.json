@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-film-studio",
-  "package": "dsh-film@0.6.1",
-  "version": "0.6.1",
+  "package": "dsh-film",
+  "version": "0.6.4",
   "license": "MIT",
   "repository": "git+https://github.com/VibeDev-Si/dsh-film.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "app.failed": "Film Studio did not start.",
     "app.hint": "If it keeps failing, check that the VibeDev account plugin is enabled.",

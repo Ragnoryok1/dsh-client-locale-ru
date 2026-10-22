@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-delete-turn",
-  "package": "dsh-delete-turn@0.1.13",
-  "version": "0.1.13",
+  "package": "dsh-delete-turn",
+  "version": "0.1.14",
   "license": "MIT",
   "repository": "git+https://github.com/DDDMUC/dsh-delete-turn.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "action.tooltip.message": "Delete this message",
     "action.tooltip.reply": "Delete this reply",

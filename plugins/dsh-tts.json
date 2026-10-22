@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-tts",
   "package": "@goodandready/dsh-tts",
-  "version": "0.4.34",
+  "version": "0.4.35",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-tts.git",
-  "fetched": "2026-10-19",
+  "fetched": "2026-10-22",
   "en": {
     "activeProvider": "Active provider",
     "addProvider": "Add provider",

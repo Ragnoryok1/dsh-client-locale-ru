@@ -1,10 +1,10 @@
 {
   "namespace": "russian-lang",
-  "package": "@goodandready/dsh-russian-lang@0.4.0",
-  "version": "0.4.0",
+  "package": "@goodandready/dsh-russian-lang",
+  "version": "0.4.5",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-russian-lang.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "agentPrompt": "Russian agent prompt",
     "agentPromptDesc": "Adds an instruction to reply in Russian in the selected style to the system prompt.",
@@ -99,6 +99,7 @@
     "updaterSuccess": "✅ Plugin updated successfully! Restart DSH to apply.",
     "updaterUpdating": "Installing update…",
     "updaterUpToDate": "You are on the latest version",
+    "yo": "Letter «ё»",
     "yoDesc": "Restores «ё» in frequent words (ещё, идёт, etc.)."
   }
 }

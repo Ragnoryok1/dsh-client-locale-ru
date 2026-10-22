@@ -1,10 +1,10 @@
 {
   "namespace": "settings.ip-pool",
   "package": "@opencode2dsh/dsh-plugin",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "license": "MIT",
   "repository": "git+https://github.com/FishBottle7/opencode2dsh.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "banBanned": "banned",
     "bansEmpty": "No banned (exit × model) pairs.",

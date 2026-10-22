@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-gitea",
   "package": "@goodandready/dsh-gitea",
-  "version": "0.7.36",
+  "version": "0.7.39",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-gitea.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "en": {
     "actionAnalyzeConflict": "Analyze Conflicts",
     "actionApprove": "Approve",

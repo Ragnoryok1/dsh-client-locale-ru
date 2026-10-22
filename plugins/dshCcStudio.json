@@ -1,10 +1,10 @@
 {
   "namespace": "dshCcStudio",
-  "package": "@xia-sc/dsh-cc-studio@0.11.0",
-  "version": "0.11.0",
+  "package": "@xia-sc/dsh-cc-studio",
+  "version": "0.11.2",
   "license": "MIT",
   "repository": "git+https://github.com/xia-sc/dsh-cc-studio.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "en": {
     "action.addEntry": "+ Add Entry",
     "action.backToSide": "Back",

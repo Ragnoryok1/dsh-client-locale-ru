@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-web-ui-preset-center",
   "package": "@linxin666/dsh-client-ui-preset-center",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "BSD-3-Clause",
   "repository": "git+https://github.com/zhu1090093659/dsh-presets.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "action.cancel": "Cancel",
     "action.disable": "Disable",

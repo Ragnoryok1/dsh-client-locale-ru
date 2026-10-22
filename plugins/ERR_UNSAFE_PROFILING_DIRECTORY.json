@@ -1,12 +1,13 @@
 {
   "namespace": "ERR_UNSAFE_PROFILING_DIRECTORY",
-  "package": "@sagmans/dsh-tui@0.15.0",
-  "version": "0.15.0",
+  "package": "@sagmans/dsh-tui",
+  "version": "0.16.0",
   "license": "MIT",
   "repository": "git+https://github.com/sagmans/dsh-tui.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "added": "tool.diff.added",
+    "cwd": "tool.terminal.cwd",
     "detail": "tool.generic.detail",
     "header": "tool.read.header",
     "hunk": "tool.diff.hunk",
@@ -18,6 +19,7 @@
     "removed": "tool.diff.removed",
     "source": "tool.web.source",
     "status": "tool.terminal.status",
-    "truncated": "tool.web.truncated"
+    "truncated": "tool.web.truncated",
+    "url": "tool.web.url"
   }
 }

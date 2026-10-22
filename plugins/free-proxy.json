@@ -1,10 +1,10 @@
 {
   "namespace": "free-proxy",
-  "package": "dsh-freeroute@0.8.24",
-  "version": "0.8.24",
+  "package": "dsh-freeroute",
+  "version": "0.10.3",
   "license": "MIT",
   "repository": "git+https://github.com/dushaobindoudou/dsh-freeroute.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "FreeRoute",
     "description": "Aggregate free-tier and custom model upstreams with transparent failover and key rotation"

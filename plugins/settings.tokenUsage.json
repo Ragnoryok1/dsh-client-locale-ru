@@ -1,10 +1,10 @@
 {
   "namespace": "settings.tokenUsage",
-  "package": "dsh-token-use@0.3.3",
-  "version": "0.3.3",
+  "package": "dsh-token-use",
+  "version": "0.3.4",
   "license": "MIT",
   "repository": "git+https://github.com/huangyuheng/dsh-token-use.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "auxiliaryNote": "A further {count} auxiliary calls ({detail}) are counted but not priced: their tokens exist only server-side.",
     "auxSearch": "web search",
@@ -151,6 +151,7 @@
     "shutdownConfirm": "Shut down",
     "shutdownFailed": "Shutdown failed: {error}",
     "shutdownTitle": "Shut down the dsh web service?",
+    "tab": "Token usage",
     "tabConfig": "Configuration",
     "tabModels": "By model",
     "tabOverview": "Overview",

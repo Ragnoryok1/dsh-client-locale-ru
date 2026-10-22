@@ -1,10 +1,10 @@
 {
   "namespace": "providerUsage",
-  "package": "@wingsky-1/dsh-provider-usage@0.2.9",
-  "version": "0.2.9",
+  "package": "@wingsky-1/dsh-provider-usage",
+  "version": "0.2.10",
   "license": "MIT",
   "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Usage Stats",
     "description": "Multi-provider usage stats (v2 adapter contract): floating capsule plus detail panel; DeepSeek official, OpenCode Go and Zhipu Coding Plan adapters built in."
@@ -78,6 +78,7 @@
     "pillCached": "cached",
     "pillFetchFail": "Usage fetch failed: {msg}",
     "pillFresh": "live",
+    "pillLastSuccess": "last updated {t}",
     "pillNotConfigured": "No adapter configured — click for onboarding",
     "pillStale": "stale data",
     "pillUpdatedAt": "updated {t}",

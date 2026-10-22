@@ -1,10 +1,10 @@
 {
   "namespace": "mimo",
-  "package": "dsh-mimo-connect@0.3.4",
-  "version": "0.3.4",
+  "package": "dsh-mimo-connect",
+  "version": "0.3.5",
   "license": "MIT",
   "repository": "git+https://github.com/anze225-max/dsh-mimo-connect.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "quota.label": "MiMo {percent}% left",
     "quota.refreshing": "Refreshing MiMo quota",

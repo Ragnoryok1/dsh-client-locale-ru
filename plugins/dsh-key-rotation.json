@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-key-rotation",
   "package": "@goodandready/dsh-key-rotation",
-  "version": "0.8.69",
+  "version": "0.8.71",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-key-rotation.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "activeBadge": "active",
     "addKey": "+ Add key",

@@ -1,10 +1,10 @@
 {
   "namespace": "opencodeFree",
-  "package": "dsh-opencode-free@0.3.6",
-  "version": "0.3.6",
+  "package": "dsh-opencode-free",
+  "version": "0.3.7",
   "license": "MIT",
   "repository": "git+https://github.com/x5427876/dsh-opencode-free.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "advice.anongated": "the upstream refused the anonymous request at the time; a key raises the quota but is not guaranteed to lift the refusal",
     "advice.badkey": "check that the key is correct",

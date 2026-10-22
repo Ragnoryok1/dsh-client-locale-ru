@@ -1,10 +1,10 @@
 {
   "namespace": "update",
   "package": "@linxin666/dsh-update",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": "https://github.com/zhu1090093659/dsh-web.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "update.availableLabel": "New version available. Check for updates",
     "update.badge": "Update available",
@@ -19,7 +19,7 @@
     "update.error.notFound": "The dsh-web aggregate package is not installed; nothing to update.",
     "update.error.pnpmFailed": "The update failed (pnpm exited with code {code}); see the output below.",
     "update.error.pnpmMissing": "pnpm was not found (tried pnpm / corepack / npx). Install pnpm and restart the app (Windows: npm install -g pnpm or corepack enable; macOS: brew install pnpm or corepack enable).",
-    "update.error.stale": "The update command ran but the installed versions did not change. Likely cause: the pnpm 11 minimumReleaseAge gate silently skips releases published less than 24 hours ago. Add minimumReleaseAgeExclude (e.g. \"@linxin666/*\") or set minimumReleaseAge: 0 in pnpm-workspace.yaml under the profile directory (~/.dsh/profiles/<profile>), then run the update again.",
+    "update.error.stale": "The update command ran but the installed versions did not change. Likely cause: the pnpm 11/12 minimumReleaseAge gate silently skips releases published less than 24 hours ago. The update command already passes --config.minimum-release-age=0 to override it: from pnpm 12 on, --config accepts kebab-case only (a camelCase key is ignored without any warning), so first check that the pnpm the host runs honours that key; when the override really does not apply, add minimumReleaseAgeExclude (e.g. \"@linxin666/*\") or set minimumReleaseAge: 0 in pnpm-workspace.yaml under the profile directory (~/.dsh/profiles/<profile>), then run the update again.",
     "update.error.timeout": "The update timed out and the install process was killed; try again.",
     "update.error.unknown": "Update failed; try again.",
     "update.error.verifyFailed": "The update command ran but the installed versions could not be verified afterwards (registry probe failed or the install path changed). Inspect the output below, or retry later.",

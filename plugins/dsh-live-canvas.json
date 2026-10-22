@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-live-canvas",
   "package": "@goodandready/dsh-live-canvas",
-  "version": "0.2.30",
+  "version": "0.2.33",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-live-canvas.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "aiPromptBtn": "✨ AI Refine",
     "aiPromptDesc": "Describe what to change in this component or choose a preset:",

@@ -1,10 +1,10 @@
 {
   "namespace": "settings.lanProxy",
-  "package": "@wingsky-1/dsh-lan-proxy@0.2.9",
-  "version": "0.2.9",
+  "package": "@wingsky-1/dsh-lan-proxy",
+  "version": "0.2.10",
   "license": "MIT",
   "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "LAN Proxy",
     "description": "Access the dsh web UI over the LAN: HTTP/HTTPS/WebSocket forwarding to the loopback server with TLS and DNS-rebinding protection."

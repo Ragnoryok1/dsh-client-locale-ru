@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-paper-reader",
-  "package": "@ggboy123/dsh-paper-reader@1.5.1",
-  "version": "1.5.1",
+  "package": "@ggboy123/dsh-paper-reader",
+  "version": "1.6.0",
   "license": "MIT",
   "repository": "git+https://github.com/GGboya/dsh-paper-reader.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "cancel": "Cancel",
     "clearDone": "Cleared “{topic}”: {papers} papers / {files} files → moved to trash",
@@ -55,6 +55,7 @@
     "newName": "New name",
     "newTopic": "New topic",
     "newTopicFail": "Failed to create topic",
+    "ok": "OK",
     "pdfTab": "Paper PDF",
     "rename": "Rename",
     "renameDetached": "Note: {n} past chats are kept but no longer listed",

@@ -1,10 +1,10 @@
 {
   "namespace": "settings.mcpManager",
-  "package": "@guowenzhang/dsh-mcp-manager@1.4.0",
-  "version": "1.4.0",
+  "package": "@guowenzhang/dsh-mcp-manager",
+  "version": "1.5.0",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/zhang-guo-wen/dsh-mcp-manager.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "dsh-mcp-manager",
     "description": "Manage MCP servers, choose when allowed servers load, and filter the tools available to a session."
@@ -36,7 +36,7 @@
     "mcp.filter.option": "{name}",
     "mcp.form.addTitle": "Add MCP server",
     "mcp.form.args": "Arguments (one per line)",
-    "mcp.form.argsPlaceholder": "--argn--flag",
+    "mcp.form.argsPlaceholder": "--arg\n--flag",
     "mcp.form.cancel": "Cancel",
     "mcp.form.close": "Close",
     "mcp.form.command": "Command",
@@ -130,6 +130,7 @@
     "mcp.tab.servers": "Servers",
     "mcp.tab.settings": "Settings",
     "mcp.tabs.label": "MCP settings sections",
+    "nav": "MCP Management",
     "opt.annotations": "Show tool annotations",
     "opt.annotations.desc": "Carry the server's read-only / destructive / idempotent / open-world hints in a listing, so the model can tell which operations change data before it calls one.",
     "opt.catalog.age.minutes": "{n} min ago",

@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-task-ledger",
-  "package": "dsh-task-ledger@0.0.70",
-  "version": "0.0.70",
+  "package": "dsh-task-ledger",
+  "version": "0.0.74",
   "license": "MIT",
   "repository": "git+https://github.com/cq-guojia/dsh-task-ledger.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "actionClaim": "Claim",
     "actionFinish": "Close",

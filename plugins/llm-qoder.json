@@ -1,12 +1,12 @@
 {
   "namespace": "llm-qoder",
-  "package": "@eghrhegpe/dsh-connect-qoder@0.7.3",
-  "version": "0.7.3",
+  "package": "@eghrhegpe/dsh-connect-qoder",
+  "version": "0.7.5",
   "license": "MIT",
   "repository": "git+https://github.com/eghrhegpe/dsh-connect-qoder.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
-    "title": "DSH Connect Qoder",
+    "title": "Qoder Model Access",
     "description": "Registers Qoder CN and international language models into DSH, fetching each model's rate automatically as it shifts with off-peak hours. It also provides a daily check-in, a usage pill and a credit lookup. Needs the Qoder login state on this machine, or one browser login."
   },
   "en": {

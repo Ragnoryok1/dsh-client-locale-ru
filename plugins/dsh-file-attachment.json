@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-file-attachment",
-  "package": "@wszhoho/dsh-file-attachment@0.6.4",
-  "version": "0.6.4",
+  "package": "@wszhoho/dsh-file-attachment",
+  "version": "0.7.0",
   "license": "MIT",
   "repository": "git+https://github.com/wszhoho/dsh-file-attachment.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "card.description": "Drag, paste or upload files and images. Configure file types and multimodal recognition.",
     "card.title": "File Attachments",

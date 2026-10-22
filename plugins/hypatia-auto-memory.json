@@ -1,10 +1,10 @@
 {
   "namespace": "hypatia-auto-memory",
-  "package": "dsh-hypatia-auto-memory@2.4.1",
-  "version": "2.4.1",
+  "package": "dsh-hypatia-auto-memory",
+  "version": "2.4.3",
   "license": "MIT",
   "repository": "git+https://github.com/tkliuxing/dsh-hypatia-auto-memory.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Hypatia Auto Memory",
     "description": "Automatic long-term memory for DSH: logs each session into Hypatia and recalls what matters."

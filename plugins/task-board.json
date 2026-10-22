@@ -1,10 +1,10 @@
 {
   "namespace": "task-board",
   "package": "@linxin666/dsh-client-ui-task-board",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": "https://github.com/zhu1090093659/dsh-web.git",
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "archive.empty": "No archived tasks",
     "board.archive": "Archive",
@@ -361,6 +361,8 @@
     "settings.saving": "Saving…",
     "settings.sessionPollSeconds": "Session poll interval (seconds)",
     "settings.sessionPollSecondsHint": "Default 5. The Host reads the DSH session roster only while the board has something to reconcile: a running card or an open execution. With neither it stops polling and never re-scans the persisted session directory. Range 1 to 300 seconds: a shorter interval settles runs sooner and costs the Host more.",
+    "settings.spendBudgetTokens": "Daily token cap",
+    "settings.spendBudgetTokensHint": "Default 0 means no gate: behavior is exactly what it was before this setting existed, with no ledger read and no counting. With a positive cap, once today's measured spend reaches it a manual run or re-run is refused and the caller sees that message as the refusal, while a due schedule writes the reason to the scheduler error and skips that occurrence without spending a planned run — raising the cap, or the local day rolling over, lets the next trigger run as usual. The unit is tokens rather than money: the usage ledger prices only DeepSeek's own routes and stays 0 on every other route. Today's spend is that ledger's local-date bucket summed over input, cache read/write and output, the same measure the usage panel shows.",
     "settings.title": "Task Board",
     "settings.unsaved": "Unsaved",
     "status.move.backlog": "Move to Backlog",

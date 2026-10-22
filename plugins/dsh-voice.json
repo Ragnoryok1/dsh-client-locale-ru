@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-voice",
   "package": "@goodandready/dsh-voice",
-  "version": "0.9.39",
+  "version": "0.9.41",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-voice.git",
-  "fetched": "2026-10-19",
+  "fetched": "2026-10-22",
   "en": {
     "addCustom": "Add your own provider",
     "addMacro": "Add macro",
@@ -99,7 +99,7 @@
     "jargonAdd": "Add replacement",
     "jargonFormatHint": " (spoken -> replacement)",
     "jargonFrom": "Spoken slang",
-    "jargonPlaceholder": "k8s -> kubernetesnpr -> pull request",
+    "jargonPlaceholder": "k8s -> kubernetes\npr -> pull request",
     "jargonTitle": "Developer Lexicon & IT Jargon",
     "jargonTo": "Correct spelling",
     "keepPending": "Do not send",

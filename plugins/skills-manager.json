@@ -1,10 +1,10 @@
 {
   "namespace": "skills-manager",
   "package": "@michengai/dsh-skills-manager",
-  "version": "1.2.8",
+  "version": "1.2.11",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/MichengAI/dsh-skills-manager.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Skills Manager",
     "description": "Load and safely manage local Agent Skills."
@@ -54,6 +54,9 @@
     "repo.confirmUninstall": "Move to Trash",
     "repo.confirmUpdate": "Back up and update",
     "repo.conflict": "Name conflict",
+    "repo.copied": "Copied",
+    "repo.copyBody": "Copy body",
+    "repo.copyFailed": "Copy failed",
     "repo.defaultBranch": "Leave empty for the default branch",
     "repo.defaultBranchLabel": "default branch",
     "repo.destinationUnavailable": "The original project is unregistered or unavailable. Re-register it in the sidebar and refresh to manage this copy.",
@@ -109,7 +112,7 @@
     "repo.source.agents": "Shared Agent",
     "repo.source.dsh": "DSH",
     "repo.states": "All statuses",
-    "repo.subsource.catalogNote": "ClawHub download ranking · Up to 100; sort only displayed items",
+    "repo.subsource.catalogNote": "ClawHub download ranking xB7 Up to 100; sort only displayed items",
     "repo.subsource.clawhub": "ClawHub",
     "repo.subsource.github": "GitHub Repos",
     "repo.subsource.popular": "Top 100 by downloads",

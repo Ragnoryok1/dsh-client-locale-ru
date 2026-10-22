@@ -114,6 +114,165 @@ function propertyStart(text, start, property) {
 }
 
 /**
+ * The properties of the object literal that begins at `start`, one level deep.
+ *
+ * A property's value is one of three things: an object literal of its own
+ * (`en: {…}`), a reference to a property of another object (`en: L.en`) or a
+ * plain name (`en` in the shorthand `{ en, zh }`, where the name stands for the
+ * variable of that name). Which one it is decides how the dictionary is read.
+ *
+ * @param text - the source the object lives in.
+ * @param start - where the object literal begins.
+ * @returns the properties, in the order they are written.
+ */
+function propertiesOf(text, start) {
+  const properties = []
+  let index = text.indexOf('{', start)
+  if (index === -1) return properties
+  let depth = 0
+  let cursor = index
+  while (cursor < text.length) {
+    const char = text[cursor]
+    if (char === '{' || char === '[' || char === '(') {
+      depth += 1
+      cursor += 1
+      continue
+    }
+    if (char === '}' || char === ']' || char === ')') {
+      depth -= 1
+      if (depth === 0) break
+      cursor += 1
+      continue
+    }
+    if (char === '"' || char === "'" || char === '`') {
+      const quote = char
+      let end = cursor + 1
+      let value = ''
+      while (end < text.length && text[end] !== quote) {
+        if (text[end] === '\\') { value += text[end + 1] ?? ''; end += 2; continue }
+        value += text[end]
+        end += 1
+      }
+      let after = end + 1
+      while (after < text.length && /\s/u.test(text[after])) after += 1
+      if (depth === 1 && text[after] === ':') {
+        const read = readValue(text, after + 1)
+        if (read !== null) properties.push({ name: value, ...read })
+        cursor = read === null ? after + 1 : read.end
+        continue
+      }
+      cursor = end + 1
+      continue
+    }
+    if (char === '/') {
+      const comment = commentEnd(text, cursor)
+      if (comment !== -1) { cursor = comment; continue }
+    } else if (/[A-Za-z_$]/u.test(char) && depth === 1) {
+      const before = text.slice(0, cursor).replace(/\s+$/u, '').slice(-1)
+      if (before === '{' || before === ',') {
+        const identifier = /^([A-Za-z_$][\w$]*)\s*(:)?/u.exec(text.slice(cursor, cursor + 80))
+        if (identifier !== null) {
+          if (identifier[2] === ':') {
+            const read = readValue(text, cursor + identifier[0].length)
+            if (read !== null) properties.push({ name: identifier[1], ...read })
+            cursor = read === null ? cursor + identifier[0].length : read.end
+            continue
+          }
+          /*
+           * The shorthand: `{ en, zh }` names the variable `en`, so the value of
+           * the property is that variable and nothing else.
+           */
+          properties.push({ name: identifier[1], kind: 'name', value: identifier[1], end: cursor + identifier[0].length })
+          cursor += identifier[0].length
+          continue
+        }
+      }
+    }
+    cursor += 1
+  }
+  return properties
+}
+
+/**
+ * The value of a property, read at the position the colon left off.
+ *
+ * @param text - the source the value lives in.
+ * @param start - where the value begins.
+ * @returns what the value is, or null when it is none of the three shapes.
+ */
+function readValue(text, start) {
+  let cursor = start
+  while (cursor < text.length && /\s/u.test(text[cursor])) cursor += 1
+  const rest = text.slice(cursor, cursor + 120)
+  const member = /^([A-Za-z_$][\w$]*)\.([A-Za-z_$][\w$]*)/u.exec(rest)
+  if (member !== null) {
+    return { kind: 'member', object: member[1], property: member[2], end: cursor + member[0].length }
+  }
+  const name = /^([A-Za-z_$][\w$]*)/u.exec(rest)
+  if (name !== null) {
+    return { kind: 'name', value: name[1], end: cursor + name[0].length }
+  }
+  if (rest.startsWith('{')) {
+    return { kind: 'object', start: cursor, end: cursor }
+  }
+  return null
+}
+
+/**
+ * The arguments of a call, as the raw text of each and where it begins.
+ *
+ * @param text - the source the call lives in.
+ * @param open - the index of the opening parenthesis.
+ * @returns the raw text of every argument, in order, with its offset.
+ */
+function argumentsOf(text, open) {
+  const args = []
+  let depth = 0
+  let cursor = open + 1
+  let start = cursor
+  while (cursor < text.length) {
+    const char = text[cursor]
+    if (char === '"' || char === "'" || char === '`') {
+      const quote = char
+      let end = cursor + 1
+      while (end < text.length && text[end] !== quote) {
+        if (text[end] === '\\') end += 1
+        end += 1
+      }
+      cursor = end + 1
+      continue
+    }
+    if (char === '/') {
+      const comment = commentEnd(text, cursor)
+      if (comment !== -1) { cursor = comment; continue }
+    }
+    if (char === '{' || char === '[' || char === '(') {
+      depth += 1
+      cursor += 1
+      continue
+    }
+    if (char === '}' || char === ']' || char === ')') {
+      if (depth === 0) {
+        args.push({ text: text.slice(start, cursor), start, end: cursor })
+        return args
+      }
+      depth -= 1
+      cursor += 1
+      continue
+    }
+    if (char === ',' && depth === 0) {
+      args.push({ text: text.slice(start, cursor), start, end: cursor })
+      start = cursor + 1
+      cursor += 1
+      continue
+    }
+    cursor += 1
+  }
+  args.push({ text: text.slice(start), start, end: text.length })
+  return args
+}
+
+/**
  * Every string-literal pair of an object literal starting at `start`, flattened.
  *
  * A key is either a quoted string (`"cancel": "Cancel"`) or a bare identifier
@@ -342,63 +501,87 @@ for (const name of packages) {
       return null
     }
     /**
-     * The namespace this package registers, and the bundle that registers it.
+     * The registrations this package makes: the namespace of each and the bundle
+     * that makes it.
      *
      * The first argument of `locale.register` is the namespace, and it is read from
      * every call whatever the rest of the arguments look like: a plugin may register
      * one language at a time (`register(NS, "en", en)`), hand over both
      * (`register(NS, { zh, en })`) or wrap the call in a helper of its own
      * (`addLocale("en", KL_en)` → `register(NS, locale, dictionary)`).
+     *
+     * A package may register more than one namespace — `dsh-commandcode-provider`
+     * registers its panel under a namespace of its own — and each registration
+     * carries a dictionary of its own. So the calls are read in full, and the
+     * namespace and the dictionary are taken from the same call.
      */
-    const registration = (() => {
+    const registrations = (() => {
+      const found = []
       for (const [bundle, text] of texts) {
-        for (const call of text.matchAll(/locale\.register\(\s*(?:["'`]([\w.-]+)["'`]|([A-Za-z_$][\w$]*))\s*(?=[,)])/gu)) {
-          const [, literal, identifier] = call
-          if (literal !== undefined) return { namespace: literal, bundle, body: null }
-          const constant = constantOf(identifier)
-          if (constant !== null) return { namespace: constant, bundle, body: null }
+        for (const call of text.matchAll(/locale\.register\(/gu)) {
+          const open = call.index + call[0].length - 1
+          const args = argumentsOf(text, open)
+          if (args.length < 2) continue
+          const first = args[0].text.trim()
+          let namespace = null
+          const literal = /^["'`]([\w.-]+)["'`]$/u.exec(first)
+          if (literal !== null) namespace = literal[1]
+          else if (/^[A-Za-z_$][\w$]*$/u.test(first)) namespace = constantOf(first)
+          if (namespace === null) continue
+          found.push({ namespace, bundle, text, args })
         }
       }
-      return null
+      return found
     })()
+    const registration = registrations[0] ?? null
     /**
-     * The English dictionary the registration hands over.
+     * The English dictionary one registration hands over.
      *
-     * Three shapes carry it: the object of the `en` property
-     * (`register(NS, { zh, en })`), the object named by the third argument
-     * (`register(NS, "en", KL_en)`) and the shorthand (`register(NS, { zh, en })` where
-     * `en` is a variable of its own).
+     * The dictionary is the value of the `en` property of the second argument, and
+     * the property may be written in three ways: an object literal of its own
+     * (`{ en: {…} }`), a reference to a property of another object (`{ en: L.en }`)
+     * or the shorthand (`{ en, zh }`, where `en` names the variable of that name).
+     * A registration that names its language instead (`register(NS, "en", KL_en)`)
+     * hands the dictionary over as the third argument.
+     *
+     * The namespace and the dictionary come from the same call: a package may
+     * register a second namespace of its own — `dsh-commandcode-provider` has a
+     * panel besides its settings — and the dictionary of one is not the dictionary
+     * of the other.
      */
     const englishOfRegistration = (() => {
-      for (const [bundle, text] of texts) {
-        for (const call of text.matchAll(/locale\.register\(\s*(?:["'`]([\w.-]+)["'`]|([A-Za-z_$][\w$]*))\s*,\s*(?:\{([\s\S]{0,200})|"en"\s*,\s*([A-Za-z_$][\w$]*))/gu)) {
-          const [, , , body, named] = call
-          if (named !== undefined) {
-            const pairs = objectOf(named)
+      for (const entry of registrations) {
+        const { text, args } = entry
+        const second = args[1].text.trim()
+        /*
+         * `register(NS, "en", KL_en)` — the dictionary is the third argument.
+         */
+        if (/^["'`]en["'`]$/u.test(second)) {
+          const third = (args[2]?.text ?? '').trim()
+          if (/^[A-Za-z_$][\w$]*$/u.test(third)) {
+            const pairs = objectOf(third)
             if (pairs !== null) return pairs
           }
-          if (body === undefined) continue
-          if (!/\ben\b/u.test(body)) continue
-          /*
-           * `en: L.en` — the English half of an object that holds both languages.
-           * Reading the whole `L` would take the Chinese half with it.
-           */
-          const member = /\ben\s*:\s*([A-Za-z_$][\w$]*)\.([A-Za-z_$][\w$]*)/u.exec(body)
-          if (member !== null) {
-            const pairs = propertyOf(member[1], member[2])
+          continue
+        }
+        if (!second.startsWith('{')) continue
+        const brace = text.indexOf('{', args[1].start)
+        const properties = propertiesOf(text, brace)
+        for (const property of properties) {
+          if (property.name !== 'en') continue
+          if (property.kind === 'object') {
+            const pairs = pairsOf(text, property.start, name => objectOf(name))
+            if (pairs.size > 0) return pairs
+          }
+          if (property.kind === 'member') {
+            const pairs = propertyOf(property.object, property.property)
             if (pairs !== null) return pairs
           }
-          const property = /\ben\s*:\s*([A-Za-z_$][\w$]*)/u.exec(body)
-          if (property !== null) {
-            const pairs = objectOf(property[1])
+          if (property.kind === 'name') {
+            const pairs = objectOf(property.value)
             if (pairs !== null) return pairs
           }
-          if (/(?:^|[{,]\s*)en\s*[,}]/u.test(body) || /(?:^|[{,]\s*)en\s*[,}][\s\S]*$/u.test(body)) {
-            const pairs = objectOf('en')
-            if (pairs !== null) return pairs
-          }
-          const inline = pairsOf(text, call.index + call[0].length - 1, name => objectOf(name))
-          if (inline.size > 0) return inline
+          break
         }
       }
       return null

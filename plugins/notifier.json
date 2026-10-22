@@ -1,10 +1,10 @@
 {
   "namespace": "notifier",
-  "package": "@wingsky-1/dsh-notifier@0.2.9",
-  "version": "0.2.9",
+  "package": "@wingsky-1/dsh-notifier",
+  "version": "0.2.10",
   "license": "MIT",
   "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Notifier",
     "description": "Task-event notifications for dsh web via browser Notification and host system toast, with Bark and webhook push channels."
@@ -250,11 +250,11 @@
     "whAuthBearer": "Bearer Token (Authorization header)",
     "whAuthHeader": "Custom header",
     "whAuthHeaderName": "Header name (e.g. X-Gotify-Key)",
-    "whAuthHeaderValue": "Header value (token)",
-    "whAuthHint": "Credentials go in request headers only (ntfy / Gotify both support the Authorization header), never in the URL; stored locally and shown masked; leave empty to keep the saved value",
+    "whAuthHeaderValue": "Header value (sent verbatim)",
+    "whAuthHint": "Bearer mode takes a raw token only (no Bearer prefix; the plugin adds it); custom header values are sent exactly as entered; credentials stay in headers, never URLs; stored locally and shown masked; leave empty to keep the saved value",
     "whAuthNone": "None",
     "whAuthPassword": "Password",
-    "whAuthToken": "Access token",
+    "whAuthToken": "Raw token (without Bearer prefix)",
     "whAuthUsername": "Username",
     "whPreset": "Preset",
     "whPresetCustom": "Custom push gateway",

@@ -1,10 +1,10 @@
 {
   "namespace": "tidy-display",
-  "package": "dsh-tidy-display@0.4.2",
-  "version": "0.4.2",
+  "package": "dsh-tidy-display",
+  "version": "0.4.4",
   "license": "MIT",
   "repository": "git+https://github.com/drscrewdriver/dsh-tidy-display.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "bubbleDescription": "On by default: final answers sit in a rounded bubble that separates them from the background, translucent in frosted-glass mode. Turn this off to lay answers flat on the page.",
     "bubbleTitle": "Message bubbles",
@@ -19,6 +19,7 @@
     "foldTitle": "Auto-fold process",
     "glassDescription": "Off by default: reading chrome stays opaque, matching the current Host look. Turn this on to let wallpaper and skins show through the panel; path and count chips stay clear until hover or focus.",
     "glassTitle": "Translucent frosted glass",
+    "nav": "整洁显示",
     "openDescription": "Off by default: chips and inline file mentions open in the system app. Turn this on to preview them in the right Sidebar, matching official chat. Reveal and folder actions still use the system file manager.",
     "openTitle": "Open deliverables in built-in panel",
     "pinDescription": "Off: the collapsed thinking card stays at the top. On: it always scrolls to the newest line, including while streaming. Scrolling up or selecting text still pauses it.",

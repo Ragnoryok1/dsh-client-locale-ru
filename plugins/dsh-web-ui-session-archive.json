@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-web-ui-session-archive",
   "package": "@linxin666/dsh-session-archive",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "Apache-2.0",
   "repository": null,
-  "fetched": "2026-10-18",
+  "fetched": "2026-10-22",
   "en": {
     "arch.auto.archiveDays": "Inactivity threshold (days)",
     "arch.auto.archiveToggle": "Auto-archive sessions inactive beyond the threshold",

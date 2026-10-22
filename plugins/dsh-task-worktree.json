@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-task-worktree",
-  "package": "dsh-task-worktree@0.4.4",
-  "version": "0.4.4",
+  "package": "dsh-task-worktree",
+  "version": "0.4.5",
   "license": "MIT",
   "repository": "git+https://github.com/Letter2025/dsh-task-worktree.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "badgeFallback": "worktree",
     "badgeTooltip": "Worktree used by this conversation",

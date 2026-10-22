@@ -1,10 +1,10 @@
 {
   "namespace": "hermes-loop",
-  "package": "@weibaohui/hermes-loop@0.3.0",
-  "version": "0.3.0",
+  "package": "@weibaohui/hermes-loop",
+  "version": "0.3.1",
   "license": "MIT",
   "repository": "git+https://github.com/weibaohui/hermes-loop.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "action.create": "create",
     "action.patch": "patch",
@@ -75,6 +75,7 @@
     "signal.title": "Signal trigger",
     "signal.words": "correction words",
     "skillContent.failed": "Failed to load content",
+    "tab": "Hermes Loop",
     "thresholds": "Trigger thresholds",
     "toolCalls": "tool calls",
     "turns": "turns",

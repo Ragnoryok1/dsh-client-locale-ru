@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-remote",
-  "package": "dsh-remote@0.8.48",
-  "version": "0.8.48",
+  "package": "dsh-remote",
+  "version": "0.8.50",
   "license": "MIT",
   "repository": "git+https://github.com/flymysql/dsh-remote.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "en": {
     "common.close": "Close",
     "common.confirm": "Confirm",
@@ -213,6 +213,7 @@
     "settings.registryUnreachable": "Cannot reach the npm registry",
     "settings.save": "Save",
     "settings.saved": "Saved",
+    "settings.saveWritesSshConfig": "Saving writes host/user/port/key into a managed block in ~/.ssh/config (marked # dsh-remote: managed); the file then takes precedence — edit it directly and it takes effect at once.",
     "settings.saving": "Saving…",
     "settings.secretStoreFailed": "The OS keychain refused the password ({msg}); it was saved as plaintext in machines.json and the machine still connects.",
     "settings.sectionHide": "Collapse section",

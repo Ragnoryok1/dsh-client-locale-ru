@@ -1,10 +1,10 @@
 {
   "namespace": "sessions",
-  "package": "dsh-plugin-ideas-manager@0.10.2",
-  "version": "0.10.2",
+  "package": "dsh-plugin-ideas-manager",
+  "version": "0.10.3",
   "license": "MIT",
   "repository": "git+https://github.com/EiffelBS/dsh-plugin-ideas-manager.git",
-  "fetched": "2026-10-21",
+  "fetched": "2026-10-22",
   "en": {
     "about.checkUpdate": "Check for updates",
     "about.compatibleVersions": "DSH compatibility",

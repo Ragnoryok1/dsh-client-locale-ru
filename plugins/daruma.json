@@ -1,10 +1,10 @@
 {
   "namespace": "daruma",
-  "package": "dsh-daruma@0.1.9",
-  "version": "0.1.9",
+  "package": "dsh-daruma",
+  "version": "0.1.10",
   "license": "MIT",
   "repository": "git+https://github.com/SISCHOI/daruma.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "backup": "Backup",
     "backupManage": "Backup channel",

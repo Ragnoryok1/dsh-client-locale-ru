@@ -1,10 +1,10 @@
 {
   "namespace": "archive-manager-workspace",
-  "package": "@michengai/dsh-archive-manager@1.1.6",
-  "version": "1.1.6",
+  "package": "@michengai/dsh-archive-manager",
+  "version": "1.1.7",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/MichengAI/dsh-archive-manager.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "meta": {
     "title": "Archive Manager",
     "description": "Archive, restore, favorite, and permanently delete sessions, and diagnose damaged session logs."
@@ -240,7 +240,7 @@
     "organizer.refreshError": "Results retained, but refresh failed: {detail}",
     "organizer.reloadFavorites": "Reload favorites",
     "organizer.restoreResult": "Restore results",
-    "organizer.result": "Succeeded {succeeded} · Skipped {skipped} · Failed {failed} · Unprocessed {remaining}",
+    "organizer.result": "Succeeded {succeeded} xB7 Skipped {skipped} xB7 Failed {failed}",
     "organizer.retry": "Retry remaining {n}",
     "organizer.rules": "Uses last activity, the current list filters. Excludes favorites, open, running and waiting sessions.",
     "organizer.undo": "Undo this archive batch ({n})",

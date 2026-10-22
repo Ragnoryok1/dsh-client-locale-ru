@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-cron",
   "package": "@goodandready/dsh-cron",
-  "version": "0.3.14",
+  "version": "0.3.18",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-cron.git",
-  "fetched": "2026-10-19",
+  "fetched": "2026-10-22",
   "en": {
     "actions.approve": "Approve",
     "actions.archive": "Archive",
@@ -189,6 +189,9 @@
     "form.schedulePlaceholder": "0 */6 * * * or every 2h or in 30m or at: 2026-09-05T15:00:00Z",
     "form.selfHealingLabel": "Self-healing runbook command (shell)",
     "form.selfHealingPlaceholder": "systemctl restart app || true",
+    "form.sessionTitleHint": "Name given to agent sessions created by this task. Supports {{date}} for YYYY-MM-DD. Defaults to \"<YYYY-MM-DD> <title>\".",
+    "form.sessionTitleLabel": "Session Title Template",
+    "form.sessionTitlePlaceholder": "e.g. {{date}} a-share-review (supports {{date}})",
     "form.silentRuleHint": "For tasks with output: a cheap model judges the run against this rule and the report is skipped when it says to stay silent. If the model is unavailable or unsure, the report is delivered.",
     "form.silentRuleLabel": "Silent rule (optional)",
     "form.silentRulePlaceholder": "Stay silent when no filesystem is above 80%",

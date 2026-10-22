@@ -1,10 +1,10 @@
 {
   "namespace": "agentTeams",
-  "package": "@nanmicoder/dsh-agent-teams@0.1.25",
-  "version": "0.1.25",
+  "package": "@nanmicoder/dsh-agent-teams",
+  "version": "0.1.26",
   "license": "MIT",
   "repository": "git+https://github.com/NanmiCoder/dsh-agent-teams.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "action.openActivityPanel": "Open activity panel",
     "activity.badgeAria": "AgentTeams activity and history, {count} team records",
@@ -149,6 +149,7 @@
     "plan.unsaved": "Unsaved",
     "progress.aria": "Overall team progress",
     "progress.blocked": "■ Waiting {count}",
+    "progress.claimed": "■ Claimed {count}",
     "progress.delivered": "■ Delivered {count}",
     "progress.running": "■ In progress {count}",
     "progress.title": "Overall progress",
@@ -174,6 +175,7 @@
     "task.summary.allDelivered": "All {count} tasks delivered",
     "task.summary.blocked": "{tasks} waiting on prerequisites",
     "task.summary.blockedAndRunning": "{tasks}{more} waiting on prerequisites; other work has started",
+    "task.summary.claimed": "Claimed: {tasks}",
     "task.summary.discarded": "{count} planned tasks discarded; none ran",
     "task.summary.ended": "Final: {completed} delivered · {cancelled} cancelled · {failed} failed",
     "task.summary.failedSettled": "{count} failed; the automatic loop has stopped",
@@ -209,12 +211,17 @@
     "workspace.focus": "View team",
     "workspace.guide": "Members, task dependencies, and execution progress",
     "workspace.history": "History",
+    "workspace.inbox": "Captain inbox",
+    "workspace.inboxEmpty": "No unread messages. Member reports appear here until the captain reads them.",
+    "workspace.inboxHint": "Up to 5 recent unread messages",
     "workspace.loading": "Loading team activity",
     "workspace.members": "members",
     "workspace.noTasks": "Waiting for the captain to define tasks",
     "workspace.relationships": "The captain coordinates members. Connections show task prerequisites. Select a task to locate its owner.",
     "workspace.retry": "Reconnect",
     "workspace.tasks": "tasks",
-    "workspace.title": "Team workspace"
+    "workspace.taskSummary": "Task completion summary",
+    "workspace.title": "Team workspace",
+    "workspace.verdictStale": "Verdict outdated"
   }
 }

@@ -1,10 +1,10 @@
 {
   "namespace": "dsh-github",
-  "package": "@perrylink/dsh-github@0.7.24",
-  "version": "0.7.24",
+  "package": "@perrylink/dsh-github",
+  "version": "0.7.26",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-github.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "discard": "Discard",
     "githubDescription": "GitHub pull requests, issues, and CI through the agent.",

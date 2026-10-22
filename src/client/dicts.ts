@@ -3190,7 +3190,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update.error.notFound': 'Агрегатный пакет dsh-web не установлен — обновлять нечего.',
     'update.error.pnpmFailed': 'Обновление не удалось (pnpm завершился с кодом {code}); вывод ниже.',
     'update.error.pnpmMissing': 'pnpm не найден (пробовали pnpm, corepack и npx). Установите pnpm и перезапустите приложение (Windows: npm install -g pnpm или corepack enable; macOS: brew install pnpm или corepack enable).',
-    'update.error.stale': 'Команда обновления выполнилась, но установленные версии не изменились. Вероятная причина: порог minimumReleaseAge в pnpm 11 молча пропускает выпуски, опубликованные меньше 24 часов назад. Добавьте minimumReleaseAgeExclude (например, @linxin666/*) или установите minimumReleaseAge: 0 в pnpm-workspace.yaml в каталоге профиля (~/.dsh/profiles/<profile>) и запустите обновление снова.',
+    'update.error.stale': 'Команда обновления выполнилась, но установленные версии не изменились. Вероятная причина: порог minimumReleaseAge в pnpm 11/12 молча пропускает выпуски, опубликованные меньше 24 часов назад. Команда обновления уже передаёт --config.minimum-release-age=0, чтобы отменить это ограничение: начиная с pnpm 12, ключ --config принимает только имя в нижнем регистре с дефисами (имя в верблюжьем регистре игнорируется без всякого предупреждения), поэтому сначала проверьте, учитывает ли этот ключ pnpm, который запускает хост; если отмена действительно не действует, добавьте minimumReleaseAgeExclude (например, «@linxin666/*») или установите minimumReleaseAge: 0 в pnpm-workspace.yaml в каталоге профиля (~/.dsh/profiles/<profile>), затем запустите обновление снова.',
     'update.error.timeout': 'Обновление не уложилось в отведённое время, процесс установки остановлен; попробуйте снова.',
     'update.error.unknown': 'Обновление не удалось; попробуйте снова.',
     'update.error.verifyFailed': 'Команда обновления выполнилась, но проверить установленные версии не удалось (запрос к реестру не прошёл или путь установки изменился). Посмотрите вывод ниже или повторите позже.',
@@ -3359,6 +3359,10 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usage.tokens.output': 'Вывод',
     'usage.tokens.total': 'Всего токенов',
     'usage.trend': 'Последние 30 дней',
+    'usage.peak.ends': 'заканчивается в {time}',
+    'usage.peak.starts': 'пик в {time}',
+    'usage.peak.tag.off': 'Вне пика',
+    'usage.peak.tag.on': 'Пик',
     'usage.updated': 'Обновлено {time}',
   },
   /*
@@ -3658,8 +3662,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.idleExpireMsHint': 'Сопряжённое устройство, от которого не было ни сигнала активности, ни запросов столько времени, удаляется, и ему придётся сканировать заново. По умолчанию 7 дней.',
     'settings.inherit': 'Наследовать',
     'settings.invalidNumber': 'Введите число или оставьте поле пустым, чтобы использовать значение по умолчанию.',
-    'settings.lanBind': 'Доступ по локальной сети (привязка к 0.0.0.0)',
-    'settings.lanBindHint': 'Когда включено, плагин записывает управляемый блок в патч профиля с привязкой по умолчанию к 0.0.0.0 (явный флаг --host всё равно главнее) и поддерживает соответствующее правило брандмауэра хоста (Windows и Linux; на других платформах оно не нужно). Когда выключено, блок закрепляет 127.0.0.1. Изменение привязки обычно вступает в силу после перезапуска dsh web.',
+    'settings.lanBind': 'Доступ по локальной сети (привязка к локальному адресу этой машины)',
+    'settings.lanBindHint': 'Когда включено, плагин записывает управляемый блок в патч профиля: на хосте, который ещё допускает привязку к любому адресу, блок закрепляет 0.0.0.0, а на DSH 0.2.1-rc.2 и новее, где хост такие привязки отклоняет, — текущий локальный IPv4-адрес этой машины; адрес переопределяется при каждом запуске (явный флаг --host всё равно главнее). Плагин также поддерживает соответствующее правило брандмауэра хоста (Windows и Linux; на других платформах оно не нужно). Когда выключено, блок закрепляет 127.0.0.1. Изменение привязки обычно вступает в силу после перезапуска dsh web, а после смены сети новый адрес подхватывается только после очередного переключения.',
     'settings.maxDevices': 'Предел сопряжённых устройств',
     'settings.maxDevicesHint': 'Жёсткий предел сессий сопряжённых устройств; при заполнении вытесняется самая старая.',
     'settings.notExposed': 'Эта версия DSH не показывает странице настроек пространство имён этого плагина, поэтому форма недоступна. Отредактируйте $DSH_HOME/settings.yaml напрямую или убедитесь, что плагин-владелец пространства имён подключён вместе со своим доменом настроек, и перезапустите.',
@@ -3700,6 +3704,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Удалённый доступ',
     'tunnel.failed': 'Публичный туннель не запустился: {error}',
     'tunnel.starting': 'Публичный туннель запускается; вскоре QR-код переключится на публичную ссылку…',
+    'lan.noLanAddress': 'Этот хост не принимает привязку ко всем адресам, а у этой машины сейчас нет адреса IPv4 в локальной сети, поэтому закрепить доступ по локальной сети невозможно — используйте туннель.',
+    'lan.wildcardUnsupported': 'Этот хост не принимает привязку к 0.0.0.0, поэтому переключатель закрепляет конкретный адрес этой машины в локальной сети (DSH 0.2.1-rc.2 и новее).',
     'tunnel.unknownError': 'неизвестная ошибка',
   },
   /*
@@ -3782,6 +3788,45 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tab.edit': 'Изменить навык',
     'tab.list': 'Навыки',
     'workspace.isolated': 'Рабочая область изолирована',
+    'create.template': 'Скопировано из шаблона «{name}»: измените имя и поля перед созданием.',
+    'create.templateClear': 'Очистить шаблон',
+    'filter.clear': 'Очистить фильтры',
+    'filter.mark.linked': 'Символическая ссылка',
+    'filter.mark.no-file': 'Локального файла нет',
+    'filter.mark.provider-file': 'Предоставлен плагином',
+    'filter.markLabel': 'Метки',
+    'filter.sourceLabel': 'Источник',
+    'filter.status.all': 'Все',
+    'filter.status.disabled': 'Выключен',
+    'filter.status.enabled': 'Включён',
+    'filter.statusLabel': 'Состояние',
+    'filter.toggle': 'Фильтры',
+    'import.archiveLabel': 'Выберите файл .zip',
+    'import.archiveRequired': 'Выберите файл .zip',
+    'import.archiveTooLarge': 'Архив не должен превышать {size}',
+    'import.directoryLabel': 'Путь к каталогу (абсолютный, на этой машине)',
+    'import.directoryPlaceholder': 'Каталог с файлом <name>/SKILL.md',
+    'import.directoryRequired': 'Введите каталог для импорта',
+    'import.failed': 'Не удалось импортировать: {error}',
+    'import.imported': 'Импортировано',
+    'import.note': 'Импорт только создаёт файлы и никогда не перезаписывает существующий навык. Конфликт одинаковых имён разрешается по рангу официальных источников (проект 100 → поставка 600): более сильный навык с тем же именем остаётся, а кандидат попадает в список пропущенных. Импорт каталога читает один уровень (<name>/SKILL.md или <name>.md); символические ссылки и записи, начинающиеся с точки, игнорируются.',
+    'import.open': 'Импорт',
+    'import.reason.duplicate': 'Дубликат имени в том же источнике',
+    'import.reason.exists': 'Навык с таким именем уже есть там',
+    'import.reason.invalid-frontmatter': 'В начальном блоке YAML нет имени или описания',
+    'import.reason.invalid-name': 'Имя не в стиле kebab-case',
+    'import.reason.shadowed': 'Более сильный источник уже предоставляет это имя',
+    'import.reason.too-large': 'Содержимое больше 64 КБ',
+    'import.reason.unknown': 'Пропущено',
+    'import.root': 'Импортировать в',
+    'import.source': 'Источник импорта',
+    'import.source.archive': 'Архив .zip',
+    'import.source.directory': 'Локальный каталог',
+    'import.submit': 'Импортировать навыки',
+    'import.summary': 'Импортировано: {imported}, пропущено: {skipped}.',
+    'list.duplicate': 'Дублировать как шаблон',
+    'list.duplicateFailed': 'Не удалось дублировать: {error}',
+    'tab.import': 'Импорт',
     'workspace.isolatedHint': 'Этот навык принадлежит рабочей области «{workspace}» и изолирован от контекста текущей сессии',
   },
   /*
@@ -4158,6 +4203,10 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tunnel.started': 'Туннель поднят: 127.0.0.1:{localPort}',
     'tunnel.stop': 'Остановить',
     'tunnel.stopAll': 'Остановить все',
+    'form.forwardAgent': 'Включить пересылку агента',
+    'form.forwardAgentHint': 'Пересылайте локальный SSH-агент на этот хост (аналог ssh -A): удалённая машина сможет подписывать данные вашими закрытыми ключами. Включайте только для хостов, которым доверяете.',
+    'hosts.forwardAgentBadge': 'agent-fwd',
+    'hosts.forwardAgentHint': 'Включайте только для хостов, которым доверяете: удалённая машина сможет подписывать данные вашими локальными закрытыми ключами (аналог ssh -A).',
     'tunnel.stopAllConfirm': 'Остановить все туннели?',
   },
   /*
@@ -4602,6 +4651,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'verify.title': 'Отчёт о приёмке',
     'verify.usage': 'Расход: запросов {calls} · на входе {input} · на выходе {output} · токенов рассуждения {reasoning}',
     'verify.usageIncomplete': ' (расход хотя бы одного запроса неизвестен; эти значения — нижняя граница)',
+    'settings.spendBudgetTokens': 'Дневной лимит токенов',
+    'settings.spendBudgetTokensHint': 'По умолчанию 0 означает отсутствие ограничения: поведение в точности такое, каким было до появления этой настройки, без чтения реестра и без подсчёта. При положительном лимите, как только измеренный расход за сегодня достигнет его, ручной запуск или повторный запуск отклоняются, и вызывающая сторона видит это сообщение как причину отказа; наступившее по расписанию срабатывание записывает причину в ошибку планировщика и пропускает этот случай, не расходуя один из запланированных запусков — повышение лимита или наступление нового локального дня позволяет следующему срабатыванию отработать как обычно. Единица измерения — токены, а не деньги: реестр расхода оценивает только собственные маршруты DeepSeek и остаётся равным нулю на любом другом маршруте. Расход за сегодня — это сумма по локальной дате того же реестра, посчитанная по вводу, чтению и записи кэша и по выводу, то есть та же величина, что показывает панель расхода.',
     'verify.workspaceEvidence': 'Изменённых файлов, замеченных хостом: {files}',
   },
   /*
@@ -4962,9 +5013,9 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'sidebar.mainMenu': 'Главное меню',
     'sidebar.marketplace': 'Магазин плагинов',
     'sidebar.newTask': 'Новая задача',
-    'sidebar.overviewTab': 'Обзор задач',
+    'sidebar.overviewTab': 'Задачи',
     'sidebar.plugins': 'Менеджер плагинов',
-    'sidebar.runsTab': 'История запусков',
+    'sidebar.runsTab': 'Записи',
     'sidebar.schedule': 'Задачи по расписанию',
     'sidebar.scheduleTab': 'Расписание',
     'sidebar.search': 'Поиск разговоров',
@@ -5140,6 +5191,17 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'term.newTerminal': '+ Новый терминал',
     'term.noOutput': '(вывода нет)',
     'term.send': 'Отправить',
+    'flow.syncPaths': 'Область синхронизации (необязательно, пусто = общее значение по умолчанию / всё дерево)',
+    'settings.defaultSyncExclude': 'Исключения синхронизации по умолчанию для новых рабочих областей',
+    'settings.defaultSyncMaxBytes': 'Ограничение размера синхронизации по умолчанию (ГБ, пусто = встроенные 2 ГБ)',
+    'settings.defaultSyncPaths': 'Область синхронизации по умолчанию для новых рабочих областей (через запятую или с новой строки)',
+    'settings.syncScope': 'Область синхронизации (дополнительно)',
+    'settings.syncScopeHint': 'Синхронизируйте только нужные подпути вместо архива всего дерева. Это важно для рабочих областей, у которых удалённый путь — ~: синхронизация всего дерева сначала отклоняется ограничением размера (проблема №28). Пусто = всё дерево.',
+    'settings.wsSyncExclude': 'Исключения синхронизации (через запятую или с новой строки, например data/, *.log)',
+    'settings.wsSyncMaxBytes': 'Ограничение размера синхронизации (ГБ, пусто = 2 ГБ по умолчанию)',
+    'settings.wsSyncPaths': 'Область синхронизации (через запятую или с новой строки, например .dsh; пусто = всё дерево)',
+    'sync.upDone': 'Отправка завершена',
+    'sync.upFail': 'Отправка не удалась: ',
     'term.title': 'Терминал {id}',
   },
   /*
@@ -5208,6 +5270,19 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
    * плейсхолдеры сверяет аудит, поэтому расхождение с публикацией видно сразу.
    */
   'web-ui-plugins': {
+    'settings.collapse': 'Свернуть',
+    'settings.discard': 'Отменить изменения',
+    'settings.expand': 'Развернуть',
+    'settings.notExposed': 'Раздел не открыт (нет пространства имён хоста)',
+    'settings.readOnly': 'Только чтение',
+    'settings.save': 'Сохранить',
+    'settings.saveFailed': 'Не удалось сохранить',
+    'settings.saving': 'Сохранение…',
+    'settings.unsaved': 'Несохранённые изменения',
+    'telemetry.description': 'Один анонимный сигнал в день со списком семейств плагинов, которые используются здесь',
+    'telemetry.dnt': 'Этот браузер отправляет запрос «Не отслеживать», поэтому телеметрия уже отключена; переключатель справа лишь сохраняет предпочтение на этой машине.',
+    'telemetry.meta': 'Если выключить, браузерная часть каждого семейства плагинов перестанет отправлять отчёты; Мастерская и онлайн-обновления продолжат работать.',
+    'telemetry.title': 'Анонимная телеметрия установки',
     'title': 'Веб-плагины',
   },
   /*
@@ -6213,6 +6288,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'webdavRestore': 'Восстановить из WebDAV',
     'webdavUpload': 'Выгрузить резервную копию',
     'webdavUrl': 'URL файла резервной копии',
+    'marketGoneBody': 'DSH выгрузил рынок при перезагрузке плагинов. Перезапустите DSH, чтобы вернуть его. Последняя операция, возможно, уже завершена.',
+    'marketGoneRecord': 'Рынок был выгружен из DSH, поэтому у этой операции нет результата. После перезапуска проверьте раздел «Установлено».',
+    'marketGoneTitle': 'Рынок плагинов перестал работать',
+    'recentHide': 'Скрыть этот блок',
+    'recentShow': 'Показать недавно добавленные',
+    'updateHeldEstimatedHint': 'Новая версия указана, но зеркало реестра ещё не обновило метаданные, поэтому обновление приостановлено; рынок проверит снова примерно через {1} мин.',
+    'updateHeldHint': 'Этот профиль подождёт перед установкой свежего выпуска; осталось примерно {1} ч.',
+    'updateHeldTag': 'ожидает новая версия',
     'webdavUser': 'Имя пользователя (необязательно)',
   },
   /*
@@ -6379,6 +6462,29 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updater.success': 'Обновление до v{version} выполнено. Перезапустите DSH, чтобы применить его.',
     'updater.title': 'Обновления плагина',
     'updater.updating': 'Обновляем плагин…',
+    'aggregator.workbench_companion': 'Сопутствующий плагин:',
+    'aggregator.workbench_companion_note': 'безопасные теневые контрольные точки git перед переносом файлов',
+    'aggregator.workbench_desc': 'Судья оценивает каждый файл-кандидат от 1 до 10, указывая плюсы и минусы. Выберите нужные файлы среди кандидатов; лучшая модель согласует и объединит их, после чего проводится финальная проверка судьёй.',
+    'aggregator.workbench_title': '🛠️ Интерактивная мастерская (оценка файлов от 1 до 10 и объединение лучшей моделью)',
+    'workbench.assemble_btn': '🚀 Согласовать и собрать (объединение лучшей моделью)',
+    'workbench.assembling': '⏳ Файлы согласуются с лучшей моделью…',
+    'workbench.audit_failed': 'НЕ ПРОЙДЕНО',
+    'workbench.audit_passed': 'ПРОЙДЕНО',
+    'workbench.candidate_header': 'Версии-кандидаты и оценки (от 1 до 10)',
+    'workbench.cons': 'Минусы:',
+    'workbench.desc': 'Изучите оценки качества файлов-кандидатов (от 1 до 10), комбинируйте файлы из разных предложений, согласуйте их с помощью лучшей модели и проведите финальную проверку судьёй.',
+    'workbench.empty_files': 'Для этого запуска не найдено файлов-кандидатов.',
+    'workbench.file_header': 'Файл проекта',
+    'workbench.instructions_label': 'Инструкции по согласованию (необязательно):',
+    'workbench.instructions_placeholder': 'например, согласуйте все импорты, объедините типы TypeScript, приведите сигнатуры функций к единому виду…',
+    'workbench.latest_run': 'Выберите запуск…',
+    'workbench.no_runs': 'Запусков MoA с файлами-кандидатами пока нет.',
+    'workbench.promote_btn': 'Перенести согласованные файлы в рабочую область',
+    'workbench.promoted_ok': '✅ Согласованный результат перенесён в корень рабочей области!',
+    'workbench.pros': 'Плюсы:',
+    'workbench.recheck_title': '⚖️ Вердикт повторной проверки',
+    'workbench.select_run': 'Запуск MoA:',
+    'workbench.title': '🛠️ Интерактивная мастерская синтеза',
     'updater.upToDate': 'Обновлений нет',
   },
   /*
@@ -6743,6 +6849,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'saving': 'Сохранение…',
     'streamProfile': 'Профиль качества',
     'title': 'ego-browser',
+    'residentExecutor': 'Постоянный исполнитель',
+    'residentExecutorHint': 'Один долгоживущий процесс `ego-browser --serve` обслуживает все вызовы ego_*: первый платит за запуск, следующие его пропускают (~16ms). Если резидентный процесс умер, вызов сам поднимет новый.',
+    'residentExecutorOff': 'Выключено (запуск на каждый вызов)',
+    'residentExecutorOn': 'Включено (постоянный процесс)',
+    'residentIdleMin': 'Остановка при простое (минуты)',
+    'residentIdleMinHint': 'Остановить процесс после N минут без вызовов ego_* (0 = держать до выгрузки плагина). Сам браузер не затрагивается.',
     'unsaved': 'Есть несохранённые изменения',
   },
   /*
@@ -7792,6 +7904,9 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updater.success': 'Обновление до v{version} выполнено. Перезапустите DSH или перезагрузите профиль, чтобы применить изменения.',
     'updater.title': 'Автообновление плагинов',
     'updater.updating': 'Обновляем…',
+    'form.sessionTitleHint': 'Название, которое получают сессии агентов, созданные этой задачей. Поддерживается {{date}} для YYYY-MM-DD. По умолчанию — «<YYYY-MM-DD> <title>».',
+    'form.sessionTitleLabel': 'Шаблон заголовка сессии',
+    'form.sessionTitlePlaceholder': 'например, {{date}} a-share-review (поддерживается {{date}})',
     'updater.upToDate': 'Обновлений нет',
   },
   /*
@@ -8556,6 +8671,87 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updater.title': 'Обновления плагинов',
     'updater.updateNow': 'Обновить до v{version}',
     'updater.updating': 'Обновление…',
+    'card.blocked': 'Заблокировано',
+    'dup.check': 'Проверить дубликаты',
+    'dup.checking': 'Проверка…',
+    'dup.found': 'Найдены похожие задачи:',
+    'dup.title': 'Дубликаты задач',
+    'field.audioAlertsEnabled': 'Звуковые оповещения',
+    'field.notificationsEnabled': 'Системные уведомления',
+    'field.remoteAuthType': 'Тип SSH-аутентификации',
+    'field.remoteHost': 'Удалённый узел',
+    'field.remoteKeyPath': 'Приватный ключ SSH',
+    'field.remoteMode': 'Удалённый режим',
+    'field.remotePort': 'Порт SSH',
+    'field.remoteRoot': 'Корень проекта на удалённом узле',
+    'field.remoteServerToken': 'Токен аутентификации сервера',
+    'field.remoteServerUrl': 'URL сервера DSH',
+    'field.remoteSudoUser': 'Пользователь sudo',
+    'field.remoteUser': 'Пользователь SSH',
+    'field.timeMachineAutoSnapshot': 'Автоснимок в начале',
+    'field.timeMachineEnabled': 'Снимки Time Machine',
+    'field.watchdogEnabled': 'Сторожевой таймер и предохранитель',
+    'field.watchdogMaxConsecutiveErrors': 'Максимум ошибок сторожевого таймера',
+    'field.watchdogStallTimeoutMin': 'Тайм-аут зависания сторожевого таймера (мин)',
+    'group.remote': 'Удалённое выполнение (сервер 111)',
+    'group.timeMachine': 'Time Machine и безопасность',
+    'hint.audioAlertsEnabled': 'Воспроизводить синтезированные сигналы Web Audio при событиях задач.',
+    'hint.notificationsEnabled': 'Показывать системные уведомления рабочего стола при событиях доски задач.',
+    'hint.remoteAuthType': 'Метод SSH-аутентификации: ключ, агент или пароль.',
+    'hint.remoteHost': 'Имя узла или IP-адрес удалённого сервера.',
+    'hint.remoteKeyPath': 'Путь к файлу приватного ключа SSH на локальном компьютере.',
+    'hint.remoteMode': 'Выполнять задачи, рабочие деревья и команды git на удалённом сервере 111.',
+    'hint.remotePort': 'Порт SSH на удалённом сервере (по умолчанию 22).',
+    'hint.remoteRoot': 'Каталог проектов на удалённом узле (/mnt/external/Project/DEV).',
+    'hint.remoteServerToken': 'Необязательный токен аутентификации удалённого сервера DSH.',
+    'hint.remoteServerUrl': 'URL удалённого DSH (http://192.168.1.111:3080) для единого состояния доски.',
+    'hint.remoteSudoUser': 'Выполнять удалённые команды от имени этого пользователя Linux через sudo -u.',
+    'hint.remoteUser': 'Имя пользователя для входа по SSH на удалённом узле.',
+    'hint.timeMachineAutoSnapshot': 'Автоматически создавать снимок в начале, когда задача переходит в статус «в работе».',
+    'hint.timeMachineEnabled': 'Включить интеграцию с @goodandready/dsh-time-machine для контрольных точек задач и мгновенного отката.',
+    'hint.watchdogEnabled': 'Приостанавливать зависшие задачи и не допускать бесконтрольного расхода токенов.',
+    'hint.watchdogMaxConsecutiveErrors': 'Сколько ошибок инструментов подряд допустимо до срабатывания предохранителя.',
+    'hint.watchdogStallTimeoutMin': 'Минут бездействия, после которых активная задача считается зависшей.',
+    'notify.failedTitle': 'Проверка не пройдена',
+    'notify.permission': 'Включить уведомления',
+    'notify.reviewTitle': 'Задача готова к проверке',
+    'notify.stalledTitle': 'Задача зависла',
+    'panel.addBlocker': 'Добавить блокирующую задачу…',
+    'panel.blockedBy': 'Заблокировано задачами',
+    'panel.blockedDesc': 'Эту задачу блокируют незавершённые задачи. Перед началом все блокирующие задачи нужно перевести в статус «готово».',
+    'panel.blockedTitle': 'Задача заблокирована зависимостями',
+    'panel.blocks': 'Блокирует',
+    'panel.dependencies': 'Зависимости',
+    'panel.noBlockers': 'Зависимости не настроены',
+    'pr.copied': 'Скопировано в буфер обмена!',
+    'pr.copy': 'Копировать Markdown',
+    'pr.failed': 'Не удалось создать PR: ',
+    'pr.generate': 'Создать PR',
+    'pr.title': 'Запрос на слияние и примечания к выпуску',
+    'remote.badge': 'Удалённый: 111',
+    'remote.failed': 'Не удалось подключиться',
+    'remote.ok': 'Подключено к серверу 111',
+    'remote.testBtn': 'Проверить подключение',
+    'remote.testing': 'Проверка подключения…',
+    'settings.timeMachineNotice': 'Автоматический снимок задачи (контрольная точка) и откат работают только при установленном и активном плагине @goodandready/dsh-time-machine в профиле DSH.',
+    'spec.edit': 'Изменить спецификацию',
+    'spec.failed': 'Не удалось составить план: ',
+    'spec.generate': 'Составить план',
+    'spec.generated': 'План успешно составлен!',
+    'spec.generating': 'Составление…',
+    'spec.save': 'Сохранить спецификацию',
+    'spec.saved': 'Спецификация сохранена!',
+    'spec.title': 'Техническая спецификация и план',
+    'tm.confirmRollback': 'Откатить рабочее дерево задачи к снимку в начале? Все незакоммиченные изменения будут потеряны.',
+    'tm.createCheckpoint': 'Создать контрольную точку',
+    'tm.notice': 'Снимки и откат требуют плагина @goodandready/dsh-time-machine в профиле DSH.',
+    'tm.rollbackFailed': 'Не удалось выполнить откат: ',
+    'tm.rollbackInception': 'Откат к началу',
+    'tm.rollbackSuccess': 'Рабочее дерево задачи успешно откачено к снимку в начале!',
+    'tm.snapshotCreated': 'Снимок контрольной точки успешно создан!',
+    'tm.snapshotFailed': 'Не удалось создать снимок контрольной точки: ',
+    'tm.title': 'Снимки Time Machine',
+    'watchdog.stalled': 'Зависла',
     'updater.upToDate': 'Всё актуально',
   },
   /*
@@ -8657,7 +8853,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'jargonAdd': 'Добавить замену',
     'jargonFormatHint': ' (произносимое -> замена)',
     'jargonFrom': 'Произносимый сленг',
-    'jargonPlaceholder': 'k8s -> kubernetesnpr -> pull request',
+    'jargonPlaceholder': 'k8s -> kubernetes\npr -> pull request',
     'jargonTitle': 'Лексикон разработчика и IT-жаргон',
     'jargonTo': 'Правильное написание',
     'keepPending': 'Не отправлять',
@@ -9441,14 +9637,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'accounts.title': 'Пул учётных записей с переключением при отказе',
     'api.timeout': 'Истекло время ожидания запроса ({seconds} с)',
     'badge.key_missing': 'Ключ отсутствует',
-    'badge.key_ok': 'Ключ ✓ ({source})',
+    'badge.key_ok': 'Ключ задан ({source})',
     'badge.not_registered': 'Не зарегистрирован',
     'badge.offline': 'Хост недоступен',
     'badge.online': 'Хост в сети ({latency} мс)',
     'badge.registered': 'Зарегистрирован в DSH, моделей: {count}',
     'composer.completion_tok': 'Токены на выходе',
     'composer.cost_breakdown': 'Разбивка по токенам и расходам',
-    'composer.cost_title': 'Оценка расходов сессии',
+    'composer.cost_title': 'Расходы сессии ClineBot',
     'composer.est_cost': 'Оценка расходов',
     'composer.prompt_tok': 'Токены на входе',
     'composer.reasoning_tok': 'Токены рассуждения',
@@ -9464,22 +9660,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'dashboard.updated_at': 'Обновлено в',
     'dashboard.used': 'использовано',
     'dashboard.weekly_window': 'Недельное окно',
-    'diag.desc': 'ClineBot автоматически регистрируется в моделях DSH, если настроен ключ. Можно запустить проверку связи или принудительно синхронизировать заново.',
+    'diag.desc': 'ClineBot автоматически регистрируется в моделях DSH, если настроен ключ. Здесь можно запустить проверку связи.',
     'diag.empty': '(пусто)',
-    'diag.proxy_desc': 'Включает переключение между несколькими учётными записями, закреплённые сессии и телеметрию через локальный петлевой прокси. Отключите, чтобы подключаться напрямую к апстрим-эндпоинту.',
-    'diag.proxy_disabled': 'Прямой режим (напрямую к апстриму, без прокси)',
-    'diag.proxy_enabled': 'Режим прокси включён (переключение при отказе и телеметрия активны)',
-    'diag.proxy_title': 'Прозрачный петлевой прокси',
-    'diag.resync_btn': 'Принудительно синхронизировать с DSH',
-    'diag.resynced_msg': 'Провайдер заново синхронизирован с моделями DSH, моделей: {count}',
-    'diag.resyncing': 'Синхронизация…',
     'diag.smoke_btn': 'Запустить проверку связи (пинг)',
-    'diag.smoke_result': '✅ Задержка: {latency} мс | Модель: {model}\nОтвет: {preview}',
+    'diag.smoke_result': 'Задержка: {latency} мс | Модель: {model}\nОтвет: {preview}',
     'diag.smoke_testing': 'Проверка…',
     'diag.title': 'Диагностика и авторегистрация',
-    'diag.unregister_btn': 'Убрать регистрацию в DSH',
-    'diag.unregistered_msg': 'Провайдер убран из моделей DSH',
-    'diag.unregistering': 'Удаление…',
     'discovery.import_btn': 'Импортировать из {source}',
     'discovery.imported': 'Импортировано в пул учётных записей',
     'discovery.scanning': 'Поиск локальных ключей Cline…',
@@ -9491,7 +9677,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'key.env_label': 'Имя переменной окружения для учётных данных: ',
     'key.get_key': 'Получить ключ в консоли app.cline.bot ↗',
     'key.hide': 'Скрыть',
-    'key.invalid': '✗ Проверка ключа не пройдена: {error}',
+    'key.invalid': 'Проверка ключа не пройдена: {error}',
     'key.login_fast': 'Открыть API-ключи ↗',
     'key.placeholder_empty': 'Вставьте ключ ClinePass (cline_…)',
     'key.placeholder_has': '••••••••••••••••••••••••',
@@ -9500,7 +9686,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'key.saving': 'Сохранение…',
     'key.show': 'Показать',
     'key.title': 'Авторизация и API-ключ',
-    'key.verified': '✓ Действительный ключ для {email} ({plan})',
+    'key.verified': 'Действительный ключ для {email} ({plan})',
     'key.verifying': 'Проверка ключа через Cline…',
     'models.all': 'Все',
     'models.apply_original_all': 'Исходные параметры',
@@ -9612,7 +9798,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'stats.top_models': 'Лучшие модели по расходу токенов',
     'subtitle': 'Подписка ClinePass с динамическими моделями тарифа.',
     'title': 'ClineBot',
-    'ui.error_title': '⚠️ Ошибка интерфейса ClineBot: ',
+    'ui.error_title': 'Ошибка интерфейса ClineBot: ',
     'ui.retry': 'Повторить',
     'update.available': 'Доступно обновление: v{latestVersion} (текущая: v{currentVersion})',
     'update.btn': 'Обновить сейчас',
@@ -9622,6 +9808,178 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update.failed': 'Не удалось обновить: {error}',
     'update.retry': 'Проверить ещё раз',
     'update.up_to_date': 'Всё обновлено',
+    'accounts.actions': 'Действия с учётной записью',
+    'accounts.cancel': 'Отмена',
+    'accounts.clear_confirm': 'Очистить сохранённый ключ для {name}? Строка учётной записи останется.',
+    'accounts.clear_key': 'Очистить сохранённый ключ',
+    'accounts.configured': 'Настроена',
+    'accounts.confirm': 'Подтвердить',
+    'accounts.event_cooldown': 'Пауза',
+    'accounts.event_recover': 'Восстановлена',
+    'accounts.event_route': 'Направлена',
+    'accounts.history_empty': 'Событий учётных записей пока нет.',
+    'accounts.history_hide': 'Скрыть историю',
+    'accounts.history_hint': 'Недавние паузы, восстановления и решения о маршрутизации. Сначала новые, последние 50.',
+    'accounts.history_loading': 'Загрузка истории…',
+    'accounts.history_show': 'История',
+    'accounts.history_title': 'История событий учётных записей',
+    'accounts.history_until': 'до {time}',
+    'accounts.missing_key': 'Ключ отсутствует',
+    'accounts.no_accounts': 'Учётные записи пока не настроены.',
+    'accounts.quota_5h': '5 ч {pct}%',
+    'accounts.remove_confirm': 'Удалить {name} из пула?',
+    'accounts.rename': 'Переименовать',
+    'accounts.rename_placeholder': 'Метка учётной записи',
+    'accounts.rename_save': 'Сохранить название',
+    'accounts.route_remove': 'Удалить маршрут',
+    'accounts.source': 'Источник: {source}',
+    'accounts.unpin': 'Открепить',
+    'analytics.account_filter': 'Фильтр по учётной записи',
+    'analytics.all_accounts': 'Все учётные записи',
+    'analytics.all_models': 'Все модели',
+    'analytics.avg_latency': 'Средняя задержка',
+    'analytics.avg_ttft': 'Средний TTFT',
+    'analytics.cache_read': 'Чтение из кэша',
+    'analytics.cache_saved': 'Экономия на кэше',
+    'analytics.cache_write': 'Запись в кэш',
+    'analytics.cost': 'Оценка расходов',
+    'analytics.errors': 'Ошибки',
+    'analytics.errors_only': 'Только ошибки',
+    'analytics.from': 'От',
+    'analytics.group_account': 'Учётные записи',
+    'analytics.group_day': 'Дни',
+    'analytics.group_model': 'Модели',
+    'analytics.group_session': 'Сессии',
+    'analytics.health_error': 'Адрес ClinePass недоступен.',
+    'analytics.heatmap': 'Тепловая карта запросов',
+    'analytics.heatmap_all_models': 'Все модели',
+    'analytics.heatmap_by_hour': 'По часам',
+    'analytics.heatmap_empty': 'Данных по часам пока нет. Отправьте сообщение, чтобы запустить тепловую карту.',
+    'analytics.heatmap_hint': 'Запросов в час за последние 7 дней.',
+    'analytics.heatmap_less': 'Меньше',
+    'analytics.heatmap_model': 'Модель тепловой карты',
+    'analytics.heatmap_more': 'Ещё',
+    'analytics.heatmap_peak': 'Пик',
+    'analytics.heatmap_selected': '{day} {hour}:00 — запросов: {count}. Нажмите на ячейку ещё раз, чтобы очистить её.',
+    'analytics.input': 'Ввод',
+    'analytics.loading': 'Загрузка аналитики…',
+    'analytics.model_filter': 'Фильтр по модели',
+    'analytics.no_data': 'Аналитики пока нет. Сначала отправьте несколько сообщений.',
+    'analytics.no_key': 'Ключ ClinePass не настроен.',
+    'analytics.no_key_hint': 'Откройте «Настройки» → ClineBot и вставьте ключ или импортируйте найденный локальный ключ.',
+    'analytics.not_registered': 'Провайдер ClineBot не зарегистрирован в DSH.',
+    'analytics.not_registered_hint': 'Откройте «Настройки» → ClineBot и посмотрите раздел «Диагностика».',
+    'analytics.output': 'Вывод',
+    'analytics.p50_latency': 'Задержка P50',
+    'analytics.p95_latency': 'Задержка P95',
+    'analytics.range': 'Диапазон',
+    'analytics.range_24h': '24 часа',
+    'analytics.range_30': '30 дней',
+    'analytics.range_7': '7 дней',
+    'analytics.range_90': '90 дней',
+    'analytics.reasoning': 'Рассуждение',
+    'analytics.requests': 'Запросы',
+    'analytics.stale': 'Показан последний успешный снимок.',
+    'analytics.success': 'Доля успешных запросов',
+    'analytics.title': 'Аналитика использования',
+    'analytics.to': 'До',
+    'analytics.tokens': 'Токены',
+    'analytics.ttft': 'Средний TTFT',
+    'analytics.unpriced': 'Запросов без оценки цены: {count} — они не входят в итоги расходов.',
+    'composer.cache_read': 'Чтение из кэша',
+    'composer.cache_write': 'Запись в кэш',
+    'composer.free': 'Бесплатно',
+    'composer.last_request': 'Последний запрос',
+    'composer.price_estimate': 'оценка',
+    'composer.price_override': 'вручную',
+    'composer.price_public': 'общедоступный каталог',
+    'composer.price_source': 'Цена',
+    'composer.unpriced': 'без цены',
+    'dashboard.auto_account': 'Автоматически (наименее использованная)',
+    'dashboard.tab_analytics': 'Аналитика',
+    'dashboard.tab_quota': 'Квота',
+    'models.group_custom': 'Свои модели',
+    'models.group_other': 'Другие модели',
+    'models.group_plan': 'Включены в тариф',
+    'prices.auto': 'авто',
+    'prices.cache_read': 'Чтение из кэша',
+    'prices.cache_write': 'Запись в кэш',
+    'prices.desc': 'USD за миллион токенов. Пустое значение использует локальную оценку.',
+    'prices.empty': 'Нет доступных моделей.',
+    'prices.hide': 'Скрыть цены',
+    'prices.hint': 'Эти тарифы влияют только на поле ввода и локальную аналитику; это не счёт на оплату.',
+    'prices.input': 'Ввод',
+    'prices.model': 'Модель',
+    'prices.output': 'Вывод',
+    'prices.public_hint': 'Синхронизация берёт оценку из общедоступного каталога models.dev; ваши собственные значения всегда важнее.',
+    'prices.show': 'Показать цены',
+    'prices.sync': 'Синхронизировать общедоступные цены',
+    'prices.sync_failed': 'Не удалось синхронизировать цены: {error}',
+    'prices.synced': 'Синхронизировано моделей из общедоступного каталога: {count}',
+    'prices.syncing': 'Синхронизация…',
+    'prices.title': 'Свои цены',
+    'providerCard.failed': 'Не удалось сохранить ключ',
+    'providerCard.hide': 'Скрыть',
+    'providerCard.hint': 'Вставьте ключ API ClinePass или управляйте пулом учётных записей в «Настройках» → ClineBot.',
+    'providerCard.keyMissing': 'Ключ отсутствует',
+    'providerCard.keyPresent': 'Ключ настроен',
+    'providerCard.openSettings': 'Откройте «Настройки» → ClineBot: учётные записи, модели и квоты.',
+    'providerCard.placeholder': 'Вставьте ключ API',
+    'providerCard.replace': 'Заменить ключ API',
+    'providerCard.routeActive': 'Маршрут активен',
+    'providerCard.save': 'Сохранить ключ',
+    'providerCard.saved': 'Ключ сохранён и проверен',
+    'providerCard.saving': 'Сохранение…',
+    'providerCard.show': 'Показать',
+    'providerCard.title': 'ClineBot (ClinePass)',
+    'quota.forecast_exhausted': 'Исчерпана',
+    'quota.forecast_holds': 'Держится до сброса при текущем темпе',
+    'quota.forecast_left': 'При текущем темпе осталось ~{time}',
+    'quota.forecast_no_usage': 'Использования пока нет',
+    'quota.no_windows': 'Окон квоты не получено.',
+    'settings.advanced': 'Дополнительно',
+    'settings.advanced_desc': 'Подключение, тайм-ауты и пути хранения.',
+    'settings.base_url': 'Базовый URL API',
+    'settings.base_url_hint': 'Корень API ClinePass. Удалённые адреса должны использовать https://.',
+    'settings.composer_cost': 'Показывать стоимость сессии в поле ввода',
+    'settings.composer_cost_hint': 'Показывать оценку стоимости в токенах рядом с полем ввода.',
+    'settings.daily_budget': 'Дневной бюджет (USD)',
+    'settings.daily_budget_hint': 'Ограничение расходов по оценке за текущий день UTC. Значение 0 отключает его.',
+    'settings.discard': 'Сбросить',
+    'settings.integrations': 'Интеграции и отображение',
+    'settings.integrations_desc': 'Разделы вне запроса в чате, которые используют этого провайдера.',
+    'settings.max_payload': 'Максимальный объём мультимодальных данных (МБ)',
+    'settings.max_payload_hint': 'Самые старые изображения вытесняются, когда запрос превышает этот предел.',
+    'settings.models_cache_path': 'Путь кэша моделей',
+    'settings.models_cache_path_hint': 'Кэш каталога моделей для работы без сети (поддерживает ~/).',
+    'settings.models_group': 'Модели и контекст',
+    'settings.models_group_hint': 'Фильтр по тарифу, видимые модели, окна контекста, ограничения вывода и значения по умолчанию для уровня рассуждения.',
+    'settings.monthly_budget': 'Месячный бюджет (USD)',
+    'settings.monthly_budget_hint': 'Ограничение расходов по оценке за текущий месяц UTC. Значение 0 отключает его.',
+    'settings.save': 'Сохранить',
+    'settings.save_failed': 'Не удалось сохранить настройки',
+    'settings.save_invalid_base_url': 'Базовый URL должен быть https:// или адресом localhost.',
+    'settings.save_invalid_number': 'Тайм-ауты и ограничения объёма должны быть положительными числами.',
+    'settings.saved': 'Настройки сохранены',
+    'settings.saving': 'Сохранение…',
+    'settings.sidebar_quota': 'Показывать счётчик квоты в боковой панели',
+    'settings.sidebar_quota_hint': 'Показывать компактный тариф и счётчик скользящего окна над настройками.',
+    'settings.smoke_timeout': 'Тайм-аут проверки связи (мс)',
+    'settings.smoke_timeout_hint': 'Максимальное ожидание завершения диагностического запроса в чате.',
+    'settings.stats_path': 'Путь к файлу статистики',
+    'settings.stats_path_hint': 'Путь к постоянному файлу телеметрии в формате JSON (поддерживает ~/).',
+    'settings.stats_retention': 'Хранение статистики (дни)',
+    'settings.stats_retention_hint': 'Удалять телеметрию по дням, часам и сессиям старше указанного срока. Значение 0 сохраняет всё.',
+    'settings.stream_idle': 'Тайм-аут простоя потока (мс)',
+    'settings.stream_idle_hint': 'Максимальный интервал между фрагментами SSE, после которого поток считается прерванным.',
+    'settings.timeout': 'Тайм-аут подключения (мс)',
+    'settings.timeout_hint': 'Максимальное ожидание заголовков ответа вышестоящего сервера.',
+    'settings.unsaved': 'Несохранённых изменений: {count}',
+    'settings.web_search': 'Веб-поиск через ClineBot',
+    'settings.web_search_hint': 'Использовать адрес ClinePass для инструмента web_search в DSH.',
+    'stats.cache_saved': 'Экономия на кэше: ≈ ${amount}',
+    'stats.export_json': 'Экспорт в JSON',
+    'stats.top_accounts': 'Лучшие учётные записи по расходу токенов',
     'update.updating': 'Обновление…',
   },
   /*
@@ -9895,6 +10253,43 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tokenEnv': 'Имя доступа',
     'tokenEnvHint': 'Имя ищется в учётных данных DSH, затем в окружении, затем в gh CLI. Значение здесь не хранится.',
     'tokenSource': 'Источник доступа',
+    'panelChangelog': 'Список изменений',
+    'panelChangelogEmpty': 'Записи журнала изменений не найдены.',
+    'panelCopyMarkdown': 'Копировать Markdown',
+    'panelDiagnose': 'Диагностика',
+    'panelDiagnoseAsk': 'Попросить агента диагностировать и исправить',
+    'panelDiagnoseCopied': 'Запрос скопирован в буфер обмена!',
+    'panelDiagnosing': 'Диагностика…',
+    'panelFailedStep': 'Шаг с ошибкой',
+    'panelPrAddComment': 'Добавить комментарий',
+    'panelPrApplySuggestion': 'Применить предложение',
+    'panelPrApprove': 'Одобрить',
+    'panelPrBack': '← Запросы на слияние',
+    'panelPrComment': 'Комментировать',
+    'panelPrCommentPlaceholder': 'Оставьте комментарий…',
+    'panelPrEmptyDiff': 'Для этого файла нет доступных фрагментов изменений.',
+    'panelPrFilesChanged': 'Изменённые файлы',
+    'panelPrInsertSuggestion': 'Вставить предложение',
+    'panelPrRefresh': 'Обновить',
+    'panelPrReply': 'Ответить',
+    'panelPrReplyPlaceholder': 'Напишите ответ…',
+    'panelPrRequestChanges': 'Запросить изменения',
+    'panelPrResolve': 'Пометить обсуждение решённым',
+    'panelPrResolved': 'Решено',
+    'panelPrReviewBody': 'Кратко о проверке…',
+    'panelPrReviewBtn': 'Проверка',
+    'panelPrSubmitReview': 'Отправить проверку',
+    'panelPrUnresolve': 'Снова открыть обсуждение',
+    'panelPrUnresolved': 'Не решено',
+    'panelSecurity': 'Безопасность',
+    'panelSecurityDisabled': 'Функции безопасности отключены или у токена не хватает прав.',
+    'panelSecurityEmpty': 'Оповещений безопасности не найдено.',
+    'panelSteps': 'Шаги',
+    'scmCherryPick': 'Перенести коммит',
+    'scmRevert': 'Откатить',
+    'scmSubmodules': 'Подмодули',
+    'scmSubmoduleUpdate': 'Обновить',
+    'scmSubmoduleUpdateAll': 'Обновить все подмодули',
     'tokenSourceHint': '«auto» сначала пробует учётные данные DSH, затем переменную окружения, затем сессию gh CLI. Закрепите источник, чтобы использовать только его.',
   },
   /*
@@ -9999,6 +10394,39 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'verificationGate': 'Шлюз приёмки',
     'verificationPassed': 'Проверено',
     'version': 'Версия',
+    'copyReleaseNotes': '📝 Копировать заметки о выпуске',
+    'cost': 'Стоимость',
+    'costBudgetLabel': 'Финансовый лимит бюджета ($):',
+    'costLimitReached': 'Бюджет расходов превышен',
+    'costUsage': 'Финансовые расходы',
+    'notifyTelegram': '✈️ Отправить в Telegram',
+    'releaseNotesCopied': '✅ Заметки о выпуске скопированы!',
+    'telegramNotified': '✅ Отправлено в Telegram!',
+    'allFiles': 'Все файлы',
+    'answerPlaceholder': 'Введите ответ или выберите вариант выше…',
+    'compactedBadge': 'Сжато',
+    'compactionTooltip': 'История сжата, чтобы уменьшить расход контекста',
+    'diffBaseCommit': 'База:',
+    'diffDeletions': 'удалений',
+    'diffFilesChanged': 'Изменённых файлов:',
+    'diffInsertions': 'добавлений',
+    'diffLoading': 'Загрузка различий…',
+    'diffNoChanges': 'Изменений git относительно базового коммита не обнаружено.',
+    'diffRefresh': 'Обновить различия',
+    'diffTargetBranch': 'Цель:',
+    'noSubGoals': 'Подзадачи пока не созданы. Модель может создать подзадачи через инструмент goal_spawn_subgoal.',
+    'operatorInputRequired': 'Требуется ввод оператора',
+    'operatorQuestion': 'Вопрос от агента:',
+    'parentGoalBanner': 'Дочерняя подзадача:',
+    'quickTplVariablesTitle': 'Параметры:',
+    'requiredField': 'Обязательное',
+    'subGoalBadge': 'Подзадача',
+    'subGoalsPill': 'подзадачи',
+    'subGoalsTitle': 'Иерархические подзадачи',
+    'submitAnswer': 'Отправить',
+    'tabDiff': 'Изменения / Различия',
+    'tabOverview': 'План и обзор',
+    'tabSubGoals': 'Подзадачи',
     'waitingPrereq': 'ожидание предусловия',
   },
   /*
@@ -10450,6 +10878,9 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'DeepSeek Harness',
     'tooMany': 'Слишком много попыток. Подождите ',
     'tooManySec': ' с.',
+    'logged-out': 'Выполнен выход из системы.',
+    'password-changed': 'Пароль изменён. Войдите снова.',
+    'session-expired': 'Срок сессии истёк. Войдите снова.',
     'username': 'Имя пользователя',
   },
   /*
@@ -10937,6 +11368,34 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'webhookFailed': 'Проверка вебхука не удалась: %s',
     'webhookSaved': 'Настройки вебхука сохранены',
     'webhookSuccess': 'Проверка вебхука прошла успешно',
+    'contextIn': 'Ввод',
+    'contextOut': 'Вывод',
+    'ollamaDeleteBtn': '🗑 Удалить',
+    'ollamaHubTitle': '🦙 Хаб моделей Ollama',
+    'ollamaInstalled': 'Установленные локальные модели',
+    'ollamaNoRunning': 'Сейчас в VRAM нет загруженных моделей',
+    'ollamaPullBtn': '⬇ Загрузить модель',
+    'ollamaPullPlaceholder': 'e.g. llama3.2:3b or qwen2.5-coder:7b',
+    'ollamaRunningVram': 'Активна в VRAM (GPU)',
+    'ollamaUnloadBtn': '⏏ Выгрузить из VRAM',
+    'pricingSync': 'Синхронизировать цены',
+    'pricingSyncing': 'Синхронизация цен…',
+    'probeAll': '🔍 Проверить все модели',
+    'probeCapabilities': '🔍 Проверить возможности',
+    'probeNewOnly': '⚡ Проверить только новые',
+    'probingInProgress': 'Проверка возможностей…',
+    'reasoningFormat': 'Рассуждения',
+    'selectCurated': '⭐ Лучшие из подборки',
+    'speedRadar': 'Радар задержек',
+    'tagAll': 'Все',
+    'tagCoding': '💻 Кодирование',
+    'tagCurated': '⭐ Подборка',
+    'tagFast': '⚡ Быстрые',
+    'tagLongContext': '📜 128k+',
+    'tagReasoning': '🧠 Рассуждения',
+    'tagVision': '👁️ Зрение',
+    'ttft': 'TTFT',
+    'verifiedBadge': 'Проверено',
     'webhookTesting': 'Проверяем…',
   },
   /*
@@ -11118,9 +11577,9 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'transferCancel': 'Отмена',
     'transferDestHost': 'Сервер назначения',
     'transferDestPath': 'Путь к файлу назначения',
-    'transferFailed': 'Передача не удалась: {name}',
+    'transferFailed': 'Передача не удалась: {err}',
     'transferProgress': '{name}: {percent}%',
-    'transferSuccess': 'Успешно передано {bytes} Б в {host}:{path}',
+    'transferSuccess': 'Передано {src} в {dst}',
     'transferTitle': 'Прямая передача между серверами',
     'tRemotePort': 'Удалённый порт',
     'tStopBtn': 'Остановить',
@@ -11145,6 +11604,22 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wsFiles': 'Файлы',
     'wsHosts': 'Хосты',
     'wsTerminal': 'Терминал',
+    'compareDiff': 'Сравнить различия',
+    'diffIdentical': 'Файлы совпадают',
+    'diffLeft': 'Панель A',
+    'diffLinesChanged': 'Изменённых строк: {count}',
+    'diffModalTitle': 'Конфигурация и файлы рядом',
+    'diffRight': 'Панель B',
+    'dockerSocketDesc': 'Свяжите удалённый сокет Docker с локальной конечной точкой для совместной работы с @goodandready/dsh-docker-dashboard',
+    'dockerSocketForward': 'Мост для сокета Docker',
+    'singleView': 'Одиночный вид',
+    'socketActive': 'Пересылка активна',
+    'socketInactive': 'Неактивно',
+    'socketStatus': 'Состояние сокета',
+    'splitView': 'Разделённый вид',
+    'startForward': 'Запустить пересылку сокета',
+    'stopForward': 'Остановить пересылку сокета',
+    'transferToOther': 'Перенести в другую панель',
     'wsTunnels': 'Туннели',
   },
   /*
@@ -11562,7 +12037,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'cascadingFallbackOrderHint': 'Последовательность запасных провайдеров, к которым обращаться, когда основные учётные записи исчерпаны.',
     'check': 'Проверить',
     'checking': 'Проверка…',
-    'chipActive': 'Подписки',
     'close': 'Закрыть',
     'closeModal': 'Закрыть',
     'codexFastMode': 'Быстрый режим Codex (1,5×)',
@@ -11602,18 +12076,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'diagHint': 'В отчёте нет токенов, адресов почты, адресов прокси и личных данных.',
     'diagIssues': 'Открыть трекер задач',
     'disconnect': 'Отключить',
-    'doctorDiagnosis': 'Вердикт доктора',
     'enableQueue': 'Включить очередь запросов',
     'enableQueueHint': 'Ставить лишние запросы в очередь, когда учётная запись достигает предела параллельности, вместо сбоя с 429',
     'enableToasts': 'Всплывающие уведомления в приложении',
-    'expiryLabel': 'истекает',
     'expiryNotifyDays': 'Порог предупреждения об истечении (дни)',
     'expiryNotifyDaysHint': 'Уведомлять, если обновление подписки или истечение токена наступает в течение указанного числа дней (0 — отключить).',
     'fcCalibrating': 'калибровка…',
     'fcHours': 'ч',
     'fcIdle': 'нет расхода',
     'fcMinutes': 'мин',
-    'field.enableToasts': 'Показывать всплывающие уведомления при карантине и событиях квоты',
     'forecast': '≈',
     'forecastBurnRate': 'Скорость расхода',
     'forecastExhaustWarning': 'Квота, по прогнозу, исчерпается до конца окна сброса',
@@ -11624,7 +12095,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'groupPrivacy': 'Приватность и список моделей',
     'groupProvider': 'Поведение провайдера',
     'groupQueue': 'Параллельность и очередь запросов',
-    'groupRotation': 'Ротация и лимиты',
     'healthAccount': 'Учётная запись',
     'healthActive': 'Активна',
     'healthIdle': 'Простаивает',
@@ -11642,8 +12112,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'hostOnline': 'Хост на связи',
     'howToGetToken': '❓ Инструкция',
     'howToGetTokenTitle': 'Как получить токен или ключ API для этого провайдера',
-    'hudHint': 'перетаскивание · закрепление у края · нажатие для обновления',
-    'hudTitle': 'Баланс подписок',
     'importLocalCli': '📥 Из CLI',
     'importLocalCliTitle': 'Автоимпорт токена из локально установленного CLI на сервере',
     'importLocalSuccess': 'Токен из локального CLI успешно импортирован!',
@@ -11674,7 +12142,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'ollamaFallbackHint': 'Автоматически направлять запросы локальному экземпляру Ollama, когда облачная квота исчерпана.',
     'ollamaFallbackModel': 'Резервная модель Ollama',
     'pastePlaceholder': 'Вставьте перенаправленный URL или код',
-    'pingTitle': 'Измерить задержку сети до API провайдера',
     'plan': 'Тариф',
     'privacyMask': 'Маскировать адреса почты и идентификаторы учётных записей',
     'privacyMaskHint': 'Для демонстраций и показа экрана: адреса почты отображаются как j***n@example.com.',
@@ -11695,10 +12162,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'queueWaiting': 'В очереди',
     'reasoningEffortDesc': 'Настройте глубину рассуждений для моделей с расширенным мышлением.',
     'reasoningEffortTitle': 'Управление глубиной рассуждений',
-    'reasoningLevelHigh': 'Высокий',
-    'reasoningLevelLow': 'Низкий',
-    'reasoningLevelMax': 'Максимум',
-    'reasoningLevelMed': 'Средний',
     'reasoningLevelOff': 'Выкл.',
     'recentErrors': 'Недавние ошибки выполнения',
     'recentErrorsClear': 'Очистить журнал',
@@ -11719,7 +12182,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'resetDone': 'квота сброшена',
     'resetExpires': 'ближайшее истечение',
     'resetGo': 'Сбросить сейчас',
-    'resetLabel': 'сброс',
     'resetNoCredit': 'нет пригодного кредита (не израсходован)',
     'resetNothing': 'сервер считает, что сброс не нужен (попытка не израсходована)',
     'resetReady': 'готово',
@@ -11745,13 +12207,10 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'show': 'Показать',
     'slashLogin': 'Войти к провайдеру по подписке',
     'slashLogout': 'Выйти из провайдера по подписке',
-    'slashStatus': 'Состояние подписок',
-    'slotDetailsTitle': 'Сведения о слоте',
     'smokeDesc': 'Проверить рабочее соединение с апстримом и измерить задержку в обе стороны до провайдера подписки.',
     'smokeFail': 'Проверка связи не пройдена',
     'smokeOk': 'Проверка связи пройдена',
     'smokeTesting': 'Пинг…',
-    'smokeTitle': 'Проверка связи (пинг)',
     'softFailureSentinel': 'Детектор мягких сбоев и отказов',
     'softFailureSentinelHint': 'Определяет ответы HTTP 200 с извинениями за нехватку мощностей и до начала потока автоматически переходит к следующей исправной учётной записи.',
     'speedMetric': 'Скорость',
@@ -11760,16 +12219,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'statsLatency': 'Средняя задержка ответа',
     'statsRequests': 'Успешных / всего запросов',
     'statsSuccessRate': 'Доля успешных запросов сессии',
-    'statsTitle': 'Телеметрия сессии',
     'storedAs': 'Хранится как',
     'submitCode': 'Отправить код',
-    'subsActiveHero': 'Активная подписка',
     'subsCooldown': 'пауза',
-    'subsFastMode': 'Быстрый режим 1,5×',
     'subsFree': 'бесплатно',
-    'subsHealthy': 'Исправна',
     'subsLogged': 'подключено',
-    'subsModalClose': 'Закрыть',
     'subsModalTitle': 'Центр подписок',
     'subsNotLogged': 'не подключено',
     'subsOpenSettings': 'Все настройки →',
@@ -11777,7 +12231,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'subsPoolTitle': 'Учётные записи провайдеров',
     'subsRefresh': 'Обновить',
     'subsUsed': 'использовано',
-    'switchLabel': 'Провайдер',
     'syncModels': 'Синхронизировать модели',
     'syncModelsTitle': 'Найти и синхронизировать доступные модели через API провайдера',
     'testConnection': 'Проверить',
@@ -11785,23 +12238,19 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Подписки',
     'toastCooldownRecovered': 'снова доступна (пауза истекла)',
     'toastQuarantined': 'Учётная запись помещена в карантин',
-    'toastQuotaWarning': 'Превышен порог квоты',
     'toastReleased': 'Учётная запись активна и исправна',
     'tokensSaved': 'Сохранённые токены',
     'ttftMetric': 'Задержка TTFT',
     'unavailable': 'Настройки недоступны',
     'updateAvailable': 'Доступно обновление',
-    'updateChecking': 'Проверка обновлений…',
     'updateFailed': 'Не удалось обновить',
     'updateNow': 'Обновить',
     'updateSuccessRestart': 'Обновление завершено. Перезапуск службы…',
-    'updateUpToDate': 'Актуальная версия',
     'updating': 'Обновление…',
     'usageFull': 'Расход 100%',
     'usageLimitsTitle': 'Лимиты расхода',
     'useOrigin': 'Использовать адрес этого веб-интерфейса как redirect_uri для OAuth',
     'useOriginHint': 'Не включайте, пока для этого адреса не зарегистрирован собственный OAuth-клиент. CLI-клиенты провайдера обычно требуют опубликованный ими адрес перенаправления и шаг с вставкой кода.',
-    'vaultTokenWarning': '⚠️ Содержит чувствительные OAuth-токены обновления',
     'verifyAccount': 'Подтвердить учётную запись',
     'verifyLink': 'Открыть ссылку подтверждения',
     'verifyPrefix': 'Google требует однократной проверки учётной записи. ',
@@ -11817,10 +12266,111 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wizardIncludeNetwork': 'Включить активные сетевые проверки (пинг прокси и поиск каталога моделей)',
     'wizardRecommendations': 'Рекомендации и следующие шаги',
     'wizardRunning': 'Выполняется диагностический чек-лист…',
-    'wizardStepCatalog': 'Доступность каталога моделей',
-    'wizardStepCreds': 'Учётные данные и срок действия',
-    'wizardStepProxy': 'Прокси и шлюз',
-    'wizardStepToken': 'Проверка токена',
+    'activeStreams': 'активно',
+    'apiKeySource': 'Ключ API',
+    'atRestEncrypted': 'Шифрование при хранении (AES-256-GCM)',
+    'atRestEncryptedTitle': 'Учётные данные при хранении защищены шифрованием мастер-ключом.',
+    'billingAlertHint': 'Уведомление о состоянии оплаты от провайдера',
+    'cancel': 'Отмена',
+    'capabilitiesHint': 'Возможности подписки, контекстное окно и функции моделей',
+    'composerQuotaDisplay': 'Область квоты в строке состояния',
+    'composerQuotaDisplayCurrent': 'Текущая модель',
+    'composerQuotaDisplayHidden': 'Скрыто',
+    'composerQuotaDisplayHint': 'Показывать квоту провайдера текущей модели или скрыть индикатор в строке состояния.',
+    'concurrencyQueueHint': 'Активные и поставленные в очередь параллельные запросы этой учётной записи',
+    'cooldownLabel': 'пауза',
+    'created': 'создано',
+    'createSnapshot': 'Создать снимок',
+    'delivered': 'доставлено',
+    'digestHint': '0 = выключено.',
+    'digestIntervalHours': 'Интервал сводки (часы)',
+    'error': 'Ошибка',
+    'exported': 'экспортировано',
+    'exportPacks': 'Экспорт',
+    'groupDisplay': 'Отображение и квота',
+    'headlessCopied': 'Скопировано!',
+    'headlessCopySsh': 'Копировать команду SSH',
+    'headlessScanQr': 'Отсканируйте в мобильном приложении, чтобы подтвердить вход:',
+    'headlessTip': 'Сервер без интерфейса или удалённый?',
+    'isPro': 'Pro',
+    'isProHint': 'Считать эту учётную запись Pro при взвешенном приоритете.',
+    'keyRotationHealth': 'состояние ротации ключей',
+    'keyRotationOffline': 'ротация ключей не установлена или недоступна',
+    'lang': 'en',
+    'maxConcurrencySlotTitle': 'Максимум параллельных потоков для этого слота учётной записи (по умолчанию: 1)',
+    'maxQueueSizeSlot': 'Очередь',
+    'monthlyCostSlotTitle': 'Месячная стоимость подписки в USD для этой учётной записи (по умолчанию: 20)',
+    'noPacks': 'Наборов пока нет.',
+    'noSnapshots': 'Снимков пока нет.',
+    'notifications': 'Уведомления',
+    'oauthSource': 'OAuth',
+    'ollamaSource': 'Ollama',
+    'openSettings': 'Открыть настройки',
+    'orPasteVaultPayload': 'или вставьте ниже данные хранилища',
+    'pacingRunwayHint': 'Примерное время до исчерпания квоты при текущем темпе расхода',
+    'providerGallery': 'Добавить провайдера',
+    'providerGalleryHint': 'Неподключённые провайдеры скрыты из основного списка, чтобы не перегружать страницу.',
+    'providerPacks': 'Наборы провайдеров',
+    'providerPacksHint': 'Добавьте JSON провайдера.',
+    'queuedStreams': 'в очереди',
+    'quota': 'Квота',
+    'quotaWidget': 'Индикатор квоты',
+    'quotaWidgetDocked': 'Закреплён',
+    'quotaWidgetFloating': 'Плавающий (с перетаскиванием)',
+    'quotaWidgetHint': 'Перетаскивайте и закрепляйте.',
+    'quotaWidgetOff': 'Выключен',
+    'reconnectNow': 'Пройти аутентификацию заново',
+    'reconnectScope': 'Заново выдать разрешения',
+    'renewalHint': 'Дата продления цикла оплаты подписки',
+    'restoredSlots': 'восстановленные слоты:',
+    'restoreSnapshot': 'Восстановить',
+    'runwayPrefix': 'Запас',
+    'scopeWarning': 'Предупреждение о разрешениях OAuth',
+    'searchProviders': 'Поиск провайдеров…',
+    'sendTest': 'Отправить проверочный запрос',
+    'sessionRevokedBadge': 'Отозвано / Истекло',
+    'sessionRevokedWarning': 'Сессия истекла или отозвана — требуется повторная авторизация',
+    'settingsError': 'Ошибка настроек',
+    'slashFast': 'Переключить скорость Codex (быстро/обычно)',
+    'slotAdvanced': 'Расширенные настройки слота',
+    'sourceAvailable': 'доступно',
+    'sourceNone': 'нет',
+    'sources': 'Источники',
+    'sourcesHint': 'OAuth → ключ → Ollama.',
+    'sourceUnavailable': 'недоступно',
+    'subs5hWindow': 'окно 5 ч',
+    'tabAccounts': 'Учётные записи',
+    'tabAdvanced': 'Расширенные',
+    'tabModels': 'Модели',
+    'tabNotifications': 'Уведомления',
+    'tabOverview': 'Обзор',
+    'tabRouting': 'Маршрутизация',
+    'tabVault': 'Хранилище',
+    'tags': 'Метки',
+    'tagsPlaceholder': 'team, prod',
+    'validateAndSave': 'Проверить и сохранить',
+    'valueDeliveredHint': 'Стоимость израсходованных токенов по официальному тарифу API в сравнении с ценой подписки',
+    'vaultSnapshots': 'Снимки хранилища',
+    'vaultSnapshotsHint': 'Автоматически забирать заранее.',
+    'vaultSyncBackend': 'Бэкенд:',
+    'vaultSyncLastPull': 'Последнее получение:',
+    'vaultSyncLastPush': 'Последняя отправка:',
+    'vaultSyncPull': 'Синхронизировать сейчас (получение)',
+    'vaultSyncPullOk': 'Хранилище успешно получено из удалённого хранилища и объединено',
+    'vaultSyncPush': 'Синхронизировать сейчас (отправка)',
+    'vaultSyncPushOk': 'Хранилище успешно отправлено в удалённое хранилище',
+    'vaultSyncTitle': 'Автоматическая синхронизация удалённого хранилища',
+    'vipOnly': 'Только VIP',
+    'vipOnlyHint': 'Резервировать эту учётную запись для запросов с меткой VIP.',
+    'webhookFormat': 'Формат вебхука',
+    'webhookFormatNative': 'Встроенный',
+    'webhookFormatNotify': 'совместимо с dsh-plugin-notify',
+    'webhookSecret': 'Секрет вебхука',
+    'webhookUrl': 'Адрес вебхука',
+    'webhookUrlHint': 'Подписанный адрес.',
+    'weight': 'Вес',
+    'windowResetsAt': 'Окно сбрасывается в',
+    'workspaceTitle': 'Организация / Рабочая область',
     'wizardTitle': 'Мастер диагностики',
   },
   /*
@@ -12058,11 +12608,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'excludeDomains': 'Исключить домены',
     'excludeDomainsDesc': 'Домены, исключаемые из результатов поиска; перечисляются через запятую.',
     'extractProviderOrder': 'Порядок провайдеров извлечения',
-    'extractProviderOrderDesc': 'Порядок через запятую. Допустимые: Firecrawl, Tavily, Crawl4AI.',
+    'extractProviderOrderDesc': 'Порядок через запятую. Допустимые: Firecrawl, Tavily, Crawl4AI, Jina, Readability.',
     'firecrawlApiKeyEnv': 'Имя учётных данных Firecrawl',
     'freshness': 'Актуальность',
     'freshnessDesc': 'значения: Any | Day | Week | Month — применяется, если провайдер это поддерживает.',
-    'header_desc': 'Резервный веб-поиск (Tavily → Firecrawl → Exa → SearXNG) и извлечение страниц, когда встроенные web_search / web_fetch упираются в лимиты.',
+    'header_desc': 'Резервный веб-поиск с приоритетом бесплатных тарифов (Firecrawl без ключа → Keenable без ключа → SearXNG → DuckDuckGo → Firecrawl → Keenable → Tavily → Brave → Exa) и извлечение страниц, когда встроенные web_search / web_fetch упираются в лимиты.',
     'health_caps': 'Использование за день',
     'health_circuit_breaker': 'Состояние автоматического выключателя',
     'health_credentials': 'Учётные данные',
@@ -12097,7 +12647,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'saved': 'Настройки сохранены',
     'saving': 'Сохранение…',
     'searchProviderOrder': 'Порядок провайдеров поиска',
-    'searchProviderOrderDesc': 'Порядок через запятую. Допустимые: Tavily, Brave, Firecrawl, Exa, SearXNG, DuckDuckGo.',
+    'searchProviderOrderDesc': 'Порядок через запятую. Допустимые: Firecrawl, Keenable, SearXNG, DuckDuckGo, Tavily, Brave, Exa.',
     'searchStrategy': 'Стратегия выполнения поиска',
     'searchStrategyDesc': 'режимы: Fallback (последовательно) | Race (побеждает самый быстрый) | Aggregate (объединение и дедупликация).',
     'searxngUrl': 'Базовый URL SearXNG',
@@ -12120,6 +12670,28 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updater_unavailable': 'Автоматические обновления недоступны для этого профиля.',
     'updater_up_to_date': 'Актуальная версия',
     'updater_update_now': 'Обновить до {version}',
+    'circuitBreakerCooldownMs': 'Задержка предохранителя (мс)',
+    'circuitBreakerCooldownMsDesc': 'Сколько провайдер остаётся приостановленным после срабатывания порога ошибок.',
+    'dailyCapFirecrawlFree': 'Дневной лимит: Firecrawl без ключа',
+    'dailyCapJina': 'Дневной лимит: Jina Reader',
+    'dailyCapKeenable': 'Дневной лимит: Keenable с ключом',
+    'dailyCapKeenableFree': 'Дневной лимит: Keenable без ключа',
+    'dailyCapReadability': 'Дневной лимит: Readability',
+    'duckduckgoEnabled': 'Включить запасной вариант DuckDuckGo',
+    'duckduckgoEnabledDesc': 'Поиск DuckDuckGo по HTML без ключа.',
+    'extractDeadlineMs': 'Срок извлечения (мс)',
+    'extractDeadlineMsDesc': 'Бюджет реального времени на одну цепочку извлечения.',
+    'firecrawlKeylessFetch': 'Извлечение Firecrawl без ключа',
+    'firecrawlKeylessFetchDesc': 'Разрешить извлечение Firecrawl без ключа. Публичные адреса отправляются в облако Firecrawl; отключите, чтобы оставлять запросы локальными или с ключом.',
+    'firecrawlKeylessSearch': 'Поиск Firecrawl без ключа',
+    'firecrawlKeylessSearchDesc': 'Разрешить поиск Firecrawl без ключа API.',
+    'freeTierFirst': 'Сначала бесплатный тариф',
+    'freeTierFirstDesc': 'Выполнять каждую попытку без ключа до любой попытки с ключом.',
+    'keenableApiKeyEnv': 'Имя переменной окружения для учётных данных Keenable',
+    'keenableEnabled': 'Включить поиск Keenable',
+    'keenableEnabledDesc': 'Поиск без ключа, а также адрес с ключом, если ключ задан.',
+    'searchDeadlineMs': 'Срок поиска (мс)',
+    'searchDeadlineMsDesc': 'Бюджет реального времени на одну цепочку поиска.',
     'updater_updating': 'Обновление…',
   },
   /*
@@ -12156,6 +12728,30 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unit': 'юнит systemd',
     'unitHint': 'Пустое значение определяет юнит по контрольной группе процесса.',
     'windowMs': 'Окно (мс)',
+    'cancel': 'Отмена',
+    'cancelRestart': 'Отменить перезапуск',
+    'confirmRestart': 'Подтвердить перезапуск',
+    'downtime': 'Простой',
+    'drainTimeoutMs': 'Таймаут мягкого завершения (мс)',
+    'drainTimeoutMsHint': 'Время ожидания завершения активных задач агента перед перезапуском (по умолчанию 15000).',
+    'healthDegraded': 'Деградация',
+    'healthLoop': 'Защита от цикла активна',
+    'healthOk': 'Норма',
+    'healthVerdict': 'Состояние работоспособности',
+    'historyEmpty': 'Перезапусков пока не зафиксировано.',
+    'historyTitle': 'Последние перезапуски',
+    'preflightFailed': 'Предварительная проверка не пройдена:',
+    'preflightPassed': 'Предварительные проверки пройдены.',
+    'reason': 'Причина',
+    'reasonPlaceholder': 'Причина перезапуска (например, обновлённый плагин)',
+    'restartCancelled': 'Перезапуск отменён.',
+    'restartDelaySec': 'Пауза перед перезапуском (с)',
+    'restartingIn': 'Перезапуск через {seconds} с…',
+    'restartReasonPrompt': 'Причина перезапуска',
+    'safeRestart': 'Безопасный перезапуск',
+    'safeRestartDesc': 'Проверить конфигурацию и перезапустить DeepSeek Harness с проверкой работоспособности.',
+    'time': 'Время',
+    'verdict': 'Вердикт',
     'windowMsHint': 'Окно защиты от цикла.',
   },
   /*
@@ -12201,7 +12797,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'accountModeAuto': 'Режим: переключение автоматически (по порядку в списке)',
     'accountModelOwner': 'учётная запись {name}',
     'accountModels': 'Выделенные модели',
-    'accountModelsHint': 'Эти модели предпочитают эту учётную запись, но всё равно переключаются, когда она недоступна. Модель принадлежит одной учётной записи; выбор здесь переносит её из любой другой.',
+    'accountModelsHint': 'Эти модели предпочитают эту учётную запись и всё равно переключаются, когда она недоступна; модель принадлежит только одной учётной записи.',
     'accountModePinned': 'Режим: закреплено за «{name}», но всё равно переключается, когда она недоступна',
     'accountNameAcceptExisting': 'Принять текущее имя',
     'accountNameN': 'Учётная запись {n}',
@@ -12211,17 +12807,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'accountOpFailed': 'Изменение учётной записи не завершилось. Попробуйте ещё раз.',
     'accountRefSeparator': ': ',
     'accountRemoveConfirm': 'Удалить «{name}»? Сохранённый ключ и выделенные модели будут удалены вместе с ней.',
-    'accountsHint': 'Действия с учётной записью применяются сразу, сохранять не нужно. Добавьте больше учётных записей — и запросы переключатся на следующую, когда текущая достигнет лимита использования или её ключ перестанет работать.',
-    'accountsRotationHint': 'Действия с учётной записью применяются сразу. Когда текущая учётная запись достигает лимита или её ключ перестаёт работать, запросы переключаются на следующую доступную учётную запись по порядку в списке.',
+    'accountsHint': 'Добавьте больше учётных записей — и запросы переключатся на следующую, когда текущая учётная запись достигнет лимита использования или её ключ перестанет работать.',
+    'accountsRotationHint': 'Когда текущая учётная запись достигнет своего лимита или её ключ перестанет работать, запросы переключаются на следующую доступную учётную запись по порядку в списке.',
     'accountStatusPinned': 'Закреплена',
     'accountsTitle': 'Учётные записи',
-    'advancedInvalid': 'Число в дополнительных настройках не готово к сохранению; разверните раздел, чтобы исправить.',
-    'advancedOverriddenMany': 'Изменённых настроек: {count}',
-    'advancedOverriddenOne': 'Изменённых настроек: 1',
     'advancedSettings': 'Дополнительно',
     'advancedSettingsHint': 'Базовый URL API и сетевые лимиты; обычно менять не нужно.',
     'apiBase': 'Базовый URL API',
-    'apiBaseHint': 'По умолчанию https://api.commandcode.ai; обычно менять не нужно.',
     'apiKey': 'API-ключ',
     'apiKeyHint': 'Создайте его в консоли commandcode.ai. Если при сохранении оставить поле пустым, сохранённый ключ сохранится.',
     'apiKeyLocked': 'Ключ предоставлен источником только для чтения',
@@ -12236,11 +12828,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'contextOverrideModel': 'Модель',
     'contextOverrideNoCatalog': 'Каталог моделей ещё не загружен; сейчас нельзя добавить переопределения для отдельных моделей.',
     'contextOverrideRemove': 'Удалить переопределение контекста у этой модели',
-    'contextOverridesHint': 'Задайте длину контекста для одной модели — она важнее общего значения выше. Список показывает только модели из белого списка видимых моделей (весь каталог, пока показаны все).',
+    'contextOverridesHint': 'Задайте длину контекста для одной модели — она важнее общего значения выше. Выбирать можно только модели из белого списка.',
     'contextOverridesTitle': 'Переопределения для отдельных моделей',
     'contextOverrideValue': 'Длина контекста',
     'contextWindow': 'Своя длина контекста',
-    'contextWindowHint': 'Переопределяет контекстное окно из каталога моделей для всех моделей без собственного переопределения ниже; счётчик контекста и автосжатие следуют ему. Пустое значение берётся из каталога. Принимаются сокращения вида 32K или 1M.',
+    'contextWindowHint': 'Переопределяет контекстное окно из каталога; счётчик контекста и автосжатие следуют ему. Пустое значение берётся из каталога; принимаются значения вида 32K или 1M.',
     'contextWindowInvalid': 'Введите целое число токенов',
     'contextWindowTooLarge': 'Длина контекста не должна превышать 10 000 000',
     'contextWindowTooSmall': 'Длина контекста должна быть не меньше 1',
@@ -12274,7 +12866,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'filterModelsByPlanHint': 'Показывать только модели вашего тарифа; учётные записи с оплатой по факту по-прежнему видят весь каталог.',
     'hide': 'Скрыть',
     'integrationsTitle': 'Интеграции и отображение',
-    'intro': 'Действия с учётными записями применяются сразу; остальные настройки записываются кнопкой «Сохранить» внизу. API-ключ остаётся в локальном хранилище учётных данных и никогда не выводится обратно.',
+    'intro': 'Действия с учётной записью применяются сразу; остальные изменения — кнопкой «Сохранить» ниже. Ключ остаётся в локальном хранилище учётных данных и никогда не выводится обратно.',
     'invalidNumber': 'Недопустимое число',
     'loginButton': 'Войти в Command Code',
     'loginCancel': 'Отменить вход',
@@ -12284,7 +12876,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'loginHintIdle': 'Или войдите, чтобы получить и сохранить ключ автоматически.',
     'loginInvalidKey': 'Полученный ключ не прошёл проверку (401). Попробуйте ещё раз или вставьте его вручную.',
     'loginNetwork': 'Не удалось связаться со службой Command Code, чтобы проверить ключ; проверьте сеть и повторите.',
-    'loginOpenLink': 'Открыть страницу авторизации ↗',
+    'loginOpenLink': 'Открыть страницу авторизации',
     'loginStarting': 'Запуск локального сервера обратного вызова…',
     'loginStoreFailed': 'Не удалось сохранить ключ в локальном хранилище учётных данных; вставьте его вручную.',
     'loginSuccess': 'Вход выполнен как',
@@ -12293,7 +12885,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'loginUnavailable': 'Вход в этой среде недоступен; вставьте API-ключ.',
     'loginWaiting': 'Ожидание авторизации в вашем браузере. Если страница не открылась автоматически, воспользуйтесь ссылкой авторизации.',
     'maxOutputTokens': 'Лимит выходных токенов на раунд',
-    'maxOutputTokensHint': 'Пустое значение берётся из модели (по умолчанию). Положительное число никогда не превышает предел модели или 131 072 на шлюзе. 0 исключает поле (только для CLI и OpenAI; эндпоинт Messages у Claude требует его). Сокращение вида 64K принимается.',
+    'maxOutputTokensHint': 'Пустое значение выводится из модели. 0 исключает поле (только для CLI и OpenAI; эндпоинт Messages у Claude требует его). Верхний предел — 131 072; принимается значение вида 64K.',
     'maxOutputTokensInvalid': 'Введите 0 или целое число токенов',
     'maxOutputTokensTooLarge': 'Лимит выходных токенов не должен превышать 131 072 (предел шлюза)',
     'maxOutputTokensTooSmall': 'Лимит выходных токенов должен быть не меньше 0 (0 исключает поле)',
@@ -12304,20 +12896,19 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'modelPick': 'Выберите модели…',
     'modelSearchEmpty': 'Подходящих моделей нет.',
     'modelSearchPlaceholder': 'Поиск моделей…',
-    'modelsInvalid': 'Число в разделе «Модели и контекст» не готово к сохранению; разверните раздел, чтобы исправить.',
     'modelStale': 'Выведена из обращения',
     'modelsTitle': 'Модели и контекст',
     'nav': 'Command Code',
     'numberTooLarge': 'Число повторов не должно превышать 50',
     'numberTooSmall': 'Число повторов должно быть не меньше 0',
     'offloadSeenImagesForCache': 'Не воспроизводить уже просмотренные изображения',
-    'offloadSeenImagesForCacheHint': 'Только для транспорта CLI. После того как модель ответит на изображение, старые пиксели надёжно заменяются текстом, чтобы при загрузке следующего изображения кэш не откатывался. Чтобы снова посмотреть старое изображение, модели нужно заново прочитать его файл или пользователю нужно приложить его ещё раз. По умолчанию выключено.',
+    'offloadSeenImagesForCacheHint': 'Только для транспорта CLI. Изображения, на которые модель уже ответила, заменяются текстовыми заглушками, поэтому новое изображение больше не откатывает кэш; чтобы увидеть изображение снова, прочитайте или приложите его заново.',
     'openAnalytics': 'Посмотреть использование моделей, стоимость и производительность',
-    'overridden': 'Переопределено',
+    'overridden': 'Изменено',
     'privacyTitle': 'Приватность и безопасность',
     'readOnly': 'Настройки доступны только для чтения.',
-    'requestTimeoutMs': 'Тайм-аут запроса (секунды)',
-    'requestTimeoutMsHint': 'Сколько ждать первый байт ответа; по умолчанию 300 с (как в официальном CLI). Маршрут Provider API не отдаёт заголовки, пока апстрим-модель не выпустит первый токен, поэтому медленный апстрим всё равно может пережить это время; увеличьте его, если об этом сообщает тайм-аут.',
+    'requestTimeoutMs': 'Тайм-аут запроса',
+    'requestTimeoutMsHint': 'Сколько ждать первый байт ответа; по умолчанию 300 с. Маршрут Provider API отвечает только после первого токена апстрима, поэтому увеличьте значение для медленного апстрима.',
     'reset': 'Сбросить',
     'save': 'Сохранить',
     'saved': 'Настройки сохранены',
@@ -12326,12 +12917,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'saving': 'Сохранение',
     'show': 'Показать',
     'showSidebarQuota': 'Показывать карточку квоты в боковой панели',
-    'showSidebarQuotaHint': 'Показывать внизу боковой панели карточку тарифа и квоты, которая открывает полную сводку. По умолчанию выключено; пока выключено, для неё не выполняется фоновое обновление данных об использовании.',
-    'streamIdleTimeoutMs': 'Тайм-аут простоя потока (секунды)',
-    'streamIdleTimeoutMsHint': 'Через сколько молчащий поток считается прерванным; по умолчанию 300 с (намеренно с запасом — модели с долгими размышлениями могут молчать минутами).',
+    'showSidebarQuotaHint': 'Показывать внизу боковой панели карточку тарифа и квоты, которая открывает полную сводку; пока выключено, фонового обновления не происходит.',
+    'streamIdleTimeoutMs': 'Тайм-аут простоя потока',
+    'streamIdleTimeoutMsHint': 'Через сколько остановившийся поток считается мёртвым; по умолчанию 300 с (модели с долгими размышлениями могут молчать минутами).',
     'title': 'Command Code',
     'transportMaxRetries': 'Повторы транспорта',
-    'transportMaxRetriesHint': 'Сколько раз неудачное соединение повторяется автоматически; по умолчанию 5 (паузы 0,5+1+2+4+8 с, всего около 15 с). После этого сбой сообщается, а не ждёт окончания экспоненциальной задержки. 0 отключает повторы. Ограничения частоты запросов и ответы 5xx сохраняют своё, более длинное окно повторов.',
+    'transportMaxRetriesHint': 'Сколько раз повторять запрос после неудачного соединения; по умолчанию 5 (всего около 15 с). 0 отключает повторы; ограничения частоты и ответы 5xx сохраняют свои повторы.',
     'unsavedChanges': 'Есть несохранённые изменения',
     'updateAvailable': 'доступно обновление',
     'updateHint': 'Опубликована новая версия; нажмите, чтобы посмотреть список изменений. Уведомление исчезнет после обновления плагина.',
@@ -12374,13 +12965,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usageWeekly': 'Недельное окно',
     'visibleModelsCleanStale': 'Очистить устаревшие ({count})',
     'visibleModelsCount': 'Выбрано моделей: {count}',
-    'visibleModelsHint': 'Отметьте модели, которые нужно оставить, и списки моделей будут показывать только их. Если ничего не отмечено, показываются все модели. После сохранения изменение применяется и в веб-настройках, и в настройках терминала. Эта страница показывает их действующий выбор; доступ по тарифу фильтруется отдельно.',
+    'visibleModelsHint': 'Списки выбора моделей показывают только отмеченные модели; если не отмечено ни одной, показываются все. Веб-интерфейс и терминал используют этот выбор совместно.',
     'visibleModelsPick': 'Выберите модели, которые нужно оставить…',
     'visibleModelsShowAll': 'Показать все',
     'visibleModelsStaleHint': 'Выбранных моделей ({count}) больше нет в каталоге (возможно, они выведены из обращения); остальные модели не затронуты. Очистите их или оставьте.',
     'visibleModelsTitle': 'Белый список моделей',
     'webSearch': 'Использовать Command Code для dsh web search',
-    'webSearchHint': 'Для dsh web search используется тот же ключ; если выключить переключатель, вернётся прежний сервис. Если в настройках веб-поиска уже закреплён другой сервис, этот переключатель ничего не меняет.',
+    'webSearchHint': 'Использовать тот же ключ для dsh web search. Не действует, пока в настройках веб-поиска закреплён другой бэкенд.',
     'writeCleanupPending': 'Изменение учётной записи подтверждено, но записи очистки ещё ожидают. Повторите очистку.',
     'writeClosed': 'Клиент уничтожен; незапущенные операции остановлены. Подтверждённые изменения сохранены.',
     'writeConfigSaved': 'Конфигурация сохранена.',
@@ -12396,6 +12987,58 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writeTargetAfter': 'Операция с ключом по исходному имени была запущена, после чего имя по умолчанию изменилось. Проверьте оба имени.',
     'writeTargetBefore': 'Имя ключа по умолчанию изменилось; эта операция с ключом не была запущена. Проверьте текущую цель.',
     'zdr': 'Нулевое хранение данных (ZDR)',
+    'accountAddMethod': 'Способ',
+    'accountAddStart': 'Начать вход',
+    'accountsSummaryIssues': 'Требуют внимания: {count}',
+    'accountsSummaryMany': 'Учётных записей: {count}',
+    'accountsSummaryOne': '1 учётная запись',
+    'groupInvalid': 'Требует исправления',
+    'groupOverriddenMany': 'Изменено вручную: {count}',
+    'groupOverriddenOne': '1 изменено вручную',
+    'placeholderAuto': 'Авто',
+    'placeholderCatalog': 'Каталог',
+    'saveLocate': 'Показать',
+    'serviceStatusBadgeLocalHttp': 'Ошибка соединения на этом устройстве',
+    'serviceStatusBadgeLocalTimeout': 'Превышено время ожидания на этом устройстве',
+    'serviceStatusBadgeLocalUnreachable': 'Недоступно на этом устройстве',
+    'serviceStatusChecking': 'Проверка…',
+    'serviceStatusDegraded': 'Работает с перебоями',
+    'serviceStatusDown': 'Сбой сервиса',
+    'serviceStatusHint': 'Опубликованные данные берутся с официальной страницы статуса и записываются только при изменении статуса или в ежедневной сводке; локальное соединение проверяется хостом прямо сейчас.',
+    'serviceStatusLag': 'Официальные данные публикуются только при изменении статуса или в ежедневной сводке, поэтому могут отставать на часы.',
+    'serviceStatusLocal': 'Это устройство',
+    'serviceStatusLocalChecking': 'Проверка соединения…',
+    'serviceStatusLocalHttp': 'Ошибка (HTTP {status})',
+    'serviceStatusLocalOk': 'Доступно · {latency} мс',
+    'serviceStatusLocalTimeout': 'Время ожидания истекло',
+    'serviceStatusLocalUnavailable': 'Неизвестно (хост не предоставляет проверку)',
+    'serviceStatusLocalUnreachable': 'Недоступно',
+    'serviceStatusOfficial': 'Официальный',
+    'serviceStatusOpen': 'Открыть страницу статуса',
+    'serviceStatusResponseWeek': 'в среднем {value}',
+    'serviceStatusStale': 'Данные о статусе недоступны; показан последний известный результат.',
+    'serviceStatusTitle': 'Статус сервиса',
+    'serviceStatusUnavailable': 'Данные о статусе недоступны.',
+    'serviceStatusUnknown': 'Статус неизвестен',
+    'serviceStatusUp': 'Работает нормально',
+    'serviceStatusUpdatedDays': 'обновлено {count} дн. назад',
+    'serviceStatusUpdatedHours': 'обновлено {count} ч назад',
+    'serviceStatusUpdatedJustNow': 'обновлено только что',
+    'serviceStatusUpdatedMinutes': 'обновлено {count} мин назад',
+    'serviceStatusUpdatedUnknown': 'время обновления неизвестно',
+    'serviceStatusUptime': 'доступность {value}',
+    'serviceStatusUptimeMonth': '30 дн. {value}',
+    'serviceStatusUptimeWeek': '7 дн. {value}',
+    'unitRetries': 'раз',
+    'unitSeconds': 'с',
+    'unitTokens': 'ток',
+    'usageMonthlyDepleted': 'Месячный кредит израсходован; купленные и бесплатные кредиты больше нельзя потратить.',
+    'visibleModelsSummary': 'В белом списке: {count}',
+    'visibleModelsSummaryAll': 'Показаны все модели',
+    'webSearchSummaryOff': 'Веб-поиск выключен',
+    'webSearchSummaryOn': 'Веб-поиск включён',
+    'zdrSummaryOff': 'Нулевое хранение данных выключено',
+    'zdrSummaryOn': 'Нулевое хранение данных включено',
     'zdrHint': 'Используйте только апстримы, которые не хранят данные и не обучаются на запросах; доступность и цены могут отличаться.',
   },
   /*
@@ -13254,7 +13897,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'agents.chip.tokens': 'Токенов в контексте: {n}',
     'agents.continuable': 'можно продолжить',
     'agents.legend.free': 'свободное окно',
-    'agents.more': 'Ещё не показано: {n}',
     'agents.oneshot': 'одноразовый',
     'agents.running': 'выполняется',
     'agents.self': 'текущий',
@@ -13372,7 +14014,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'files.chipTip': 'Файлов: {files} · операций: {ops}',
     'files.deltaTip': 'Суммарное изменение строк, оценённое по аргументам вызовов редактирования и записи: + добавлено / − удалено',
     'files.empty': 'В этом диапазоне нет чтений, записей или поисков файлов',
-    'files.errs': 'Ошибок: {n}',
     'files.files': 'Файлов: {n}',
     'files.form.dir': 'Каталог',
     'files.form.image': 'Изображение',
@@ -13433,7 +14074,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'files.preview': 'Предпросмотр в боковой панели',
     'files.readEst': 'Прочитано строк, оценено по аргументу ограничения',
     'files.readTip': 'Прочитаны строки {a}–{b}',
-    'files.scopeLatest': 'До последнего · следует выбору на графике динамики',
     'files.search': 'Фильтр по пути…',
     'files.sort.count': 'Самые активные',
     'files.sort.latest': 'Последние',
@@ -13598,7 +14238,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'ov.heat.less': 'Меньше',
     'ov.heat.metric': 'Показатель',
     'ov.heat.metric.sessions': 'Сессии',
-    'ov.heat.metric.steps': 'Шаги',
     'ov.heat.mon.01': 'Янв',
     'ov.heat.mon.02': 'Фев',
     'ov.heat.mon.03': 'Мар',
@@ -13613,7 +14252,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'ov.heat.mon.12': 'Дек',
     'ov.heat.more': 'Ещё',
     'ov.heat.sessions': 'Активных сессий: {n}',
-    'ov.heat.steps': 'Шагов: {n}',
     'ov.heat.sub': 'Фильтр по дате',
     'ov.heat.title': 'Активность',
     'ov.heat.wd.1': 'Пн',
@@ -13766,7 +14404,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'stats.costPriceHead': 'Ставки за 1 млн токенов:',
     'stats.costTip': 'Оценка стоимости этого агента и всех дочерних сессий субагентов — только для справки.',
     'stats.costTipCny': 'Отображение в CNY пересчитывается по курсу 1 CNY = 0,15 USD.',
-    'stats.costTipDeepseek': 'DeepSeek берёт полную цену в пиковые окна (по будням 09:00–12:00 и 14:00–18:00 по пекинскому времени), в остальные часы — половину.',
+    'stats.costTipDeepseek': 'Ставки DeepSeek на models.dev — это ставки вне пиковых окон: в пиковые окна (по пекинскому времени, с понедельника по пятницу, 09:00–12:00 и 14:00–18:00) действует двойной тариф, а в субботу и воскресенье — ставка вне пика.',
     'stats.costUnavailable': 'Цены на модели недоступны (повтор выполняется автоматически) — стоимость пока нельзя оценить.',
     'stats.costWrite': 'Запись в кэш',
     'stats.currentAgent': 'Текущий агент',
@@ -13842,6 +14480,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trend.overviewTip': 'Уместить каждый сохранённый шаг или раунд по видимой ширине панели: без горизонтальной прокрутки и без догрузки; флажки отмечают квартили и весь интервал. Наведите курсор, чтобы прочитать, щёлкните, чтобы закрепить; режим взаимоисключающий с режимом ДНК и адаптивным режимом',
     'trend.title': 'Динамика контекста',
     'update.label': 'Обновление',
+    'agents.showAll': 'Показать все',
+    'agents.showLess': 'Показать меньше',
+    'ov.heat.metric.tokens': 'Токены',
+    'ov.heat.tokens': 'Токенов: {n}',
+    'settings.overviewAuto': 'График динамики · Автообзор',
+    'settings.overviewAutoOff': 'Выкл.',
+    'settings.overviewAutoSteps': 'Шагов: {n}',
+    'settings.overviewRange': 'Анализ контекста · Диапазон по умолчанию',
+    'timing.scope': 'Всё время сессии',
     'update.tip': 'Доступно обновление {version} — щёлкните, чтобы прочитать список изменений',
   },
   /*
@@ -13989,6 +14636,64 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updating': 'Обновление…',
     'upToDate': 'Всё обновлено',
     'usageTrend': 'Динамика расхода за 24 ч',
+    'activeKey': 'Активный',
+    'allKeysLink': 'Все ключи…',
+    'criticalBadge': 'Требуют внимания: {count}',
+    'criticalFilterHint': 'Нажмите, чтобы отфильтровать аккаунты, требующие внимания',
+    'curAuto': 'По умолчанию провайдера',
+    'curCNY': 'CNY (¥)',
+    'curEUR': 'EUR (€)',
+    'curRUB': 'RUB (₽)',
+    'curUSD': 'USD ($)',
+    'displayCurrency': 'Валюта отображения',
+    'editKey': 'Изменить подписку',
+    'keyRevoked': 'Ключ отозван',
+    'keyRevokedDesc': 'Авторизация ключа отклонена (HTTP {code}). Обновите ключ.',
+    'latencyTooltip': 'HTTP {code} · {ms} мс',
+    'networkError': 'Ошибка сети',
+    'origHint': 'исходно: {orig} по ставке {rate}',
+    'perm_default': 'Включить оповещения',
+    'perm_denied': 'Оповещения заблокированы',
+    'perm_granted': 'Оповещения включены',
+    'perm_unsupported': 'Не поддерживается',
+    'pingMs': '{ms} мс',
+    'prov_field_cerebras_secret': 'Ключ API',
+    'prov_field_custom_extra': 'Базовый URL',
+    'prov_field_custom_secret': 'Ключ API / токен (необязательно)',
+    'prov_field_mistral_secret': 'Ключ API',
+    'prov_field_together_secret': 'Ключ API',
+    'prov_field_xai_secret': 'Ключ API',
+    'prov_hint_cerebras': 'Ключ API Cerebras Inference (csk-…) из cloud.cerebras.ai.',
+    'prov_hint_custom': 'Свой адрес API, совместимый с OpenAI (например, vLLM, Ollama, прокси, LiteLLM).',
+    'prov_hint_mistral': 'Ключ API Mistral AI из console.mistral.ai.',
+    'prov_hint_together': 'Ключ API Together AI из api.together.ai.',
+    'prov_hint_xai': 'Ключ API xAI (xai-…) из console.x.ai.',
+    'prov_label_cerebras': 'Cerebras',
+    'prov_label_custom': 'Свой BaseURL',
+    'prov_label_mistral': 'Mistral AI',
+    'prov_label_together': 'Together AI',
+    'prov_label_xai': 'xAI (Grok)',
+    'providerKeys': 'Ключи {provider} ({count})',
+    'readyToUse': 'готов',
+    'replenishAlertBody': 'Квота {provider} восполнена (осталось {pct})',
+    'replenishAlerts': 'Оповещения о восполнении квоты',
+    'replenishAlertTitle': 'Квота восполнена',
+    'rotationDescription': 'Формирует события Cordis key-limits/threshold-reached, когда квота опускается ниже порога (5%), чтобы плавно переключать ключи до их исчерпания.',
+    'rotationDetected': 'Включено',
+    'rotationNotInstalled': 'Не установлен',
+    'rotationRequiresNote': 'Требуется сопутствующий плагин',
+    'rotationTitle': 'Упреждающая смена ключей',
+    'sortAlpha': 'По провайдеру по алфавиту',
+    'sortBy': 'Сортировать по',
+    'sortDefault': 'Порядок по умолчанию',
+    'sortQuotaAsc': 'Сначала минимальная квота',
+    'sortResetSoonest': 'Сначала ближайший сброс',
+    'sparkline24h': 'Динамика за 24 ч',
+    'switchKey': 'Сменить ключ',
+    'tabExhausted': 'Исчерпана 0%',
+    'tabWarning': 'Внимание <20%',
+    'totalBalance': 'Общий баланс',
+    'trendNoData': 'Данных о динамике за 24 ч пока нет',
     'warningCount': 'с предупреждением',
   },
   /*
@@ -14475,6 +15180,77 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zai.title': 'Квота Z.ai',
     'zai.webSearches': 'Веб-поиск',
     'zai.webSearchesCount': 'Поисков: {used} / {limit}',
+    'about.ahead': 'Локальная версия новее',
+    'about.aheadHint': 'Онлайн-версия: v{latest}; установлена: v{current}',
+    'about.check': 'Проверить обновления',
+    'about.checkFailed': 'Проверка не удалась — нажмите, чтобы повторить',
+    'about.checking': 'Проверка…',
+    'about.ctaGithub': 'Репозиторий GitHub',
+    'about.ctaUpdate': 'Посмотреть обновление',
+    'about.footerBuiltWith': 'Работает на DeepSeek Harness',
+    'about.footerCopyright': '© {year} Xiang',
+    'about.footerLicense': 'Лицензия MIT',
+    'about.latest': 'Актуальная версия',
+    'about.linkChangelog': 'История изменений',
+    'about.linkChangelogDesc': 'Что изменилось в каждом выпуске',
+    'about.linkDocs': 'Документация',
+    'about.linkDocsDesc': 'Установка, настройки и правила подсчёта',
+    'about.linkIssues': 'Задачи',
+    'about.linkIssuesDesc': 'Ошибки, идеи и запросы на новые возможности',
+    'about.linkNpm': 'Пакет npm',
+    'about.linkNpmDesc': '@xfqz86/dsh-usage-stats',
+    'about.linksCount': 'Ссылок: {n}',
+    'about.linksTitle': 'Ссылки',
+    'about.noteDesc': 'Каждый ответ модели и сжатие контекста учитываются в расходе; автоматические заголовки и заменённые повторы — нет.',
+    'about.noteDetail': 'Подробнее',
+    'about.noteTitle': 'Правила подсчёта',
+    'about.privacyBadge': 'Только локально',
+    'about.privacyLocalDesc': 'Читает локальные журналы сессий и записывает результаты в локальный реестр',
+    'about.privacyLocalTitle': 'Локальное агрегирование',
+    'about.privacyQuotaDesc': 'Официальные конечные точки квоты вызываются только при включённом мониторинге',
+    'about.privacyQuotaTitle': 'Запросы квоты',
+    'about.privacyRebuildDesc': 'Очистите или пересоберите реестр в настройках и начните подсчёт заново',
+    'about.privacyRebuildTitle': 'Пересборка в любой момент',
+    'about.privacyTitle': 'Данные и конфиденциальность',
+    'about.privacyUploadDesc': 'Никакой телеметрии; данные о расходе и содержимое сессий никогда не отправляются на сервер',
+    'about.privacyUploadTitle': 'Данные не отправляются',
+    'about.tagline': 'Расход токенов в DSH по моделям, сессиям и датам — плюс учёт квоты для DeepSeek, OpenCode Go и Z.ai.',
+    'about.updateAvailable': 'Новая версия v{version}',
+    'about.updateDotAria': 'Доступно обновление: v{version}',
+    'about.updateHint': 'Посмотрите примечания к выпуску и обновите прямо в окне',
+    'markdown.code': 'Код',
+    'markdown.copied': 'Скопировано',
+    'markdown.copy': 'Копировать',
+    'markdown.footnotes': 'Сноски',
+    'markdown.unwrap': 'Снять переносы строк',
+    'markdown.wrap': 'Перенести строки',
+    'tab.about': 'О плагине',
+    'update.close': 'Закрыть примечания к выпуску',
+    'update.dismiss': 'Закрыть',
+    'update.done': 'Готово',
+    'update.errorTitle': 'Не удалось обновить',
+    'update.later': 'Позже',
+    'update.localHint': 'Локальная установка по ссылке: обновите её в репозитории — зависимость по ссылке не будет заменена пакетом npm.',
+    'update.notesFallback': 'Примечания к выпуску сейчас недоступны — откройте страницу выпуска GitHub, чтобы увидеть все подробности.',
+    'update.publishedAt': 'Опубликовано {date}',
+    'update.reason.busy': 'Другое обновление уже выполняется. Попробуйте позже.',
+    'update.reason.failed': 'Установка не удалась. Попробуйте позже или установите вручную со страницы выпуска GitHub.',
+    'update.reason.linkInstall': 'Это локальная установка по ссылке; обновите её в репозитории.',
+    'update.reason.network': 'Соединение с сетью было прервано. Проверьте сеть и повторите попытку.',
+    'update.reason.timeout': 'Время ожидания установки истекло. Проверьте сеть и повторите попытку.',
+    'update.reason.unsupported': 'Эта среда выполнения не поддерживает автоматическое обновление. Установите новую версию вручную.',
+    'update.retry': 'Повторить',
+    'update.successDesc': 'Новая версия установлена. Перезапустите DSH, чтобы изменения вступили в силу.',
+    'update.successHeader': 'Обновление завершено',
+    'update.successTitle': 'Обновлено до v{version}',
+    'update.title': 'Доступна новая версия',
+    'update.unknownHint': 'Эту установку нельзя обновить из окна; установите новую версию вручную.',
+    'update.upgradeNow': 'Обновить сейчас',
+    'update.upgrading': 'Обновление…',
+    'update.upgradingDesc': 'Загрузка и установка v{version}…',
+    'update.upgradingHint': 'Не закрывайте DSH во время обновления — это окно нельзя закрыть до его завершения. Перезапустите DSH после окончания.',
+    'update.upgradingProgress': 'Установка обновления',
+    'update.viewFull': 'Посмотреть полные примечания на GitHub',
     'zai.weekly': 'Эта неделя',
   },
   /*
@@ -14666,7 +15442,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'repo.source.agents': 'Общий агент',
     'repo.source.dsh': 'DSH',
     'repo.states': 'Все статусы',
-    'repo.subsource.catalogNote': 'Рейтинг загрузок ClawHub × до 100; сортировка затрагивает только показанные элементы',
+    'repo.subsource.catalogNote': 'Рейтинг загрузок ClawHub · до 100; сортировка затрагивает только показанные элементы',
     'repo.subsource.clawhub': 'ClawHub',
     'repo.subsource.github': 'Репозитории GitHub',
     'repo.subsource.popular': 'Топ-100 по загрузкам',
@@ -14684,10 +15460,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'repo.updateSuccess': 'Обновлено. Предыдущая версия сохранена в резервной копии.',
     'repo.updating': 'Обновление…',
     'repo.url': 'Адрес репозитория',
+    'repo.copied': 'Скопировано',
+    'repo.copyBody': 'Скопировать текст',
+    'repo.copyFailed': 'Не удалось скопировать',
     'scope.repositories': 'Обзор навыков',
   },
   /*
-   * dsh-damage-pulse@4.2.8@4.2.8 — словарь плагина conversation.session.header.actions (MIT).
+   * dsh-damage-pulse@4.2.8 — словарь плагина conversation.session.header.actions (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -14997,7 +15776,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'yesterday': 'Вчера',
   },
   /*
-   * dsh-agent-plugins-market@0.11.0@0.11.0 — словарь плагина dsh-agent-extension-preset (MIT).
+   * dsh-agent-plugins-market@0.11.0 — словарь плагина dsh-agent-extension-preset (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -15468,7 +16247,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceTabSkills': 'Навыки',
   },
   /*
-   * dsh-graph@0.22.0@0.22.0 — словарь плагина dsh-graph.hidden-versions. (MIT).
+   * dsh-graph@0.22.0 — словарь плагина dsh-graph.hidden-versions. (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -16681,7 +17460,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'worktree.unavailable': '⚠️ Список рабочих деревьев Git недоступен',
   },
   /*
-   * dsh-live-voice@0.6.2@0.6.2 — словарь плагина dsh-live-voice (Apache-2.0).
+   * dsh-live-voice@0.6.2 — словарь плагина dsh-live-voice (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -17083,7 +17862,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'dsh-live-voice.speak.volume.label': 'Громкость речи',
   },
   /*
-   * dsh-lowtide@0.2.8@0.2.8 — словарь плагина dsh-lowtide (MIT).
+   * dsh-lowtide@0.2.8 — словарь плагина dsh-lowtide (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -17422,7 +18201,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tooltip.timeNoWindow': 'Сейчас: {tier}',
   },
   /*
-   * dsh-plugin@2.0.5@2.0.5 — словарь плагина dsh-plugin (MIT).
+   * dsh-plugin@2.0.5 — словарь плагина dsh-plugin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -17832,10 +18611,16 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewMarketHint': 'Просмотр и поиск плагинов',
     'viewSettings': 'Настройки',
     'viewSettingsHint': 'Сетевые источники и предпочтения',
+    'failKind_registryAuth': 'реестр npm отклонил доступ',
+    'failReason_registryAuth': 'Реестр вернул 401/403: нужны учётные данные или текущая сеть не разрешена.',
+    'failRegistryAuthHint': 'Установщику отказали в доступе к реестру npm (HTTP 401/403): этому реестру нужны учётные данные либо он не разрешает текущую сеть или IP-адрес. Если вы используете корпоративный или частный реестр, сначала настройте аутентификацию (npm login или запишите //{host}/:_authToken=… в ~/.npmrc). Если частный реестр не нужен, верните реестр на официальный (https://registry.npmjs.org) или переключитесь на публичное зеркало в настройках хаба, затем повторите попытку. Это не проблема самого плагина.',
+    'failRegistryAuthHintNoHost': 'Установщику отказали в доступе к реестру npm (HTTP 401/403): этому реестру нужны учётные данные либо он не разрешает текущую сеть или IP-адрес. Если вы используете корпоративный или частный реестр, сначала настройте аутентификацию (npm login или запишите //<registry>/:_authToken=… в ~/.npmrc). Если частный реестр не нужен, верните реестр на официальный (https://registry.npmjs.org) или переключитесь на публичное зеркало в настройках хаба, затем повторите попытку. Это не проблема самого плагина.',
+    'settingsRegistryFallback': 'Переключать зеркала при сбое',
+    'settingsRegistryFallbackDesc': 'Если публичный реестр не отвечает или заблокирован, повторите попытку со следующим зеркалом (до 3). Свои и внутрисетевые реестры не переключаются, поэтому имена приватных пакетов не утекают.',
     'yearsAgo': 'обновлено {years} г. назад',
   },
   /*
-   * dsh-remote@0.8.48@0.8.48 — словарь плагина dsh-remote (MIT).
+   * dsh-remote@0.8.48 — словарь плагина dsh-remote (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -18117,10 +18902,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.webAttachReopen': 'Открыть',
     'settings.webAttachTokenWarn': 'Адрес содержит токен входа; он предназначен только для этого компьютера, не передавайте его дальше.',
     'settings.workspace': 'Рабочая область по умолчанию',
+    'settings.saveWritesSshConfig': 'При сохранении хост, пользователь, порт и ключ записываются в управляемый блок файла ~/.ssh/config, который помечен как управляемый; затем файл получает приоритет — правьте его напрямую, и изменения подхватятся сразу.',
     'settings.workspaceSwitched': 'Переключено на рабочую область {path}',
   },
   /*
-   * @firetruck666/dsh-task-board@1.3.12@1.3.12 — словарь плагина dsh-task-board (MIT).
+   * @firetruck666/dsh-task-board@1.3.12 — словарь плагина dsh-task-board (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -18544,7 +19330,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'detail.sessionNewTitleFailed': 'Сессия создана и добавлена в список, но название не применилось: {error} (переименуйте её в строке сессии)',
     'detail.sessionNewTitleHint': 'Оставьте поле пустым, чтобы хост назвал сессию сам (название появится после первого сообщения); заполните его, чтобы назвать сессию сейчас и закрепить название против автоматического переименования.',
     'detail.sessionNewTitleLabel': 'Название сессии (необязательно)',
-    'detail.sessionNewTitlePlaceholder': 'Что нужно сделать — одной строкой',
     'detail.sessionPanel': 'Детали сессии',
     'detail.sessionRemoveConfirm': 'Комментарии этой сессии и записи о запусках в этой задаче будут удалены безвозвратно; задача и её другие сессии останутся нетронутыми.',
     'detail.sessionRemoved': 'Эта сессия удалена из этой задачи — перетащите её обратно на карточку, чтобы вернуть',
@@ -18614,8 +19399,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'home.pipeline': 'Конвейер',
     'home.pipelineFresh': 'перемещено сегодня',
     'home.pipelineStale': 'самая давняя в простое — {n} д',
-    'home.sessions': 'Сессии',
-    'home.sessionsEmpty': 'Ни в одной карточке нет сессии',
+    'home.sessions': 'Сессии в работе',
+    'home.sessionsEmpty': 'Сейчас ничего не выполняется. Завершённые сессии остаются на своих карточках.',
     'home.sessionsRunning': 'Выполняется',
     'home.sessionsWaiting': 'Ждёт вас',
     'home.subtitle': 'Дел ждут вас: {n}',
@@ -18670,7 +19455,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'item.ask.why.unknownTask': 'этой карточки больше нет',
     'item.batch.all': 'Выбрать все',
     'item.batch.arm': 'Выбрать',
-    'item.batch.askOne': 'Спросить можно только те строки, что привязаны к карточке.',
+    'item.batch.askOne': 'Спросить можно только те строки, что привязаны к карточке — выбрано строк: {n}.',
     'item.batch.count': 'Выбрано: {n}',
     'item.batch.due': 'Назначить на сегодня',
     'item.batch.hold': 'Отложить эту строку',
@@ -18825,7 +19610,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'item.sort.label': 'Сортировка',
     'item.sort.priority': 'Приоритет',
     'item.sort.sequence': 'Сначала самые громкие',
-    'item.sort.title': 'Название',
     'item.stale': 'без изменений {days} д',
     'item.status.backlog': 'Отметить как запланированную',
     'item.status.card': 'Эта строка берёт статус из карточки, к которой привязана; чтобы изменить статус, перенесите карточку.',
@@ -19087,10 +19871,18 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workbench.status': 'ждут вас: {n} · выполняется: {m}',
     'workbench.tab.board': 'Доска',
     'workbench.tab.home': 'Обзор',
+    'board.update.gitRemoteUnread': 'Не удалось достучаться до origin: все попытки чтения прошли молча (сначала api.github.com, затем github.com по git — оба недоступны или истекло время), поэтому определить, есть ли новые коммиты, нельзя. Команда ниже по-прежнему работает.',
+    'board.update.gitUnreadable': 'Состояние git в этой рабочей копии прочитать нельзя (нет команды git или каталог не является репозиторием), поэтому определить, есть ли в origin новые коммиты, нельзя. Команда ниже по-прежнему работает.',
+    'gallery.frameBody': 'Все три страницы используют эту рамку: полоса сверху, предупреждения только когда что-то не так, страница занимает всё остальное.',
+    'gallery.frameNotice': 'Сервер всё ещё работает на старой версии — обновление страницы не поможет, перезапустите dsh web',
+    'gallery.frameNoticeQuiet': 'Этот только сообщает; это не кнопка.',
+    'gallery.sharedCandidates': 'Общие кандидаты (пока один потребитель)',
+    'gallery.sharedCandidatesWhy': 'Это перечень, а не список дел: каждая запись объясняет, почему вторая страница пока не воспользовалась этим. Список и счётчик в тестах проверяют друг друга в обе стороны.',
+    'gallery.shellFrame': 'Рамка страницы и полоса предупреждений',
     'workbench.tab.items': 'Список',
   },
   /*
-   * @evaldock/dsh-top100-plugin@1.3.14@1.3.14 — словарь плагина dsh-top100 (MIT).
+   * @evaldock/dsh-top100-plugin@1.3.14 — словарь плагина dsh-top100 (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -19607,7 +20399,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'willRunScriptsPrefix': 'Будет выполнено',
   },
   /*
-   * dsh-workspace-combiner@0.8.7@0.8.7 — словарь плагина dsh-workspace-combiner (MIT).
+   * dsh-workspace-combiner@0.8.7 — словарь плагина dsh-workspace-combiner (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -20141,7 +20933,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wsSaved': 'Сохранено',
   },
   /*
-   * dsh-plugin-admin@1.27.23@1.27.23 — словарь плагина dshAdmin (MIT).
+   * dsh-plugin-admin@1.27.23 — словарь плагина dshAdmin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -20150,7 +20942,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'Webhook': 'Вебхук',
   },
   /*
-   * @xia-sc/dsh-cc-studio@0.11.0@0.11.0 — словарь плагина dshCcStudio (MIT).
+   * @xia-sc/dsh-cc-studio@0.11.0 — словарь плагина dshCcStudio (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -20484,7 +21276,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workshop.world.title': 'Мироустройство 5D (углублённый разбор Q2-B)',
   },
   /*
-   * dshhub-market@0.8.60@0.8.60 — словарь плагина dshhub-market (MIT).
+   * dshhub-market@0.8.60 — словарь плагина dshhub-market (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -20884,7 +21676,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'webdavUser': 'Имя пользователя (необязательно)',
   },
   /*
-   * dsh-m@0.10.8@0.10.8 — словарь плагина dshm (MIT).
+   * dsh-m@0.10.8 — словарь плагина dshm (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -21193,7 +21985,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zone.primary': 'Подборка',
   },
   /*
-   * dsh-workspace-enhancement@0.2.5@0.2.5 — словарь плагина dsw (MIT).
+   * dsh-workspace-enhancement@0.2.5 — словарь плагина dsw (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -21577,7 +22369,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tool.sw_status.ping.ok': 'Проверка связи: успешно — {prefix} ({outcome})',
   },
   /*
-   * @kenz1117/dsh-engram@0.9.3@0.9.3 — словарь плагина engram (MIT).
+   * @kenz1117/dsh-engram@0.9.3 — словарь плагина engram (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -21753,7 +22545,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'importDone': 'Импорт завершён: записей записано — {imported}, на месте встроено — {embedded}, связей связано — {edges}, висячих связей отброшено — {dangling}',
     'importFilePick': 'Выберите файл экспорта (JSON / Markdown)',
     'importImporting': 'Импортируем…',
-    'importInvalidPayload': 'Проверка файла не пройдена: {error}',
+    'importInvalidPayload': 'Импорт не удался: {error}',
     'importJson': 'Импорт JSON…',
     'importJsonHint': 'JSON-файл из engram_export (обмен без потерь)',
     'importKeepDuplicates': 'Принудительно импортировать содержательные дубликаты (только если их ID свободен)',
@@ -21763,14 +22555,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'importRedactedNotice': 'Это экспорт в режиме скрытых данных: содержимое обрезано до предпросмотра; при импорте сохранится текст предпросмотра, а не оригиналы.',
     'importSummary': 'Записей: {total}: новых — {fresh} · дубликатов — {dup} · конфликтов — {conflict}; связей: {edges}; висячих связей отброшено — {dangling}; сущности: новых — {entitiesNew} / объединено — {entitiesMerged}. Записаны будут только отмеченные записи.',
     'importTitle': 'Предпросмотр импорта',
-    'jevApiKey': 'API-ключ',
-    'jevApiKeyHint': 'Оставьте пустым, чтобы сохранить текущий ключ; нажмите «Очистить сохранённый ключ», чтобы удалить его (будет использован cordis.yml).',
-    'jevApiKeyUnset': 'не настроено',
-    'jevBaseUrl': 'Адрес',
-    'jevClearKey': 'Очистить сохранённый ключ',
     'jevEnabled': 'Включить арбитраж Jev',
-    'jevIntro': 'Арбитраж Jev System-One: трёхстороннее решение (объединить / принять / отложить) для неоднозначных воспоминаний перед записью, а также подтверждение противоречий. Ключ хранится в локальном каталоге данных (файл с правами 0600) и начинает действовать сразу после сохранения, без перезапуска; если Jev недоступен, плагин возвращается к чистым правилам в четыре пункта.',
-    'jevKeyCleared': 'Ключ панели очищен; используется конфигурация развёртывания',
+    'jevIntro': 'Арбитраж Jev System-One: трёхстороннее решение (объединить / принять / отложить) для неоднозначных воспоминаний перед записью, а также подтверждение противоречий. Провайдер и его ключ API берутся из DSH, поэтому здесь ничего секретного не хранится; настройки вступают в силу сразу после сохранения, без перезапуска, а если Jev недоступен, плагин возвращается к чистым правилам в четыре пункта.',
     'jevLoadFailed': 'Не удалось загрузить',
     'jevModel': 'Модель арбитража',
     'jevObsEmpty': 'Записей пока нет; они появятся, когда Jev рассмотрит запись после включения',
@@ -21983,10 +22769,22 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viaEdgeLabel': 'по коридору',
     'viaFts': 'по ключевым словам',
     'viaVec': 'по смыслу',
+    'importTooLarge': 'Файл слишком большой (предел: {limit}) и не может быть импортирован.',
+    'jevEndpointField': 'Адрес System One',
+    'jevEndpointTemplate': 'вычислено: {base}/systemone',
+    'jevHostHint': 'Провайдеры и их ключи API настраиваются только в DSH; эта панель лишь выбирает один. Пустой провайдер означает «использовать тот, на котором уже работает эта сессия»; пустой адрес выводится из этого провайдера как «{base}/systemone».',
+    'jevLoadModels': 'Загрузить модели провайдера',
+    'jevModelHint': 'Здесь можно ввести любое имя модели; если поле оставить пустым, используется первая модель JEV у провайдера. «Загрузить модели провайдера» предлагает только модели JEV — остальные не отвечают на протокол System One, поэтому они не показываются.',
+    'jevModelsFailed': 'Не удалось получить список моделей',
+    'jevModelsFiltered': 'Моделей Jev от провайдера: {count}',
+    'jevModelsLoaded': 'Провайдер сообщил о моделях: {count}',
+    'jevModelsNoProvider': 'Сначала выберите провайдера',
+    'jevProvider': 'Провайдер',
+    'jevProviderUnset': '— не выбран —',
     'viewCrashed': 'Не удалось отрисовать это представление — нажмите «Повторить»; если ошибка повторяется, сообщите о ней вместе с этим сообщением об ошибке',
   },
   /*
-   * dsh-git-review@0.1.8@0.1.8 — словарь плагина git-review (MIT).
+   * dsh-git-review@0.1.8 — словарь плагина git-review (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -22315,7 +23113,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewTab.graph': 'Граф',
   },
   /*
-   * dsh-mnemon@0.5.33@0.5.33 — словарь плагина mnemon (MIT).
+   * dsh-mnemon@0.5.33 — словарь плагина mnemon (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -23072,10 +23870,39 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspace.selectorAria': 'Выберите рабочую область памяти для просмотра',
     'workspace.storageMode': 'Область хранения',
     'workspace.storageModeAria': 'Область хранения: {mode}',
+    'board.experimental': 'Экспериментально',
+    'skills.autoBacktest': 'Черновики для проверки',
+    'skills.autoBacktestHint': 'Сравнивать новый черновик с текущей версией на её тестовых наборах',
+    'skills.casesPerRun': 'Наборов на одну проверку',
+    'skills.cooldownSeconds': 'Интервал проверки (с)',
+    'skills.evolution': 'Самообучение',
+    'skills.evolutionHint': 'Проверять завершённые разговоры в фоне и предлагать новые или улучшенные навыки',
+    'skills.expiryDays': 'Срок действия подсказок (дни)',
+    'skills.hints': 'В разговоре',
+    'skills.hintsHint': 'Показывать навыки, использованные в раунде, и новые подсказки под ними',
+    'skills.idleSeconds': 'Пауза простоя (с)',
+    'skills.invalid': 'Значение {field} должно быть между {min} и {max}',
+    'skills.label': 'Навыки',
+    'skills.maxPendingPerSession': 'Ожидающих на разговор',
+    'skills.minConfidence': 'Минимальная уверенность',
+    'skills.parameters': 'Параметры проверки',
+    'skills.reviewThreshold': 'Порог проверки',
+    'skills.sidebar': 'Пункт боковой панели',
+    'skills.sidebarHint': 'Показывать Skills отдельным пунктом боковой панели, а не в Memory System',
+    'skills.statusCount': 'Навыков: {count}',
+    'skills.statusIdle': 'Самообучение включено',
+    'skills.statusOff': 'Самообучение выключено',
+    'skills.statusOn': 'Самообучение включено · ожидающих: {waiting}',
+    'skillTail.failed': 'Проверка не удалась',
+    'skillTail.label': 'Навыки раунда',
+    'skillTail.openSkill': 'Открыть {name} в Skills',
+    'skillTail.openSuggestions': 'Открыть подсказки в Skills',
+    'skillTail.reviewing': 'Проверка',
+    'skillTail.suggested': 'подсказок: {count}',
     'workspace.viewing': 'Просматриваемая рабочая область',
   },
   /*
-   * @wingsky-1/dsh-provider-usage@0.2.9@0.2.9 — словарь плагина providerUsage (MIT).
+   * @wingsky-1/dsh-provider-usage@0.2.9 — словарь плагина providerUsage (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -23372,10 +24199,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usageTitle': 'Визуализация использования',
     'usageToday': 'Обзор за сегодня (/trend, детализация по дням; сбой получения данных не влияет на точки статуса ниже)',
     'usageTodayTokens': 'Токены за сегодня',
+    'pillLastSuccess': 'последнее обновление {t}',
     'zIndexBase': 'Базовый --index',
   },
   /*
-   * dsh-mimir@0.21.1@0.21.1 — словарь плагина research (MIT).
+   * dsh-mimir@0.21.1 — словарь плагина research (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -24213,7 +25041,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zotero.unconfigured': 'Zotero не настроен: задайте zotero.apiKey и zotero.userId в конфигурации плагина Mimir в cordis.yml (создайте бесплатный ключ на zotero.org/settings/keys; ваш ID пользователя указан на той же странице настроек)',
   },
   /*
-   * dsh-session-manager@0.7.4@0.7.4 — словарь плагина session-manager (MIT).
+   * dsh-session-manager@0.7.4 — словарь плагина session-manager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -24499,10 +25327,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspace.switch.active': 'Видна в боковой панели (нажмите, чтобы архивировать)',
     'workspace.switch.archived': 'Скрыта из боковой панели (нажмите, чтобы восстановить)',
     'workspace.switch.aria': 'Переключатель видимости рабочей области: {name}',
+    'move.restartRequired': 'Сессия успешно перемещена в целевую рабочую область, но рабочий каталог вступит в силу после перезапуска DSH.',
     'workspace.unarchive.failed': 'Не удалось восстановить рабочую область: {message}',
   },
   /*
-   * @benz-ai-x/dsh-research-graph@0.1.5-rc.1@0.1.5-rc.1 — словарь плагина sessionGraph (MIT).
+   * @benz-ai-x/dsh-research-graph@0.1.5-rc.1 — словарь плагина sessionGraph (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -24797,7 +25626,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.graph': 'Граф исследования',
   },
   /*
-   * dsh-plugin-ideas-manager@0.10.2@0.10.2 — словарь плагина sessions (MIT).
+   * dsh-plugin-ideas-manager@0.10.2 — словарь плагина sessions (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -25203,7 +26032,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'undo.scope': 'Отмена охватывает собственные правки этой доски и текущую пачку. Она не охватывает удаление, объединение, продолжение, отклонение или доставку: у этих действий нет обратного глагола, и интерфейс не притворяется, что это не так.',
   },
   /*
-   * dsh-archived-chats@1.5.2@1.5.2 — словарь плагина settings.archived-chats (MIT).
+   * dsh-archived-chats@1.5.2 — словарь плагина settings.archived-chats (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -25212,17 +26041,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'action.deleteAll': 'Удалить все',
     'action.export': 'Экспортировать все',
     'action.import': 'Импортировать резервную копию',
-    'action.refresh': 'Обновить список',
-    'archiveNotice.close': 'Закрыть уведомление об архиве',
-    'archiveNotice.opening': 'Открытие…',
-    'archiveNotice.retry': 'Повторить',
-    'archiveNotice.settings': 'Настройки',
-    'archiveNotice.title': 'Разговор отправлен в архив',
-    'archiveNotice.undo': 'Отменить',
-    'archiveNotice.undoError': 'Не удалось отменить. Попробуйте ещё раз',
-    'archiveNotice.undoing': 'Отмена…',
-    'archiveNotice.view': 'Открыть',
-    'archiveNotice.viewError': 'Не удалось открыть управление архивом. Попробуйте ещё раз',
+    'action.refresh': 'Обновить',
     'chat.delete': 'Удалить',
     'chat.unarchive': 'Вернуть из архива',
     'chat.untitled': 'Разговор без названия',
@@ -25234,7 +26053,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'confirm.deleteOne.title': 'Переместить в корзину?',
     'confirm.deleteSelected.title': 'Переместить выбранные архивные разговоры в корзину?',
     'confirm.permanent.body': 'Эти разговоры будут удалены без корзины, и после удаления их нельзя будет восстановить.',
-    'confirm.permanent.confirm': 'Удалить безвозвратно',
+    'confirm.permanent.confirm': 'Удалить',
     'confirm.permanent.title': 'Удалить архивные разговоры безвозвратно?',
     'confirm.permanentAll.title': 'Удалить все архивные разговоры безвозвратно?',
     'delete.all': 'Переместить все в корзину',
@@ -25246,7 +26065,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'export.timeout': 'Экспорт резервной копии не успел завершиться. Неполный файл не загружен; попробуйте позже',
     'export.tooLarge': 'Разговор {id} превышает предел резервной копии, его нельзя упаковать в импортируемую резервную копию. Снимите его с выбора и попробуйте ещё раз.',
     'filter.allChats': 'Все разговоры',
-    'filter.allProjects': 'Все проекты',
+    'filter.allProjects': 'Все рабочие области',
     'filter.normal': 'Обычные разговоры',
     'filter.subagent': 'Разговоры субагентов',
     'filter.type': 'Тип',
@@ -25303,7 +26122,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'insights.total': 'Измеренный итог',
     'insights.unavailable': 'Недоступные сессии / снимки с деградацией',
     'lineage.collapseAll': 'Свернуть все',
-    'lineage.contextOnly': 'Активный разговор, показан только для контекста связей',
+    'lineage.contextOnly': 'Только контекст источника',
     'lineage.copiedId': 'Скопировано',
     'lineage.copyId': 'Копировать ID',
     'lineage.created': 'Создан',
@@ -25314,29 +26133,29 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'lineage.diagnostic.cycle': 'Обнаружен цикл',
     'lineage.diagnostic.delegation-depth-mismatch': 'Несовпадение глубины делегирования',
     'lineage.diagnostic.missing-parent': 'Отсутствует родитель',
-    'lineage.diagnostic.missing-parent.detail': 'Родительский разговор отсутствует, поэтому сведения об источнике недоступны',
+    'lineage.diagnostic.missing-parent.detail': 'Сведения об источнике для родительского разговора недоступны',
     'lineage.diagnostic.self-parent': 'Ссылка на самого себя как родителя',
-    'lineage.empty': 'У архивных разговоров и разговоров в корзине нет истоков и ветвей',
+    'lineage.empty': 'Подходящих разговоров нет',
     'lineage.error': 'Истоки и ветви недоступны',
     'lineage.expandAll': 'Развернуть все',
     'lineage.loading': 'Загрузка истоков и ветвей…',
-    'lineage.managedCount': 'управляемых разговоров',
-    'lineage.managedHeading': 'Управляемые разговоры',
+    'lineage.managedCount': 'разговоров',
+    'lineage.managedHeading': 'Архивные и связанные разговоры',
     'lineage.noBranches': 'Нет ветвей',
     'lineage.origin.session': 'Сессия',
     'lineage.origin.subagent': 'Субагент',
     'lineage.project': 'Проект',
     'lineage.projectFilter': 'Фильтр по проекту',
-    'lineage.scopeNote': 'Здесь управляются только архивные разговоры и разговоры из корзины. Активные разговоры появляются только тогда, когда нужно объяснить управляемую связь, и не управляются этим плагином.',
+    'lineage.scopeNote': 'Показывает архивные разговоры вместе с их предками и потомками, включая связанные неархивные разговоры. Перечислены только связанные рабочие области; повторяющиеся ссылки на источник не учитываются.',
     'lineage.search': 'Искать разговоры или проекты',
-    'lineage.searchFoldHint': 'Совпадающие ветви остаются развёрнутыми во время поиска',
+    'lineage.searchFoldHint': 'Совпадающие ветви остаются развёрнутыми во время фильтрации',
     'lineage.sourceContext': 'Источник',
     'lineage.sourceId': 'ID источника',
     'lineage.sourceUnavailable': 'Сведения об источнике недоступны',
     'lineage.start': 'Начальный разговор',
-    'lineage.status.active': 'Разговор-источник',
+    'lineage.status.active': 'Не архивирован',
     'lineage.status.archived': 'В архиве',
-    'lineage.status.missing': 'Исходный разговор отсутствует',
+    'lineage.status.missing': 'Источник недоступен',
     'lineage.status.trash': 'Корзина',
     'lineage.statusAll': 'Все статусы',
     'lineage.statusFilter': 'Фильтр по статусу',
@@ -25417,7 +26236,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'residual.count': 'Разговоров: {count}',
     'residual.empty': 'Остаточных разговоров не найдено',
     'residual.failed': 'Проверка не удалась',
-    'residual.note': 'При переходе в «Хранилище и сроки хранения» автоматически проверяются субагенты, чей родительский разговор больше не существует. Перед очисткой изучите подробности и сделайте резервную копию.',
+    'residual.note': 'Вручную проверьте разговоры субагентов, чей родительский разговор больше не существует. Просмотрите или выгрузите резервную копию, прежде чем решать, удалять ли безвозвратно.',
     'residual.open': 'Подробнее об остаточном разговоре',
     'residual.recheck': 'Проверить снова',
     'residual.search': 'Искать по названиям, ID или каталогам',
@@ -25460,11 +26279,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'search.loading': 'Поиск по содержимому разговоров…',
     'search.placeholder': 'Искать по названиям, меткам, заметкам и содержимому разговоров',
     'sort.label': 'Порядок сортировки',
-    'sort.newest': 'Сначала новые',
-    'sort.oldest': 'Сначала старые',
+    'sort.newest': 'Недавно обновлённые',
+    'sort.oldest': 'Давно не обновлённые',
     'sort.title': 'Название',
     'state.empty': 'Архивных разговоров нет',
-    'state.emptyFiltered': 'Архивных разговоров, подходящих под фильтры, нет',
+    'state.emptyFiltered': 'Подходящих разговоров не найдено',
     'state.error': 'Не удалось загрузить',
     'state.loading': 'Загрузка…',
     'state.retry': 'Повторить',
@@ -25499,7 +26318,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trash.restored': 'Разговор восстановлен',
     'trash.status.degraded': 'Снимок с деградацией',
     'trash.status.parked': 'Сессия приостановлена и доступна для восстановления',
-    'trash.status.purgePending': 'Ожидается восстановление после безвозвратного удаления',
+    'trash.status.purgePending': 'Удаление не завершено; доступен повтор',
     'trash.status.ready': 'Защитный снимок готов',
     'trash.unavailable': 'Корзина недоступна; управление архивными разговорами по-прежнему доступно',
     'trash.undo': 'Отменить',
@@ -25513,7 +26332,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unarchived.busy': 'Выполняется',
     'unarchived.empty': 'Неархивных разговоров нет',
     'unarchived.error': 'Неархивные разговоры недоступны. Повторите попытку.',
-    'unarchived.search': 'Поиск по названиям или ID разговоров…',
+    'unarchived.search': 'Поиск по названиям или ID разговоров',
     'workspaceArchive.action': 'Архивировать разговоры',
     'workspaceArchive.apply': 'Подтвердить архивирование',
     'workspaceArchive.applying': 'Архивирование…',
@@ -25523,8 +26342,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceArchive.chooseTitle': 'Выберите рабочую область',
     'workspaceArchive.close': 'Закрыть архивирование рабочих областей',
     'workspaceArchive.confirmBody': 'Это архивирует разговоры в «{workspace}». Позже вы найдёте их в разделе «Архив» в управлении архивом.',
-    'workspaceArchive.confirmBodyMany': 'Рабочих областей: {count}. Их разговоры будут архивированы. Позже вы найдёте их в разделе «Архив» в управлении архивом.',
-    'workspaceArchive.confirmTitle': 'Архивировать разговоров: {count}?',
+    'workspaceArchive.confirmBodyMany': 'Это архивирует разговоры в выбранных рабочих областях. Позже вы найдёте их в разделе «Архив».',
+    'workspaceArchive.confirmTitle': 'Архивировать все разговоры в этой рабочей области?',
     'workspaceArchive.done': 'Готово',
     'workspaceArchive.eligibleCount': 'Доступно разговоров: {count}',
     'workspaceArchive.error': 'Не удалось выполнить массовое архивирование рабочих областей. Попробуйте ещё раз.',
@@ -25551,10 +26370,29 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceArchive.snapshotFailed': 'Снимок защиты не сохранён',
     'workspaceArchive.status.captured': 'Снимок защиты сохранён',
     'workspaceArchive.status.snapshot-failed': 'Снимок защиты не сохранён',
+    'chat.deleteArchived': 'Удалить архивный разговор',
+    'chat.recycle': 'Переместить в корзину',
+    'filter.scheduled': 'Задачи по расписанию',
+    'filter.scheduleUnavailable': 'Задачи по расписанию недоступны. Обновите, чтобы повторить попытку.',
+    'filter.scheduleUnsupported': 'Задачи по расписанию не включены на этом хосте',
+    'lineage.noArchives': 'У архивных разговоров нет ни истоков, ни ветвей',
+    'lineage.origin.fork': 'Ответвление',
+    'lineage.origin.root': 'Исходный разговор',
+    'lineage.origin.unknown': 'Неизвестный исток',
+    'lineage.relatedWorkspaces': 'Связанные рабочие области',
+    'lineage.trashUnavailable': 'Состояние корзины недоступно; показывается только официальное состояние архива.',
+    'lineage.workspaceEmpty': 'Разговоров нет',
+    'menu.allWorkspaces': 'Все рабочие области',
+    'menu.deleteAllPermanently': 'Удалить все',
+    'menu.workspaceScope': 'Эта рабочая область',
+    'page.description': 'Просмотр, поиск и управление архивными разговорами',
+    'unarchived.loading': 'Загрузка разговоров…',
+    'workspaceArchive.reason.stop-archive-unsupported': 'Этот хост не может остановить задачу и архивировать её. Сначала остановите задачу в официальном интерфейсе.',
+    'workspaceArchive.success': 'Архивирование завершено — разговоров в архиве: {count}',
     'workspaceArchive.unsupported': 'Эта версия DSH не поддерживает пакетное архивирование рабочей области.',
   },
   /*
-   * dsh-codex-subscription@3.1.3@3.1.3 — словарь плагина settings.codexSubscription (MIT).
+   * dsh-codex-subscription@3.1.3 — словарь плагина settings.codexSubscription (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -26399,10 +27237,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'windowFiveHours': 'Квота на 5 ч',
     'windowHours': 'Квота на {value} ч',
     'windowMonthly': 'Месячная квота',
+    'voicePreviewHint': 'Смена языка ответа проигрывает образец на этом языке. Для варианта «Как вы говорите» используется английский образец.',
     'windowWeekly': 'Недельная квота',
   },
   /*
-   * dsh-coding-subscription-oauth@0.8.5@0.8.5 — словарь плагина settings.grok-build (Apache-2.0).
+   * dsh-coding-subscription-oauth@0.8.5 — словарь плагина settings.grok-build (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -26746,7 +27585,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'working': 'Выполняется…',
   },
   /*
-   * dsh-knowledge@0.5.2@0.5.2 — словарь плагина settings.knowledge (AGPL-3.0).
+   * dsh-knowledge@0.5.2 — словарь плагина settings.knowledge (AGPL-3.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -27202,7 +28041,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'visionModelPlaceholder': 'Модель зрения (например, qwen-vl-plus, gpt-4o-mini)',
   },
   /*
-   * dsh-codex-connect@0.2.0-alpha.1@0.2.0-alpha.1 — словарь плагина settings.openai-codex (Apache-2.0).
+   * dsh-codex-connect@0.2.0-alpha.1 — словарь плагина settings.openai-codex (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -27549,7 +28388,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'working': 'Работа…',
   },
   /*
-   * dsh-prompt-setting@0.2.4@0.2.4 — словарь плагина settings.promptSetting (MIT).
+   * dsh-prompt-setting@0.2.4 — словарь плагина settings.promptSetting (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -28142,7 +28981,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewSections': 'Разделы',
   },
   /*
-   * dsh-connect-trae@4.0.1@4.0.1 — словарь плагина settings.trae (MIT).
+   * dsh-connect-trae@4.0.1 — словарь плагина settings.trae (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -28464,10 +29303,39 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.veilSaving': 'Сохранение изменений…',
     'row.workCreditsLabel': 'Рабочие кредиты',
     'row.workNotUsable': 'Непригодны в DSH',
+    'row.diagAccount': 'Обслуживающий аккаунт',
+    'row.diagCatalog': 'Модели в каталоге',
+    'row.diagCheckin': 'Ежедневная отметка',
+    'row.diagCheckinOff': 'здесь не предлагается',
+    'row.diagCheckinOn': 'поддерживается',
+    'row.diagEnabled': 'Включённые модели',
+    'row.diagFailures': 'Последняя сообщённая ошибка',
+    'row.diagHint': 'Всё вышеперечисленное доступно только для чтения и можно дословно процитировать в отчёте об ошибке. Значения — это результат последнего обновления самой панели, а не сводка по нему.',
+    'row.diagNoFailures': 'нет',
+    'row.diagPool': 'Пул аккаунтов',
+    'row.diagPoolOff': 'отключён',
+    'row.diagPoolOn': 'включён · аккаунтов: {count}',
+    'row.diagProvider': 'Идентификатор провайдера',
+    'row.diagRaw': 'Прямой канал чата',
+    'row.diagRawOff': 'не проверяется',
+    'row.diagRefresh': 'Срок повторного входа',
+    'row.diagRefreshNone': 'у этой учётной записи такого срока нет',
+    'row.diagRegion': 'Панель',
+    'row.diagToken': 'Срок действия токена доступа',
+    'row.panelAccounts': 'Аккаунт',
+    'row.panelAria': 'Разделы карточки',
+    'row.panelDiag': 'Диагностика',
+    'row.panelModels': 'Модели',
+    'row.promoHintMember': 'для подписчиков цена снижена ещё на {percent}%',
+    'row.promoHintRate': 'было {before} кредитов за миллион токенов, теперь {rate}',
+    'row.promoHintWindow': 'часы низкой нагрузки {from}–{until} ({zone})',
+    'row.promoLimited': 'Ограниченная скидка {percent}%',
+    'row.promoOffPeak': 'Скидка в непиковые часы {percent}%',
+    'row.promoSubsidy': 'Скидка {percent}%',
     'row.workUsableHint': 'Только внутри приложения Trae',
   },
   /*
-   * dsh-workbuddy-xdpool@2.0.1@2.0.1 — словарь плагина settings.workbuddy-xdpool (MIT).
+   * dsh-workbuddy-xdpool@2.0.1 — словарь плагина settings.workbuddy-xdpool (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -28901,7 +29769,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'shell.tabRouting': 'Маршрутизация',
   },
   /*
-   * @anyaer/dsh-workbuddy-xdpool@2.3.2@2.3.2 — словарь плагина settings.xdpool (MIT).
+   * @anyaer/dsh-workbuddy-xdpool@2.3.2 — словарь плагина settings.xdpool (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -29408,7 +30276,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'shell.tabRouting': 'Маршрутизация',
   },
   /*
-   * dsh-theone@0.3.40@0.3.40 — словарь плагина theone (MIT).
+   * dsh-theone@0.3.40 — словарь плагина theone (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -29445,7 +30313,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'catalog.refresh': 'Разобрать историю',
     'catalog.refreshError': 'Не удалось разобрать историю. Проверьте настройки модели DSH.',
     'catalog.searchUnavailable': 'Часть истории временно недоступна для поиска. Работу можно продолжить из каталога тем.',
-    'catalog.subtitle': 'Держите связанные темы вместе и продолжайте разговор в основном чате.',
+    'catalog.subtitle': 'Связанные темы вместе. Продолжайте в основном чате.',
     'catalog.title': 'Рабочие области тем',
     'catalog.unassigned': 'К разбору',
     'catalog.unassignedSummary': 'Эти темы ждут группировки.',
@@ -29470,7 +30338,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'feedback.intro': 'Расскажите, что произошло. Ниже показано всё, что будет отправлено; до нажатия «Отправить» ничего не покинет этот компьютер.',
     'feedback.loadError': 'Не удалось собрать диагностику. Вы всё равно можете описать проблему, скопировать описание и отправить письмо на {email}.',
     'feedback.loading': 'Собираем диагностику…',
-    'feedback.open': 'Сообщить о проблеме',
+    'feedback.open': 'Обратная связь',
     'feedback.preview': 'Что будет отправлено',
     'feedback.privacy': 'Отправляется на feedback.yulid.org, используется только для разбора проблемы и удаляется автором TheOne через 90 дней. По умолчанию содержит версии, настройки, коды ошибок маршрутизации и задержки, но не содержимое чатов.',
     'feedback.send': 'Отправить',
@@ -29560,13 +30428,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'routes.corrected': 'Перенесено в «{title}»',
     'routes.empty': 'Записей о маршрутизации пока нет.',
     'routes.error': 'Ошибка классификатора: {code}',
-    'routes.hint': 'Перенесите ошибочно направленное сообщение в нужную тему здесь: TheOne запомнит, будет направлять похожие сообщения туда и продолжит следующее сообщение в этой теме. Можно также сказать в основном чате «не та тема, это тема X», и предыдущее сообщение будет обработано заново в нужной теме.',
+    'routes.hint': 'Не та тема? Исправьте здесь — TheOne запомнит. Сказать «не та тема» в основном чате тоже работает.',
     'routes.move': 'Перенести в…',
     'routes.moveTo': 'Перенести в «{title}»',
     'routes.removed': '(удалённая тема)',
     'routes.report': 'Сообщить о проблеме',
     'routes.rules': 'правила',
-    'routes.stats': 'Последние {total}: {rate}% осталось по маршруту, уточнений задано — {clarified}.',
+    'routes.stats': 'Последние {total}: верно {rate}%',
     'routes.title': 'Последняя маршрутизация по темам',
     'routes.undo': 'Отменить',
     'settings.back': 'Вернуться в основной чат',
@@ -29722,7 +30590,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tasks.url': 'Публичный адрес PR',
     'tasks.used': 'Использовано проверок',
     'topic.constraints': 'Ограничения:',
-    'topic.continue': 'Продолжить общение',
+    'topic.continue': 'Продолжить',
     'topic.continueHidden': 'Разговоры этой темы исчезли с диска, продолжать нечего.',
     'topic.hiddenArchived': 'Разговоры темы убраны в архив: тема просто отложена и снова включится, когда вы её упомянете.',
     'topic.hiddenOrphaned': 'Разговоры темы исчезли с диска: тема больше не участвует в маршрутизации. Удалите её, чтобы убрать из каталога.',
@@ -29753,10 +30621,29 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update.restartHint': 'Обновление установлено. Перезапустите DSH, чтобы применить его.',
     'update.tooNew': 'В рамках политики безопасности DSH устанавливает только версии, опубликованные не менее 24 часов назад, а эта версия новее. Попробуйте позже.',
     'update.waiting': 'Новая версия',
+    'catalog.chooseChats': 'Выберите беседы для сортировки',
+    'catalog.chooseChatsShort': 'Выберите беседы',
+    'catalog.chooseFirst': 'Сначала выберите беседы',
+    'catalog.chooseHint': 'Невыбранные беседы не будут прочитаны. Это можно изменить в любой момент.',
+    'catalog.consentBody': 'После сортировки TheOne сможет подхватывать всё, что вы упомянете из прошлого.',
+    'catalog.consentChoose': 'Исключите всё личное',
+    'catalog.consentKeep': 'Ничего не удаляется и не меняется',
+    'catalog.consentQuota': 'Однократное чтение вашей моделью DSH, немного квоты',
+    'catalog.consentTitle': 'Упорядочить прежние беседы?',
+    'catalog.declined': 'Прежние беседы ещё не упорядочены.',
+    'catalog.doneChoosing': 'Готово',
+    'catalog.notNow': 'Не сейчас',
+    'catalog.otherChats': 'Другие беседы',
+    'catalog.pickerLoading': 'Загрузка бесед…',
+    'catalog.reconsider': 'Упорядочить сейчас',
+    'catalog.startCount': 'Отсортировать {count} — бесед{sessionSuffix}',
+    'catalog.untitledChat': 'Беседа без названия',
+    'catalog.wholeFolder': 'Вся папка',
+    'topic.hiddenExcluded': 'Эта тема взята из бесед, которые вы исключили, поэтому она не будет использована.',
     'update.waitingHint': 'Версия {latest} уже вышла, но ей меньше 24 часов. Нажмите, чтобы узнать, как установить её прямо сейчас.',
   },
   /*
-   * @rebornace/dsh-tracescope@0.3.5@0.3.5 — словарь плагина tracescope (MIT).
+   * @rebornace/dsh-tracescope@0.3.5 — словарь плагина tracescope (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -30374,7 +31261,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'visual.workflowHint': 'Сравнение экранов строит доску макета и список статических различий; анализ с помощью ИИ записывает выводы ниже.',
   },
   /*
-   * dsh-mpkg-wallpaper@3.16.6@3.16.6 — словарь плагина ui-mpkg-wallpaper (MIT).
+   * dsh-mpkg-wallpaper@3.16.6 — словарь плагина ui-mpkg-wallpaper (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -30927,7 +31814,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zoom': 'Увеличение объектива (камера обоев)',
   },
   /*
-   * @kenz1117/dsh-ui-usage-billing@1.6.5@1.6.5 — словарь плагина usageBilling (MIT).
+   * @kenz1117/dsh-ui-usage-billing@1.6.5 — словарь плагина usageBilling (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -31218,7 +32105,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tierPeak': 'Пик',
     'tierToOff': 'до времени вне пика',
     'tierToPeak': 'до пика',
-    'title': 'Расход',
+    'title': 'Расходы',
     'todayCost': 'Сегодня',
     'todayNoConsumption': 'Сегодня расхода нет',
     'todayOnly': 'Только сегодня',
@@ -31282,10 +32169,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'userPriceSource': 'Источник (адрес релея)',
     'userPriceSourceHint': 'Пусто — по умолчанию; например, https://api.relay.com',
     'weekCost': 'Расход за эту неделю',
+    'balanceStaleNotice': 'Обновление баланса идёт медленно — цифры ниже взяты из последнего завершённого запроса',
+    'staleSnapshotNotice': 'Данные об использовании пересчитываются; цифры ниже взяты из последнего завершённого расчёта (названия сессий могут отставать от рабочей области)',
     'yearCost': 'В этом году',
   },
   /*
-   * dsh-xiaomi-tts@4.0.1@4.0.1 — словарь плагина xiaomi-mimo-tts (MIT).
+   * dsh-xiaomi-tts@4.0.1 — словарь плагина xiaomi-mimo-tts (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -31437,9 +32326,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.minimalModeOff': 'Выкл.',
     'settings.minimalModeOn': 'Вкл.',
     'settings.minimalModeShort': 'Минимальный интерфейс',
-    'settings.mixerCloneCopy': 'Принесите свой голос в разговор.',
-    'settings.mixerPresetCopy': 'Чёткий голос для каждого сообщения.',
-    'settings.mixerVoiceDesignCopy': 'Создайте голос, похожий на ваш.',
     'settings.model': 'Настройки источника голоса',
     'settings.modelAutoPlayHintPreset': 'Готовые голоса автоматически используют потоковую передачу с малой задержкой.',
     'settings.modelAutoPlayHintVoiceDesign': 'Собственный дизайн голоса поддерживает автовоспроизведение только после того, как ответ будет полностью готов.',
@@ -31475,10 +32361,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.previewPlayingDoubao': 'Идёт речь Doubao. Нажмите ещё раз, чтобы остановить.',
     'settings.previewPlayingLocal': 'Идёт речь браузера — нажмите ещё раз, чтобы остановить',
     'settings.previewPlayingMimo': 'Идёт речь MiMo — нажмите ещё раз, чтобы остановить',
-    'settings.previewPlayShort': 'Прослушать',
     'settings.previewSaveKeyFirst': 'Сохраните API-ключ перед прослушиванием.',
     'settings.previewStop': 'Остановить прослушивание',
-    'settings.previewStopShort': 'Стоп',
     'settings.previewText': 'Текст для прослушивания',
     'settings.previewTitle': 'Студия вещания',
     'settings.provider': 'Провайдер речи',
@@ -31498,15 +32382,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.saving': 'Сохранение…',
     'settings.secretPlaceholder': 'Введите новый ключ для этого провайдера',
     'settings.soundEffectsBubbleOff': 'UISFX отключён',
-    'settings.soundEffectsBubbleOn': 'Включено, нажмите, чтобы переключить',
     'settings.soundEffectsClick': 'Звуки кликов',
     'settings.soundEffectsClickOnly': 'Только звуки кликов',
-    'settings.soundEffectsCycle': 'Переключить набор звуков',
     'settings.soundEffectsDescription': 'Мы приносим в DSH семантические звуки интерфейса UISFX. Другие звуки — в DSH…',
     'settings.soundEffectsEnabled': 'Включить звуки',
     'settings.soundEffectsOff': 'Выкл.',
     'settings.soundEffectsOffLabel': 'Магические звуки выключены',
-    'settings.soundEffectsOn': 'Вкл.',
+    'settings.soundEffectsOn': 'Все звуки',
     'settings.soundEffectsOnLabel': 'Магические звуки включены',
     'settings.soundEffectsPack': 'Набор звуков',
     'settings.soundEffectsPreview.complete': 'Прослушивание: завершение',
@@ -31592,10 +32474,55 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.voiceRate': 'Скорость воспроизведения',
     'settings.voiceRateHint': 'Диапазон: 0,5×–2,0×; 1,0× — исходная скорость.\\nDoubao: применяется при синтезе, начиная со следующего синтеза.\\nXiaomi и речь браузера: регулируется при воспроизведении. Потоковая передача Xiaomi также меняет высоту тона.',
     'settings.voiceRateInfo': 'Сведения о скорости воспроизведения',
+    'announcements.approval': 'Операция ожидает вашего подтверждения.',
+    'announcements.job': 'Фоновая задача',
+    'announcements.jobCompleted': 'Завершено.',
+    'announcements.jobFailed': 'Ошибка.',
+    'announcements.jobKilled': 'Отменено.',
+    'settings.announcementsApprovals': 'Напоминания о подтверждениях',
+    'settings.announcementsApprovalsHint': 'Озвучивать новые запросы на подтверждение в текущем разговоре. По умолчанию выключено; прекращается после ответа или отзыва.',
+    'settings.announcementsHint': 'Включите озвучивание и держите DSH Web открытым. Сообщения, полученные, пока идёт озвучивание, пропускаются и не воспроизводятся позже.',
+    'settings.announcementsJobs': 'Результаты фоновых задач',
+    'settings.announcementsJobsHint': 'Озвучивать завершение, ошибку или отмену наблюдаемых фоновых задач в текущем разговоре. По умолчанию выключено; нужна служба задач DSH.',
+    'settings.announcementsNone': 'Источники не включены',
+    'settings.announcementsPet': 'dsh-pet',
+    'settings.announcementsPetHint': 'Читать размышления питомца, ответы в чате и сообщения широковещания.',
+    'settings.announcementsQuestions': 'Заголовки карточек вопросов',
+    'settings.announcementsQuestionsHint': 'Следует за автовоспроизведением и читает только заголовок текущего вопроса. Прекращается, когда вопрос меняется или карточка закрывается.',
+    'settings.announcementsTitle': 'Источники объявлений',
+    'settings.announcementsWhale': 'dsh-whale-musume',
+    'settings.announcementsWhaleHint': 'Принимать речь, запрошенную Whale Musume через речевой API. По умолчанию включено.',
+    'settings.soundEffectsPreview.close': 'Прослушивание: закрытие',
+    'settings.soundEffectsPreview.delete': 'Прослушивание: удаление',
+    'settings.soundEffectsPreview.open': 'Прослушивание: открытие',
+    'settings.soundEffectsPreview.queued': 'Прослушивание: в очереди',
+    'settings.soundEffectsPreview.select': 'Прослушивание: выбор',
+    'settings.soundEffectsPreview.send': 'Прослушивание: отправка',
+    'settings.soundEffectsPreview.stop': 'Прослушивание: стоп',
+    'settings.soundEffectsPreview.success': 'Прослушивание: успех',
+    'settings.soundEffectsPreview.toggle-off': 'Прослушивание: выключение',
+    'settings.soundEffectsPreview.toggle-on': 'Прослушивание: включение',
+    'settings.soundEffectsScope': 'Область звуков',
+    'settings.voiceReadingAutoPlay': 'Автоматическое воспроизведение',
+    'settings.voiceReadingAutoPlayHint': 'Новые ответы читаются вслух автоматически; включение этой опции также включает чтение голосом.',
+    'settings.voiceReadingCustomVoice': 'Свой (текущий)',
+    'settings.voiceReadingHintDoubaoCloned': 'Клонирование голоса Doubao использует ID голоса; выберите ID, который вы уже использовали.',
+    'settings.voiceReadingHintDoubaoStandard': 'Стандартные голоса синтеза Doubao.',
+    'settings.voiceReadingHintVoiceDesign': 'Проектирование голоса создаёт голос по описанию; выбор предустановленного голоса также обновляет описание.',
+    'settings.voiceReadingHintXiaomi': 'Встроенные голоса Xiaomi MiMo.',
+    'settings.voiceReadingIntro': 'Выберите голос для чтения и настройте автоматическое воспроизведение и звуки интерфейса. Изменения сразу записываются в настройки речи этого плагина.',
+    'settings.voiceReadingNav': 'Чтение голосом',
+    'settings.voiceReadingReadOnly': 'В этой конфигурации настройки доступны только для чтения, сохранить их нельзя.',
+    'settings.voiceReadingSaveFailed': 'Не удалось сохранить. Попробуйте ещё раз.',
+    'settings.voiceReadingSound': 'Звуковые эффекты',
+    'settings.voiceReadingSoundHint': 'Проигрывать звуки щелчка и выполнения задачи.',
+    'settings.voiceReadingTitle': 'Чтение голосом',
+    'settings.voiceReadingUnavailable': 'В этой конфигурации настройки голоса недоступны.',
+    'settings.voiceReadingVoice': 'Голос для чтения',
     'settings.voiceVolume': 'Громкость голоса',
   },
   /*
-   * dsh-agent-studio@0.1.7@0.1.7 — словарь плагина agentStudio (MIT).
+   * dsh-agent-studio@0.1.7 — словарь плагина agentStudio (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -31629,14 +32556,10 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'bar.deleteEnabledTitle': 'Удалить этот пресет',
     'bar.deletePreset': 'Удалить пресет',
     'bar.export': 'Экспорт',
-    'bar.exportTitle': 'Экспорт всего: агенты, наборы промптов, наборы инструментов, наборы навыков, привязки пресетов и все переключатели',
+    'bar.exportTitle': 'Выберите пулы и элементы для экспорта (только четыре пула — без привязок пресетов и переключателей)',
     'bar.import': 'Импорт',
-    'bar.importTitle': 'Импорт всей конфигурации (сливается с текущим черновиком; нажмите «Сохранить изменения», чтобы применить)',
+    'bar.importTitle': 'Импорт конфигурации: сначала выберите файл, затем отметьте элементы для объединения с черновиком',
     'bar.notAuthorableTitle': 'В этой версии платформы нет входа для создания пресетов (пресеты объявляются развёртыванием); создание и удаление недоступны',
-    'bar.poolExport': 'Экспорт {pool}',
-    'bar.poolExportTitle': 'Экспорт всех элементов пула {pool} (текущий черновик, включая несохранённые изменения)',
-    'bar.poolImport': 'Импорт {pool}',
-    'bar.poolImportTitle': 'Импорт {pool} (сливается с этим пулом текущего черновика)',
     'bar.save': 'Сохранить изменения',
     'bar.saved': 'Сохранено. Вступает в силу со следующей сборки.',
     'bar.unbound': 'Не привязан',
@@ -31676,9 +32599,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'import.overwrite': 'Перезаписывать одинаковые идентификаторы',
     'import.overwriteOff': 'Выключено: импорт элемента с уже существующим идентификатором завершается ошибкой',
     'import.overwriteOn': 'Включено: элемент с уже существующим идентификатором перезаписывается',
-    'import.pickFile': 'Выбрать файл',
-    'import.poolTitle': 'Импорт {pool}',
-    'import.title': 'Импорт всей конфигурации',
     'load.canLoad': 'Доступно:',
     'load.count.sectionOne': 'Раздел: {count}',
     'load.count.sections': 'Разделов: {count}',
@@ -31789,7 +32709,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'set.notePlaceholder': 'Заметка для себя (необязательно)',
     'set.removeTitle': 'Удалить выбранное: {noun}',
     'set.skillHint': 'Объединяет навыки; затрагивается только та часть, которую ИИ распознаёт и вызывает',
-    'set.toolHint': 'Объединяет инструменты; если ничего не отмечено, инструментов нет вовсе\nЧтобы инициализировать или обновить: отправьте одно сообщение в стандартном режиме, затем вернитесь.',
+    'set.toolHint': 'Объединяет инструменты; если ничего не отмечено, инструментов нет вовсе\nКандидаты считываются в реальном времени из текущего списка инструментов платформы; если прочитать не удалось, используется последнее наблюдение.',
     'shell.failedHint': 'Скорее всего, плагин только что обновили или статический маршрут хоста ещё не готов. Повторите ниже; если ошибка повторяется, перезапустите DSH один раз.',
     'shell.failedTitle': 'Не удалось загрузить модуль панели Agent Studio',
     'shell.loadingHint': 'Код панели загружается с хоста во время работы, поэтому первое открытие занимает некоторое время.',
@@ -31827,7 +32747,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'validate.importIdClash': '[{id}:{label}] конфликтует с существующим [{beforeId}:{beforeLabel}] — импорт не удался.',
     'validate.importIdEmpty': 'У одной из записей ({noun}) пустой идентификатор — импорт не удался.',
     'validate.importNoItems': 'В файле нет записей для импорта.',
-    'validate.importPoolDone': 'Импортировано записей: {count} ({noun}) — пока не сохранено.',
     'validate.importSetRef': '{noun} «{id}»',
     'validate.loadConflict': 'И «{loaded}», и «{incoming}» содержат {member} «{name}» — наборы, загруженные одним агентом, не должны пересекаться.',
     'validate.loadedContains': '«{a}» и «{b}» оба содержат {member} «{name}»',
@@ -31846,10 +32765,19 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.noPresets': 'Пресеты агентов не прочитаны',
     'view.noPresetsHint': 'Служба пресетов платформы, возможно, ещё не готова; нажмите кнопку ниже, чтобы повторить.',
     'view.preparing': 'Подготовка черновика…',
+    'bar.mountMainPage': 'Показывать на главной странице',
+    'bar.mountMainPageTitle': 'Если включено, панель Agent Studio показывается на главной странице, а её пункт появляется в боковом меню; если выключено, скрыты и панель, и пункт (основная область возвращается к странице беседы) — вы можете открыть его в любой момент в Настройках → Agent Studio.',
+    'bar.mountUnavailableTitle': 'Применится после перезапуска DSH',
+    'transfer.count': '{checked} / {total}',
+    'transfer.exportOk': 'Экспортировано элементов: {count}.',
+    'transfer.exportSelected': 'Экспортировать выбранные',
+    'transfer.importSelected': 'Импортировать выбранные',
+    'transfer.titleExport': 'Экспорт конфигурации',
+    'transfer.titleImport': 'Импорт конфигурации',
     'view.retry': 'Повторить',
   },
   /*
-   * @nanmicoder/dsh-agent-teams@0.1.25@0.1.25 — словарь плагина agentTeams (MIT).
+   * @nanmicoder/dsh-agent-teams@0.1.25 — словарь плагина agentTeams (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -32063,10 +32991,17 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspace.relationships': 'Капитан координирует участников. Связи показывают предварительные условия задач. Выберите задачу, чтобы найти её исполнителя.',
     'workspace.retry': 'Переподключиться',
     'workspace.tasks': 'задач',
+    'progress.claimed': '■ Принято: {count}',
+    'task.summary.claimed': 'Принято: {tasks}',
+    'workspace.inbox': 'Входящие капитана',
+    'workspace.inboxEmpty': 'Непрочитанных сообщений нет. Отчёты участников появятся здесь, пока капитан их не прочитает.',
+    'workspace.inboxHint': 'До 5 последних непрочитанных сообщений',
+    'workspace.taskSummary': 'Сводка выполнения задач',
+    'workspace.verdictStale': 'Вердикт устарел',
     'workspace.title': 'Рабочая область команды',
   },
   /*
-   * dsh-legal-suite@0.2.25@0.2.25 — словарь плагина agentlex-moot-court (GPL-3.0).
+   * dsh-legal-suite@0.2.25 — словарь плагина agentlex-moot-court (GPL-3.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -32275,7 +33210,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wizard.warnings': 'Предупреждения',
   },
   /*
-   * @michengai/dsh-archive-manager@1.1.6@1.1.6 — словарь плагина archive-manager-workspace (Apache-2.0).
+   * @michengai/dsh-archive-manager@1.1.6 — словарь плагина archive-manager-workspace (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -32510,7 +33445,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'organizer.refreshError': 'Результаты сохранены, но обновление не удалось: {detail}',
     'organizer.reloadFavorites': 'Обновить избранное',
     'organizer.restoreResult': 'Результаты восстановления',
-    'organizer.result': 'Успешно: {succeeded} · Пропущено: {skipped} · С ошибкой: {failed} · Не обработано: {remaining}',
+    'organizer.result': 'Успешно: {succeeded} · Пропущено: {skipped} · С ошибкой: {failed}',
     'organizer.retry': 'Повторить для оставшихся: {n}',
     'organizer.rules': 'Учитывает последнюю активность и текущие фильтры списка. Исключает избранные, открытые, выполняющиеся и ожидающие сессии.',
     'organizer.undo': 'Отменить эту пакетную архивацию ({n})',
@@ -32554,7 +33489,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspace.add': 'Добавить рабочую область',
   },
   /*
-   * @hanxuanliang/dsh-chaos@0.1.2@0.1.2 — словарь плагина chaos (MIT).
+   * @hanxuanliang/dsh-chaos@0.1.2 — словарь плагина chaos (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -32800,7 +33735,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspace.up': 'Перейти в родительскую папку',
   },
   /*
-   * dsh-comfyui@0.5.5@0.5.5 — словарь плагина comfyui (MIT).
+   * dsh-comfyui@0.5.5 — словарь плагина comfyui (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -33075,7 +34010,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wfViewNodes': 'Узлы',
   },
   /*
-   * ds-harness-remote@0.5.14@0.5.14 — словарь плагина ds-harness-remote (MIT).
+   * ds-harness-remote@0.5.14 — словарь плагина ds-harness-remote (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -33352,7 +34287,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zhihuLogin': 'QR-код Zhihu',
   },
   /*
-   * dsh-auto-title@1.7.0@1.7.0 — словарь плагина dsh-auto-title (MIT).
+   * dsh-auto-title@1.7.0 — словарь плагина dsh-auto-title (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -33568,7 +34503,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'vocabularySpellingsEmpty': 'нет (при сохранении исчезнут все написания, сохранённые для него на этой машине)',
   },
   /*
-   * @alpacachen/dsh-automation@0.3.32@0.3.32 — словарь плагина dsh-automation (MIT).
+   * @alpacachen/dsh-automation@0.3.32 — словарь плагина dsh-automation (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -33830,7 +34765,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceUnavailable': 'Откройте рабочую область перед созданием автоматизации.',
   },
   /*
-   * dsh-database-explorer@0.9.25@0.9.25 — словарь плагина dsh-database (MIT).
+   * dsh-database-explorer@0.9.25 — словарь плагина dsh-database (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -34055,7 +34990,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewer.copy': 'Копировать',
   },
   /*
-   * @chance722/dsh-inbox@0.2.15@0.2.15 — словарь плагина dsh-inbox (MIT).
+   * @chance722/dsh-inbox@0.2.15 — словарь плагина dsh-inbox (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -34326,7 +35261,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'sync.shortPushed': 'отправлено: {count}',
   },
   /*
-   * dsh-plugin-cards@0.9.29@0.9.29 — словарь плагина dsh-plugin-cards (MIT).
+   * dsh-plugin-cards@0.9.29 — словарь плагина dsh-plugin-cards (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -34609,7 +35544,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'node.badge': '🗂 Карточка плагина',
   },
   /*
-   * dsh-timeline@0.1.5@0.1.5 — словарь плагина dshTimeline (GPL-3.0-or-later).
+   * dsh-timeline@0.1.5 — словарь плагина dshTimeline (GPL-3.0-or-later).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -34888,7 +35823,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tooltip.unstarAction': 'Убрать из сохранённого',
   },
   /*
-   * dsh-instruction-memory@1.4.0@1.4.0 — словарь плагина instruction-memory (MIT).
+   * dsh-instruction-memory@1.4.0 — словарь плагина instruction-memory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -34916,7 +35851,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'batch.exit': 'Выйти из массовых действий',
     'batch.noneSelected': 'Сначала отметьте записи, с которыми нужно работать',
     'batch.priority': 'Задать приоритет…',
-    'batch.promptUnavailable': 'Быстрое добавление недоступно в этом окружении; правьте теги по одному',
     'batch.selectAll': 'Выбрать все',
     'batch.selected': 'Выбрано: {count}',
     'batch.tagEmpty': 'Не введён ни один допустимый тег',
@@ -35161,10 +36095,16 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'undo.deleted': 'Удалено «{title}»',
     'undo.dismiss': 'Скрыть',
     'undo.restore': 'Отменить удаление',
+    'batch.tagCancel': 'Отмена',
+    'batch.tagConfirm': 'Добавить',
+    'batch.tagInputPlaceholder': 'Теги для добавления (несколько — через запятую)',
+    'confirm.unavailable': 'Эта оболочка не может показать окно подтверждения, поэтому действие отменено и ничего не изменилось.',
+    'feedback.timeout': 'Время ожидания хоста истекло ({seconds} с подряд). Письмо могло быть уже отправлено — проверьте перед повтором.',
+    'tags.remove': 'Удалить тег {tag}',
     'undo.restored': 'Удалённая инструкция восстановлена',
   },
   /*
-   * @feng0531/dsh-vcs@0.4.10@0.4.10 — словарь плагина local.vcs (SEE LICENSE IN LICENSE).
+   * @feng0531/dsh-vcs@0.4.10 — словарь плагина local.vcs (SEE LICENSE IN LICENSE).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -35422,7 +36362,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wrap': 'Перенос по словам',
   },
   /*
-   * dsh-modeltester@0.0.7-alpha.6@0.0.7-alpha.6 — словарь плагина modeltester (MIT).
+   * dsh-modeltester@0.0.7-alpha.6 — словарь плагина modeltester (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -35641,7 +36581,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'vendor.zhipu': 'Семейство Zhipu GLM',
   },
   /*
-   * @wingsky-1/dsh-notifier@0.2.9@0.2.9 — словарь плагина notifier (MIT).
+   * @wingsky-1/dsh-notifier@0.2.9 — словарь плагина notifier (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -35886,11 +36826,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'whAuthBearer': 'Токен Bearer (заголовок Authorization)',
     'whAuthHeader': 'Свой заголовок',
     'whAuthHeaderName': 'Имя заголовка (например, X-Gotify-Key)',
-    'whAuthHeaderValue': 'Значение заголовка (токен)',
-    'whAuthHint': 'Данные для входа указываются только в заголовках запроса (ntfy и Gotify поддерживают заголовок Authorization), но никогда — в адресе; они хранятся локально и показываются замаскированными; оставьте поле пустым, чтобы сохранить текущее значение',
+    'whAuthHeaderValue': 'Значение заголовка (передаётся дословно)',
+    'whAuthHint': 'В режиме Bearer указывается только сам токен (без префикса Bearer — его добавляет плагин); значения пользовательских заголовков передаются ровно в том виде, в каком введены; данные для входа остаются в заголовках и никогда не попадают в адрес; они хранятся локально и показываются замаскированными; оставьте поле пустым, чтобы сохранить текущее значение',
     'whAuthNone': 'Нет',
     'whAuthPassword': 'Пароль',
-    'whAuthToken': 'Токен доступа',
+    'whAuthToken': 'Сырой токен (без префикса Bearer)',
     'whAuthUsername': 'Имя пользователя',
     'whPreset': 'Пресет',
     'whPresetCustom': 'Собственный шлюз доставки',
@@ -35908,7 +36848,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'whUrlPlaceholder': 'https://ntfy.sh/ (укажите тему в шаблоне)',
   },
   /*
-   * @y9931666/dsh-plugin-roundtable@1.0.0-rc.3@1.0.0-rc.3 — словарь плагина roundtable (MIT).
+   * @y9931666/dsh-plugin-roundtable@1.0.0-rc.3 — словарь плагина roundtable (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -36130,7 +37070,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tokensBudget': 'Токены',
   },
   /*
-   * dsh-deeppilot@0.9.8@0.9.8 — словарь плагина settings.deeppilot (MIT).
+   * dsh-deeppilot@0.9.8 — словарь плагина settings.deeppilot (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -36349,10 +37289,36 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'troubleshooting.description': 'Используйте их только при диагностике проблем с подключением или отправкой уведомлений.',
     'troubleshooting.summary': 'Проверки и диагностика',
     'troubleshooting.title': 'Диагностические инструменты',
+    'diagnostics.attempt': 'попытка {id}',
+    'diagnostics.closeCode': 'код закрытия {code}',
+    'diagnostics.copied': 'Диагностика скопирована',
+    'diagnostics.copy': 'Копировать диагностику',
+    'diagnostics.copyFailed': 'Копирование диагностики не удалось: ',
+    'diagnostics.description': 'Последние сбои подключения; скопируйте их для диагностики.',
+    'diagnostics.duration': '{ms} мс',
+    'diagnostics.empty': 'Нет недавних сбоев',
+    'diagnostics.item': '{time} · {kind} · {reason}',
+    'diagnostics.off': 'отключено',
+    'diagnostics.on': 'включено',
+    'diagnostics.recent': 'Недавние сбои',
+    'diagnostics.reportConnections': 'Активные подключения',
+    'diagnostics.reportEnabled': 'Главный переключатель',
+    'diagnostics.reportFailureHeader': 'Недавние сбои',
+    'diagnostics.reportGeneratedAt': 'Создано',
+    'diagnostics.reportLocal': 'LAN',
+    'diagnostics.reportNone': '(нет)',
+    'diagnostics.reportRemote': 'Funnel',
+    'diagnostics.reportTitle': 'Диагностика DeepPilot',
+    'diagnostics.reportVersion': 'Версия плагина',
+    'diagnostics.source': 'источник {label}',
+    'diagnostics.staleHost': 'Этот узел слишком старый, чтобы собирать диагностику подключений. Обновите dsh-deeppilot.',
+    'diagnostics.startedAt': 'Запущено {time}',
+    'diagnostics.title': 'Диагностика подключения',
+    'nav': 'DeepPilot',
     'update.badge': 'Доступна новая версия',
   },
   /*
-   * dsh-kinich-theme@2.0.2@2.0.2 — словарь плагина settings.kinich-theme (SEE LICENSE IN LICENSE).
+   * dsh-kinich-theme@2.0.2 — словарь плагина settings.kinich-theme (SEE LICENSE IN LICENSE).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -36559,7 +37525,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'welcome.line2': 'откройте для себя, что дальше.',
   },
   /*
-   * dsh-packycode-api@1.3.6@1.3.6 — словарь плагина settings.packyCodeApi (MIT).
+   * dsh-packycode-api@1.3.6 — словарь плагина settings.packyCodeApi (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -36763,10 +37729,40 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'versionUpdatedHint': 'Закройте настольное приложение и откройте его снова. Обновление страницы не перезагружает плагин внутри Хоста.',
     'versionUpdateFailed': 'Обновление не удалось. Повторите попытку или переустановите со страницы «Плагины».',
     'versionUpdating': 'Обновление…',
+    'add': 'Добавить',
+    'cliUpdateAvailable': 'Доступна версия {latest}. Установленная версия продолжает работать до обновления.',
+    'cliUpdateNotUpdated': 'Обновление выполнено, но версия всё ещё {version}, а актуальная — {latest}. Выполните {command} в терминале и следуйте указаниям (для установки через Homebrew — brew upgrade claude-code), затем нажмите «Проверить ещё раз». Установленная версия продолжает работать.',
+    'cliUpdateUnchanged': 'Обновление выполнено; версия всё ещё {version}.',
+    'nav': 'PackyCode',
+    'reviewChecking': 'Чтение настройки автопроверки…',
+    'reviewCounts': 'С момента запуска плагин ответил на проверки: всего {reviewed}, разрешено {allowed}, отклонено {denied}, с ошибкой {failed}.',
+    'reviewEnableHint': 'Пока не включено: откройте страницу «Плагины» DSH на боковой панели, включите «Автоматическую проверку разрешений», затем выберите «Автопроверку» в меню разрешений поля ввода.',
+    'reviewIntro': 'Встроенный плагин DSH «Автоматическая проверка разрешений» добавляет «Автопроверку» в меню разрешений поля ввода: перед каждым вызовом инструмента модель проверяет его; разрешённые вызовы выполняются сразу, а отклонённые требуют вашего одобрения. По умолчанию проверяет собственная модель диалога; этот плагин может заставить её использовать модель, выбранную ниже, но что именно проверяется, правила и результаты остаются точно официальными.',
+    'reviewLast': 'Последняя: {tool} · {outcome} · {model} · {seconds} с',
+    'reviewLoadFailed': 'Не удалось прочитать или сохранить настройку автопроверки',
+    'reviewMenuNote': 'Описание под «Автопроверкой» в меню разрешений приходит от DSH и говорит, что проверяет та же модель; если здесь выбрана jev-latest или DeepSeek Flash, проверяет именно она. Когда проверка не проходит, DSH отклоняет вызов вместо его выполнения.',
+    'reviewModelFlash': 'DeepSeek Flash',
+    'reviewModelFlashHint': 'Примерно 2 с на проверку, и в отказе указывается причина. Нужен ключ, в группу которого входит deepseek-officially.',
+    'reviewModelJev': 'jev-latest',
+    'reviewModelJevHint': 'Классификатор решений TypeSafe: примерно 0,4 с на проверку, оплачивается только ввод; в отказе указывается лишь уровень риска. Нужен ключ, в группу которого входит typesafe-officially.',
+    'reviewModelSession': 'Модель диалога',
+    'reviewModelSessionHint': 'Не меняйте настройку: проверяет собственная модель диалога, как это делает DSH по умолчанию.',
+    'reviewModelTitle': 'Ревьюер',
+    'reviewOfficialOff': 'Официальная автопроверка отключена',
+    'reviewOfficialOn': 'Официальная автопроверка включена',
+    'reviewOutcomeAllowed': 'разрешено',
+    'reviewOutcomeDenied': 'отклонено',
+    'reviewOutcomeFailed': 'с ошибкой',
+    'reviewTitle': 'Автопроверка',
+    'reviewUncovered': 'Ни один сохранённый ключ не относится к группе, обслуживающей {model}: проверки будут неуспешными, и DSH отклонит каждый вызов инструмента. Выберите другого ревьюера или добавьте ключ, в группу которого входит ревьюер.',
+    'versionUpdateSyncing': 'Версия v{version} опубликована недавно, а источник установки ещё не синхронизировал её. Повторите обновление через несколько минут; региональному зеркалу может потребоваться больше времени.',
+    'versionUpdateSyncingFrom': 'Версия v{version} опубликована недавно, а источник установки {registry} ещё не синхронизировал её. Повторите обновление через несколько минут; региональному зеркалу может потребоваться больше времени.',
+    'versionUpdateUnreachable': 'Не удалось обратиться к источнику установки для загрузки v{version}. Проверьте сеть или прокси, затем повторите попытку.',
+    'versionUpdateUnreachableFrom': 'Не удалось обратиться к источнику установки {registry} для загрузки v{version}. Проверьте сеть или прокси, затем повторите попытку.',
     'versionUpToDate': 'Актуальная версия',
   },
   /*
-   * dsh-plugin-manager-pro@0.9.1@0.9.1 — словарь плагина settings.pluginManagerPro (MIT).
+   * dsh-plugin-manager-pro@0.9.1 — словарь плагина settings.pluginManagerPro (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -36982,7 +37978,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'versionUnknown': 'версия неизвестна',
   },
   /*
-   * dsh-solution-explorer@1.0.2@1.0.2 — словарь плагина solution-explorer (MIT).
+   * dsh-solution-explorer@1.0.2 — словарь плагина solution-explorer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -37183,7 +38179,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tree.refresh': 'Обновить',
   },
   /*
-   * dsh-swarm-orchestrator@0.6.32@0.6.32 — словарь плагина swarm (MIT).
+   * dsh-swarm-orchestrator@0.6.32 — словарь плагина swarm (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -37436,7 +38432,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'time.seconds': '{n} с назад',
   },
   /*
-   * dsh-token-monitor@1.0.12@1.0.12 — словарь плагина token-monitor (MIT).
+   * dsh-token-monitor@1.0.12 — словарь плагина token-monitor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -37674,7 +38670,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'vendor.zhipu': 'Zhipu (GLM)',
   },
   /*
-   * dsh-trust-check@0.2.4@0.2.4 — словарь плагина trust (MIT).
+   * dsh-trust-check@0.2.4 — словарь плагина trust (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -37927,7 +38923,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'verdict.review': 'проверка',
   },
   /*
-   * dsh-local-usage@0.8.0@0.8.0 — словарь плагина usage (MIT).
+   * dsh-local-usage@0.8.0 — словарь плагина usage (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -38125,10 +39121,66 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wdShort.3': 'Ср',
     'wdShort.4': 'Чт',
     'wdShort.5': 'Пт',
+    'backToDay': 'Вернуться к дню',
+    'calendarRangeSelected': 'Выбрано {from} – {to}',
+    'calendarRangeSelectedDay': 'Выбрано {day}',
+    'callsColumnDuration': 'Длительность',
+    'callsColumnFirstToken': 'Первый токен',
+    'callsColumnHitRate': 'Доля попаданий',
+    'callsColumnModel': 'Модель',
+    'callsColumnSession': 'Сессия / проект',
+    'callsColumnTime': 'Время',
+    'callsColumnTotal': 'Всего',
+    'callsColumnTps': 'Выход, ток/с',
+    'callsDayOpen': 'Вызовы за этот день',
+    'callsEmpty': 'Нет подходящих вызовов.',
+    'callsError': 'Не удалось прочитать журнал вызовов.',
+    'callsExact': 'Точно: {value}',
+    'callsFilterAllModels': 'Все модели',
+    'callsFilterModel': 'Модель',
+    'callsFilterRange': 'Диапазон времени',
+    'callsLoading': 'Чтение журнала вызовов…',
+    'callsNext': 'Далее',
+    'callsPagerEmpty': 'Нет строк',
+    'callsPagerPage': 'Страница {page} из {pages}',
+    'callsPagerShowing': '{from}–{to} из {total}',
+    'callsPageSize': 'На странице',
+    'callsPrev': 'Назад',
+    'callsQuerying': 'Запрос…',
+    'callsRangeAll': 'За всё время',
+    'callsScanNote': 'Просканировано сессий: {sessions}; {source}',
+    'callsSearch': 'Поиск',
+    'callsSearchPlaceholder': 'Сессия, проект или маршрут',
+    'callsSort': 'Порядок',
+    'callsSortCostDesc': 'Стоимость: сначала дороже',
+    'callsSortOutputDesc': 'Вывод: сначала больше',
+    'callsSortTimeAsc': 'Время: сначала раньше',
+    'callsSortTimeDesc': 'Время: сначала позже',
+    'callsSortTokensDesc': 'Токены: сначала больше',
+    'callsSubtitle': 'Вызовы моделей из локальных журналов, по одной строке: время, сессия, проект, модель, токены и расходы',
+    'callsSummaryCacheDetail': 'Прочитано: {read} · Записано: {write}',
+    'callsSummaryCacheDetailRead': 'Прочитано: {read} · запись не учитывается',
+    'callsSummaryCalls': 'Подходящие вызовы',
+    'callsSummaryCallsDetail': 'Сессий: {sessions} · Проектов: {projects}',
+    'callsSummaryCost': 'Общий расход',
+    'callsSummaryCostDetail': 'Оценено по текущим тарифам',
+    'callsSummaryHitRate': 'Доля попаданий в кэш',
+    'callsSummaryProjects': 'Проекты',
+    'callsSummaryProjectsDetail': 'Разные рабочие каталоги',
+    'callsSummarySessions': 'Сессии',
+    'callsSummarySessionsDetail': 'Сессии, из которых пришли подходящие вызовы',
+    'callsSummaryTokens': 'Всего токенов',
+    'callsSummaryTokensDetail': 'Ввод: {input} · Вывод: {output}',
+    'callsTitle': 'Журнал вызовов',
+    'callsTurnStep': 'Раунд {turn} · Шаг {step}',
+    'nav': 'Расходы',
+    'rangeCustom': 'Свой',
+    'rangeFrom': 'С',
+    'rangeTo': 'По',
     'wdShort.6': 'Сб',
   },
   /*
-   * dsh-voice-mode@0.7.25@0.7.25 — словарь плагина voice-mode (MIT).
+   * dsh-voice-mode@0.7.25 — словарь плагина voice-mode (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -38164,23 +39216,23 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'captionWidth70': 'Средне',
     'captionWidth90': 'Широко',
     'configUnavailable': 'Настройки недоступны',
-    'configUnavailableNote': ' (документ настроек ещё не готов; панель появится, когда он будет готов).',
+    'configUnavailableNote': ' (документ настроек ещё не готов; попытка повторится — панель появится, когда он будет готов).',
     'custom': 'Своё',
     'dataFlowHint': 'Поток данных: распознавание ASR (zipformer2+SenseVoice) всегда выполняется локально; озвучивание зависит от движка (Edge — облако Microsoft, VITS/Kokoro — локально)',
-    'descAutoSend': 'Автоотправка после тишины (соседние фрагменты объединяются в одно сообщение; выкл. — только черновик; Ctrl или удержание всё равно отправляет)',
-    'descBackchannelYield': 'Если пользователь произносит короткий ответ вроде «угу-угу» во время чтения агента вслух, агент автоматически уступает (пропускает текущую фразу TTS и отбрасывает кадры 1,5 с; если пользователю действительно нужно говорить, вступает в силу существующий механизм жёсткого прерывания; выкл. — без уступки, как до партии 5)',
-    'descBargeIn': 'Режим прерывания (Автоопределение: автоматически проверить встроенное подавление эха, при его отсутствии — удержание для разговора — по умолчанию; Авто: принудительное прерывание голосом — наушники или тишина; Вручную: для громкоговорящих колонок, без самопрерывания по эху — удерживайте микрофон или Ctrl для прерывания)',
+    'descAutoSend': 'Автоотправка после тишины (соседние фрагменты объединяются в одно сообщение; выкл. — только черновик; удержание Ctrl во время речи отправляет сразу; в режиме удержания отпускание отправляет)',
+    'descBackchannelYield': 'Если пользователь произносит короткий ответ вроде «угу-угу/да» во время чтения агента вслух, агент автоматически уступает (пропускает текущую фразу TTS и отбрасывает кадры на 1,5 с; если пользователю действительно нужно говорить, вступает в силу существующий механизм жёсткого прерывания; выкл. — без уступки, поведение как до этого изменения). Срабатывает только в режиме удержания: в режиме непрерывного прослушивания речь во время воспроизведения не распознаётся (речь считается прерыванием)',
+    'descBargeIn': 'Режим прерывания (Автоопределение: автоматически проверить встроенное подавление эха, при его отсутствии — удержание для разговора — по умолчанию; Авто: принудительное прерывание голосом — наушники или тишина; Вручную: для громкоговорящих колонок, без самопрерывания по эху — удерживайте микрофон или Ctrl для прерывания). Примечание: в ручном режиме (в том числе когда автоопределение переходит в ручной на машинах без встроенного подавления эха) звук вне нажатия не распознаётся — в режиме переключателя можно удерживать для разговора только пока агент говорит; в простое голосового ввода нет, поэтому используйте режим удержания или переключитесь на авто / автоопределение',
     'descCaptionFontSize': 'Размер шрифта подписей в пикселях (малый 12 / обычный 14 / крупный 18 / очень крупный 24; по умолчанию малый, как сейчас)',
     'descCaptionMaxWidth': 'Ширина подписей (50 % / 70 % / 90 % от ширины окна; по умолчанию 70 %; высота ограничена 30 % высоты окна, поэтому многострочные 24 px не перекрывают поле ввода)',
     'descEchoGate': 'Порог шлюза эха (дБ, по умолчанию 6): для автоматического прерывания остаточный сигнал должен превышать порог эха на это значение. При работающем встроенном подавлении эха в браузере шлюз простаивает; он включается как запасной вариант в Safari и в средах без встроенного подавления эха (например, в некоторых наушниках). Повысьте (8-10), если эхо от колонок всё ещё прерывает, понизьте (3-4), если прерывать трудно',
-    'descIdle': 'Автовыход из голосового режима после простоя (тайм-аут по умолчанию: 5 мин; в партии G добавлено предупреждение за 30 с до выхода)',
+    'descIdle': 'Автовыход из голосового режима после простоя в минутах (по умолчанию 5; за 30 с до выхода появляется предупреждение с обратным отсчётом)',
     'descInterrupt': 'Чувствительность прерывания (уровни: 0 — высокая, ≈ 0,3 с до подтверждения; 1 — средняя, ≈ 0,2 с; 2 — низкая, ≈ 0,1 с; самая отзывчивая); чем ниже уровень, тем выше порог и тем труднее прервать',
     'descKokoroModel': 'Точность модели Kokoro: INT8 — меньше и быстрее (сервер на CPU или узкий канал; по умолчанию); FP32 звучит лучше, но занимает ~311 МБ и работает медленнее (GPU или много памяти). Обе модели используют одинаковый набор голосов: 103. Переключение действует сразу.',
-    'descMode': 'Режим взаимодействия (переключатель: непрерывное прослушивание с автоотправкой / удержание: нажмите, чтобы говорить)',
+    'descMode': 'Режим взаимодействия (переключатель: непрерывное прослушивание с автоотправкой / удержание: нажмите, чтобы говорить / один раз: одна реплика, затем выход после того, как ответ будет прочитан вслух)',
     'descModelHost': 'Источник загрузки моделей ASR (официальный источник / зеркало или любой свой адрес)',
     'descRate': 'Темп речи (0,5 медленно – 2,0 быстро, по умолчанию 1,1; ответы получаются компактнее)',
     'descSenseITN': 'Нормализация чисел, дат и форматов SenseVoice (по умолчанию включена; отключите, чтобы сохранить исходную разговорную форму)',
-    'descSenseVoice': 'Повторное распознавание завершённой реплики через SenseVoice (пунктуация и нормализация текста, точнее; по умолчанию включено — отключите, чтобы не загружать модель 228 МБ и оставить только потоковый режим)',
+    'descSenseVoice': 'Режим распознавания: вкл. = точный режим (финализация SenseVoice с пунктуацией и ITN; длинные реплики могут обрабатываться несколько секунд на CPU); выкл. = быстрый режим (потоковый результат финализируется сразу, без модели повторного распознавания на 228 МБ, чуть менее точный)',
     'descShortcut': 'Сочетание клавиш для входа и выхода из голосового режима (например, Ctrl+Shift+V; пустое значение отключает его, остаётся только кнопка микрофона; избегайте сочетаний, зарезервированных браузером, вроде Ctrl+W/N/T)',
     'descSilence': 'Пауза тишины перед фиксацией предложения (по умолчанию 1500 мс; нужно не менее 250 мс речи, чтобы защититься от срабатывания на шум)',
     'descSpokenFormat': 'Подстановка подсказки о разговорном формате в голосовые ответы (разговорно, короткие предложения, без Markdown; по умолчанию включено, действует сразу)',
@@ -38189,8 +39241,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'descVoice': 'Голоса облака Edge (загружаются все голоса Microsoft; популярные китайские голоса закреплены сверху; ◀▶ или раскрывающийся список; допускается свой ShortName)',
     'descVoiceKokoro': 'Голоса Kokoro zh-en (103; ◀▶ для переключения; 48-51 — именованные китайские, остальные пронумерованы с указанием измеренного пола; поддерживается смешанный zh-en)',
     'descVoiceLocal': 'Локальный голос (VITS, перечислены все дикторы, всего: 5; раскрывающийся список или ◀▶; свой голос не нужен)',
-    'descWakeWord': 'Слово пробуждения (по умолчанию выключено; например, «Hey D»): распознавание начинается только после того, как вы его произнесёте, чтобы избежать случайных срабатываний. Его можно произнести вместе с командой («Hey D, проверь погоду» — слово пробуждения отбрасывается и никогда не отправляется); его нужно повторять после каждого разделения реплики или прерывания; работает только в режиме переключателя (не работает при удержании и в режиме прерывания «Вручную»); произнесённое во время чтения агента вслух не срабатывает (прерывание остаётся на основе VAD). Устойчивое к ошибкам распознавание (омографы и вводные слова в начале фразы); рекомендуемая длина слова: 3-4; это не отдельный движок KWS — в шумных условиях распознавание может задержаться или сработать ложно',
-    'descYieldMs': 'Сколько миллисекунд отбрасывать кадры после срабатывания уступки (500-3000, по умолчанию 1500; в пределах этого окна, если пользователю действительно нужно говорить, вступает в силу существующий механизм жёсткого прерывания; после истечения окна — автовозобновление)',
+    'descWakeWord': 'Слово пробуждения (по умолчанию выключено; например, «Hey D»): распознавание начинается только после того, как вы его произнесёте, чтобы избежать случайных срабатываний. Его можно произнести вместе с командой («Hey D, проверь погоду» — слово пробуждения отбрасывается и никогда не отправляется); его нужно повторять после каждого разделения реплики или прерывания; работает только в режиме переключателя (не работает при удержании и в режиме прерывания «Вручную» — и точно так же не работает, когда проверка автоопределения не удаётся и режим переходит в ручной, а это по умолчанию на машинах без встроенного подавления эха, например в Safari); произнесённое во время чтения агента вслух не срабатывает (прерывание остаётся на основе VAD). Устойчивое к ошибкам распознавание (омографы и вводные слова в начале фразы); рекомендуемая длина слова: 3-4; это не отдельный движок KWS — в шумных условиях распознавание может задержаться или сработать ложно',
+    'descYieldMs': 'Сколько миллисекунд отбрасывать кадры после срабатывания уступки (500-3000, по умолчанию 1500; в пределах этого окна, если пользователю действительно нужно говорить, вступает в силу существующий механизм жёсткого прерывания; после истечения окна — автовозобновление). Только в режиме удержания, во время воспроизведения',
     'disabled': 'Голосовой режим отключён (плагин enabled=false)',
     'echoGateDbLabel': 'Шлюз эха',
     'elapsedHint': 'Текущая длительность голосовой сессии',
@@ -38282,15 +39334,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'senseVoiceLabel': 'Повторное распознавание при финализации',
     'sessionExpired': 'Голосовая сессия истекла, переподключение…',
     'sessionExpiredFail': 'Не удалось переподключить голосовую сессию; войдите в голосовой режим заново',
-    'settingsCardDesc': 'Движок / голос / темп / прерывание / перебивание / шлюз эха / тишина / простой / зеркало моделей / автоотправка / автовозобновление / режим / слово пробуждения / сигнал инструмента / нормализация / шрифт подписей / ширина подписей / уступка / окно уступки',
-    'settingsEffectiveNote': 'Движок / голос / темп / точность модели / разговорный формат / повторное распознавание / шрифт подписей / ширина подписей / уступка / окно уступки применяются сразу; ITN применяется сразу (при следующем входе в голосовой режим потоковый распознаватель перестраивается); остальные (прерывание / перебивание / шлюз эха / сочетание клавиш / тишина / простой / зеркало / автоотправка / автовозобновление / режим взаимодействия / слово пробуждения / сигнал инструмента) применяются при следующем входе в голосовой режим.',
+    'settingsCardDesc': 'Движок / голос / темп / прерывание / перебивание / шлюз эха / тишина / простой / хост модели / автоотправка / чтение ответов / строка состояния / наложение подписей / автовозобновление / режим / слово пробуждения / сигнал инструмента / нормализация чисел / шрифт подписей / ширина подписей / уступка / окно уступки / спасение при перебивании / исправление через LLM',
+    'settingsEffectiveNote': 'Когда применяются настройки, в четыре яруса: ① сразу — движок / голос / темп / точность модели Kokoro (сразу, если модель в кэше, иначе при следующей загрузке) / разговорный формат (применяется к последующим ответам) / чтение ответов вслух / строка состояния / наложение подписей / зеркало моделей (при следующей попытке загрузки); ② при следующем распознавании — повторное распознавание при финализации (SenseVoice) / ITN; ③ при следующей реплике — порог тишины (эндпоинт; ожидание отправки остаётся фиксированным — 1,2 с); ④ при следующем входе в голосовой режим — чувствительность к прерыванию / режим прерывания / шлюз эха / сочетание клавиш / автоотправка / автовозобновление / режим взаимодействия / слово пробуждения / сигнал инструмента / шрифт подписей / ширина подписей / уступка при репликах собеседника / окно уступки / восстановление после перебивания / коррекция LLM / тайм-аут простоя. Пункты, которые применяются при следующем входе в голосовой режим, перечислены в начале этой карточки вместе с их текущими действующими значениями.',
     'sev0': '0 — высокая',
     'sev1': '1 — средняя',
     'sev2': '2 — низкая',
-    'shortcutLabel': 'Сочетание клавиш',
+    'shortcutLabel': 'Вход в голосовой режим и выход из него (во всём приложении)',
     'silenceMsLabel': 'Пауза тишины',
     'skip': 'Пропустить',
-    'skipReading': 'Пропустить текущее чтение вслух',
+    'skipReading': 'Пропустить это предложение',
     'spokenFormatLabel': 'Подсказка о разговорном формате',
     'startFail': 'Не удалось запустить голосовой режим: {err}',
     'stateVoiceMode': 'Голосовой режим',
@@ -38310,7 +39362,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'thinking': 'Думаю…',
     'titleEnter': 'Войти в голосовой режим (Ctrl+Shift+V)',
     'titleHold': 'Голосовой режим · удерживайте, чтобы говорить, отпустите, чтобы отправить; нажмите, чтобы выйти; Esc или потеря фокуса отменяет; Ctrl+Shift+V выходит',
-    'titleToggle': 'Голосовой режим · нажмите, чтобы выйти (Ctrl+Shift+V) · удерживайте Ctrl, чтобы отправить сейчас',
+    'titleToggle': 'Голосовой режим · нажмите, чтобы выйти (Ctrl+Shift+V) · удерживайте Ctrl во время речи, чтобы отправить сейчас',
     'toolBeepLabel': 'Сигнал при вызове инструмента',
     'ttsDelete': 'Удалить',
     'ttsDeleteHint': 'Удалить локальные модели (освобождает место; при следующем использовании они скачаются автоматически)',
@@ -38324,7 +39376,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'ttsUnavailableNotice': 'Чтение вслух постоянно не удаётся: облачный TTS недоступен. Повторите попытку позже или переключите движок чтения вслух на локальный VITS / Kokoro в настройках',
     'vadDetected': 'Речь по VAD',
     'voiceBtn': 'Голос',
-    'voiceDetected': 'Голос активен',
     'voiceHintChineseVoice': 'Примечание: это китайский голос. Для ответов на английском выберите английский голос (en-…) из списка.',
     'voiceHintEnglishVoice': 'Примечание: это английский голос, он плохо читает китайские ответы. Для разговоров на китайском выберите китайский голос (zh-…).',
     'voiceKokoroChineseFemale': 'Женский (китайский)',
@@ -38337,10 +39388,56 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'voicePrev': 'Предыдущий голос',
     'wakePlaceholder': 'например, «Эй, Д»',
     'wakeWord': 'Слово пробуждения',
+    'composerShortcutLabel': 'Вход и выход из голосового режима (в поле ввода)',
+    'descComposerShortcut': 'Сочетание клавиш для переключения голосового режима, пока фокус находится в поле ввода (по умолчанию Alt/Option+Enter)',
+    'errMethodNotAllowed': 'Метод запроса не разрешён',
+    'secShortcut': 'Сочетание клавиш',
+    'shortcutCancel': 'Отмена',
+    'shortcutNeedModifier': 'Нужен хотя бы один модификатор',
+    'shortcutNote': 'Alt/Option+Enter переключает режим в поле ввода; поддерживаются сочетания с Cmd, Ctrl, Alt и Shift; пустое значение оставляет только кнопку микрофона. Во время записи Backspace очищает сочетание, а Esc отменяет; избегайте зарезервированных браузером сочетаний (Cmd+W, Cmd+T, Cmd+N, Cmd+L). Изменения применяются сразу.',
+    'shortcutPlaceholder': 'Нажмите «Записать», затем введите сочетание',
+    'shortcutRecord': 'Записать',
+    'shortcutRecording': 'Нажмите сочетание клавиш…',
+    'shortcutReset': 'Сбросить к значению по умолчанию',
+    'shortcutUnsupportedKey': 'Поддерживаются только буквы, цифры, Enter, Space и Tab',
+    'backchannelDropped': 'Обратный канал проигнорирован, не отправлен',
+    'buttonListening': 'Слушаем',
+    'buttonLoading': 'Загрузка…',
+    'correctAbandoned': 'Исходный текст сохранён в черновике',
+    'descLlmCorrect': 'Перед отправкой по всему распознанному тексту проходит один проход LLM (только опечатки, омографы и пунктуация; смысл сохраняется; нужна модель по умолчанию, настроенная на хосте — иначе отправляется исходный текст). Вкл. = один дополнительный круг коррекции на сообщение: обычно меньше секунды, максимум около 10 секунд; не больше 10 раз в минуту — когда голосовой режим выключен или предел исчерпан, отправляется исходный текст. Неудачный или ненормальный вывод тоже приводит к отправке исходного текста',
+    'descReadAloud': 'Голосовой режим = читать ответы только в голосовом режиме (по умолчанию); Всегда = читать каждый ответ в текущей сессии, включая набранные текстом; Выключено = не читать вслух',
+    'descShowCaptions': 'Показывать плавающую подпись текущего предложения при чтении вслух',
+    'descShowStatusBar': 'Показывать панель состояния голоса над полем ввода (волна, расшифровка, таймер, уведомления, выход); когда выключено, состояние видно только на кнопке микрофона',
+    'detectFail': 'Определение вмешательства временно недоступно (ошибка канала обнаружения, идёт повтор)',
+    'diagCopied': 'Диагностика скопирована',
+    'diagCopy': 'Копировать диагностику',
+    'diagCopyFailed': 'Не удалось скопировать (буфер обмена отклонён браузером)',
+    'effectiveItem': '{label} (сейчас действует: {value})',
+    'effectiveItemSep': ', ',
+    'effectivePending': 'При следующем входе в голосовой режим применятся изменения: {count} — {items}',
+    'llmCorrectLabel': 'Коррекция LLM',
+    'micBusy': 'Микрофон занят другой программой — закройте её и повторите попытку',
+    'modeOnce': 'Однократно',
+    'partialFail': 'Живые подписи временно недоступны (ошибка канала распознавания, идёт повтор)',
+    'readAloudAlways': 'Всегда',
+    'readAloudLabel': 'Читать ответы',
+    'readAloudOff': 'Выключено',
+    'readAloudVoice': 'Голосовой режим',
+    'recognizingSec': 'Распознавание… {sec} с',
+    'shortcutInvalid': 'Недопустимое сочетание клавиш, отключено. Исправьте его в настройках (например, Ctrl+Shift+V); оставьте поле пустым, чтобы использовать только кнопку микрофона',
+    'showCaptionsLabel': 'Наложение подписей',
+    'showStatusBarLabel': 'Панель состояния',
+    'sseReconnect': 'Синхронизация состояния отключена, переподключение…',
+    'stopReading': 'Прекратить чтение',
+    'unitDb': 'дБ',
+    'unitMin': 'мин',
+    'valueOff': 'Выключено',
+    'valueOn': 'Включено',
+    'valueQuoted': '«{value}»',
     'wakeWordLabel': 'Слово пробуждения',
   },
   /*
-   * dsh-web-search-enhanced@0.1.10@0.1.10 — словарь плагина webSearchEnhanced (MIT).
+   * dsh-web-search-enhanced@0.1.10 — словарь плагина webSearchEnhanced (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -38554,7 +39651,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'write.unavailable': 'Это подключение выключено или удалено.',
   },
   /*
-   * @luweiyabo/dsh-whale-pet@0.1.3@0.1.3 — словарь плагина whale-pet (SEE LICENSE IN LICENSE).
+   * @luweiyabo/dsh-whale-pet@0.1.3 — словарь плагина whale-pet (SEE LICENSE IN LICENSE).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -38747,7 +39844,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'uploadingCustom': 'Загрузка…',
   },
   /*
-   * dsh-api-dashboard@1.7.0@1.7.0 — словарь плагина apiDashboard (MIT).
+   * dsh-api-dashboard@1.7.0 — словарь плагина apiDashboard (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -38920,7 +40017,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'whale.volume': 'Громкость',
   },
   /*
-   * dsh-better-workspace@0.32.2@0.32.2 — словарь плагина betterWorkspace (MIT).
+   * dsh-better-workspace@0.32.2 — словарь плагина betterWorkspace (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39028,8 +40125,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.sessionLimit': 'Сессий при раскрытии',
     'settings.sessionLimit.all': 'Все',
     'settings.sessionLimit.hint': 'Раскрытая рабочая область сначала показывает только самые свежие сессии, а остальные прячет за одной строкой «Показать ещё»; закреплённые, выполняющиеся и ожидающие вас сессии остаются видимыми всегда. «Все» — без ограничения (по умолчанию).',
-    'settings.sessionMenu': 'Контекстное меню сессии',
-    'settings.sessionMenu.hint': 'Включено: щёлкните по строке сессии правой кнопкой, чтобы открыть меню действий (включая обычные закрепление, архивирование и остановку с архивированием). Выключено: тогда у строки при наведении появляется кнопка «⋯» в обычном стиле, открывающая то же меню. По умолчанию включено.',
     'settings.statusPulse': 'Пульсация статуса',
     'settings.statusPulse.hint': 'Скрытые свёрткой точки статуса (готово — зелёная, выполняется — синяя, ожидает — янтарная) расходятся наружу: у строк рабочих областей и папок пульсирует значок цветом статуса (подписи с собственным свечением пульсируют вместе с ним), у строк групп сессий появляется пульсирующая точка; по умолчанию включено, выключите здесь.',
     'settings.title': 'Better Workspaces',
@@ -39086,11 +40181,23 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wsPreset.empty': 'Нет доступных пресетов',
     'wsPreset.globalDefault': 'глобальный по умолчанию',
     'wsPreset.loadFailed': 'Не удалось загрузить список пресетов',
-    'wsPreset.noBlank': 'В этой рабочей области нет постоянного черновика; она использует глобальный пресет по умолчанию',
+    'add': 'Добавить рабочую область',
+    'presetCordisName': 'Режим Creator',
+    'presetMinimalName': 'Минимальный режим',
+    'presetPtcName': 'Режим PTC',
+    'presetStandardName': 'Стандартный режим',
+    'settings.density': 'Плотность строк',
+    'settings.density.comfortable': 'Удобная (по умолчанию)',
+    'settings.density.compact': 'Компактная',
+    'settings.density.hint': 'Высота строк повторяет штатную боковую панель: «Удобная» — официальный вариант по умолчанию; «Компактная» экономит вертикальное место, «Просторная» увеличивает зону нажатия. Применяется сразу и хранится в этом браузере.',
+    'settings.density.roomy': 'Просторная',
+    'settings.showCount': 'Значок числа сессий',
+    'settings.showCount.hint': 'Штатная боковая панель убрала счётчик сессий для каждой рабочей области; включите эту настройку, чтобы вернуть его в конце строки (при наведении он уступает место действиям строки). По умолчанию выключено.',
+    'wsPreset.createHint': 'В этой рабочей области нет постоянной заготовки; после подтверждения будет создана новая заготовка с выбранным пресетом по умолчанию для рабочей области',
     'wsPreset.title': 'Смена пресета рабочей области по умолчанию',
   },
   /*
-   * dsh-bill@0.23.0@0.23.0 — словарь плагина dsh-bill (MIT).
+   * dsh-bill@0.23.0 — словарь плагина dsh-bill (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39253,7 +40360,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'kpi.forecastHint.b.many': ' наблюдённым дням',
   },
   /*
-   * dsh-decision-layer@0.6.4@0.6.4 — словарь плагина dsh-decision-layer (MIT).
+   * dsh-decision-layer@0.6.4 — словарь плагина dsh-decision-layer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39412,7 +40519,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Соединение недоступно',
   },
   /*
-   * dsh-fonttune@0.7.1@0.7.1 — словарь плагина dsh-fonttune (MIT).
+   * dsh-fonttune@0.7.1 — словарь плагина dsh-fonttune (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39577,7 +40684,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'write.reverted': 'Настройка не дошла до документа, поэтому значение вернулось к тому, что хранится в документе.',
   },
   /*
-   * @dsh-plugins/dsh-llm-hub@1.9.6@1.9.6 — словарь плагина dsh-llm-hub (MIT).
+   * @dsh-plugins/dsh-llm-hub@1.9.6 — словарь плагина dsh-llm-hub (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39743,7 +40850,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'week': 'нед.',
   },
   /*
-   * dsh-mnemosyne@0.7.0@0.7.0 — словарь плагина dsh-mnemosyne (MIT).
+   * dsh-mnemosyne@0.7.0 — словарь плагина dsh-mnemosyne (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -39913,7 +41020,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'testOk': 'Подключение в порядке',
   },
   /*
-   * dsh-pdf-mineru@0.2.1@0.2.1 — словарь плагина dsh-pdf-mineru (MIT).
+   * dsh-pdf-mineru@0.2.1 — словарь плагина dsh-pdf-mineru (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40061,7 +41168,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'verify.result': '{valid} в порядке · {corrupt} повреждено · {missing} отсутствует · {unreadable} не читается',
   },
   /*
-   * dsh-pentester@6.5.0@6.5.0 — словарь плагина dsh-pentester-view (MIT).
+   * dsh-pentester@6.5.0 — словарь плагина dsh-pentester-view (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40220,7 +41327,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.trace': 'Журнал выполнения',
   },
   /*
-   * dsh-perm-gate@5.3.2@5.3.2 — словарь плагина dsh-perm-gate (MIT).
+   * dsh-perm-gate@5.3.2 — словарь плагина dsh-perm-gate (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40411,7 +41518,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'section.title': 'Автоматическая проверка разрешений',
   },
   /*
-   * dsh-skillbox@0.5.3@0.5.3 — словарь плагина dsh-skillbox (MIT).
+   * dsh-skillbox@0.5.3 — словарь плагина dsh-skillbox (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40591,7 +41698,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaces': 'Видно в',
   },
   /*
-   * dsh-update-copilot@0.13.0@0.13.0 — словарь плагина dsh-update-copilot (MIT).
+   * dsh-update-copilot@0.13.0 — словарь плагина dsh-update-copilot (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40744,7 +41851,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'upToDateSection': 'Актуальные версии',
   },
   /*
-   * dsh-vsceditor@0.5.6@0.5.6 — словарь плагина dsh-vsceditor (MIT).
+   * dsh-vsceditor@0.5.6 — словарь плагина dsh-vsceditor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -40909,7 +42016,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wiz.waitingExtDetail': 'Ожидание расширения… убедитесь, что рабочая область {ws} открыта в VS Code и ей доверено (при необходимости выполните «Перезагрузку окна»)',
   },
   /*
-   * @eghrhegpe/dsh-connect-qoder@0.7.3@0.7.3 — словарь плагина llm-qoder (MIT).
+   * @eghrhegpe/dsh-connect-qoder@0.7.3 — словарь плагина llm-qoder (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41084,7 +42191,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usage.viewDetails': 'Подробнее',
   },
   /*
-   * misakanet@2.48.0@2.48.0 — словарь плагина misakanet.panel.density.v1 (Apache-2.0).
+   * misakanet@2.48.0 — словарь плагина misakanet.panel.density.v1 (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41240,7 +42347,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toast.few': 'уроков: {n}',
   },
   /*
-   * dsh-retrace@0.4.134@0.4.134 — словарь плагина retrace (MIT).
+   * dsh-retrace@0.4.134 — словарь плагина retrace (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41419,7 +42526,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'what.summaryTag': 'Сводка',
   },
   /*
-   * dsh-full-remote@0.3.7@0.3.7 — словарь плагина reverse-proxy (MIT).
+   * dsh-full-remote@0.3.7 — словарь плагина reverse-proxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41601,7 +42708,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tunnel.toast.stopped': 'Туннель остановлен.',
   },
   /*
-   * dsh-codebuddy-cli@0.4.3@0.4.3 — словарь плагина settings.codebuddy-cli (MIT).
+   * dsh-codebuddy-cli@0.4.3 — словарь плагина settings.codebuddy-cli (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41770,7 +42877,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Подключение DSH CodeBuddy CLI',
   },
   /*
-   * @zhiqiangme/dsh-autostart-workbuddy@26.10.20@26.10.20 — словарь плагина settings.dsh-autostart-workbuddy (MIT).
+   * @zhiqiangme/dsh-autostart-workbuddy@26.10.20 — словарь плагина settings.dsh-autostart-workbuddy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41830,7 +42937,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'emptyBackend': 'Бэкенд не вернул моделей.',
     'emptyFiltered': 'Нет моделей, подходящих под фильтры',
     'emptyHint': 'Пустой выбор означает «синхронизировать все модели бэкенда» (прежний смысл пустого списка разрешённых).',
-    'gatewayHub': 'workbuddy2api-hub',
+    'gatewayHub': 'workbuddy2api-hub (по умолчанию)',
     'gatewayHubHint': 'Сервис workbuddy2api-hub обслуживает один выход за раз (Китай или международный) и следует за переключателем выхода в верхней части панели workbuddy2api-hub. Выборы CN и GL сохраняются отдельно (общие с идентификаторами cn: и global: у wb2api); после переключения выхода на панели список моделей DSH меняется на соответствующий набор за несколько секунд.',
     'gatewayNotInstalled': 'Переключение на {name} выполнено, но он ещё не установлен: нажмите «Установить» ниже.',
     'gatewaySwitched': 'Переключено на {name}.',
@@ -41838,7 +42945,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'gatewayTimeout': 'Переключено на {name}, но за {seconds} с он не был готов; попробуйте «Повторить» или «Обновить» в списке моделей позже.',
     'gatewayTitle': 'Шлюз',
     'gatewayWaiting': 'Переключение на {name}, ожидание запуска…',
-    'gatewayWb2api': 'wb2api (по умолчанию)',
+    'gatewayWb2api': 'wb2api',
     'hubApply': 'Применить режим региона',
     'hubBoth': 'CN + GL (одна группа, независимые выходы)',
     'hubCnKey': 'Ключ региона CN (необязательно)',
@@ -41945,10 +43052,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updateTitle': 'Обновление плагина',
     'updateTooFresh': 'Новая версия всё ещё в периоде ожидания релиза pnpm. Попробуйте позже или выполните принудительное обновление.',
     'updateUpToDate': 'актуальная версия',
+    'gatewayCredentialFailed': 'Не удалось сохранить учётные данные шлюза. Проверьте службу учётных данных DSH и повторите попытку.',
+    'gatewayNoAccounts': 'Шлюз переключён, но его пул учётных записей пуст. Добавьте рабочую учётную запись перед синхронизацией моделей.',
+    'gatewaySynced': 'Переключено на {name}. Модели, URL и учётные данные сохранены и синхронизированы автоматически.',
+    'gatewaySyncFailed': 'Шлюз переключён, но автоматическая синхронизация не завершилась: {reason}',
     'vision': 'зрение',
   },
   /*
-   * @guowenzhang/dsh-mcp-manager@1.4.0@1.4.0 — словарь плагина settings.mcpManager (Apache-2.0).
+   * @guowenzhang/dsh-mcp-manager@1.4.0 — словарь плагина settings.mcpManager (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -41979,7 +43090,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'mcp.filter.option': '{name}',
     'mcp.form.addTitle': 'Добавить сервер MCP',
     'mcp.form.args': 'Аргументы (по одному в строке)',
-    'mcp.form.argsPlaceholder': '--argn--flag',
+    'mcp.form.argsPlaceholder': '--arg\n--flag',
     'mcp.form.cancel': 'Отмена',
     'mcp.form.close': 'Закрыть',
     'mcp.form.command': 'Команда',
@@ -42112,10 +43223,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'opt.state.failed': 'Не удалось сохранить',
     'opt.state.saved': 'Сохранено',
     'opt.state.saving': 'Сохранение',
+    'nav': 'Управление MCP',
     'unavailable': 'Настройка сейчас недоступна',
   },
   /*
-   * dsh-plugin-model-capability@1.4.0@1.4.0 — словарь плагина settings.model-capability (MIT).
+   * dsh-plugin-model-capability@1.4.0 — словарь плагина settings.model-capability (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -42292,7 +43404,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writeFailed': 'Запись отклонена:',
   },
   /*
-   * dsh-opencode-go@0.1.24@0.1.24 — словарь плагина settings.opencode-go (MIT).
+   * dsh-opencode-go@0.1.24 — словарь плагина settings.opencode-go (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -42476,7 +43588,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'visibilityHint': 'В списках выбора моделей в диалоге видны только включённые модели. Изменения применяются сразу. Устаревшие модели по умолчанию выключены, их можно включать по отдельности.',
   },
   /*
-   * dsh-plugin-capabilities@0.4.1@0.4.1 — словарь плагина settings.pluginCapabilities (MIT).
+   * dsh-plugin-capabilities@0.4.1 — словарь плагина settings.pluginCapabilities (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -42652,7 +43764,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zipTooLarge': 'ZIP-архив превышает ограничение в 32 MiB',
   },
   /*
-   * dsh-subusage@0.14.2@0.14.2 — словарь плагина settings.subusage (MIT).
+   * dsh-subusage@0.14.2 — словарь плагина settings.subusage (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -42715,8 +43827,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'errRevisionConflict': 'Настройки изменены в другом окне; перезагрузите страницу перед сохранением',
     'errTimeout': 'Истекло время запроса; повторите чуть позже или запросите меньше провайдеров',
     'errUnknownProvider': 'Запущенный хост старее и не знает об этом провайдере; перезапустите DSH, чтобы изменения вступили в силу',
-    'grokHelp': 'Подписка X и устаревшая SuperGrok используют одну запись: <https://grok.com/v1/billing?format=credits> и /v1/settings. Если на перенесённой учётной записи формат кредитов возвращает 500, для недельного процента используется запасной вариант — gRPC-web на grok.com. Новый недельный пул общий у подходящих официальных Grok, Grok Bot и Cursor для этого рабочего места, а не дополнительная квота Cursor. Тариф берётся из subscription_tier_display, а <prepaidBalance> показывается в USD. Если процент прокси отсутствует, данные получаются неполными: выдуманные 0% и расходы с предоплаты никогда не выдаются за включённое использование. У мест команды индивидуальные недельные пулы и общий предоплаченный баланс; эта запись читает только данные вошедшего пользователя, а не сводку рабочей области. Требуется вход через OAuth; XAI_API_KEY не заменяет его.',
-    'grokManaged': 'Данные для входа — это файл входа OAuth, общий для dsh-grok-kit / Grok CLI (<~/.grok/auth.json>); эта страница ничего не сохраняет и только читает файл. Когда срок действия токена доступа истекает, этот плагин обновляет его через официальную цепочку входа dsh-grok-kit (≥0.2.0) — тот же файл и та же блокировка записи, поэтому общий вход не может быть аннулирован этим обновлением; ручной повторный вход плагин просит только тогда, когда dsh-grok-kit отсутствует или обновление не удалось. Данные об использовании сначала берутся из адреса оплаты Grok CLI (cli-chat-proxy.grok.com); если этот формат кредитов не сработает, те же данные для входа используются для grok.com GetGrokCreditsConfig.',
+    'grokHelp': 'Подписка X и устаревшая SuperGrok используют одну запись: <grok.com/v1/billing?format=credits> и <grok.com/v1/settings>. Если на перенесённой учётной записи формат кредитов возвращает 500, для недельного процента используется запасной вариант — gRPC-web на grok.com. Новый недельный пул общий у подходящих официальных Grok, Grok Bot и Cursor для этого рабочего места, а не дополнительная квота Cursor. Тариф берётся из subscription_tier_display, а <prepaidBalance> показывается в USD. Если процент прокси не указан, выполняется одна клиентская проверка через gRPC с бюджетом 6 секунд. Полный успешный ответ с активным подходящим недельным или месячным периодом может подтвердить, что неявное значение proto3 означает 0% использования. В остальных случаях данные остаются неполными; расходы с предоплаты никогда не выдаются за включённое использование. У мест команды индивидуальные недельные пулы и общий предоплаченный баланс; эта запись читает только данные вошедшего пользователя, а не сводку рабочей области. Требуется вход через OAuth; XAI_API_KEY не заменяет его.',
+    'grokManaged': 'Данные для входа — это файл входа OAuth, общий для dsh-grok-kit / Grok CLI (<~/.grok/auth.json>); эта страница ничего не сохраняет и только читает файл. Когда срок действия токена доступа истекает, этот плагин обновляет его через официальную цепочку входа dsh-grok-kit (≥0.2.0) — тот же файл и та же блокировка записи, поэтому общий вход не может быть аннулирован этим обновлением; ручной повторный вход плагин просит только тогда, когда dsh-grok-kit отсутствует или обновление не удалось. Данные об использовании сначала берутся из адреса оплаты Grok CLI (cli-chat-proxy.grok.com); если этот формат кредитов не сработает или не содержит процента, те же данные для входа используются для grok.com GetGrokCreditsConfig.',
     'groupMemberBudget': 'Бюджет участника',
     'hint': 'Показывает расход по подписке у текущего провайдера моделей. Ключи наследуются от службы учётных данных или окружения либо задаются вручную. MiMo использует официальный Cookie платформы. Обновляются раз в минуту только активные провайдеры. Успешное чтение данных не означает, что квота ещё осталась.',
     'keyEnv': 'Унаследовано от {name}',
@@ -42820,10 +43932,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zaiProject': 'Идентификатор проекта (командные тарифы)',
     'zaiType': 'Тип тарифа',
     'zaiTypePersonal': 'Личный (тип=1)',
+    'nav': 'Расход подписки',
+    's7d': '7d',
+    'w5h': '5 ч',
+    'w7d': '7 дн.',
     'zaiTypeTeam': 'Командный (тип=2)',
   },
   /*
-   * dsh-token-use@0.3.3@0.3.3 — словарь плагина settings.tokenUsage (MIT).
+   * dsh-token-use@0.3.3 — словарь плагина settings.tokenUsage (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43003,10 +44119,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'versionRefresh': 'Проверить снова',
     'versionRefreshing': 'Проверка…',
     'versionState': 'Состояние',
+    'tab': 'Расход токенов',
     'versionUnknown': 'Неизвестно',
   },
   /*
-   * dsh-theme-manager@1.3.1@1.3.1 — словарь плагина themeManager (MIT).
+   * dsh-theme-manager@1.3.1 — словарь плагина themeManager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43191,7 +44308,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update.view': 'Открыть',
   },
   /*
-   * @chenmiao8563/dsh-token-ledger@1.1.2@1.1.2 — словарь плагина token-ledger (MIT).
+   * @chenmiao8563/dsh-token-ledger@1.1.2 — словарь плагина token-ledger (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43358,7 +44475,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zeroPriceNote': 'Цена 0 не обязательно означает бесплатно: возможно, в источнике просто не указана цена за токен для этой модели (некоторые платформы тарифицируют по часу работы GPU)',
   },
   /*
-   * dsh-version-update@1.4.4@1.4.4 — словарь плагина version-update (Apache-2.0).
+   * dsh-version-update@1.4.4 — словарь плагина version-update (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43529,7 +44646,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'versions.title': 'Доступные версии',
   },
   /*
-   * dsh-workload-report@0.6.6@0.6.6 — словарь плагина workload-report (MIT).
+   * dsh-workload-report@0.6.6 — словарь плагина workload-report (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43674,10 +44791,40 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tip.weekend': ' · выходной',
     'ws.activeDays': 'Активных дней: {days}',
     'ws.lastUsed': 'Последнее использование: {date}',
+    'hour.background': 'Обновление в фоне',
+    'profile.advice': 'Совет',
+    'profile.code.emptyResult': 'Ответ модели оказался пустым; применены локальные правила',
+    'profile.code.failed': 'Вызов модели не удался; применены локальные правила',
+    'profile.code.llmUnavailable': 'В этом DSH нет службы модели; применены локальные правила',
+    'profile.code.missingCredential': 'Нет учётных данных модели; применены локальные правила',
+    'profile.code.notStopped': 'Модель не завершилась нормально; применены локальные правила',
+    'profile.code.parseFailed': 'Не удалось разобрать ответ модели; применены локальные правила',
+    'profile.code.signInRequired': 'Вход не выполнен или нет модели; применены локальные правила',
+    'profile.code.timeout': 'Истекло время вызова модели; применены локальные правила',
+    'profile.generate': 'Создать профиль',
+    'profile.generating': 'Создание…',
+    'profile.hint': 'Только агрегаты · по запросу',
+    'profile.notice.cost': 'Модель вызывается, и это может повлечь расходы, только после нажатия «Создать профиль».',
+    'profile.notice.data': 'Отправляет только агрегаты за последние {days} дн. — без чатов, заголовков и путей',
+    'profile.notice.dataAll': 'Отправляет только агрегаты за всё время (не менее {days} дн.) — без чатов, заголовков и путей',
+    'profile.notice.model': 'Модель: {provider} / {model}',
+    'profile.notice.modelDefault': 'Модель: модель хоста по умолчанию (выбирается при нажатии)',
+    'profile.regenerate': 'Создать заново',
+    'profile.requestFailed': 'Не удалось создать профиль. Попробуйте ещё раз.',
+    'profile.risk': 'Риск: ',
+    'profile.signIn': 'Вход не выполнен: войдите в DeepSeek (пока применяются локальные правила)',
+    'profile.source.llm': 'Создано ИИ',
+    'profile.source.local': 'Локальные правила',
+    'profile.title': 'Профиль пользователя от ИИ',
+    'profile.truncated': 'Ответ обрезан; восстановлен и использован',
+    'profile.usage': 'Токенов ввода: {input} · Токенов вывода: {output} · {time}',
+    'profile.usage.local': 'Локальные правила · {time}',
+    'profile.window': 'По данным за последние {days} дн.',
+    'tab.aiProfile': 'Профиль ИИ',
     'ws.wait': 'Ожидание: {wait}',
   },
   /*
-   * @xrn1997/dsh-novel@0.7.0@0.7.0 — словарь плагина xrn1997-dsh-novel (Apache-2.0).
+   * @xrn1997/dsh-novel@0.7.0 — словарь плагина xrn1997-dsh-novel (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43838,12 +44985,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'sources.verify.startFailed': 'Не удалось начать проверку: {detail}',
     'status.dismissError': 'Скрыть эту ошибку',
     'status.locate': 'Найти →',
-    'status.saving': 'Сохранение элементов: {n}…',
     'status.stale': 'Проблема с соединением, повтор… (не удалось обновить статус задачи; показан последний кадр)',
+    'sources.auth.actionDone': 'Действие кнопки выполнено',
+    'sources.auth.actionFailed': 'Действие кнопки завершилось ошибкой: {detail}',
     'status.viewTask': 'Открыть задачу →',
   },
   /*
-   * @sidequest-007/dsh-atlas@1.0.9@1.0.9 — словарь плагина atlas (MIT).
+   * @sidequest-007/dsh-atlas@1.0.9 — словарь плагина atlas (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -43969,7 +45117,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'time.years': '{n} г',
   },
   /*
-   * dsh-client-auto-continue@0.15.0@0.15.0 — словарь плагина auto-continue (MIT).
+   * dsh-client-auto-continue@0.15.0 — словарь плагина auto-continue (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44113,7 +45261,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'stats.title': 'Статистика за сегодня',
   },
   /*
-   * @liaozhi/dsh-comfyui-based-tools@0.8.7@0.8.7 — словарь плагина comfyui-tools.panel (MIT).
+   * @liaozhi/dsh-comfyui-based-tools@0.8.7 — словарь плагина comfyui-tools.panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44144,15 +45292,9 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'disabledWindow': 'Поддерживаемые версии DeepSeek Harness: {min} ~ {max} (включительно).',
     'edit': 'Изменить',
     'editInstance': 'Изменить экземпляр',
-    'enabledLabel': 'Включить инструменты ComfyUI',
     'frameFirst': 'Первый кадр',
     'frameLast': 'Последний кадр',
-    'gateClosed': 'Инструменты НЕ зарегистрированы',
-    'gateMissingAssignment': 'инструмент не назначен экземпляру',
-    'gateMissingEnabled': 'переключатель выключен',
-    'gateMissingNoInstances': 'экземпляр не настроен',
     'gateOpen': 'Инструменты зарегистрированы в сессии',
-    'gateOpenPartial': 'Инструменты зарегистрированы частично ({ready}/{total})',
     'genDuration': 'прошло {duration}',
     'healthChecking': 'проверка…',
     'healthOffline': 'не в сети',
@@ -44252,10 +45394,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewLabelIso': 'Изометрия',
     'viewLabelSide': 'Вид сбоку',
     'viewLabelTop': 'Вид сверху',
+    'toolStatusRegistered': 'Зарегистрирован в сессии',
+    'toolStatusUnassigned': 'Экземпляр не назначен',
     'workflowDownloadFailed': 'Не удалось скачать рабочий процесс: {message}',
   },
   /*
-   * dsh-actions@0.4.1@0.4.1 — словарь плагина dsh-actions (MIT).
+   * dsh-actions@0.4.1 — словарь плагина dsh-actions (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44274,7 +45418,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'badgeTipApproval': 'подтверждение: {value}',
     'badgeTipExtends': 'расширяет: {id}',
     'badgeTipPanel': 'presentation.panel: {value}',
-    'badgeTipVisibility': 'видимость: {value}',
+    'badgeTipVisibility': 'agentVisible: {value}',
     'badgeVisibilityUi': 'Только вручную',
     'cancel': 'Отмена',
     'chipCancel': 'Остановить этот запуск',
@@ -44380,10 +45524,17 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceCollapse': 'Свернуть область запуска',
     'workspaceExpand': 'Развернуть область запуска',
     'nav': 'Действия',
+    'favorite': 'В избранное',
+    'migrationWarning': 'Старая видимость читается совместимо; ваш файл конфигурации не изменён. Все действия отображаются в панели. Используйте <agentVisible>, чтобы управлять доступом агента.',
+    'presentationConflict': 'Конфигурация изменилась. Обновите страницу перед повторной попыткой.',
+    'presentationFailed': 'Не удалось сохранить настройки отображения: {message}',
+    'reorderHandle': 'Перетащите, чтобы изменить порядок; пробел или Enter — взять элемент, стрелки — переместить, пробел или Enter — сохранить, Escape — отменить',
+    'reorderPosition': 'Изменение порядка: {label}, позиция {position}',
+    'unfavorite': 'Убрать из избранного',
     'run': 'Запустить',
   },
   /*
-   * @pinkbanana/dsh-balance@0.10.2@0.10.2 — словарь плагина dsh-balance (MIT).
+   * @pinkbanana/dsh-balance@0.10.2 — словарь плагина dsh-balance (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44521,7 +45672,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'punchcard.total': 'Запросов за этот период: {count}',
   },
   /*
-   * dsh-dupguard@1.10.0@1.10.0 — словарь плагина dsh-dupguard (MIT).
+   * dsh-dupguard@1.10.0 — словарь плагина dsh-dupguard (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44612,7 +45763,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'stripWhitespaceHint': 'Удалять все пробельные символы (включая переводы строк) перед распознаванием, чтобы разделённые повторы всё равно распознавались.',
     'systemNotify': 'Также отправлять системное уведомление',
     'systemNotifyBody': 'Обнаружен повторяющийся вывод, генерация остановлена. Нажмите, чтобы открыть.',
-    'systemNotifyHint': 'Отправляет дополнительное системное уведомление (уведомление браузера → всплывающее уведомление Windows / Центр уведомлений macOS), когда генерация остановлена. Срабатывает, только пока страница DSH скрыта; текст никогда не содержит название рабочей области или сессии. При первом включении браузер спросит разрешение.',
+    'systemNotifyHint': 'Отправляет дополнительное системное уведомление (уведомление браузера → всплывающее уведомление Windows / Центр уведомлений macOS), когда генерация остановлена. Срабатывает, только пока страница DSH не на переднем плане (фоновая вкладка, свёрнутое или неактивное окно); текст никогда не содержит название рабочей области или сессии. При первом включении браузер спросит разрешение.',
     'systemNotifyPermissionDefault': 'Разрешение на уведомления браузера: ещё не выдано (выключите и включите, чтобы спросить снова)',
     'systemNotifyPermissionDenied': 'Разрешение на уведомления браузера: отклонено (разрешите его в настройках сайта браузера)',
     'systemNotifyPermissionGranted': 'Разрешение на уведомления браузера: выдано',
@@ -44633,10 +45784,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Защита от повторов',
     'unavailable': 'Settings unavailable: no data for the Dupguard section was received. Verify the plugin is mounted (the host log should contain "[dupguard] 常驻插件 apply 开始") and that this DSH build exposes a settings channel (0.1.7+ needs a plugin Config export), then refresh the page.',
     'whitelistHint': 'Введите отдельные символы или целые подстроки — каждая запись определяется автоматически: одна кодовая точка без пробельных символов попадает в список символов, всё остальное — в список подстрок. Разделяйте записи пробелами или запятыми. Подстроки берутся буквально (с учётом регистра, без регулярных выражений); на запись приходится не больше {maxLen} кодовых точек, всего записей — не больше {maxCount}. Чтобы изменить обработку пробельных символов, правьте файл конфигурации.',
+    'persistStopLog': 'Записывать журнал остановок',
+    'persistStopLogHint': 'Добавляет по одной строке JSON на каждую остановку в ~/.dsh/dupgard/stops.jsonl (ротация после 2 МБ; только резидентная сборка npm). По умолчанию данные маскируются (без повторяющегося содержимого, названия сессии и пути рабочей области); задайте DSH_DUPGUARD_STOP_LOG_REDACT=0 для полного содержимого; DSH_DUPGUARD_STOP_LOG=off принудительно отключает запись.',
+    'add': 'Добавить',
+    'nav': 'Dupguard',
     'windowWarn': '⚠ Производному окну нужно {need} символов, но оно ограничено значением {current}; единицы длиннее {effective} символов не распознаются — уменьшите порог, множитель для кода или максимальную длину единицы.',
   },
   /*
-   * @neptune810/dsh-model-router@0.14.2@0.14.2 — словарь плагина dsh-model-router (MIT).
+   * @neptune810/dsh-model-router@0.14.2 — словарь плагина dsh-model-router (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44768,26 +45923,24 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'yieldedHint': 'Жёлтая точка = маршрутизатор уступил: вы выбрали модель вручную, поэтому он не вмешивается; нажмите, чтобы вернуть его',
   },
   /*
-   * dsh-notify-me@1.7.0@1.7.0 — словарь плагина dsh-notify-me (MIT).
+   * dsh-notify-me@1.7.0 — словарь плагина dsh-notify-me (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'dsh-notify-me': {
-    'attentionVisible': 'Также оповещать «нужно ваше участие», пока страница открыта',
-    'attentionVisibleHint': 'По умолчанию включено: оповещать даже на переднем плане, когда модель ждёт подтверждения / проверки плана / ответа.',
+    'attentionVisible': 'Также оповещать «нужно ваше участие», пока окно на переднем плане',
+    'attentionVisibleHint': 'Оповещать даже когда окно в фокусе. Выключите, чтобы слышать только после того, как окно уйдёт в фон (другое приложение, перекрытие или сворачивание).',
     'autoFocus': 'Нажмите на всплывающее уведомление, чтобы открыть этот диалог',
-    'autoFocusHint': 'По умолчанию включено: нажатие на всплывающее уведомление выводит DSH на передний план и переключает на диалог, из которого пришло оповещение. Когда выключено, нажатие на всплывающее уведомление ничего не делает.',
-    'blurb': 'Когда агент останавливается и ждёт вашего ответа (подтверждение / проверка плана / вопрос) или ответ в фоновом режиме завершается, вы получаете системное уведомление, звук и отметку в заголовке вкладки.',
+    'autoFocusHint': 'Нажатие переключает на диалог, из которого пришло оповещение; когда выключено, нажатие ничего не делает.',
+    'blurb': 'Уведомляйте, когда агенту нужно ваше участие или когда в фоновом режиме готов ответ.',
     'bridgeOff': 'Кнопки быстрого решения сейчас недоступны (',
-    'bridgeOffDesktop': 'Кнопки быстрого решения недоступны в десктопном приложении: страницы dsh-app:// не могут зарегистрировать Service Worker, поэтому подтверждающие всплывающие уведомления переходят в простую форму без кнопок, а тестовая кнопка отправляет только обычное уведомление. Это ограничение среды, а не сбой настройки.',
-    'bridgeOffTail': '); подтверждающие всплывающие уведомления переходят в простую форму.',
+    'bridgeOffDesktop': 'Страницы dsh-app:// не могут зарегистрировать Service Worker (оболочка не выдаёт привилегию allowServiceWorkers), а системное уведомление не содержит кнопок «Подтвердить» / «Отклонить»: оповещение о подтверждении всё равно появится — нажмите на него, чтобы открыть диалог и принять решение.',
+    'bridgeOffTail': '); это уведомление не содержит кнопок — нажмите на него, чтобы открыть диалог и принять решение.',
     'current': 'Текущий язык интерфейса',
     'currentQuiet': 'Не беспокоить по диалогу на экране',
-    'currentQuietHint': 'По умолчанию включено: ожидание внутри диалога, который вы смотрите, оставляет только отметку в заголовке вкладки — ни всплывающего уведомления, ни звука на карточке подтверждения. Если свернуть страницу, оповещение вернётся.',
-    'doneVisible': 'Также оповещать «ответ готов», пока страница открыта',
-    'doneVisibleHint': 'По умолчанию выключено: «готово» оповещает только тогда, когда страница скрыта или свёрнута, чтобы не создавать лишнего шума.',
+    'currentQuietHint': 'Ожидание внутри диалога, который вы смотрите, оставляет только отметку в заголовке вкладки — страница не перекрывается; если увести окно в фон или отойти от него, оповещения вернутся.',
     'enable': 'Включить напоминания',
-    'enableHint': 'Главный переключатель: когда выключен, нет всплывающих уведомлений, нет звуков, а заголовок вкладки не изменяется.',
+    'enableHint': 'Когда выключено: нет всплывающих уведомлений, нет звуков, а заголовок вкладки не изменяется.',
     'external': 'Внешние уведомления',
     'externalAdd': 'Добавить получателя',
     'externalAttentionHint': 'Также отправлять оповещения о подтверждении / проверке плана / вопросах на внешние конечные точки.',
@@ -44800,7 +45953,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'externalEmpty': 'Получателей доставки пока нет — нажмите «Добавить получателя», чтобы создать одного.',
     'externalEnable': 'Пересылать внешним получателям',
     'externalEnableHint': 'Главный переключатель: когда выключен, ничего не отправляется ни в одну внешнюю конечную точку.',
-    'externalHint': 'Дублировать оповещения в вебхук Discord / Bark / Gotify / свой вебхук, чтобы «вернуться» долетало до вас вне машины. Те же правила срабатывания, что и у локальных оповещений (переключатели видимости выше тоже применяются).',
+    'externalHint': 'Также отправляйте оповещения в Discord / Bark / Gotify / свои вебхуки, чтобы узнать о них вдали от компьютера. Правила срабатывания те же, что у локальных оповещений.',
     'externalNoTargets': 'Сначала добавьте хотя бы одного получателя доставки.',
     'externalOffHint': 'Сначала включите «Пересылать внешним получателям».',
     'externalPrivacy': 'Заголовок и текст оповещения (включая имя сессии и фрагмент) отправляются как есть на указанный вами адрес — используйте только те конечные точки, которым доверяете.',
@@ -44823,7 +45976,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'hostEnvAuto': 'Определять автоматически (рекомендуется)',
     'hostEnvDesktop': 'Десктоп (DSH Desktop)',
     'hostEnvDesktopForcedNote': ' (эта страница не dsh-app://: нажатие на всплывающее уведомление попытается запустить протокол dsh://, и браузер может показать запрос «открыть приложение?»)',
-    'hostEnvHint': 'По умолчанию определяется автоматически: страница dsh-app:// — это оболочка десктопа (DSH Desktop), всё остальное — веб-версия. Переопределите, если определение ошибочно: в десктопе нажатие на всплывающее уведомление поднимает окно через глубокую ссылку dsh://, а кнопки быстрого решения недоступны; в веб-версии это window.focus() и мост Service Worker.',
+    'hostEnvHint': 'По умолчанию определяется автоматически: страница dsh-app:// — это оболочка десктопа (DSH Desktop), всё остальное — веб-версия. Переопределите, если определение ошибочно: в десктопе нажатие на всплывающее уведомление открывает глубокую ссылку dsh:// (результат ненадёжен), а системные уведомления не содержат кнопок «Подтвердить» / «Отклонить»; в веб-версии это window.focus() и мост Service Worker.',
     'hostEnvMismatch': ' (автоопределение видит (',
     'hostEnvMismatchTail': '); ручной выбор перекрывает его)',
     'hostEnvWeb': 'Веб (браузер)',
@@ -44835,8 +45988,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'offHint': 'Напоминания выключены: сначала включите их, потом проверьте.',
     'permHint': 'Разрешение на уведомления ещё не выдано — нажмите один раз на странице и разрешите уведомления, чтобы могли появляться всплывающие уведомления (звук не затрагивается).',
     'quickActions': 'Подтверждать запросы прямо из всплывающего уведомления',
-    'quickActionsHint': 'По умолчанию включено: в оповещениях о подтверждении есть кнопки «Подтвердить» / «Отклонить», и одно нажатие закрывает запрос точно так же, как кнопки «Разрешить один раз» / «Отклонить» на карточке подтверждения. Нужен браузер с поддержкой Service Worker (http://127.0.0.1 или https); там, где это недоступно, остаются простые всплывающие уведомления.',
-    'quickApprovalNote': '«Подтвердить» — это то же самое, что «Разрешить один раз» на карточке подтверждения: разрешается только этот один вызов.',
+    'quickActionsHint': 'В оповещениях о подтверждении есть кнопки «Подтвердить» / «Отклонить», и одно нажатие закрывает запрос без переключения обратно. Нужен браузер с поддержкой Service Worker (http://127.0.0.1 или https); там, где он не может работать (оболочка десктопа), оповещение остаётся простым уведомлением без кнопок — нажатие открывает диалог.',
+    'quickApprovalNote': '«Подтвердить» — это то же самое, что «Разрешить один раз» в диалоге: разрешается только этот один вызов.',
     'reset': 'Восстановить значения по умолчанию',
     'resetDone': 'Значения по умолчанию восстановлены.',
     'sent': 'Тестовое оповещение отправлено · язык уведомлений: ',
@@ -44846,7 +45999,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'soundCleared': 'Свой звук удалён; это оповещение использует встроенный сигнал.',
     'soundCustom': 'Свой звуковой файл',
     'soundDoneLabel': 'Звук «ответ готов»',
-    'soundHint': 'Главный переключатель сигнала; что именно играет, задаётся полем «Звук оповещения» ниже.',
+    'soundHint': 'Главный переключатель сигнала; что именно играет, задаётся в разделе «Дополнительно → Звук оповещения».',
     'soundNone': 'Файл ещё не выбран',
     'soundNotAudio': 'Это не звуковой файл, который может воспроизвести этот браузер.',
     'soundOffHint': 'Переключатель «Звук» выключен: включите его, чтобы прослушать (с выключенным переключателем сами оповещения тоже беззвучны).',
@@ -44859,28 +46012,49 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'soundReadFail': 'Не удалось прочитать файл.',
     'soundSaved': 'Свой звук сохранён: ',
     'soundSource': 'Звук оповещения',
-    'soundSourceHint': 'Каждый вид оповещения выбирает свой источник звука; они никак не влияют друг на друга. По умолчанию используется встроенный сигнал плагина.',
+    'soundSourceHint': 'Каждый вид оповещения выбирает свой источник звука; они никак не влияют друг на друга. По умолчанию используется встроенный сигнал.',
     'soundSynth': 'Встроенный сигнал (по умолчанию)',
     'soundSynthNote': 'Сигнал синтезируется плагином — у «нужно ваше участие» и «ответ готов» разные схемы.',
     'soundSystem': 'Системный звук уведомления (его играет ОС)',
     'soundSystemNote': 'У плагина нет своего сигнала: всплывающее уведомление всё равно появится, но звук останется за операционной системой, поэтому его тембр зависит от ваших системных настроек уведомлений. Переключатель «Звук» выше всё равно его отключает.',
     'soundTooBig': 'Файл слишком большой; предел — ',
     'subagentQuiet': 'Игнорировать сессии субагентов',
-    'subagentQuietHint': 'По умолчанию включено: фоновые сессии, созданные субагентом, не вызывают ни оповещений «нужно ваше участие», ни «ответ готов» — это шаги другого диалога, уже охваченные его собственным оповещением. Открытая у вас сессия субагента оповещается как обычно. Выключите, чтобы оповещать о каждой сессии.',
+    'subagentQuietHint': 'Пропускать сессии, созданные субагентом (их покрывает родительский диалог); открытая у вас сессия оповещается как обычно.',
     'testApprovalBtn': 'Проверить кнопки подтверждения',
-    'testApprovalNoBridge': 'Отправлено простое тестовое уведомление (кнопки быстрого решения требуют Service Worker, которого нет в этой среде, поэтому они не отображаются).',
+    'testApprovalNoBridge': 'Тестовое оповещение отправлено: уведомления десктопа не содержат кнопок — нажмите на него, чтобы открыть диалог и принять решение.',
     'testAttention': 'Проверить «нужно ваше участие»',
     'testDone': 'Проверить «ответ готов»',
-    'testHint': 'Отправить одно тестовое оповещение с текущими настройками (без ограничений переключателями «пока страница открыта» выше).',
+    'testHint': 'Отправить по одному оповещению каждого вида с текущими настройками; переключатели «Когда оповещать» при этом не учитываются.',
     'testNeedsQuick': 'Включите «Подтверждать запросы прямо из всплывающего уведомления» выше, чтобы проверить кнопки.',
     'testTitle': 'Быстрая проверка',
     'toast': 'Системные уведомления',
-    'toastHint': 'Собственные всплывающие уведомления через браузер (центр уведомлений Windows); требуется разрешение на уведомления.',
+    'toastHint': 'Через системный центр уведомлений; требуется разрешение на уведомления, а в десктопе такие уведомления не содержат кнопок «Подтвердить» / «Отклонить».',
     'versionLine': 'Версия плагина: dsh-notify-me v',
+    'adAlways': 'Закрывать всегда',
+    'adNever': 'Никогда не закрывать',
+    'adPresent': 'Оставлять, пока вас нет',
+    'advanced': 'Дополнительно',
+    'advancedHint': 'Звуки оповещений · внешняя пересылка · среда выполнения',
+    'autoDismiss': 'Автоматически закрывать всплывающее уведомление',
+    'autoDismissHint': 'Оповещение, пришедшее, пока вас не было, должно остаться на месте, когда вы вернётесь. «Оставлять, пока вас нет» только приводит в порядок, пока страница открыта.',
+    'collapse': 'Скрыть',
+    'donePolicy': 'Когда приходят оповещения «ответ завершён»',
+    'donePolicyHint': '«Тихо для открытой» значит, что беседа, которую вы читаете, завершается беззвучно, пока любая другая беседа по-прежнему оповещает — это удобно, когда открыто несколько бесед.',
+    'dpAlways': 'Всегда',
+    'dpBackground': 'Только в фоне',
+    'dpSmart': 'Тихо для открытой',
+    'expand': 'Показать',
+    'nav': 'Уведомить меня',
+    'permHintInline': 'Ещё не разрешено — разрешите один раз на странице.',
+    'resetHint': 'Вернуть все перечисленные выше параметры к значениям по умолчанию (включая выбранные звуковые файлы).',
+    'secDiag': 'Среда выполнения и диагностика',
+    'secTest': 'Проверить',
+    'secWays': 'Как вас уведомляют',
+    'secWhen': 'Когда оповещать',
     'volume': 'Громкость',
   },
   /*
-   * @ggboy123/dsh-paper-reader@1.5.1@1.5.1 — словарь плагина dsh-paper-reader (MIT).
+   * @ggboy123/dsh-paper-reader@1.5.1 — словарь плагина dsh-paper-reader (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -44990,10 +46164,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'setTranslateTitle': 'Конечная точка перевода',
     'sync': 'Чат всё ещё открыт на другой статье — нажмите, чтобы переключиться на текущую',
     'upload': 'Загрузить PDF в эту тему',
+    'ok': 'ОК',
     'uploadBtn': 'Загрузить PDF',
   },
   /*
-   * dsh-plugin-rollout-scout@1.6.0@1.6.0 — словарь плагина dsh-plugin-rollout-scout (MIT).
+   * dsh-plugin-rollout-scout@1.6.0 — словарь плагина dsh-plugin-rollout-scout (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45124,7 +46299,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'verdict_unknown': 'неопределённо',
   },
   /*
-   * dsh-proactive@0.3.1@0.3.1 — словарь плагина dsh-proactive (MIT).
+   * dsh-proactive@0.3.1 — словарь плагина dsh-proactive (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45260,7 +46435,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspacePickPlaceholder': 'Выберите рабочую область…',
   },
   /*
-   * dsh-task-ledger@0.0.70@0.0.70 — словарь плагина dsh-task-ledger (MIT).
+   * dsh-task-ledger@0.0.70 — словарь плагина dsh-task-ledger (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45389,7 +46564,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceLabel': 'Рабочая область',
   },
   /*
-   * dsh-tavily-pool@0.3.1@0.3.1 — словарь плагина dsh-tavily-pool (MIT).
+   * dsh-tavily-pool@0.3.1 — словарь плагина dsh-tavily-pool (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45522,7 +46697,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Несохранённые изменения',
   },
   /*
-   * dsh-updater-npm@1.13.4@1.13.4 — словарь плагина dsh-updater-npm (MIT).
+   * dsh-updater-npm@1.13.4 — словарь плагина dsh-updater-npm (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45653,7 +46828,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'waiting': 'Загрузка / установка…',
   },
   /*
-   * @vibedev-si/dsh-vibedev@0.3.5@0.3.5 — словарь плагина dsh-vibedev (MIT).
+   * @vibedev-si/dsh-vibedev@0.3.5 — словарь плагина dsh-vibedev (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45760,10 +46935,43 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'transcriptionModel': 'Распознавание речи',
     'unavailable': 'Плагин не запущен, поэтому его настройки сейчас нельзя изменить.',
     'usage': 'Использование',
+    'categoryInstructionFollowing': 'Понимание и выполнение инструкций',
+    'categoryOther': 'Другое',
+    'categoryProductInteraction': 'Возможности продукта и взаимодействие',
+    'categoryResourceCost': 'Расход ресурсов и стоимость',
+    'categorySecurityPrivacyPermission': 'Безопасность, конфиденциальность и разрешения',
+    'categoryServiceStability': 'Стабильность и скорость',
+    'categoryTaskResult': 'Результат задачи',
+    'close': 'Закрыть',
+    'feedbackAttach': 'Приложить недавние сообщения об ошибках (могут содержать пути к файлам или фрагменты кода)',
+    'feedbackAttachEmpty': 'Недавних ошибок нет; приложить нечего.',
+    'feedbackAttachFailed': 'Не удалось прочитать сообщения об ошибках; приложить нечего.',
+    'feedbackAttachLoading': 'Чтение сообщений об ошибках…',
+    'feedbackAttachPreview': 'Будет приложено (записей: {entries}, {size}):',
+    'feedbackCancel': 'Отмена',
+    'feedbackCategories': 'Категория',
+    'feedbackCount': 'Записей: {n} / {max}',
+    'feedbackDetail': 'Подробности обратной связи',
+    'feedbackDone': 'Готово',
+    'feedbackErrorFailed': 'Не удалось отправить. Проверьте подключение и повторите попытку.',
+    'feedbackErrorInvalid': 'Обратная связь не принята в таком виде. Измените её и повторите попытку.',
+    'feedbackErrorRejected': 'VibeDev не принял эту обратную связь ({code}).',
+    'feedbackIntro': 'Расскажите, что работает, а что нужно улучшить. Обратная связь отправляется команде VibeDev с вашей учётной записью VibeDev.',
+    'feedbackMenu': 'Обратная связь',
+    'feedbackPlaceholder': 'Что пошло не так или что вы хотели бы увидеть?',
+    'feedbackQueuedLater': 'Сохранено; будет отправлено автоматически позже',
+    'feedbackQueuedOffline': 'Сохранено; будет отправлено автоматически, когда вы снова в сети',
+    'feedbackQueuedSignedOut': 'Сохранено; будет отправлено после входа в VibeDev',
+    'feedbackSend': 'Отправить',
+    'feedbackSending': 'Отправка…',
+    'feedbackSent': 'Отправлено. Спасибо!',
+    'feedbackSignedOut': 'Обратная связь отправляется с вашей учётной записью VibeDev, а не анонимно. Сначала войдите в VibeDev.',
+    'feedbackTitle': 'Обратная связь',
+    'localeTag': 'en',
     'videoModel': 'Видео',
   },
   /*
-   * deepseek-harness-zh_pro@0.10.3@0.10.3 — словарь плагина dsh-zh-settings (MIT).
+   * deepseek-harness-zh_pro@0.10.3 — словарь плагина dsh-zh-settings (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -45891,7 +47099,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zhWebSearchDesc': 'Когда включено, плагин перехватывает выбор бэкенда web_search по списку «Приоритет поисковых бэкендов» ниже; когда выключено, остаётся бэкенд, заданный развёртыванием. Поиск с несколькими движками (DuckDuckGo/Yandex/Bing/Wikipedia без ключа и необязательный API Tavily) — одна запись в этом списке приоритетов.',
   },
   /*
-   * dsh-local-link@1.2.4@1.2.4 — словарь плагина dsh.localLink (MIT).
+   * dsh-local-link@1.2.4 — словарь плагина dsh.localLink (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46000,7 +47208,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'pair.unreachable': 'Не удалось связаться с этим компьютером. Проверьте локальную сеть и повторите попытку.',
   },
   /*
-   * dsh-remote-explorer@0.8.5@0.8.5 — словарь плагина dshRemoteExplorer (Apache-2.0).
+   * dsh-remote-explorer@0.8.5 — словарь плагина dshRemoteExplorer (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46115,10 +47323,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wslStateStopped': 'Остановлен',
     'wslUser': 'Имя пользователя',
     'wslUserPlaceholder': 'пусто = пользователь по умолчанию',
+    'cwd': 'Удалённый каталог',
+    'log': 'Журнал хода выполнения',
+    'nav': 'Удалённые сессии',
     'wslVersion': 'Версия',
   },
   /*
-   * dsh-expert-orchestrator@2.9.8@2.9.8 — словарь плагина expertSources (MIT).
+   * dsh-expert-orchestrator@2.9.8 — словарь плагина expertSources (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46207,7 +47418,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'rec.willEnableOnly': 'Будут включены (уже скачаны):',
     'settings.desc': 'Управление пакетами экспертов-источников: включение, скачивание, обновление и удаление.',
     'settings.loading': 'Загрузка источников…',
-    'settings.nav': 'dsh-expert-orchestrator',
     'settings.reload': 'Перезагрузить',
     'settings.subtitle': 'Управление экспертами-источниками',
     'settings.title': 'dsh-expert-orchestrator',
@@ -46253,7 +47463,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status.verifyFailed': 'Проверка не пройдена',
   },
   /*
-   * dsh-mcp-studio@1.0.6@1.0.6 — словарь плагина h3.internal.event. (MIT).
+   * dsh-mcp-studio@1.0.6 — словарь плагина h3.internal.event. (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46370,7 +47580,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspaceUnavailable': 'Рабочая область недоступна. Откройте или подключите рабочую область перед созданием навыка.',
   },
   /*
-   * dsh-hypatia-auto-memory@2.4.1@2.4.1 — словарь плагина hypatia-auto-memory (MIT).
+   * dsh-hypatia-auto-memory@2.4.1 — словарь плагина hypatia-auto-memory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46486,7 +47696,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewMemory': 'Память',
   },
   /*
-   * @mstar-harness/dsh@4.0.4@4.0.4 — словарь плагина mstar-panel (MIT).
+   * @mstar-harness/dsh@4.0.4 — словарь плагина mstar-panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46627,7 +47837,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zone.tasks.total': 'Планов: {count}',
   },
   /*
-   * @telosmaylx/dsh-session-notify@0.1.23@0.1.23 — словарь плагина session-complete-notify (MIT).
+   * @telosmaylx/dsh-session-notify@0.1.23 — словарь плагина session-complete-notify (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46741,7 +47951,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'volumeTest': 'Тест',
   },
   /*
-   * @awiki/dsh-plugin@0.3.18@0.3.18 — словарь плагина settings.awiki (MIT).
+   * @awiki/dsh-plugin@0.3.18 — словарь плагина settings.awiki (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -46823,7 +48033,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tenantArchived': 'Арендатор архивирован; его локальные данные сохранены.',
     'tenantChangeFailed': 'Операция с арендатором не выполнена. Если это было переключение, хост попытался восстановить предыдущего арендатора.',
     'tenantCreate': 'Создать арендатора',
-    'tenantCreated': 'Арендатор создан.',
+    'tenantCreated': 'Сервер добавлен. Возможности подтвердятся при подключении. После входа посмотрите раздел «Возможности сервера» — там переписка и шифрование.',
     'tenantCurrent': 'Текущий',
     'tenantCustom': 'Пользовательский',
     'tenantDiagnostic': 'Не удалось безопасно определить прежнюю структуру арендаторов. Предыдущая среда выполнения сохранена, а локальный диагностический отчёт записан.',
@@ -46866,10 +48076,23 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updateTitle': 'Обновления плагинов',
     'updateUnavailable': 'Сведения об обновлениях недоступны. Политика других арендаторов не используется.',
     'updateUnchecked': 'Обновления ещё не проверялись.',
+    'featureAgents': 'Агенты',
+    'featureChat': 'Сообщения',
+    'featureEncryption': 'Зашифрованные разговоры',
+    'featureGroups': 'Групповые разговоры',
+    'featureMail': 'Почта',
+    'featureRetry': 'Обновить возможности сервера',
+    'featuresTab': 'Возможности сервера',
+    'featureSupported': 'Доступно',
+    'featureUnknown': 'Пока не подтверждено. Повторите попытку.',
+    'featureUnsupported': 'Не поддерживается этим сервером',
+    'featureUpdatedAt': 'Последнее подтверждение',
+    'featureUpgradeRequired': 'Сервер нужно обновить, чтобы подтвердить его возможности. Локальные идентичности и история остаются доступными.',
+    'nav': 'AWiki',
     'updateVersions': 'Текущая версия: {current}; рекомендуемая: {recommended}; минимально поддерживаемая: {minimum}.',
   },
   /*
-   * dsh-mcp-panel@0.6.29@0.6.29 — словарь плагина settings.mcpPanel (Apache-2.0).
+   * dsh-mcp-panel@0.6.29 — словарь плагина settings.mcpPanel (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47005,7 +48228,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writeToProfile': 'Записать в профиль',
   },
   /*
-   * @liaozhi/dsh-meme-gen@0.9.2@0.9.2 — словарь плагина settings.meme (MIT).
+   * @liaozhi/dsh-meme-gen@0.9.2 — словарь плагина settings.meme (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47125,7 +48348,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warningsLabel': 'Предупреждения',
   },
   /*
-   * @nanmicoder/dsh-plugin-market@0.2.0@0.2.0 — словарь плагина settings.pluginHub (MIT).
+   * @nanmicoder/dsh-plugin-market@0.2.0 — словарь плагина settings.pluginHub (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47242,7 +48465,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'willRunConfirm': 'Будет выполнено (то же, что dsh plugin add):',
   },
   /*
-   * dsh-plugin-security@0.5.0@0.5.0 — словарь плагина settings.security (MIT).
+   * dsh-plugin-security@0.5.0 — словарь плагина settings.security (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47387,7 +48610,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'whitelistTitle': 'Белый список (не сканируется)',
   },
   /*
-   * dsh-workbuddy2api@0.6.11@0.6.11 — словарь плагина settings.workbuddy2api (MIT).
+   * dsh-workbuddy2api@0.6.11 — словарь плагина settings.workbuddy2api (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47520,7 +48743,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.title': 'Пулы аккаунтов WorkBuddy (dsh-workbuddy2api)',
   },
   /*
-   * dsh-ui-enhancer@0.2.0@0.2.0 — словарь плагина ui-enhancer (MIT).
+   * dsh-ui-enhancer@0.2.0 — словарь плагина ui-enhancer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47647,7 +48870,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.wallpaper': 'Обои рабочего стола',
   },
   /*
-   * @alanzhao/dsh-balance-monitor@0.8.2@0.8.2 — словарь плагина balance (MIT).
+   * @alanzhao/dsh-balance-monitor@0.8.2 — словарь плагина balance (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47741,7 +48964,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Баланс недоступен',
   },
   /*
-   * @gamegeek-saikel/dsh-cost-meter@0.5.1@0.5.1 — словарь плагина cost-meter (MIT).
+   * @gamegeek-saikel/dsh-cost-meter@0.5.1 — словарь плагина cost-meter (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47840,7 +49063,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.unpriced': 'Шагов без цены: {count}',
   },
   /*
-   * dsh-ballast@0.5.0@0.5.0 — словарь плагина dsh-ballast (MIT).
+   * dsh-ballast@0.5.0 — словарь плагина dsh-ballast (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -47939,7 +49162,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unpriced.title': 'Хост не предоставил числовые цены. Эти строки исключены из итогов и долей; они не равны нулю.',
   },
   /*
-   * dsh-delete-session@0.2.1@0.2.1 — словарь плагина dsh-delete-session (MIT).
+   * dsh-delete-session@0.2.1 — словарь плагина dsh-delete-session (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48030,10 +49253,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'starAsk': '⭐ Звёздочка порадует автора',
     'starCta': 'Хорошо — держите',
     'title': 'Удалить сессию',
+    'Moved ${ok}, ${fail} failed': 'Перемещено: ${ok}',
     'untitled': 'Сессия без названия',
   },
   /*
-   * dsh-instance-manager@0.12.0@0.12.0 — словарь плагина dsh-instance-manager (MIT).
+   * dsh-instance-manager@0.12.0 — словарь плагина dsh-instance-manager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48132,7 +49356,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'uptime': 'работает ',
   },
   /*
-   * dsh-jev-advisor@0.1.6@0.1.6 — словарь плагина dsh-jev-advisor (MIT).
+   * dsh-jev-advisor@0.1.6 — словарь плагина dsh-jev-advisor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48224,7 +49448,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.unsaved': 'Несохранённые изменения',
   },
   /*
-   * @240xu/dsh-message-ops@0.11.0@0.11.0 — словарь плагина dsh-message-ops (MIT).
+   * @240xu/dsh-message-ops@0.11.0 — словарь плагина dsh-message-ops (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48272,50 +49496,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'op.deleteDesc': 'Скрывает только выбранное сообщение; всё остальное остаётся.',
     'op.revert': 'Откат: удалить это сообщение и все следующие',
     'op.revertDesc': 'Скрывает выбранное сообщение и весь последующий видимый контент; журнал остаётся неизменяемым, поэтому контекст можно восстановить повторной отправкой.',
-    'panel.all': 'Все',
-    'panel.assistant': 'Ассистент',
-    'panel.branch': 'Ветка отсюда',
-    'panel.branchDone': 'Ветка создана: {id}',
-    'panel.branchHint': 'Скопировать всё до этого сообщения включительно в новую сессию',
-    'panel.busy': 'Выполняется…',
-    'panel.cancel': 'Отмена',
-    'panel.confirmDelete': 'Удалить',
-    'panel.count': 'Всего: {n} · видимых: {v} · скрытых: {s}',
-    'panel.delete': 'Удалить только это',
-    'panel.deleted': 'Сессия перемещена в корзину',
-    'panel.deleteDone': 'Удаление применено',
-    'panel.deleteHint': 'Скрывает только это сообщение',
-    'panel.deleteSession': 'Удалить всю сессию',
-    'panel.deleteSessionHint': 'Перемещает её в корзину на 7 дней. Введите название для подтверждения:',
-    'panel.deleting': 'Удаление…',
-    'panel.detailLoading': 'Загрузка полного текста…',
-    'panel.empty': 'Нет сообщений.',
-    'panel.expires': 'истекает',
-    'panel.includeShadowed': 'Включать скрытые',
-    'panel.loadFail': 'Не удалось загрузить: ',
-    'panel.loading': 'Загрузка…',
-    'panel.messages': 'Сообщения',
-    'panel.noMatch': 'Совпадений нет.',
-    'panel.openNew': 'Открыть новую сессию',
-    'panel.purge': 'Удалить безвозвратно',
-    'panel.purgeConfirm': 'Нажмите ещё раз для удаления безвозвратно',
-    'panel.purged': 'Запись в корзине удалена безвозвратно',
-    'panel.restore': 'Восстановить',
-    'panel.restored': 'Сессия восстановлена',
-    'panel.revert': 'Откатить до этого места',
-    'panel.revertDone': 'Откат применён',
-    'panel.revertHint': 'Включает это сообщение и все видимые сообщения после него',
-    'panel.running': 'Сессия выполняется: остановите её перед откатом, удалением или созданием ветки.',
-    'panel.search': 'Поиск по этой сессии',
-    'panel.searchFail': 'Не удалось выполнить поиск: ',
-    'panel.searchHint': 'Ищет по полному тексту, а не только по фрагментам',
-    'panel.selectHint': 'Выберите сообщение, чтобы увидеть полный текст и действия.',
-    'panel.shadowed': 'откачено',
-    'panel.tool': 'Инструмент',
-    'panel.trash': 'Корзина',
-    'panel.trashEmpty': 'Корзина пуста.',
-    'panel.untitled': 'Сессия без названия',
-    'panel.user': 'Пользователь',
     'quote.done': 'Цитата добавлена в поле ввода',
     'quote.unavailable': 'Цитирование недоступно (поле ввода заблокировано или нет полного текста)',
     'redo.desc': 'Вернуть откатанное сообщение обратно в чат',
@@ -48332,7 +49512,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'undo.none.redo': 'Нет отката для повторения',
   },
   /*
-   * dsh-pomodoro@0.5.5@0.5.5 — словарь плагина dsh-pomodoro (MIT).
+   * dsh-pomodoro@0.5.5 — словарь плагина dsh-pomodoro (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48422,7 +49602,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'timer.remaining': '{phase}, осталось {time}',
   },
   /*
-   * @yolk_vat-y/dsh-project-memory@0.6.3@0.6.3 — словарь плагина dsh-project-memory (MIT).
+   * @yolk_vat-y/dsh-project-memory@0.6.3 — словарь плагина dsh-project-memory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48512,7 +49692,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.task': 'Задачи',
   },
   /*
-   * dsh-prompt-manager@1.5.2@1.5.2 — словарь плагина dsh-prompt-manager (MIT).
+   * dsh-prompt-manager@1.5.2 — словарь плагина dsh-prompt-manager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48612,7 +49792,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'untitled': 'Промпт без названия',
   },
   /*
-   * dsh-scheduler@2026.9.192@2026.9.192 — словарь плагина dsh-scheduler (MIT).
+   * dsh-scheduler@2026.9.192 — словарь плагина dsh-scheduler (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48715,7 +49895,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'type.once': 'Однократно',
   },
   /*
-   * dsh-session-steward@0.5.5@0.5.5 — словарь плагина dsh-session-steward (MIT).
+   * dsh-session-steward@0.5.5 — словарь плагина dsh-session-steward (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48804,10 +49984,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'panel.tab.history': 'Дом престарелых',
     'panel.tab.manage': 'Управление',
     'panel.title': 'Session Steward',
+    'card.directDelete': 'Прямое удаление записей',
+    'card.directDelete.desc': 'Если включено, в строках результатов на панели поиска появляется кнопка удаления (подтверждение в два шага, тот же порядок действий, что в режиме управления). По умолчанию выключено.',
+    'menu.deleteSession': 'Удалить сессию',
+    'menu.deleteSession.confirm': 'Подтвердить удаление',
     'panel.untitled': '(без названия)',
   },
   /*
-   * dsh-skills-manager-plus@0.2.2@0.2.2 — словарь плагина dsh-skills-manager-plus (MIT).
+   * dsh-skills-manager-plus@0.2.2 — словарь плагина dsh-skills-manager-plus (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -48916,7 +50100,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'nav': 'Навыки и команды',
   },
   /*
-   * @yugasun/dsh-web-search@0.2.5@0.2.5 — словарь плагина dsh-web-search (MIT).
+   * @yugasun/dsh-web-search@0.2.5 — словарь плагина dsh-web-search (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49019,7 +50203,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'typeNeural': 'Нейросетевой',
   },
   /*
-   * dsh-freeroute@0.8.24@0.8.24 — словарь плагина free-proxy (MIT).
+   * dsh-freeroute@0.8.24 — словарь плагина free-proxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49114,7 +50298,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknown': 'неизвестно',
   },
   /*
-   * @fengbinmov/dsh-git-panel@0.1.1@0.1.1 — словарь плагина git-panel (MIT).
+   * @fengbinmov/dsh-git-panel@0.1.1 — словарь плагина git-panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49215,7 +50399,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.git': 'Git',
   },
   /*
-   * dsh-harden@0.0.2@0.0.2 — словарь плагина harden (MIT).
+   * dsh-harden@0.0.2 — словарь плагина harden (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49314,7 +50498,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'shell.sectionLabel': 'DSH Optimize',
   },
   /*
-   * @weibaohui/hermes-loop@0.3.0@0.3.0 — словарь плагина hermes-loop (MIT).
+   * @weibaohui/hermes-loop@0.3.0 — словарь плагина hermes-loop (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49406,10 +50590,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'written.pluginEmpty': 'Пока нет выведенных навыков',
     'written.sessionEmpty': 'Пока ничего из этого диалога — ревью появятся здесь, как только сработает порог',
     'written.tab.plugin': 'Этот плагин',
+    'tab': 'Hermes Loop',
     'written.tab.session': 'Эта сессия',
   },
   /*
-   * dsh-memory-porter@0.1.0@0.1.0 — словарь плагина memory-porter (MIT).
+   * dsh-memory-porter@0.1.0 — словарь плагина memory-porter (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49499,7 +50684,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'top.stored': 'Перенесённые воспоминания',
   },
   /*
-   * meow-memory@0.31.0@0.31.0 — словарь плагина meow-memory (MIT).
+   * meow-memory@0.31.0 — словарь плагина meow-memory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49598,7 +50783,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.unavailable': 'Это подключение не поддерживает запись настроек (изменять их могут только локальные подключения).',
   },
   /*
-   * dsh-model-pricing@0.6.1@0.6.1 — словарь плагина model-pricing (Apache-2.0).
+   * dsh-model-pricing@0.6.1 — словарь плагина model-pricing (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49702,7 +50887,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'yourRoute': 'ваш маршрут: {input}/{output}',
   },
   /*
-   * dsh-net-proxy@0.8.0@0.8.0 — словарь плагина net-proxy (MIT).
+   * dsh-net-proxy@0.8.0 — словарь плагина net-proxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49804,7 +50989,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'username': 'Имя пользователя (необязательно)',
   },
   /*
-   * dsh-plugin-notify-sounds@1.8.4@1.8.4 — словарь плагина notify-sounds (MIT).
+   * dsh-plugin-notify-sounds@1.8.4 — словарь плагина notify-sounds (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -49898,7 +51083,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'volume.title': 'Громкость',
   },
   /*
-   * dsh-pocket@2.12.0@2.12.0 — словарь плагина pocketMobileNav (GPL-2.0).
+   * dsh-pocket@2.12.0 — словарь плагина pocketMobileNav (GPL-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50001,7 +51186,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'on': 'Вкл',
   },
   /*
-   * dsh-quota@0.14.5@0.14.5 — словарь плагина quota (MIT).
+   * dsh-quota@0.14.5 — словарь плагина quota (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50107,7 +51292,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usageAlert.view': 'Показать',
   },
   /*
-   * @goodandready/dsh-russian-lang@0.4.0@0.4.0 — словарь плагина russian-lang (MIT).
+   * @goodandready/dsh-russian-lang@0.4.0 — словарь плагина russian-lang (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50205,10 +51390,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updaterSuccess': '✅ Плагин успешно обновлён! Перезапустите DSH для применения.',
     'updaterUpdating': 'Установка обновления…',
     'updaterUpToDate': 'Установлена последняя версия',
+    'yo': 'Буква «ё»',
     'yoDesc': 'Восстанавливает «ё» в частых словах (ещё, идёт и т. д.).',
   },
   /*
-   * @zaimokuza/dsh-acp-adapter@0.1.0-rc.10@0.1.0-rc.10 — словарь плагина settings.acp (MIT).
+   * @zaimokuza/dsh-acp-adapter@0.1.0-rc.10 — словарь плагина settings.acp (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50310,7 +51496,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warning.groupLoad': 'Не удалось загрузить каталог «{name}». Проверьте журналы DSH.{reference}',
   },
   /*
-   * @dan-ai-studio/dshopencodego@0.1.46@0.1.46 — словарь плагина settings.dshopencodego (MIT).
+   * @dan-ai-studio/dshopencodego@0.1.46 — словарь плагина settings.dshopencodego (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50407,10 +51593,91 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usageUnpricedModels': 'Нет опубликованного тарифа:',
     'usageWeekly': 'Неделя',
     'writeFailed': 'Не удалось сохранить настройки',
+    'requestLogClose': 'Закрыть',
+    'requestLogColCache': 'Из кэша',
+    'requestLogColFirstToken': 'Первый токен',
+    'requestLogColIn': 'Вход',
+    'requestLogColLatency': 'Задержка',
+    'requestLogColModel': 'Модель',
+    'requestLogColOut': 'Выход',
+    'requestLogColSession': 'Сессия',
+    'requestLogColStatus': 'Статус',
+    'requestLogColTime': 'Время',
+    'requestLogColTps': 'tok/s',
+    'requestLogDebug': 'Подробности отладки',
+    'requestLogDebugHint': 'События пула и полные идентификаторы сессий. Иначе сессии обрезаются до 8 символов.',
+    'requestLogDetailError': 'Ошибка',
+    'requestLogDetailHasImage': 'с изображениями',
+    'requestLogDetailHeaders': 'Заголовки',
+    'requestLogDetailMessages': 'сообщения',
+    'requestLogDetailMethod': 'Метод',
+    'requestLogDetailPool': 'Пул',
+    'requestLogDetailRequest': 'Запрос',
+    'requestLogDetailResult': 'Результат',
+    'requestLogDetailSession': 'Сессия',
+    'requestLogDetailShape': 'Структура',
+    'requestLogDetailTiming': 'Замеры времени',
+    'requestLogDetailTokens': 'Токены',
+    'requestLogDetailTools': 'инструменты',
+    'requestLogDetailUrl': 'URL',
+    'requestLogDetailUserAgent': 'User-Agent',
+    'requestLogDisabled': 'Журнал запросов отключён.',
+    'requestLogDropped': 'отброшено',
+    'requestLogEmpty': 'Запросы не записаны. Включите журнал и отправьте запрос.',
+    'requestLogEnabled': 'Записывать запросы',
+    'requestLogFilterModel': 'Модель',
+    'requestLogFilterModelAll': 'Все модели',
+    'requestLogFilterResult': 'Результат',
+    'requestLogFilterSession': 'Сессия содержит',
+    'requestLogGroupBy': 'Группировать по',
+    'requestLogGroupModel': 'Модель',
+    'requestLogGroupNone': 'Без группировки',
+    'requestLogGroupResult': 'Результат',
+    'requestLogGroupSession': 'Сессия',
+    'requestLogHint': 'Записи по каждому запросу для диагностики. По умолчанию выключено; включение не меняет поведение запросов.',
+    'requestLogMaxEntries': 'Хранить не более (записей)',
+    'requestLogMaxEntriesHint': 'От 50 до 500; первыми отбрасываются самые старые записи. По умолчанию 200.',
+    'requestLogOnlySession': 'только эта сессия',
+    'requestLogOpen': 'Открыть журнал запросов',
+    'requestLogPageHint': 'Одна строка на запрос. Таблица прокручивается, фильтры остаются на месте.',
+    'requestLogPageNext': 'Далее',
+    'requestLogPageOf': 'из',
+    'requestLogPagePrev': 'Назад',
+    'requestLogRefresh': 'Обновить',
+    'requestLogResultAll': 'Все',
+    'requestLogResultFail': 'Неудачные',
+    'requestLogResultOk': 'Успешные',
+    'requestLogReuse': 'Повторное использование соединений',
+    'requestLogReuseHint': 'Доля записанных запросов, которые использовали уже открытое соединение; оценка по числу новых сокетов и записанных запросов.',
+    'requestLogSlowOnly': 'Только медленные',
+    'requestLogSlowSeconds': 'медленнее, чем (секунды)',
+    'requestLogStatFailures': 'Ошибки',
+    'requestLogStatFirstToken': 'Среднее время до первого токена',
+    'requestLogStatLatency': 'Средняя задержка',
+    'requestLogStatRequests': 'Запросы',
+    'requestLogStatTps': 'Среднее, токенов в секунду',
+    'requestLogTitle': 'Журнал запросов',
+    'catalogDegraded': 'Каталог деградировал',
+    'catalogDegradedDocument': 'документация провайдера недоступна',
+    'catalogDegradedMetadata': 'метаданные моделей (models.dev) недоступны',
+    'catalogRefreshing': 'Показан последний известный каталог; обновление выполняется в фоне.',
+    'factsCached': 'Метаданные моделей взяты из последнего успешного чтения,',
+    'keepAliveHint': 'Сколько соединение с шлюзом удерживается между запросами. Более длинные паузы в диалоге стоят одного рукопожатия каждая; таймер перезапускается после каждого ответа.',
+    'keepAliveLabel': 'Простой соединения (секунды)',
+    'nav': 'OpenCode Go',
+    'pinClear': 'Убрать адрес',
+    'pinFailed': 'Недоступен — используется системный DNS',
+    'pinHint': 'Укажите имя шлюза для одного адреса, чтобы попасть к ближайшему краю. Имя всё ещё попадает в сертификат, поэтому адрес должен обслуживать это имя; недостижимый адрес переключает на системный DNS.',
+    'pinInvalid': 'Это не адрес IPv4 или IPv6',
+    'pinNone': 'Системный DNS',
+    'pinPlaceholder': 'Адрес IPv4 или IPv6',
+    'pinSave': 'Сохранить адрес',
+    'pinTitle': 'Фиксированный IP',
+    'pinUnavailable': 'Не удалось прочитать закреплённый адрес',
     'writeRejected': 'Запись настроек отклонена (пространство имён было перезагружено) — повторите попытку',
   },
   /*
-   * dsh-runninghub-api@0.1.6@0.1.6 — словарь плагина settings.runninghub (MIT).
+   * dsh-runninghub-api@0.1.6 — словарь плагина settings.runninghub (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50515,7 +51782,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workflows': 'Рабочие процессы',
   },
   /*
-   * dsh-token-meter-panel@0.6.4@0.6.4 — словарь плагина token-meter-panel (MIT).
+   * dsh-token-meter-panel@0.6.4 — словарь плагина token-meter-panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50614,7 +51881,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zeroDays': 'нет вызовов',
   },
   /*
-   * dsh-auto-memory@0.9.0@0.9.0 — словарь плагина autoMemory (MIT).
+   * dsh-auto-memory@0.9.0 — словарь плагина autoMemory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50694,7 +51961,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'userScope': 'Область пользователя (все рабочие области)',
   },
   /*
-   * bgjobs@0.2.6@0.2.6 — словарь плагина bgjobs (MIT).
+   * bgjobs@0.2.6 — словарь плагина bgjobs (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50772,7 +52039,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wd.unknown': '(неизвестная рабочая область)',
   },
   /*
-   * dsh-capability-panel@1.4.2@1.4.2 — словарь плагина capability-panel (MIT).
+   * dsh-capability-panel@1.4.2 — словарь плагина capability-panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50851,7 +52118,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trigger.tooltip': 'Контекст сессии: навыки, MCP и инструменты',
   },
   /*
-   * @nonamelego/dsh-catppuccin@0.6.3@0.6.3 — словарь плагина catppuccin (MIT).
+   * @nonamelego/dsh-catppuccin@0.6.3 — словарь плагина catppuccin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -50936,10 +52203,14 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update.retry': 'Повторить',
     'update.retryHint': 'Автоповтор через {s} с…',
     'update.title': 'Проверка обновлений плагина Catppuccin',
+    'glass.previewGround': 'Образец фона',
+    'glass.previewGroundHint': 'Эта полоса — сам фон страницы: перетащите ползунок яркости или переключите свечения, и фон изменится сразу.',
+    'glass.previewMode': 'Показать интерфейс',
+    'row.previewCode': 'Образец кода',
     'update.upToDate': 'Актуальная версия 🎉',
   },
   /*
-   * @cerbur/clutch-dsh-title@0.1.7@0.1.7 — словарь плагина clutch.title (MIT).
+   * @cerbur/clutch-dsh-title@0.1.7 — словарь плагина clutch.title (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51026,7 +52297,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view': 'Просмотр',
   },
   /*
-   * dsh-ds-balance@3.1.0@3.1.0 — словарь плагина ds-balance (MIT).
+   * dsh-ds-balance@3.1.0 — словарь плагина ds-balance (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51104,19 +52375,17 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'situation.unavailable': 'Баланс недоступен',
   },
   /*
-   * @luoshuizhiwei/dsh-desktop-restart@0.4.2@0.4.2 — словарь плагина dsh-desktop-restart (MIT).
+   * @luoshuizhiwei/dsh-desktop-restart@0.4.2 — словарь плагина dsh-desktop-restart (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'dsh-desktop-restart': {
-    'ariaConfirm': 'Нажмите ещё раз, чтобы подтвердить перезапуск настольного приложения',
-    'ariaDesktopOnly': 'Перезапуск настольного приложения (только в настольной сборке)',
-    'ariaError': 'Не удалось перезапустить; нажмите, чтобы повторить',
-    'ariaRestarting': 'Перезапуск настольного приложения',
-    'ariaScheduled': 'Перезапуск запланирован; страница вот-отключится',
-    'ariaWarnArmed': 'Перезапустить настольное приложение в любом случае, прервав текущие задачи',
-    'ariaWarnWait': 'Готовим подтверждение, подождите',
-    'ariaWithGuard': 'Перезапуск настольного приложения (',
+    'ariaConfirm': 'Подтвердить перезапуск',
+    'ariaError': 'Повторить',
+    'ariaRestarting': 'Перезапуск',
+    'ariaScheduled': 'Запланировано',
+    'ariaWarnArmed': 'Перезапустить всё равно',
+    'ariaWarnWait': 'Подождите',
     'blockedFallback': 'Идёт установка или обновление плагина; повторите перезапуск после завершения',
     'blockedSuffix': '; перезапуск остаётся заблокированным до его завершения.',
     'clickTwiceInterruptSuffix': '; вы всё ещё можете дважды нажать, чтобы перезапустить, но это прервёт их.',
@@ -51135,7 +52404,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'entryPanelTitle': 'Панель на боковой панели',
     'entryRowHint': 'Добавляет строку в разделе «Настройки» → «Общие»',
     'entryRowTitle': 'Запись на странице настроек',
-    'extrasSubtitle': 'Встроенные дополнения (не связаны с перезапуском)',
+    'extrasSubtitle': 'Встроенные дополнения',
     'guardFallback': 'Сейчас выполняется работа',
     'hideContactLabel': 'Скрыть «Обратная связь» в меню аккаунта',
     'hideContactOff': 'Показано: пункт снова появится ниже «Настройки», как обычно.',
@@ -51180,10 +52449,30 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wait': 'Подождите…',
     'warnAgainHint': ' Нажмите «Перезапустить всё равно?» ещё раз, чтобы продолжить.',
     'wholeApp': 'Перезапустить всё настольное приложение DeepSeek Harness',
+    'ariaIdle': 'Перезапуск',
+    'cancelWaiting': 'Отменить ожидание',
+    'guardAsk': '. Перезапуск сейчас прервёт их работу (файлы, которые записываются, могут остаться недописанными). Продолжить?',
+    'guardInstalling': 'Выполняется установка или обновление плагина',
+    'guardJobs': 'Фоновых задач: {n}',
+    'guardQueued': 'Сессий с сообщениями в очереди: {n}',
+    'guardTasksLine': 'Работа в процессе ({parts})',
+    'guardTurns': 'Раундов агентов, генерирующих ответ или выполняющих инструменты: {n}',
+    'lineSep': '; ',
+    'listSep': ', ',
+    'navLabel': 'Перезапустить приложение',
+    'statusBusy': 'Работа выполняется',
+    'statusDesktopOnly': 'Только настольное приложение',
+    'statusError': 'Ошибка',
+    'statusReady': 'Готово',
+    'statusWaiting': 'Ожидание',
+    'waitAndRestart': 'Дождаться и перезапустить',
+    'waitingCancelled': 'Ожидание отменено. Нажмите «Перезапуск», когда будете готовы.',
+    'waitingScheduled': 'Запланировано: перезапуск выполнится автоматически после завершения текущей работы.',
+    'waitingSuffix': '; перезапуск произойдёт автоматически после их завершения.',
     'wholeAppTooltip': 'Перезапуск всего настольного приложения (завершает текущий экземпляр и открывает его снова)',
   },
   /*
-   * dsh-ding@1.0.6@1.0.6 — словарь плагина dsh-ding (MIT).
+   * dsh-ding@1.0.6 — словарь плагина dsh-ding (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51265,7 +52554,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'volumeLabel': 'Громкость (%)',
   },
   /*
-   * @jiyr0119/dsh-service-console@0.7.0@0.7.0 — словарь плагина dsh-service-console (MIT).
+   * @jiyr0119/dsh-service-console@0.7.0 — словарь плагина dsh-service-console (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51344,7 +52633,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tab.settings': 'Настройки',
   },
   /*
-   * dsh-file-review@0.8.10@0.8.10 — словарь плагина file-review (MIT).
+   * dsh-file-review@0.8.10 — словарь плагина file-review (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51422,7 +52711,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.wordWrap.title': 'Автоматически переносить длинные строки',
   },
   /*
-   * @jaxzhou/dsh-file-explorer@0.1.11@0.1.11 — словарь плагина fileExplorer (MIT).
+   * @jaxzhou/dsh-file-explorer@0.1.11 — словарь плагина fileExplorer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51508,7 +52797,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.files': 'Файлы',
   },
   /*
-   * dsh-plugin-genui@0.15.1@0.15.1 — словарь плагина genui (MIT).
+   * dsh-plugin-genui@0.15.1 — словарь плагина genui (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51592,7 +52881,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'receipt.updated': 'Приложение обновлено',
   },
   /*
-   * dsh-gitbash-shell@0.42.2@0.42.2 — словарь плагина gitbashShell (MIT).
+   * dsh-gitbash-shell@0.42.2 — словарь плагина gitbashShell (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51676,7 +52965,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'variant.label': 'Четыре пресета вариантов «· Git Bash»',
   },
   /*
-   * @lijian-ui/dsh-im-gateway@0.3.5@0.3.5 — словарь плагина im-gateway (MIT).
+   * @lijian-ui/dsh-im-gateway@0.3.5 — словарь плагина im-gateway (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51765,7 +53054,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'type.weixin': 'WeChat',
   },
   /*
-   * lume-dsh-plugin@0.9.0@0.9.0 — словарь плагина lume (MIT).
+   * lume-dsh-plugin@0.9.0 — словарь плагина lume (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51854,7 +53143,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trigger.fallback': 'Выберите персону',
   },
   /*
-   * dsh-noletme@0.3.9@0.3.9 — словарь плагина noletme (MIT).
+   * dsh-noletme@0.3.9 — словарь плагина noletme (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -51940,7 +53229,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'pattern.weWill': 'Мы будем…',
   },
   /*
-   * dsh-oomol@1.0.0@1.0.0 — словарь плагина oomol.settings (MIT).
+   * dsh-oomol@1.0.0 — словарь плагина oomol.settings (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52018,7 +53307,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewOnGitHub': 'Посмотреть open-connector на GitHub',
   },
   /*
-   * @sleetdrop/dsh-plugin-topology@0.7.0@0.7.0 — словарь плагина pluginTopology (MIT).
+   * @sleetdrop/dsh-plugin-topology@0.7.0 — словарь плагина pluginTopology (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52026,7 +53315,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'back': 'Назад',
     'clearFilter': 'Сбросить фильтр',
     'clearSearch': 'Очистить поиск',
-    'closePanel': 'Закрыть панель',
     'consumersTitle': 'Потребители',
     'consumersUnit': 'потребителей',
     'consumerUnit': 'потребитель',
@@ -52042,19 +53330,17 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'frameAll': 'Показать всё',
     'frameReset': 'Сбросить кадр',
     'historyLabel': 'История переходов',
-    'historyRoot': 'Обзор',
     'inspectorCollapse': 'Свернуть инспектор',
     'inspectorEmptyHint': 'Нажмите на узел на холсте или нажмите «/» для поиска',
-    'inspectorEmptyTitle': 'Выберите плагин',
+    'inspectorEmptyTitle': 'Выберите узел',
     'inspectorExpand': 'Развернуть инспектор',
     'inspectorTitle': 'Инспектор',
-    'legendId': 'Порядковый номер создания экземпляра в текущем запуске',
+    'legendId': 'm, n — порядковые номера создания экземпляров в этом запуске',
     'legendIsolated': 'Изолированный плагин',
     'legendLabel': 'Легенда',
     'legendUnresolved': 'Неразрешённая зависимость',
     'loading': 'Загрузка…',
     'locatePlugin': 'Найти плагин',
-    'maximize': 'Развернуть',
     'metricDensity': 'Плотность связности',
     'metricDependencies': 'Зависимости',
     'metricDiameter': 'Самая длинная цепочка зависимостей',
@@ -52075,7 +53361,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'providersUnit': 'провайдеров',
     'providerUnit': 'провайдер',
     'rankdirToggle': 'Направление раскладки',
-    'resetView': 'Сбросить вид',
+    'resetView': 'Вписать в экран',
     'restore': 'Восстановить',
     'retry': 'Повторить',
     'searchNoResults': 'Совпадений нет',
@@ -52094,8 +53380,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'serviceSingleProvider': 'единственный провайдер',
     'startupDependency': 'зависимость',
     'startupDependent': 'зависимый',
-    'startupInstances': 'экземпляров',
-    'startupLate': 'поздний провайдер',
     'startupOrder': 'Порядок запуска',
     'startupSelected': 'выбран',
     'title': 'Топология плагинов',
@@ -52104,10 +53388,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unresolvedState': 'Состояние',
     'zoomIn': 'Приблизить',
     'zoomLevel': 'Уровень масштаба',
+    'exportLabel': 'Экспорт',
+    'pageIntro': 'Живой граф зависимостей плагинов и сервисов.',
+    'panelLabel': 'Топология плагинов',
+    'via': 'через',
+    'zoomReset': 'Сбросить к 100%',
     'zoomOut': 'Отдалить',
   },
   /*
-   * dsh-codex-auth@0.3.2@0.3.2 — словарь плагина settings.codexAuth (MIT).
+   * dsh-codex-auth@0.3.2 — словарь плагина settings.codexAuth (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52193,7 +53482,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writeFailed': 'Не удалось сохранить настройку',
   },
   /*
-   * dsh-dream-skin@10.16.0@10.16.0 — словарь плагина settings.dreamSkin (MIT).
+   * dsh-dream-skin@10.16.0 — словарь плагина settings.dreamSkin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52268,10 +53557,22 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skin.nebula': 'Фиолетовая туманность',
     'skin.rose': 'Материальный розовый',
     'skin.title': 'Скины',
+    'bg2.rotation': 'Смена обоев (перебор ссылок ниже по расписанию)',
+    'bg2.rotationDropped': 'Пропущено строк: {n} — недопустимые http/https-ссылки на изображения',
+    'bg2.rotationList': 'Ссылки для смены (по одной http/https-ссылке на изображение в строке, до 20)',
+    'bg2.rotationMinutes': 'Интервал смены (минуты, от 5 до 10080)',
+    'bg2.rotationNeedTwo': 'Для смены нужно минимум двух действующих ссылок, поэтому она отключена',
+    'bg2.rotationNoValid': 'Нет пригодных ссылок: в каждой строке должна быть http/https-ссылка на изображение',
+    'bg2.rotationNow': 'Следующие обои сейчас',
+    'bg2.rotationRandom': 'Случайно',
+    'bg2.rotationSave': 'Сохранить список',
+    'bg2.rotationSequential': 'По порядку',
+    'bg2.rotationUrlOnly': 'Смена по расписанию работает только для обоев по ссылке — сначала выберите «Ссылка на изображение» выше',
+    'glass.performance': 'Режим низкого энергопотребления (без размытия стекла)',
     'storage.hint': 'Некоторые настройки не удалось сохранить в локальном хранилище (квота исчерпана или браузер работает в приватном режиме). Они действуют в текущей сессии, но после перезапуска могут сброситься.',
   },
   /*
-   * dsh-grok-subscription@2.0.9@2.0.9 — словарь плагина settings.grokSubscription (MIT).
+   * dsh-grok-subscription@2.0.9 — словарь плагина settings.grokSubscription (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52360,7 +53661,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'versionUpToDate': 'У вас установлена новейшая версия.',
   },
   /*
-   * dsh-kimi-subscription@1.3.10@1.3.10 — словарь плагина settings.kimiSubscription (MIT).
+   * dsh-kimi-subscription@1.3.10 — словарь плагина settings.kimiSubscription (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52445,13 +53746,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'windowQuota': 'Квота: {duration} {unit}',
   },
   /*
-   * dsh-model-context-catalog@0.4.3@0.4.3 — словарь плагина settings.modelContextCatalog (MIT).
+   * dsh-model-context-catalog@0.4.3 — словарь плагина settings.modelContextCatalog (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'settings.modelContextCatalog': {
     'addedSummary': 'Моделей добавлено и включено: {count}.',
-    'addSelected': 'Добавить и включить моделей: {count}',
+    'addSelected': 'Добавить и включить моделей: {\ncount}',
     'addTitle': 'Добавить контекстное окно',
     'autoAdd': 'Подобрать модели',
     'autoHint': 'Существующие окна сохраняются по умолчанию. Чтобы изменить значение, сначала выберите эталонную ёмкость. Выберите модели, затем нажмите «Добавить и включить».',
@@ -52524,10 +53825,23 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknownManufacturer': 'Не указано',
     'unmatched': 'Эталон не найден',
     'window': 'Контекстное окно',
-    'writeRefused': 'Конфигурация изменилась или доступна только для чтения. Проверьте актуальные значения и повторите попытку.',
+    'add': 'Добавить модель',
+    'endpoint_auth': '{provider} · Ошибка аутентификации подключения; используются другие источники',
+    'endpoint_empty': '{provider} · Нет пригодной ёмкости подключения; используются другие источники',
+    'endpoint_failed': '{provider} · Запрос ёмкости не удался; используются другие источники',
+    'endpoint_supported': '{provider}: ёмкости моделей получены',
+    'endpoint_timeout': '{provider} · Истекло время ожидания подключения; используются другие источники',
+    'endpoint_unavailable': '{provider} · Запрос ёмкости недоступен; используются другие источники',
+    'endpointConflict': 'Ёмкости CLIProxyAPI и models.dev различаются; выберите значение',
+    'fromEndpoint': 'Ёмкость из: CLIProxyAPI',
+    'match_endpoint': 'Получено от провайдера',
+    'nav': 'Контекстные окна',
+    'providerCapacity': 'CLIProxyAPI',
+    'references_unavailable': 'models.dev недоступен; ёмкости подключений и текущие настройки остаются доступны',
+    'writeRefused': 'Конфигурация изменилась или доступна только для чтения. Проверьте актуальные значения и повторите попытку.'
   },
   /*
-   * dsh-plugin-model-proxy@0.1.6@0.1.6 — словарь плагина settings.modelProxy (MIT).
+   * dsh-plugin-model-proxy@0.1.6 — словарь плагина settings.modelProxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52611,7 +53925,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wildcardAll': 'любая модель',
   },
   /*
-   * dsh-multi2api@0.1.9@0.1.9 — словарь плагина settings.multi2api (MIT).
+   * dsh-multi2api@0.1.9 — словарь плагина settings.multi2api (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52696,7 +54010,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'waitingLogin': 'Ожидание входа…',
   },
   /*
-   * dsh-openai-codex-auth@0.6.3@0.6.3 — словарь плагина settings.openai-codex-auth (MIT).
+   * dsh-openai-codex-auth@0.6.3 — словарь плагина settings.openai-codex-auth (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52780,7 +54094,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'working': 'Выполняется…',
   },
   /*
-   * @restregular/dsh-skill-center@0.3.11@0.3.11 — словарь плагина skill-center (MIT).
+   * @restregular/dsh-skill-center@0.3.11 — словарь плагина skill-center (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52860,7 +54174,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'whenToUse': 'Когда применять',
   },
   /*
-   * dsh-tokenledger@0.1.0@0.1.0 — словарь плагина tokenLedger (MIT).
+   * dsh-tokenledger@0.1.0 — словарь плагина tokenLedger (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -52942,7 +54256,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'weekday.6': 'Вс',
   },
   /*
-   * dsh-plugin-usage-meter@1.10.0@1.10.0 — словарь плагина usage-meter (MIT).
+   * dsh-plugin-usage-meter@1.10.0 — словарь плагина usage-meter (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53021,7 +54335,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'meter.write': 'Запись в кэш',
   },
   /*
-   * dsh-usage-state@0.4.8@0.4.8 — словарь плагина usage-state (MIT).
+   * dsh-usage-state@0.4.8 — словарь плагина usage-state (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53103,7 +54417,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'window.month-code': 'Код за месяц',
   },
   /*
-   * dsh-tongflow@0.8.4@0.8.4 — словарь плагина .runs.json (AGPL-3.0-only).
+   * dsh-tongflow@0.8.4 — словарь плагина .runs.json (AGPL-3.0-only).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53180,7 +54494,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'working': '● работа…',
   },
   /*
-   * dsh-baize-rules@0.2.4@0.2.4 — словарь плагина baize-rules (MIT).
+   * dsh-baize-rules@0.2.4 — словарь плагина baize-rules (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53248,7 +54562,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'templates.uses': 'используется',
   },
   /*
-   * dsh-codex-timeline@0.6.4@0.6.4 — словарь плагина codex-navigation-enhancer (MIT).
+   * dsh-codex-timeline@0.6.4 — словарь плагина codex-navigation-enhancer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53313,7 +54627,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'turn': 'Ход {turn}',
   },
   /*
-   * dsh-completion-alert@1.8.4@1.8.4 — словарь плагина completion-alert (MIT).
+   * dsh-completion-alert@1.8.4 — словарь плагина completion-alert (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53385,7 +54699,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trim.total': 'Длина: {total}',
   },
   /*
-   * dsh-call-session@0.1.7@0.1.7 — словарь плагина dsh-canvas (MIT).
+   * dsh-call-session@0.1.7 — словарь плагина dsh-canvas (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53433,13 +54747,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'drawer.workspace': 'Рабочая область',
     'empty.desc': 'Нет активных сессий или записей на доске. Содержимое появится здесь, когда будут сделаны вызовы или опубликованы записи.',
     'empty.title': 'Холст совместной работы готов',
-    'error.boundaryTitle': 'Ошибка выполнения на холсте',
-    'error.retry': 'Перезагрузить холст',
     'session.current': 'Текущая',
     'session.idle': 'Простаивает',
     'session.offline': 'Сессия недоступна',
     'session.running': 'Выполняется',
-    'stats.activeCalls': 'Активные вызовы',
+    'stats.activeCalls': 'Вызовы',
     'stats.runningSessions': 'Выполняется',
     'stats.totalPosts': 'Записи на доске',
     'stats.totalSessions': 'Сессии',
@@ -53455,10 +54767,19 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toolbar.zoomIn': 'Увеличить',
     'toolbar.zoomOut': 'Уменьшить',
     'view.canvas': 'Холст',
+    'crumb.root': 'Корень рабочей области',
+    'section.workspaces': 'Рабочие области',
+    'session.error': 'Ошибка',
+    'time.days': '{n} дн. назад',
+    'time.hours': '{n} ч назад',
+    'time.minutes': '{n} мин назад',
+    'time.months': '{n} мес назад',
+    'time.now': 'сейчас',
+    'time.years': '{n} г назад',
     'workspace.current': 'Текущая',
   },
   /*
-   * dsh-emoji@0.3.6@0.3.6 — словарь плагина dsh-emoji (MIT).
+   * dsh-emoji@0.3.6 — словарь плагина dsh-emoji (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53529,7 +54850,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-mcp-manager-plus@0.4.4@0.4.4 — словарь плагина dsh-mcp-manager-plus (MIT).
+   * dsh-mcp-manager-plus@0.4.4 — словарь плагина dsh-mcp-manager-plus (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53600,7 +54921,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'urlHint': 'Например http://localhost:3000/mcp',
   },
   /*
-   * @cola1900/dsh-ppt@0.3.4@0.3.4 — словарь плагина dsh-ppt (MIT).
+   * @cola1900/dsh-ppt@0.3.4 — словарь плагина dsh-ppt (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53670,7 +54991,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tool.update.running': 'Обновление слайда {page}',
   },
   /*
-   * dsh-prompt-history@1.4.2@1.4.2 — словарь плагина dsh-prompt-history (MIT).
+   * dsh-prompt-history@1.4.2 — словарь плагина dsh-prompt-history (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53738,7 +55059,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toolbar.sideChat': 'Спросить в боковом чате',
   },
   /*
-   * @icedcola/dsh-provider-veark@0.2.2@0.2.2 — словарь плагина dsh-provider-veark (MIT).
+   * @icedcola/dsh-provider-veark@0.2.2 — словарь плагина dsh-provider-veark (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53813,7 +55134,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-session-toolbox@0.1.38@0.1.38 — словарь плагина dsh-session-toolbox (MIT).
+   * dsh-session-toolbox@0.1.38 — словарь плагина dsh-session-toolbox (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53882,10 +55203,28 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'reply.fromUser': 'Цитированное сообщение',
     'reply.selection': 'Цитировать выделение',
     'reply.unavailable': 'Ответ с цитатой недоступен для этого поля ввода',
+    'groups.down': 'Переместить ниже',
+    'groups.reorder': 'Перетаскивайте заголовки групп, чтобы изменить порядок, или установите на них фокус и нажмите Alt/Option + ↑/↓. Без группы тоже можно менять порядок.',
+    'groups.sortHelp': 'Перетаскивайте группы или используйте стрелки, чтобы изменить порядок. Порядок синхронизирован с боковой панелью.',
+    'groups.up': 'Переместить выше',
+    'nextTasks.empty': 'Для этого ответа нет полезных следующих шагов',
+    'nextTasks.generate': 'Создать следующие шаги (токены считаются отдельно)',
+    'nextTasks.reason.busy': 'Чат всё ещё работает или завершается',
+    'nextTasks.reason.cancelled': 'Создание предложений отменено',
+    'nextTasks.reason.context': 'Нет подходящего текста вопроса и ответа',
+    'nextTasks.reason.credentials': 'Неверные учётные данные модели или права доступа',
+    'nextTasks.reason.format': 'Модель вернула недопустимый формат предложений',
+    'nextTasks.reason.host-state': 'Не удалось прочитать состояние чата',
+    'nextTasks.reason.model-call': 'Вызов модели не был завершён',
+    'nextTasks.reason.model-unconfigured': 'Для этого чата не настроена модель',
+    'nextTasks.reason.output-limit': 'Достигнут предел размера ответа с предложениями',
+    'nextTasks.reason.rate-limit': 'Достигнут предел частоты запросов к модели',
+    'nextTasks.regenerate': 'Создать следующие шаги заново (токены считаются отдельно)',
+    'nextTasks.unavailable': 'Для этого ответа предложения не созданы',
     'reply.user': 'Пользователь',
   },
   /*
-   * @iasiv5/dsh-skins@1.5.11@1.5.11 — словарь плагина dsh-skins.ui (MIT).
+   * @iasiv5/dsh-skins@1.5.11 — словарь плагина dsh-skins.ui (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -53915,7 +55254,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'personalization.library': 'Библиотека',
     'personalization.library.clear': 'Очистить библиотеку',
     'personalization.library.clearConfirm': 'Это безвозвратно удалит все загруженные изображения: {count}. Эти настройки обоев вернутся к значениям по умолчанию: {names}',
-    'personalization.library.clearFailed': 'Часть удалений не выполнена; остальной список обновлён',
+    'personalization.library.clearFailed': 'Не удалось очистить библиотеку; остальной список обновлён',
     'personalization.library.delete': 'Удалить',
     'personalization.library.deleteConfirm': 'Эти скины вернутся к обоям по умолчанию:',
     'personalization.library.deleted': 'Удалено: {name}',
@@ -53958,10 +55297,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skins.official.description': 'Простая бумага и тёмные чернила · живое белое пространство · естественный облик',
     'skins.official.label': 'DeepSeek Harness (Official)',
     'skins.switch': 'Переключатель тем',
+    'personalization.fieldReverted': 'Обои больше не существуют; восстановлено значение по умолчанию',
+    'personalization.library.previewRef': 'несохранённая ссылка',
     'skins.title': 'Выбор скина',
   },
   /*
-   * dsh-speak@1.8.2@1.8.2 — словарь плагина dsh-speak (MIT).
+   * dsh-speak@1.8.2 — словарь плагина dsh-speak (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54033,7 +55374,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'volumeHint': 'Только Windows (0-100); в macOS громкость следует за системной.',
   },
   /*
-   * dsh-tree-view@1.2.3@1.2.3 — словарь плагина dsh-tree-view (MIT).
+   * dsh-tree-view@1.2.3 — словарь плагина dsh-tree-view (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54107,7 +55448,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view': 'Дерево',
   },
   /*
-   * dsh-treekeeper@0.5.0@0.5.0 — словарь плагина dsh-treekeeper (MIT).
+   * dsh-treekeeper@0.5.0 — словарь плагина dsh-treekeeper (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54179,7 +55520,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewInTreeKeeper': 'Показать эту сессию в TreeKeeper',
   },
   /*
-   * dsh-harbor-evolution@0.10.4@0.10.4 — словарь плагина harbor-evolution (MIT).
+   * dsh-harbor-evolution@0.10.4 — словарь плагина harbor-evolution (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54248,7 +55589,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'turnContext': 'Ссылка для отправки',
   },
   /*
-   * @anarkhgatsby/deepseek-harness-channel-config@0.1.13@0.1.13 — словарь плагина harness-channel-config (MIT).
+   * @anarkhgatsby/deepseek-harness-channel-config@0.1.13 — словарь плагина harness-channel-config (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54319,7 +55660,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wecomLabel': 'WeCom',
   },
   /*
-   * dsh-nested-followups@0.2.2@0.2.2 — словарь плагина nested-followups (MIT).
+   * dsh-nested-followups@0.2.2 — словарь плагина nested-followups (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54389,7 +55730,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.tree': 'Дерево беседы',
   },
   /*
-   * dsh-workbuddy-ppt@0.1.0@0.1.0 — словарь плагина office-ppt (MIT).
+   * dsh-workbuddy-ppt@0.1.0 — словарь плагина office-ppt (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54459,13 +55800,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tool.update.running': 'Обновление слайда {page}',
   },
   /*
-   * dsh-persona-dafeiyu@0.4.1@0.4.1 — словарь плагина personaDafeiyu (MIT).
+   * dsh-persona-dafeiyu@0.4.1 — словарь плагина personaDafeiyu (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'personaDafeiyu': {
     'builtinLocked': 'Встроенные персоны нельзя удалить или переименовать',
-    'builtinNote': 'Промпты встроенных персон поддерживаются плагином (здесь они не показаны).',
+    'builtinNote': 'Промпты встроенных персон поддерживаются плагином (только для чтения, но их можно развернуть).',
     'cancel': 'Отмена',
     'chars': 'Символы',
     'collapse': 'Свернуть',
@@ -54515,7 +55856,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'renamePlaceholder': 'Новое имя',
     'save': 'Сохранить',
     'scopeGlobal': 'Для всех сессий',
-    'scopeHint': 'Для всех сессий = одна общая персона; Для своей сессии = своя персона в каждой сессии.',
+    'scopeHint': 'Для всех сессий = одна персона для каждой сессии; Для рабочей области = по одной на папку проекта; Для своей сессии = только для этой сессии. Выигрывает более узкая область',
     'scopeSession': 'Для своей сессии',
     'section': 'Порядок разделов',
     'setCurrent': 'Сделать активной',
@@ -54529,10 +55870,25 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'suffixOn': 'Задано',
     'suffixTitle': 'Раздел суффикса',
     'title': 'Персоны',
+    'dockFollowGlobal': 'Как в глобальном',
+    'dockFollowWorkspace': 'Как в рабочей области',
+    'exportAction': 'Экспортировать',
+    'exportDone': 'Экспортировано',
+    'exportFailed': 'Не удалось экспортировать',
+    'exportUnsupported': 'Эта среда не может скачивать файлы',
+    'nav': 'Dafeiyu',
+    'pickerHint': 'Действует только для этой сессии; если очистить выбор, применяется персона рабочей области или глобальная.',
+    'pickerTitle': 'Персона для этой сессии',
+    'scopeTitle': 'Область',
+    'scopeWorkspace': 'Рабочая область',
+    'workspaceEmpty': 'Рабочая область пока не зафиксирована — отправьте сообщение в проекте, и она появится здесь.',
+    'workspaceFollow': 'Как в глобальном',
+    'workspaceHint': 'В области «Рабочая область» каждой папке ниже назначается своя персона; папки без выбора следуют глобальной.',
+    'workspaceTitle': 'Правила рабочей области',
     'totalChars': 'Всего подставлено',
   },
   /*
-   * @sunjuntao/dsh-prompt-library@0.17.2@0.17.2 — словарь плагина prompt-library (MIT).
+   * @sunjuntao/dsh-prompt-library@0.17.2 — словарь плагина prompt-library (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54605,7 +55961,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'soft control': 'disabled list',
   },
   /*
-   * dsh-quota-panel@0.1.7-rc.1-v0.1@0.1.7-rc.1-v0.1 — словарь плагина quota-panel (MIT).
+   * dsh-quota-panel@0.1.7-rc.1-v0.1 — словарь плагина quota-panel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54680,7 +56036,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'winWeekly': 'Нед',
   },
   /*
-   * relay-dsh-plugin-codex@0.2.4@0.2.4 — словарь плагина relay.codex (MIT).
+   * relay-dsh-plugin-codex@0.2.4 — словарь плагина relay.codex (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54750,7 +56106,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'statusUnavailable': 'Codex недоступен',
   },
   /*
-   * dsh-cursor-subscription@0.6.12@0.6.12 — словарь плагина settings.cursorSubscription (MIT).
+   * dsh-cursor-subscription@0.6.12 — словарь плагина settings.cursorSubscription (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54816,7 +56172,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'waiting': 'Ожидание завершения входа…',
   },
   /*
-   * @wingsky-1/dsh-lan-proxy@0.2.9@0.2.9 — словарь плагина settings.lanProxy (MIT).
+   * @wingsky-1/dsh-lan-proxy@0.2.9 — словарь плагина settings.lanProxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -54892,12 +56248,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wsPathsHint': 'Управляет только областью сжатия; пусто = мост без сжатия, keep-alive не затрагивается (мобильные устройства переподключаются реже)',
   },
   /*
-   * dsh-provider-qoder@0.4.3@0.4.3 — словарь плагина settings.qoderCredential (MIT).
+   * dsh-provider-qoder@0.4.3 — словарь плагина settings.qoderCredential (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'settings.qoderCredential': {
-    'accountCredentialHint': 'Сначала настройте персональный токен доступа Qoder в настройках моделей.',
+    'accountCredentialHint': 'Сначала войдите в Qoder или выберите настроенный PAT в настройках моделей.',
     'accountFailed': 'Не удалось прочитать сведения об учётной записи или квоте.',
     'accountLoading': 'Чтение учётной записи и квоты…',
     'accountSuspended': 'Учётная запись или организация сейчас приостановлена.',
@@ -54963,12 +56319,68 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'searchModeHint': 'В автоматическом режиме поиск направляется в Qoder при использовании моделей Qoder, в остальных случаях — к обычным провайдерам.',
     'searchModeLabel': 'Режим веб-поиска',
     'title': 'Учётные данные Qoder',
-    'tokenLabel': 'Ключ API',
+    'tokenLabel': 'Персональный токен доступа (PAT)',
     'tokenPlaceholder': 'Введите новый персональный токен доступа',
+    'accountConnectionTitle': 'Учётная запись Qoder',
+    'authorizationConnectionFailed': 'Не удалось подключиться или прочитать статус входа. Повторите попытку вскоре.',
+    'browserCancelled': 'Вход отменён.',
+    'browserComplete': 'Вход выполнен.',
+    'browserExpired': 'Срок браузерной авторизации истёк. Войдите снова.',
+    'browserFailed': 'Не удалось войти или сохранить авторизацию. Проверьте состояние учётной записи и повторите попытку.',
+    'browserLoginTitle': 'Вход на сайт Qoder',
+    'browserMethod': 'Браузерная авторизация',
+    'browserOperationFailed': 'Не удалось обновить статус входа. Повторите попытку.',
+    'browserRejected': 'Авторизация Qoder не завершена. Войдите снова.',
+    'browserRemoveFailed': 'Не удалось удалить браузерную авторизацию. Проверьте, что хранилище учётных данных доступно для записи, и повторите попытку.',
+    'browserSaving': 'Сохранение авторизации…',
+    'browserStorageFailed': 'Авторизация на сайте завершена, но учётные данные не удалось сохранить. Проверьте хранилище и войдите снова.',
+    'browserTimeout': 'Срок действия ссылки для входа истёк. Начните новый вход.',
+    'browserUnsaved': 'Обновлённые учётные данные не сохранены. При перезапуске может потребоваться вход; сохранение повторится при следующем использовании.',
+    'browserWaiting': 'Пройдите проверку и авторизацию на сайте Qoder…',
+    'cancelLogin': 'Отменить вход',
+    'changeAccount': 'Сменить учётную запись',
+    'copyLogin': 'Скопировать ссылку для входа',
+    'copyLoginFailed': 'Не удалось скопировать. Откройте страницу входа.',
+    'editPat': 'Изменить PAT',
+    'loginLinkCopied': 'Ссылка скопирована',
+    'loginTimeRemaining': 'Срок действия ссылки: {seconds} с',
+    'manageAccount': 'Управление учётной записью',
+    'manageCredential': 'Управление учётными данными',
+    'nav': 'Qoder',
+    'openLogin': 'Открыть страницу входа',
+    'patActive': 'Используется PAT',
+    'patMethod': 'Аутентификация по PAT',
+    'patSaveFailed': 'Не удалось сохранить или активировать PAT. Повторите попытку.',
+    'queueBudget': 'Лимит ожидания: {seconds} с',
+    'queueCount': 'В очереди: {count}',
+    'queueElapsed': 'Ожидание: {seconds} с',
+    'queueEstimate': 'Ожидаемое время: {seconds} с',
+    'queueHourUnit': 'ч',
+    'queueMinuteUnit': 'м',
+    'queueRunningFor': '{model} в очереди на {duration} ···',
+    'queueSecondUnit': 'с',
+    'queueServiceUnavailable': 'Сервис недоступен; ожидание',
+    'queueTitle': 'Очередь моделей Qoder',
+    'queueUnavailable': 'Статус очереди Qoder временно недоступен',
+    'queueWaiting': '{model} в очереди',
+    'regionChanged': 'Регион изменён; незавершённый вход для предыдущего региона отменён.',
+    'regionChangeFailed': 'Не удалось изменить регион. Повторите попытку.',
+    'reopenLogin': 'Снова открыть сайт Qoder',
+    'saveAndUsePat': 'Сохранить и использовать PAT',
+    'savedBrowserAccount': 'Сохранённая браузерная учётная запись',
+    'sharedAuthorization': 'Учётная запись для этого региона используется всеми клиентами, подключёнными к этому экземпляру DSH.',
+    'signedOut': 'Отключено',
+    'signInAgain': 'Войти снова',
+    'signInDescription': 'Войдите, чтобы использовать подписку и модели для этого региона.',
+    'signInQoder': 'Вход через Qoder',
+    'signOutQoder': 'Удалить браузерную авторизацию',
+    'useBrowser': 'Использовать сохранённую браузерную авторизацию',
+    'usePat': 'Использовать PAT',
+    'useSavedPat': 'Использовать сохранённый PAT',
     'userQuotaTitle': 'Личная квота',
   },
   /*
-   * dsh-research@0.4.3@0.4.3 — словарь плагина settings.researchMarket (MIT).
+   * dsh-research@0.4.3 — словарь плагина settings.researchMarket (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55039,10 +56451,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Исследовательские плагины',
     'uninstall': 'Удалить',
     'uninstalling': 'Удаление…',
+    'nav': 'Исследования',
     'update': 'Обновить до v{v}',
   },
   /*
-   * @wisdoverse/dsh-skills-manager@1.0.6@1.0.6 — словарь плагина skillManager (MIT).
+   * @wisdoverse/dsh-skills-manager@1.0.6 — словарь плагина skillManager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55116,7 +56529,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspacePlaceholder': 'Оставьте пустым для пользовательских навыков; укажите путь, чтобы включить проектные .dsh/skills и .agents/skills',
   },
   /*
-   * @xiaoso/dsh-run-config@0.2.4@0.2.4 — словарь плагина task-runner (MIT).
+   * @xiaoso/dsh-run-config@0.2.4 — словарь плагина task-runner (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55184,7 +56597,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'workspacePlaceholder': 'Выберите рабочую область…',
   },
   /*
-   * dsh-whale-meter@0.1.0@0.1.0 — словарь плагина whale-meter (MIT).
+   * dsh-whale-meter@0.1.0 — словарь плагина whale-meter (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55250,7 +56663,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tier.tangible': '≈ {count} {unit}',
   },
   /*
-   * dsh-agent-skills@0.1.14@0.1.14 — словарь плагина agent-skills (MIT).
+   * dsh-agent-skills@0.1.14 — словарь плагина agent-skills (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55310,7 +56723,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewSkills': 'Показать навыки',
   },
   /*
-   * dsh-artifact@0.8.1@0.8.1 — словарь плагина artifact (MIT).
+   * dsh-artifact@0.8.1 — словарь плагина artifact (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55373,7 +56786,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.session': 'Артефакты этой сессии',
   },
   /*
-   * dsh-context-memory@0.9.0@0.9.0 — словарь плагина contextMemory (MIT).
+   * dsh-context-memory@0.9.0 — словарь плагина contextMemory (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55428,7 +56841,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unverified': 'не подтверждено',
   },
   /*
-   * @dsh-plugins/dsh-env-inspector@0.2.9@0.2.9 — словарь плагина dsh-env-inspector (MIT).
+   * @dsh-plugins/dsh-env-inspector@0.2.9 — словарь плагина dsh-env-inspector (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55491,7 +56904,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unconfigured': 'Не настроено',
   },
   /*
-   * dsh-mcp-market@0.1.2@0.1.2 — словарь плагина dsh-mcp-market (MIT).
+   * dsh-mcp-market@0.1.2 — словарь плагина dsh-mcp-market (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55547,7 +56960,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update': 'Обновить',
   },
   /*
-   * dsh-notify-yimit@0.2.4@0.2.4 — словарь плагина dsh-notify-yimit (MIT).
+   * dsh-notify-yimit@0.2.4 — словарь плагина dsh-notify-yimit (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55609,7 +57022,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'triggerNote': 'Срабатывания: задача выполнена, задача завершилась ошибкой, выполняется (текущая активность), ожидает подтверждения, ожидает ответа. Заголовок — это название беседы; нажатие на уведомление или кнопку перехода открывает сессию.',
   },
   /*
-   * dsh-session-kit@5.7.0@5.7.0 — словарь плагина dsh-session-kit (MIT).
+   * dsh-session-kit@5.7.0 — словарь плагина dsh-session-kit (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55662,10 +57075,731 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'turnMemory.searchEmpty': 'Подходящей памяти нет',
     'turnMemory.searchPlaceholder': 'Поиск по тегам или содержимому',
     'turnMemory.tip': 'Снимок памяти для контекста этого хода',
+    'archive': 'Открыть архив',
+    'archiveAllWorkdirs': 'Все рабочие каталоги',
+    'archiveClose': 'Закрыть',
+    'archiveContinueNew': 'Продолжить в новом чате',
+    'archiveCount': 'Архивных сессий: {count}',
+    'archiveDelete': 'Удалить',
+    'archiveDeleteConfirm': 'Удалить архивную сессию «{title}»? Запись сессии будет удалена.',
+    'archiveDeleted': 'Архивная сессия удалена',
+    'archiveDescription': 'Показывает архивные (скрытые в боковой панели) сессии. Можно смотреть содержимое напрямую, возвращать их в список или удалять.',
+    'archiveEmpty': 'Архивных сессий нет',
+    'archiveExport': 'Экспорт',
+    'archiveFilteredCount': 'Показано сессий: {shown} / {total}',
+    'archiveFolder': 'Папка',
+    'archiveFolderFailed': 'Не удалось открыть папку',
+    'archiveFolderOpened': 'Папка сессии открыта',
+    'archiveForkConfirmOk': 'Продолжить',
+    'archiveForkFailed': 'Не удалось продолжить в новом чате',
+    'archiveHideSidebarEntry': 'Скрыть пункт архива в боковой панели',
+    'archiveLoading': 'Загрузка архива…',
+    'archiveLoadingMore': 'Загрузка…',
+    'archiveLoadMore': 'Загрузить ещё',
+    'archiveManage': 'Архив',
+    'archiveMissing': 'Файл сессии отсутствует',
+    'archiveMissingWorkdir': 'Нет рабочего каталога',
+    'archivePreviewCollapse': 'Свернуть',
+    'archivePreviewCopied': 'Скопировано',
+    'archivePreviewCopy': 'Копировать',
+    'archivePreviewCreatedAt': 'Создана',
+    'archivePreviewCwd': 'Рабочий каталог',
+    'archivePreviewEmpty': 'В этой сессии нет содержимого для просмотра',
+    'archivePreviewExpand': 'Развернуть',
+    'archivePreviewExport': 'Экспортировать сессию',
+    'archivePreviewExportUnavailable': 'Служба экспорта недоступна',
+    'archivePreviewFailed': 'Не удалось загрузить архивную сессию',
+    'archivePreviewFootnotes': 'Сноски',
+    'archivePreviewLoading': 'Загрузка содержимого сессии…',
+    'archivePreviewMessageCount': 'Сообщений: {shown} / {total}',
+    'archivePreviewNext': 'Далее',
+    'archivePreviewPage': 'Страница {page} / {total}',
+    'archivePreviewPrev': 'Назад',
+    'archivePreviewRename': 'Переименовать',
+    'archivePreviewRenameFailed': 'Не удалось переименовать',
+    'archivePreviewSearchEmpty': 'По вашему запросу сообщений нет',
+    'archivePreviewSearchPlaceholder': 'Поиск по этой сессии',
+    'archivePreviewSessionId': 'Идентификатор сессии',
+    'archivePreviewTitle': 'Просмотр архивной сессии',
+    'archivePreviewUnknown': 'Неизвестно',
+    'archivePreviewUpdatedAt': 'Последняя активность',
+    'archivePreviewUserToc': 'Оглавление сообщений пользователя',
+    'archiveRestore': 'Восстановить',
+    'archiveRestoreConfirm': 'Восстановить архивную сессию «{title}»?\nОна уйдёт из архива и вернётся в обычный список сессий.',
+    'archiveRestoreConfirmOk': 'Восстановить',
+    'archiveRestored': 'Архивная сессия восстановлена',
+    'archiveRoleAssistant': 'Ассистент',
+    'archiveRoleTool': 'Инструмент',
+    'archiveRoleUser': 'Пользователь',
+    'archiveSearchClear': 'Очистить поиск',
+    'archiveSearchEmpty': 'В архиве нет сессий по вашему запросу',
+    'archiveSearchPlaceholder': 'Поиск по названию или идентификатору сессии',
+    'archiveSession': 'Архивировать сессию',
+    'archiveSessionFailed': 'Не удалось архивировать сессию',
+    'archiveSessionIdCopied': 'Идентификатор скопирован',
+    'archiveSessionIdLabel': 'Идентификатор',
+    'archiveShowSidebarEntry': 'Показать пункт архива в боковой панели',
+    'archiveTitle': 'Архивные сессии',
+    'archiveToolStats': 'Статистика вызовов инструментов',
+    'archiveToolStatsEmpty': 'Вызовов инструментов нет',
+    'archiveToolStatsTotal': 'Всего: {count}',
+    'archiveView': 'Просмотр',
+    'archiveWorkdirLabel': 'Рабочий каталог',
+    'archiveWorkdirSearchEmpty': 'Подходящих рабочих каталогов нет',
+    'archiveWorkdirSearchPlaceholder': 'Поиск рабочего каталога',
+    'cancel': 'Отмена',
+    'compactionConfig': 'Настройки сжатия',
+    'compactionConfigCurrent': 'Текущее: {percent}%',
+    'compactionConfigDesc': 'Действует только во время работы плагина dsh-session-kit и не меняет официальные или предустановленные файлы настроек.\nЕсли отключить или удалить плагин, вернутся настройки DSH по умолчанию.',
+    'compactionConfigDynamicRecommend': 'Динамическая рекомендация: {percent}%',
+    'compactionConfigEnable': 'Использовать свои настройки сжатия',
+    'compactionConfigFailed': 'Не удалось сохранить настройки сжатия',
+    'compactionConfigInvalidRatio': 'Доля сохраняемого текста должна быть меньше порога срабатывания.',
+    'compactionConfigMaxTokens': 'Лимит токенов сводки',
+    'compactionConfigMaxTokensHelp': 'Ограничение токенов на ответ модели, которая пишет сводку сжатия; официальное значение по умолчанию — {default}',
+    'compactionConfigOverflowRetries': 'maxOverflowRetries',
+    'compactionConfigOverflowRetriesHelp': 'Сколько автоматических восстановлений со сжатием и повтором разрешить после того, как модель сообщит о переполнении контекста; официальное значение по умолчанию — {default}',
+    'compactionConfigReset': 'Вернуть официальное значение по умолчанию',
+    'compactionConfigRetain': 'Сохранение недавнего текста дословно',
+    'compactionConfigRetainHelp': 'При сжатии старая история сворачивается в сводку, а недавний исходный текст сохраняется дословно. Значение должно быть меньше порога.\nОфициальное значение по умолчанию — {default}%',
+    'compactionConfigRetries': 'compactionRetries',
+    'compactionConfigRetriesHelp': 'Дополнительные попытки, если после сжатия разговор всё ещё выше порога; официальное значение по умолчанию — {default}',
+    'compactionConfigSave': 'Сохранить',
+    'compactionConfigSaved': 'Сохранено',
+    'compactionConfigSaveSuccess': 'Настройки сжатия сохранены',
+    'compactionConfigSaving': 'Сохранение…',
+    'compactionConfigServiceUnavailable': 'Служба настроек сжатия не загружена. Перезапустите dsh web и обновите страницу.',
+    'compactionConfigThreshold': 'Порог автоматического сжатия',
+    'compactionConfigThresholdHelp': 'Когда разговор достигает этой доли окна контекста модели, DSH пытается выполнить автоматическое сжатие перед следующим шагом.\nОфициальное значение по умолчанию — {default}%',
+    'compactionConfigTitle': 'Настройки автоматического сжатия контекста',
+    'confirm': 'Удалить эту сессию? Запись сессии будет удалена, а журналы сессий субагентов тоже будут удалены!',
+    'delete': 'Удалить сессию',
+    'deleteTitle': 'Удалить эту сессию',
+    'dispatchMenuLabel': 'Другие действия',
+    'export': 'Экспортировать сессию',
+    'exportFailed': 'Не удалось экспортировать сессию',
+    'exportUnavailable': 'Экспорт недоступен',
+    'failed': 'Не удалось выполнить операцию',
+    'folder': 'Открыть папку',
+    'forkSession': 'Ответвить сессию',
+    'forkSessionFailed': 'Не удалось ответвить сессию',
+    'forkUnavailable': 'текущий раунд ещё не завершён, здесь его нельзя ответвить',
+    'globalPrompt': 'Глобальный промпт',
+    'globalPromptDesc': 'Если включено, dsh-session-kit внедряет этот системный промпт во время работы через systemPrompt.section. Он не меняет официальный код или файлы настроек. Если отключить или удалить плагин, промпт перестанет действовать.',
+    'globalPromptEnable': 'Включить глобальный промпт',
+    'globalPromptFailed': 'Не удалось сохранить глобальный промпт',
+    'globalPromptPlaceholder': 'Например: если пользователь явно не попросил другой язык, всегда отвечайте по-китайски.',
+    'globalPromptSave': 'Сохранить',
+    'globalPromptSaved': 'Сохранено',
+    'globalPromptSaveSuccess': 'Глобальный промпт сохранён',
+    'globalPromptSaving': 'Сохранение…',
+    'globalPromptServiceUnavailable': 'Служба глобального промпта не загружена. Перезапустите dsh web и обновите страницу.',
+    'globalPromptText': 'Текст глобального промпта',
+    'globalPromptTitle': 'Настройки глобального промпта',
+    'globalPromptTooLarge': 'Глобальный промпт слишком большой. Сократите его и повторите попытку.',
+    'headingJump': 'Перейти к заголовку',
+    'headingNav': 'Быстрый переход по заголовкам первого уровня',
+    'headings': 'Заголовки',
+    'headingUntitled': 'Заголовок без названия',
+    'manage': 'Менеджер сессий',
+    'memory': 'Память',
+    'memoryActivated': 'Активирована',
+    'memoryActivationTitle': 'Активация',
+    'memoryActive': 'Активна',
+    'memoryActivityDiffActive': 'Активна',
+    'memoryActivityDiffAfter': 'После',
+    'memoryActivityDiffBefore': 'До',
+    'memoryActivityDiffFieldDirectory': 'Проект',
+    'memoryActivityDiffFieldPinned': 'Закреплено',
+    'memoryActivityDiffFields': 'Прочие изменения',
+    'memoryActivityDiffFieldStatus': 'Статус',
+    'memoryActivityDiffFieldTags': 'Теги',
+    'memoryActivityDiffHover': 'Наведите, чтобы увидеть различия до и после',
+    'memoryActivityDiffInactive': 'Неактивна',
+    'memoryActivityDiffLegacy': 'Для этого обновления различия не записаны (устаревший журнал)',
+    'memoryActivityDiffNone': 'Содержимое без изменений',
+    'memoryActivityDiffNoneValue': 'нет',
+    'memoryActivityDiffOff': 'выключено',
+    'memoryActivityDiffOn': 'включено',
+    'memoryActivityDiffTitle': 'Различия содержимого',
+    'memoryActivityDurationHours': '{h} ч {m} мин',
+    'memoryActivityDurationMinutes': '{m} мин {s} с',
+    'memoryActivityDurationSeconds': '{s} с',
+    'memoryActivityElapsed': 'Затрачено',
+    'memoryActivityErrorReason': 'Причина сбоя',
+    'memoryActivityKind_directory_create': 'Добавление проекта',
+    'memoryActivityKind_directory_delete': 'Удаление проекта',
+    'memoryActivityKind_directory_update': 'Обновление проекта',
+    'memoryActivityKind_distill': 'Дистилляция',
+    'memoryActivityKind_distill_auto': 'Автодистилляция',
+    'memoryActivityKind_distill_manual': 'Ручная дистилляция',
+    'memoryActivityKind_embedding_backfill': 'Дозаполнение векторов',
+    'memoryActivityKind_memory_add': 'Добавление воспоминания',
+    'memoryActivityKind_memory_conflict_missed': 'Проверка конфликтов пропущена',
+    'memoryActivityKind_memory_delete': 'Удаление воспоминания',
+    'memoryActivityKind_memory_revision_delete': 'Удаление версии воспоминания',
+    'memoryActivityKind_memory_update': 'Обновление воспоминания',
+    'memoryActivityKind_scene_apply': 'Применение сцены',
+    'memoryActivityKind_scene_create': 'Добавление сцены',
+    'memoryActivityKind_scene_delete': 'Удаление сцены',
+    'memoryActivityKind_scene_update': 'Обновление сцены',
+    'memoryActivityKind_tag_create': 'Добавление тега',
+    'memoryActivityKind_tag_delete': 'Удаление тега',
+    'memoryActivityKind_tag_update': 'Обновление тега',
+    'memoryActivityMemorySummary': 'Сводка содержимого воспоминания недоступна',
+    'memoryActivityPendingSummary': 'Сводка текущего сообщения пользователя недоступна',
+    'memoryActivitySourceManual': 'Вручную',
+    'memoryActivitySourceTool': 'Инструмент',
+    'memoryActivityStartedAt': 'Время начала',
+    'memoryActivityStatus_duplicate': 'Дубликат',
+    'memoryActivityStatus_failed': 'Сбой',
+    'memoryActivityStatus_running': 'Выполняется',
+    'memoryActivityStatus_skipped': 'Пропущено',
+    'memoryActivityStatus_success': 'Успешно',
+    'memoryActivityTime': 'Время операции',
+    'memoryAllDirectories': 'Все названия проектов',
+    'memoryAllSessionsDirectory': 'Включить по умолчанию для всех чатов',
+    'memoryAlreadyInjected': 'Это воспоминание уже есть в контексте текущей сессии',
+    'memoryAutoDistill': 'Автодистилляция в каждом раунде',
+    'memoryAutoRecall': 'Автовызов',
+    'memoryAutoRecallHint': 'Если выключено, воспоминания больше не вызываются автоматически в каждом раунде; закреплённый вызов, ручное внедрение и инструменты поиска и связей не затрагиваются.',
+    'memoryAutoRecallOffNote': 'Автовызов выключен: в каждом раунде внедряются только закреплённые воспоминания, а квоты ниже относятся только к автовызову.',
+    'memoryBeautifyAlready': 'Уже нормализованный структурированный JSON',
+    'memoryBeautifyDone': 'Преобразовано в структурированный JSON',
+    'memoryBeautifyFailed': 'Не удаётся безопасно исправить JSON. Добавьте недостающие кавычки, запятые или закрывающие скобки и повторите попытку.',
+    'memoryBeautifyFormat': 'Форматирование',
+    'memoryBeautifySkipped': 'Это содержимое не нужно преобразовывать в JSON.',
+    'memoryCancel': 'Отмена',
+    'memoryClockPlaceholder': 'ЧЧ:ММ (необязательно)',
+    'memoryClockWithoutDate': 'Для времени нужна дата — сначала выберите дату.',
+    'memoryClose': 'Закрыть',
+    'memoryConfirmDelete': 'Удалить это воспоминание?',
+    'memoryConfirmDeleteDirectory': 'Удалить название проекта «{name}» и все его воспоминания?',
+    'memoryConfirmDeleteFormat': 'Удалить формат воспоминаний «{name}»?',
+    'memoryConfirmDeleteTag': 'Удалить тег «{name}»?',
+    'memoryCopied': 'Название проекта скопировано',
+    'memoryCopyProjectName': 'Копировать название проекта',
+    'memoryCreate': 'Создать',
+    'memoryCreatedAt': 'Создано: {time}',
+    'memoryCreationMethod': 'Способ: {method}',
+    'memoryCreationMethodAutoDistill': 'Автодистилляция',
+    'memoryCreationMethodImport': 'Импорт',
+    'memoryCreationMethodManual': 'Создано вручную',
+    'memoryCreationMethodManualDistill': 'Ручная дистилляция',
+    'memoryCreationMethodMemoryAdd': 'memory_add',
+    'memoryCreationMethodUnknown': '-',
+    'memoryDeactivated': 'Деактивирована',
+    'memoryDelete': 'Удалить',
+    'memoryDeleted': 'Удалено',
+    'memoryDesc': 'Управление локальными проектами памяти, тегами и воспоминаниями. Временные воспоминания не сохраняются, пока вы не нажмёте «Сохранить».',
+    'memoryDirectories': 'Названия проектов',
+    'memoryDirectoryId': 'Идентификатор проекта',
+    'memoryDirectoryListTitle': 'Проекты памяти',
+    'memoryDirectoryName': 'Название проекта',
+    'memoryDistillDone': 'Дистилляция завершена',
+    'memoryDistillDuplicate': 'Такое воспоминание уже существует',
+    'memoryDistillFailed': 'Дистилляция не удалась: {reason}',
+    'memoryDistillModel': 'Модель дистилляции',
+    'memoryDistillNow': 'Дистиллировать последний раунд текущей сессии',
+    'memoryDistillReasonNoRoute': 'Нет доступного маршрута к модели',
+    'memoryDistillReasonNoUsableOutput': 'Модель не выдала пригодное воспоминание',
+    'memoryDistillReasonNoUserTranscript': 'Нет пригодного текста сообщений пользователя',
+    'memoryDistillReasonTranscriptTooShort': 'Текст слишком короткий',
+    'memoryDistillRetrySuccess': 'Повтор с моделью по умолчанию прошёл успешно',
+    'memoryDistillSettings': 'Дистилляция моделью',
+    'memoryDistillSkipped': 'Дистилляция пропущена: {reason}',
+    'memoryDistillUsage': 'Использовано: {total} ток',
+    'memoryDistillUsageEstimated': 'Использовано: ~{total} ток',
+    'memoryDistillUsageUnknown': 'Использовано: —',
+    'memoryEdit': 'Изменить',
+    'memoryEditProject': 'Изменить проект',
+    'memoryEmbeddingBackfilling': 'векторизация {embedded}/{total}',
+    'memoryEmbeddingCovered': 'Векторизовано: {embedded}/{total}',
+    'memoryEmbeddingDim': 'Размерность: {dim}',
+    'memoryEmbeddingDisabled': 'выключено',
+    'memoryEmpty': 'Воспоминаний пока нет. Завершите раунд, чтобы создать воспоминание автодистилляцией, или нажмите «Дистиллировать последний раунд текущей сессии».',
+    'memoryEphemeral': 'Временное',
+    'memoryEphemeralListTitle': 'Временные воспоминания (исчезают после перезапуска)',
+    'memoryEventClockHint': '24-часовой формат ЧЧ:ММ или ЧЧ:ММ:СС. Оставьте пустым, чтобы сохранить точность до дня — тогда отображается только дата.',
+    'memoryEventTimeLabel': 'Время события (когда произошёл описываемый факт)',
+    'memoryEveryTurnAutoMatch': 'Автосопоставление проектов в каждом раунде',
+    'memoryFactTimeExpiredBadge': '(событие истекло)',
+    'memoryFailed': 'Сбой службы памяти',
+    'memoryFollowingSessionModel': 'Используется модель текущей сессии',
+    'memoryFollowSessionModel': 'Как в текущей сессии',
+    'memoryFormatActive': 'Включён',
+    'memoryFormatAddField': 'Добавить поле',
+    'memoryFormatAutoMatchHint': 'При создании воспоминания активный формат определяется автоматически по его названию.',
+    'memoryFormatBuiltin': 'Встроенный',
+    'memoryFormatBuiltinEditHint': 'Название формата кода и его поля по умолчанию (位置/对象/内容/踩坑) фиксированы; свои поля добавлять можно',
+    'memoryFormatBuiltinFieldLocked': 'Поля формата кода по умолчанию нельзя изменить или удалить',
+    'memoryFormatBuiltinNameLocked': 'Название формата кода изменить нельзя',
+    'memoryFormatBuiltinReadonly': 'Другие встроенные форматы изменить нельзя',
+    'memoryFormatBuiltinSuffix': ' (встроенный)',
+    'memoryFormatDiffBlocking': 'Тело не соответствует формату; сохранение будет отклонено — исправьте тело или выберите другой формат',
+    'memoryFormatDiffMissing': 'Не хватает обязательных полей: {fields}',
+    'memoryFormatDiffNotJson': 'Тело похоже на JSON, но не разбирается; сравнить с форматом нельзя',
+    'memoryFormatDiffUndeclared': 'Поля, не объявленные в формате: {fields}',
+    'memoryFormatDuplicateFieldKey': 'Повторяющееся имя поля «{key}»',
+    'memoryFormatDuplicateName': 'Формат с названием «{name}» уже есть; выберите другое',
+    'memoryFormatEmpty': 'Форматов воспоминаний пока нет.',
+    'memoryFormatEmptyFieldKey': 'Имя поля не должно быть пустым (строка {index})',
+    'memoryFormatEmptyFields': 'Нужно хотя бы одно поле (пустой формат бесполезен)',
+    'memoryFormatFieldDesc': 'Описание поля',
+    'memoryFormatFieldDescPlaceholder': 'Необязательно',
+    'memoryFormatFieldKey': 'Имя поля',
+    'memoryFormatFieldKeyPlaceholder': 'Обязательно',
+    'memoryFormatFieldList': 'Определения полей',
+    'memoryFormatFieldRequired': 'Обязательное поле',
+    'memoryFormatFields': 'Поля',
+    'memoryFormatFieldType': 'Тип',
+    'memoryFormatInjectPlainText': 'Убирать форматирование JSON при внедрении',
+    'memoryFormatInjectPlainTextHint': 'Влияет только на представление для модели; сохранённый JSON, типы полей и индексы связей не меняются.',
+    'memoryFormatInvalidName': 'Название формата не должно быть пустым',
+    'memoryFormatJsonLabel': 'Структура JSON',
+    'memoryFormatJsonLabelHint': 'Скелет сохраняемого тела для этого формата',
+    'memoryFormatLabel': 'Формат воспоминаний',
+    'memoryFormatName': 'Название формата',
+    'memoryFormatNamePlaceholder': 'например, дневник, заметки, персонаж',
+    'memoryFormatNone': 'Без формата',
+    'memoryFormatNonJsonBadge': 'Внедрять без JSON',
+    'memoryFormatOptional': 'необязательно',
+    'memoryFormatPresetNameReadonly': 'Названия встроенных форматов изменить нельзя',
+    'memoryFormatPresetReadonly': 'Статус встроенного формата изменить нельзя',
+    'memoryFormatRemoveField': 'Удалить это поле',
+    'memoryFormatRequired': 'обязательно',
+    'memoryFormatSettings': 'Форматы воспоминаний',
+    'memoryFormatSettingsDesc': 'Поля полностью на ваш выбор (имя, тип, обязательность).',
+    'memoryFormatViewerNone': 'Без формата (тело подчиняется общим правилам и не привязано к формату)',
+    'memoryFormatViewerPrefix': 'Формат: ',
+    'memoryFormatViewerTitle': 'Сведения о формате воспоминаний',
+    'memoryHideSidebarEntry': 'Скрыть пункт памяти в боковой панели',
+    'memoryHistory': 'История версий',
+    'memoryHistoryClear': 'Очистить историю',
+    'memoryHistoryClearConfirm': 'Удалить все версии этого воспоминания ({count})? Отменить это нельзя.',
+    'memoryHistoryCleared': 'Очищено версий: {count}',
+    'memoryHistoryCopied': 'Тело версии скопировано',
+    'memoryHistoryCopy': 'Копировать эту версию',
+    'memoryHistoryCount': 'Версий: {count}',
+    'memoryHistoryCurrent': 'Текущая версия',
+    'memoryHistoryCurrentHint': 'Используемое тело',
+    'memoryHistoryDelete': 'Удалить эту версию',
+    'memoryHistoryDeleteConfirm': 'Удалить эту версию? Отменить это нельзя.',
+    'memoryHistoryDeleted': 'Версия удалена',
+    'memoryHistoryDiff': 'Различия с текущей версией',
+    'memoryHistoryDiffHint': 'Зелёные строки есть только в текущем теле, красные — только в этой версии.',
+    'memoryHistoryEmpty': 'У этого воспоминания ещё нет истории версий.',
+    'memoryHistoryRestore': 'Восстановить эту версию',
+    'memoryHistoryRestoreConfirm': 'Заменить текущее тело этой версией? Текущее тело сохранится как версия.',
+    'memoryHistoryRestored': 'Версия восстановлена',
+    'memoryHistoryRestoreSame': 'Эта версия совпадает с текущим телом; восстанавливать нечего.',
+    'memoryHistorySource_distill': 'Обновление дистилляцией',
+    'memoryHistorySource_restore': 'Восстановление',
+    'memoryHistorySource_tool': 'Обновление моделью',
+    'memoryHistorySource_ui': 'Ручное изменение',
+    'memoryHistoryTitle': 'История версий тела',
+    'memoryInject': 'Внедрить в текущую сессию',
+    'memoryInjectConfirm': 'Внедрить это воспоминание в текущую сессию?\nВнедрённое вручную воспоминание не появится на панели памяти;\nэто обычный контекст, и он не участвует в автовызове.',
+    'memoryInjected': 'Внедрено в текущую сессию',
+    'memoryInjectFailed': 'Не удалось внедрить воспоминание',
+    'memoryInjectNoSession': 'Сначала откройте сессию',
+    'memoryInvalidClock': 'Неверное время: укажите ЧЧ:ММ (или ЧЧ:ММ:СС) либо оставьте пустым.',
+    'memoryInvalidDate': 'Неверная дата: укажите ГГГГ-ММ-ДД или оставьте пустым.',
+    'memoryInvalidDateOrder': 'Дата окончания не может быть раньше времени события.',
+    'memoryInvalidJson': 'Изменённые воспоминания должны быть корректным структурированным объектом JSON.',
+    'memoryInvalidText': 'Текст воспоминания слишком короткий (не менее 6 символов).',
+    'memoryItems': 'Воспоминания',
+    'memoryLastRecalledAt': 'Последний вызов: {time}',
+    'memoryLoading': 'Загрузка воспоминаний…',
+    'memoryLoadMore': 'Загрузить ещё',
+    'memoryLogCopied': 'Содержимое воспоминания скопировано',
+    'memoryLogCopiedBefore': 'Предыдущая версия скопирована',
+    'memoryLogCopy': 'Копировать содержимое воспоминания',
+    'memoryLogCopyBefore': 'Копировать предыдущую версию',
+    'memoryLogCopyBeforeEmpty': 'У этой записи журнала нет предыдущей версии.',
+    'memoryLogCopyEmpty': 'У этой записи журнала нет содержимого для копирования.',
+    'memoryLogs': 'Журнал',
+    'memoryLogsClear': 'Очистить всё',
+    'memoryLogsClearConfirmDesc': 'Все записи журнала будут удалены безвозвратно (выполняющиеся задачи не затрагиваются).\nОтменить это нельзя.',
+    'memoryLogsClearConfirmTitle': 'Очистить журнал',
+    'memoryLogsCleared': 'Удалено записей журнала: {n}',
+    'memoryLogsClearing': 'Очистка…',
+    'memoryLogsRetentionHint': 'Журнал (хранится 7 дней)',
+    'memoryManualOff': 'Отключено для этой сессии',
+    'memoryManualOn': 'Включено для этой сессии',
+    'memoryModelLoading': 'Загрузка моделей…',
+    'memoryMoreTagsHint': 'Ещё тегов: {rest} — воспользуйтесь поиском или отметьте «Только выбранные»',
+    'memoryNewDirectory': 'Новое название проекта',
+    'memoryNewFormat': 'Новый формат',
+    'memoryNewMemory': 'Новое воспоминание',
+    'memoryNewTag': 'Новый тег',
+    'memoryNextPage': 'Следующая страница',
+    'memoryNoActivities': 'Активных задач нет',
+    'memoryNoActivityLogs': 'Нет журналов активности',
+    'memoryNoDirectories': 'Названий проектов пока нет. Создайте проект, прежде чем сохранять воспоминания.',
+    'memoryNoDirectory': 'Нет названия проекта',
+    'memoryNoMatches': 'Совпадений нет.',
+    'memoryNoModels': 'Нет доступных моделей',
+    'memoryOnlySelectedTags': 'Только выбранные',
+    'memoryOverview': 'Обзор',
+    'memoryPagination': 'Страница {page} из {pages}, элементов: {total}',
+    'memoryPersisted': 'Сохранено',
+    'memoryPersistedEmpty': 'Сохранённых воспоминаний пока нет.',
+    'memoryPersistedListTitle': 'Постоянные воспоминания',
+    'memoryPinned': 'Всегда добавлять',
+    'memoryPinnedHelp': 'Если включено, это воспоминание всегда добавляется, пока его проект включён в этой сессии: оно конкурирует за релевантность наравне с остальными, а если не выбрано, добавляется после выбора четырёх сегментов, поэтому итоговое число добавленных может превышать настройку количества отбираемых воспоминаний.',
+    'memoryPinnedOff': 'Не закреплено',
+    'memoryPinnedOn': 'Закреплено',
+    'memoryPrevPage': 'Предыдущая страница',
+    'memoryProgress': 'В работе',
+    'memoryProjectActive': 'Активирован',
+    'memoryProjectCountHelp': 'Активные воспоминания / все воспоминания проекта',
+    'memoryProjectFilterClear': 'Сбросить фильтр по проекту',
+    'memoryProjectFilterHint': 'Нажмите, чтобы отфильтровать воспоминания этого проекта',
+    'memoryProjectFilterPinned': 'Только закреплённые',
+    'memoryProjectHasMemories': 'В этом проекте ещё есть воспоминания, поэтому удалить его нельзя.',
+    'memoryProjectProtected': 'Системные резервные проекты нельзя удалить',
+    'memoryProviderDefault': 'По умолчанию у провайдера',
+    'memoryReasoningEffort': 'Усилие рассуждения',
+    'memoryRecallDedupNote': 'Дедупликация между сегментами: воспоминание, выбранное в сегменте 1, не попадает в сегмент 3, а выбранное в сегменте 3 не попадает в сегмент 4.',
+    'memoryRecallInvalid': 'Неверные настройки отбора: сегмент 4 должен быть не меньше 3, а квоты должны в сумме давать общее число.',
+    'memoryRecallMax': 'Максимум отбираемых воспоминаний',
+    'memoryRecallMode': 'Режим отбора',
+    'memoryRecallModeCustom': 'Свой — от 8 до 20',
+    'memoryRecallModeDefault': 'По умолчанию — до 20',
+    'memoryRecallModeExcludeTemporary': 'Без временных воспоминаний — до 15',
+    'memoryRecallOrderNote': 'Воспоминания отбираются в порядке: сегмент 1 → сегмент 2 → сегмент 3 → сегмент 4.',
+    'memoryRecallPinnedNote': 'Закреплённые воспоминания, которые добавляются всегда, не ограничены общим числом из этой настройки.',
+    'memoryRecallRange6To20': 'Диапазон: 8–20',
+    'memoryRecallSegment1': 'Сегмент 1: базовый',
+    'memoryRecallSegment1Hint': 'Воспоминания базового пула, теги: предпочтения пользователя, профиль пользователя, профиль проекта, архитектура проекта, ограничения проекта, пути модулей',
+    'memoryRecallSegment2': 'Сегмент 2: временный',
+    'memoryRecallSegment2Hint': 'Временные воспоминания из обычного пула',
+    'memoryRecallSegment3': 'Сегмент 3: смешанный',
+    'memoryRecallSegment3Hint': 'Остаток базового пула + обычный пул',
+    'memoryRecallSegment4': 'Сегмент 4: резервный (динамический)',
+    'memoryRecallSegment4Hint': 'Оставшиеся постоянные воспоминания из обычного пула',
+    'memoryRecallSegmentDynamic': 'Общее — сегмент 1 — сегмент 2 — сегмент 3',
+    'memoryRecallSettings': 'Настройки отбора воспоминаний',
+    'memoryRecallSettingsDesc': 'Задайте общее число отбираемых воспоминаний на раунд и квоты четырёх сегментов. Сегмент 4 вычисляется из общего числа и сегментов 1–3.',
+    'memoryRemark': 'Примечание',
+    'memoryRemarkEmpty': 'Без примечания',
+    'memoryRemarkPlaceholder': 'Необязательно, до 500 символов; только локальный показ, не участвует в отборе и не добавляется в контекст',
+    'memoryRetrievalHybrid': '{lexical} + векторный семантический поиск ({detail})',
+    'memoryRetrievalLexicalOnly': '{lexical} (семантический поиск выключен)',
+    'memorySave': 'Сохранить',
+    'memorySaved': 'Сохранено',
+    'memorySaving': 'Сохранение…',
+    'memorySceneActivate': 'Активировать все',
+    'memorySceneActiveCount': 'Активных: {count}',
+    'memorySceneApplied': 'Применено к воспоминаниям: {changed}',
+    'memorySceneAppliedNone': 'Эти воспоминания уже в нужном состоянии, менять нечего.',
+    'memorySceneCollapse': 'Свернуть список участников',
+    'memorySceneConfirmDelete': 'Удалить сцену «{name}»?\nЕё воспоминания не удаляются, они просто перестают принадлежать этой сцене.',
+    'memorySceneCreateTitle': 'Новая сцена',
+    'memorySceneDeactivate': 'Деактивировать все',
+    'memorySceneDesc': 'Объедините воспоминания под одним именем, чтобы закреплять, откреплять, включать и выключать их пакетно.',
+    'memorySceneDescNote': 'Сцены нужны только для порядка и быстрых действий; они не влияют на отбор и добавление в контекст.',
+    'memorySceneDuplicateName': 'Сцена с именем «{name}» уже есть, выберите другое имя',
+    'memorySceneEditTitle': 'Изменить сцену',
+    'memorySceneEmpty': 'Сцен пока нет. Нажмите «Новая сцена», чтобы создать первую.',
+    'memorySceneEmptyMembers': 'В этой сцене пока нет участников',
+    'memorySceneExpand': 'Развернуть список участников',
+    'memorySceneInvalidName': 'Имя сцены не может быть пустым',
+    'memorySceneMembersEmpty': 'Доступных воспоминаний нет.',
+    'memorySceneMemoryCount': 'Воспоминаний: {count}',
+    'memorySceneName': 'Имя сцены',
+    'memorySceneNamePlaceholder': 'например: процесс релиза, общие предпочтения, подводные камни проекта',
+    'memorySceneNewScene': 'Новая сцена',
+    'memorySceneNoMatches': 'Подходящих сцен нет',
+    'memorySceneOnlySelected': 'Только выбранные',
+    'memoryScenePinnedCount': 'Закреплённых: {count}',
+    'memoryScenePinOff': 'Открепить все',
+    'memoryScenePinOn': 'Закрепить все',
+    'memorySceneRemark': 'Примечание к сцене',
+    'memorySceneRemarkPlaceholder': 'Необязательно, до 500 символов; только локальный показ, не участвует в отборе и не добавляется в контекст',
+    'memorySceneSearchMemories': 'Поиск по тексту воспоминаний, тегам или проекту',
+    'memorySceneSearchPlaceholder': 'Поиск по имени сцены или примечанию',
+    'memorySceneSelectMemories': 'Участники сцены (множественный выбор, выбрано: {n})',
+    'memorySceneTitle': 'Сцены воспоминаний',
+    'memorySearchDirectories': 'Поиск проектов',
+    'memorySearchFormats': 'Поиск форматов',
+    'memorySearchModels': 'Поиск моделей',
+    'memorySearchPlaceholder': 'Поиск по воспоминаниям, тегам или названиям проектов',
+    'memorySearchTags': 'Поиск тегов',
+    'memorySelectDirectory': 'Выберите название проекта',
+    'memorySelectTags': 'Теги (множественный выбор)',
+    'memorySettings': 'Настройки',
+    'memorySettingsDesc': 'Выберите модель и усилие рассуждения для дистилляции. По умолчанию используются параметры текущей сессии; если своя модель даёт сбой, один раз выполняется повтор с моделью по умолчанию.',
+    'memorySettingsDescLine1': 'Выберите модель и усилие рассуждения для дистилляции. По умолчанию используются параметры текущей сессии.',
+    'memorySettingsDescLine2': 'Если своя модель даёт сбой, один раз выполняется повтор с моделью по умолчанию.',
+    'memoryShowSidebarEntry': 'Показывать пункт памяти в боковой панели',
+    'memorySource': 'Источник: {title} ({id})',
+    'memoryStorageCurrent': 'Сейчас используется',
+    'memoryStorageCustomPath': 'Свой каталог',
+    'memoryStorageCustomPlaceholder': 'Абсолютный путь, например D:\\dsh-memory',
+    'memoryStorageDefaultHint': 'Использовать каталог .dsh-session-kit внутри профиля',
+    'memoryStorageDesc': 'Расположение локальной базы данных, общей для воспоминаний и архивов задач. Изменение вступает в силу после перезапуска DSH.\nСуществующие данные не переносятся, новый каталог начинается пустым (старый каталог сохраняется, вернитесь к нему, чтобы восстановить данные).',
+    'memoryStorageDescLine1': 'Расположение локальной базы данных, общей для воспоминаний и архивов задач. Изменение вступает в силу после перезапуска DSH.',
+    'memoryStorageDescLine2': 'Существующие данные не переносятся, новый каталог начинается пустым (старый каталог сохраняется, вернитесь к нему, чтобы восстановить данные).',
+    'memoryStorageFailed': 'Не удалось сохранить каталог данных памяти',
+    'memoryStorageInvalid': 'Неверная настройка каталога. Проверьте её и повторите попытку.',
+    'memoryStorageMode': 'Расположение',
+    'memoryStorageModeCustom': 'Свой',
+    'memoryStorageModeDefault': 'По умолчанию',
+    'memoryStorageNoPicker': 'Здесь нет выбора каталога, введите путь вручную.',
+    'memoryStorageNoRestart': 'Сохранено. Совпадает с текущим активным каталогом.',
+    'memoryStoragePathIsDefault': 'Этот путь совпадает с каталогом по умолчанию, выберите режим «По умолчанию».',
+    'memoryStoragePathNotAbsolute': 'Введите абсолютный путь (например, D:\\dsh-memory).',
+    'memoryStoragePathNotADirectory': 'Этот путь существует, но это не папка (возможно, файл), выберите путь к папке.',
+    'memoryStoragePathUnusable': 'Этот каталог непригоден: его нельзя создать или в него нельзя писать. Выберите другой.',
+    'memoryStoragePick': 'Выбрать каталог',
+    'memoryStoragePicking': 'Выбор…',
+    'memoryStorageRestart': 'Сохранено. Вступит в силу после перезапуска DSH.',
+    'memoryStorageTitle': 'Каталог сохранения воспоминаний',
+    'memoryStore': 'Сохранить',
+    'memoryStored': 'Сохранено',
+    'memoryStoreInfo': 'Локальная база: {path} · Поиск: {mode}',
+    'memoryStoreRequiresActive': 'Активируйте это временное воспоминание, прежде чем сохранять его.',
+    'memoryTagListTitle': 'Теги воспоминаний',
+    'memoryTagName': 'Имя тега',
+    'memoryTags': 'Теги',
+    'memoryTagsEmpty': 'Тегов пока нет.',
+    'memoryTemporaryEmpty': 'Временных воспоминаний пока нет. Завершите раунд, чтобы получить автоматическую дистилляцию, или нажмите «Дистиллировать последний раунд текущей сессии».',
+    'memoryText': 'Текст воспоминания',
+    'memoryTitle': 'Менеджер воспоминаний',
+    'memoryUnknownSession': 'Неизвестная сессия',
+    'memoryUpdatedAt': 'Обновлено: {time}',
+    'memoryUsageEmpty': 'Расход по воспоминаниям пока не записан',
+    'memoryUsageKindAuto': 'Автодистилляция',
+    'memoryUsageKindConflict': 'Проверка конфликтов',
+    'memoryUsageKindManual': 'Ручная дистилляция',
+    'memoryUsageKinds': 'Доля по типам',
+    'memoryUsageModels': 'Доля по моделям',
+    'memoryUsageMonth': 'Этот месяц',
+    'memoryUsageOther': 'Другое',
+    'memoryUsageProjects': 'Доля по проектам',
+    'memoryUsageRecent': 'Недавние',
+    'memoryUsageTitle': 'Расход токенов (недавние: только последние три месяца)',
+    'memoryUsageToday': 'Сегодня',
+    'memoryUsageTokensUnit': 'ток',
+    'memoryUsageUnknownModel': 'Неизвестная модель',
+    'memoryUsageUnknownProject': 'Неизвестный проект',
+    'memoryUsageWeek': 'Эта неделя',
+    'memoryValidUntilClockHint': 'Время в 24-часовом формате ЧЧ:ММ или ЧЧ:ММ:СС. Оставьте пустым, чтобы срок истёк в конце этого дня.',
+    'memoryValidUntilClockLabel': 'Время истечения срока',
+    'memoryValidUntilLabel': 'Действует до (когда воспоминание перестаёт действовать; пусто — бессрочно)',
+    'memoryValidUntilPlaceholder': 'Пусто — срок не истекает',
+    'renameConfirm': 'Сохранить',
+    'renameEmpty': 'Имя не может быть пустым',
+    'renamePlaceholder': 'Введите новое имя сессии',
+    'renameSession': 'Переименовать',
+    'renameSessionFailed': 'Не удалось переименовать сессию',
+    'renameTitle': 'Переименование сессии',
+    'repairSession': 'Исправить сессию',
+    'repairSessionAction': 'Исправить',
+    'repairSessionAutoReload': 'После успешного исправления интерфейс перезагрузится автоматически.',
+    'repairSessionDesc': 'Очищает поля вне схемы, которые плагин записал в журнал сессии.\nСообщения удалённых раундов сохраняются и снова становятся видны.',
+    'repairSessionFailed': 'Не удалось исправить сессию',
+    'repairSessionLive': 'Не удалось исправить: SESSION_LIVE. Сессия загружена, и сейчас её нельзя исправить.',
+    'repairSessionNoChange': 'Очищать было нечего.',
+    'repairSessionOldVersion': 'Исправляет сессии старых версий, которые не загружаются.',
+    'repairSessionReloading': 'Исправление завершено. Страница скоро перезагрузится, чтобы загрузить исправленную сессию…',
+    'repairSessionRunning': 'Не удалось исправить: SESSION_RUNNING. Сессия выполняется, и сейчас её нельзя исправить.',
+    'repairSessionStillUnloadable': 'Поля очищены, но сессия всё ещё не загружается (осталась другая проблема формата из прошлого).',
+    'repairSessionSuccess': 'Исправление завершено: изменений — {events}, очищено полей — {fields}, удалено надгробий и событий — {dropped}.',
+    'repairSessionTitle': 'Исправить текущую сессию',
+    'repairSessionTombstone': 'надгробие удаления',
+    'repairSessionUnavailable': 'Эту сессию сейчас нельзя исправить (она не сохранена или служба не загружена).',
+    'running': 'Сессия выполняется, удалить её нельзя',
+    'settingsAssistantDispatchToggle': 'Собрать действия раунда ассистента в одну кнопку меню',
+    'settingsDispatchEmpty': 'Действия не выбраны — меню не появится.',
+    'settingsDispatchPickHint': 'Выберите действия для меню (неотмеченные останутся отдельными кнопками):',
+    'settingsDispatchSaveFailed': 'Не удалось сохранить',
+    'settingsEmbeddingApiKey': 'Ключ API',
+    'settingsEmbeddingBackfilling': 'Заполнение векторов, готово: {done}',
+    'settingsEmbeddingBaseUrl': 'Базовый URL API',
+    'settingsEmbeddingCurrent': 'Режим: {mode}',
+    'settingsEmbeddingDimensions': 'Размерность',
+    'settingsEmbeddingHint': 'Если включено, векторы для существующих воспоминаний считаются в фоне (не блокируя разговор). Если точка доступа не отвечает, отбор автоматически переходит к лексическому поиску. При смене модели или размерности векторы перестраиваются автоматически.',
+    'settingsEmbeddingKindLocal': 'Локальная модель',
+    'settingsEmbeddingKindRemote': 'Удалённый API',
+    'settingsEmbeddingLoading': 'Загрузка настроек…',
+    'settingsEmbeddingModel': 'Модель',
+    'settingsEmbeddingModelPath': 'Путь к локальной модели',
+    'settingsEmbeddingOff': 'Выключено',
+    'settingsEmbeddingSave': 'Сохранить и использовать',
+    'settingsEmbeddingSaving': 'Сохранение…',
+    'settingsEmbeddingStatus': 'Векторы есть для воспоминаний: {embedded} из {total}',
+    'settingsEmbeddingTest': 'Проверить подключение',
+    'settingsEmbeddingTestFailed': 'Подключение не удалось',
+    'settingsEmbeddingTesting': 'Проверка…',
+    'settingsEmbeddingTestOk': 'Подключение работает',
+    'settingsEmbeddingTestOkDetail': 'Получен вектор размерности {dims} за {ms} мс; первые три значения: {sample}',
+    'settingsEmbeddingToggle': 'Включить векторизацию',
+    'settingsLeftNavToggle': 'Использовать левую навигацию плагина',
+    'settingsLoadFailed': 'Не удалось загрузить',
+    'settingsMemoryTabHint': 'Если включено, в заголовке сессии рядом с «Траектория» появляется вкладка «Память». Если выключено, вкладка убирается.',
+    'settingsMemoryTabToggle': 'Показывать вкладку «Память» в сессиях',
+    'settingsModuleDispatchTitle': 'Кнопки действий раунда',
+    'settingsModuleEmbeddingTitle': 'Семантический поиск по векторам',
+    'settingsModuleMemoryTabTitle': 'Показ вкладки «Память»',
+    'settingsModuleNavTitle': 'Левая и правая навигация',
+    'settingsNavLabel': 'session-kit',
+    'settingsRightNavToggle': 'Использовать правую навигацию плагина',
+    'settingsSave': 'Сохранить',
+    'settingsSaved': 'Сохранено',
+    'settingsSaveFailed': 'Не удалось сохранить',
+    'settingsSaving': 'Сохранение…',
+    'settingsUserDispatchToggle': 'Собрать действия раунда пользователя в одну кнопку меню',
+    'stats': 'Статистика вызовов',
+    'statsCopySessionId': 'Копировать ID сессии',
+    'statsEmpty': 'В этой сессии нет вызовов инструментов',
+    'statsFailed': 'Не удалось подсчитать вызовы инструментов',
+    'statsFailedCount': 'Сбоев: {count}',
+    'statsLoading': 'Подсчёт вызовов инструментов…',
+    'statsPending': 'В ожидании: {count}',
+    'statsSessionIdCopied': 'ID сессии скопирован',
+    'statsSessionIdCopyFailed': 'Не удалось скопировать ID сессии',
+    'statsSessionIdMissing': 'Нет ID сессии для копирования',
+    'statsSuccess': 'Успешных: {count}',
+    'statsTitle': 'Статистика вызовов инструментов этой сессии',
+    'statsTotal': 'Всего вызовов: {count}',
+    'taskAdd': 'Новая задача',
+    'taskAddTitle': 'Новая задача',
+    'taskAutoInject': 'Автодобавление незавершённых задач',
+    'taskAutoInjectFailed': 'Не удалось переключить автодобавление',
+    'taskAutoInjectHint': 'Если включено, перед каждым раундом незавершённые задачи этой сессии сопоставляются и показываются как подсказка; если выключено, ничего не добавляется автоматически',
+    'taskAutoInjectOff': 'Автодобавление незавершённых задач выключено',
+    'taskAutoInjectOn': 'Автодобавление незавершённых задач включено',
+    'taskBack': 'Назад к списку',
+    'taskCancel': 'Отмена',
+    'taskChartLegend': '{label}: {count} ({percent}%)',
+    'taskChartTotal': 'Все задачи',
+    'taskComplete': 'Отметить выполненной',
+    'taskCompleteOk': 'Задача отмечена выполненной',
+    'taskCompleteStale': 'Данные задачи устарели — обновите список и повторите',
+    'taskContextKey': 'Поле',
+    'taskContextMarks': 'Изменения контекста',
+    'taskCreatedAt': 'Создано',
+    'taskCreateFailed': 'Не удалось создать задачу',
+    'taskCreateOk': 'Задача создана',
+    'taskCreateOkWithItems': 'Задача создана (подзадач: {count})',
+    'taskCreateStatusTip1': 'Новая задача по умолчанию получает статус «Не начата» и не участвует в автодобавлении.',
+    'taskCreateStatusTip2': 'В автодобавлении участвуют только задачи со статусом «Активна».',
+    'taskCwd': 'Рабочий каталог',
+    'taskDelete': 'Удалить',
+    'taskDeleteConfirm': 'Удалить задачу «{name}»?\nЗадача переместится в корзину и будет автоматически очищена через 30 дней;\nдо этого её можно восстановить.',
+    'taskDeleteFailed': 'Не удалось удалить задачу',
+    'taskDeleteOk': 'Перемещено в корзину',
+    'taskDesc': 'Архивы задач фиксируют каждое чтение и запись файла, операцию и подводный камень за всю задачу — они сохраняются между сессиями и при сжатии контекста.',
+    'taskDetailTitle': 'Детали задачи',
+    'taskEdit': 'Изменить',
+    'taskEditTitle': 'Изменить задачу',
+    'taskEmpty': 'Архивов задач пока нет. Они создаются автоматически, как только сессия использует список дел.',
+    'taskEntryToggleHint': 'В автодобавлении участвуют только задачи со статусом «Активна»',
+    'taskExtract': 'Извлечь задачу сессии',
+    'taskExtractExists': 'В этой сессии уже есть задача «{name}», ничего не записано',
+    'taskExtractFailed': 'Не удалось извлечь задачу',
+    'taskExtractHint': 'Собрать архив задачи из списка дел этой сессии; пропускается, если архив уже есть',
+    'taskExtractOk': 'Задача «{name}» извлечена (подзадач: {count})',
+    'taskExtractReasonEmptyTodos': 'Не удалось извлечь: список дел пуст, извлекать нечего',
+    'taskExtractReasonNoEvents': 'Не удалось извлечь: поток событий этой сессии недоступен (она не сохранена или не заархивирована)',
+    'taskExtractReasonNoSession': 'Не удалось извлечь: сессия не указана — сначала откройте сессию',
+    'taskExtractReasonNoTodos': 'Не удалось извлечь: в этой сессии нет списка дел; подзадачи берутся из него',
+    'taskFilterAbandoned': 'Заброшена',
+    'taskFilterActive': 'Активна',
+    'taskFilterAll': 'Все',
+    'taskFilterCompleted': 'Завершена',
+    'taskFilterNotStarted': 'Не начата',
+    'taskFilterPaused': 'На паузе',
+    'taskHideSidebarEntry': 'Скрыть пункт задач в боковой панели',
+    'taskInject': 'Добавить в сессию',
+    'taskInjectConfirm': 'Добавить полный архив задачи «{name}» в текущую сессию?\nАрхив будет добавлен в контекст сессии как сообщение пользователя.',
+    'taskInjectHint': 'Добавить полный архив задачи в контекст текущей сессии',
+    'taskInjectNoSession': 'Сначала откройте сессию',
+    'taskInjectOk': 'Архив задачи добавлен (символов: ~{chars})',
+    'taskItemAborted': 'Прервана',
+    'taskItemAdd': 'Добавить подзадачу',
+    'taskItemBlocked': 'Заблокирована',
+    'taskItemCompleted': 'Завершена',
+    'taskItemDetailEmpty': 'Для этой подзадачи операции не записаны',
+    'taskItemExpand': 'Развернуть детали подзадачи',
+    'taskItemFiles': 'чтение {read} / запись {written}',
+    'taskItemInProgress': 'В работе',
+    'taskItemPending': 'Ожидает',
+    'taskItemPlaceholder': 'Содержание подзадачи',
+    'taskItemRemove': 'Удалить строку',
+    'taskItems': 'Подзадачи',
+    'taskItemsLabel': 'Начальные подзадачи',
+    'taskLoadFailed': 'Не удалось загрузить архивы задач',
+    'taskManage': 'Задачи',
+    'taskMemoryDirs': 'Проекты памяти',
+    'taskMenuTitle': 'Менеджер задач',
+    'taskNameLabel': 'Название задачи',
+    'taskNextPage': 'Далее',
+    'taskObjects': 'Объекты',
+    'taskOperations': 'Операции',
+    'taskPagination': 'Страница {page} из {pages}, элементов: {total}',
+    'taskPitfalls': 'Подводные камни',
+    'taskPrevPage': 'Назад',
+    'taskProgress': 'Прогресс',
+    'taskProject': 'Проект',
+    'taskSave': 'Сохранить',
+    'taskSearchPlaceholder': 'Поиск по задачам, проектам, именам и ID связанных сессий',
+    'taskSessionCopyId': 'Нажмите, чтобы скопировать ID сессии',
+    'taskSessionIdCopied': 'ID сессии скопирован',
+    'taskSessionIdCopyFailed': 'Не удалось скопировать ID сессии',
+    'taskSessions': 'Сессии',
+    'taskSessionsEmpty': 'Сессий пока нет',
+    'taskSessionTurns': 'раунды {from}–{to}',
+    'taskShowSidebarEntry': 'Показывать пункт задач в боковой панели',
+    'taskStatusAbandoned': 'Заброшена',
+    'taskStatusActive': 'Активна',
+    'taskStatusCompleted': 'Завершена',
+    'taskStatusField': 'Статус',
+    'taskStatusNotStarted': 'Не начата',
+    'taskStatusPaused': 'На паузе',
+    'taskSummary': 'Сводка',
+    'taskSummaryLabel': 'Дополнительные сведения',
+    'taskSummaryPlaceholder': 'Цели, ограничения, заметки…',
+    'taskTitle': 'Менеджер задач',
+    'taskTruncatedHint': 'Показаны первые записи: {shown} из {total}',
+    'taskTurnRange': 'раунды {from}–{to}',
+    'taskUpdatedAt': 'Обновлено',
+    'taskUpdateFailed': 'Не удалось сохранить задачу',
+    'taskUpdateOk': 'Задача сохранена',
+    'title': 'Открыть папку сессии в системном файловом менеджере',
+    'topicBackToBottom': 'К концу',
+    'topicBackToTop': 'К началу',
+    'topicJump': 'Перейти к теме',
+    'topicLoadingOlder': 'Загрузка более старых сообщений…',
+    'topicLoadOlder': 'Загрузить более старые сообщения',
+    'topicNav': 'Быстрая навигация по темам пользователя',
+    'topics': 'Темы',
+    'topicUntitled': 'Тема без названия',
+    'trashEmpty': 'Корзина пуста. Удалённые задачи хранятся здесь 30 дней.',
+    'trashLoadFailed': 'Не удалось загрузить корзину',
+    'trashLoading': 'Загрузка корзины…',
+    'trashPurge': 'Удалить навсегда',
+    'trashPurgeConfirm': 'Удалить задачу «{name}» навсегда?\nАрхив задачи (подзадачи, операции, подводные камни) будет удалён безвозвратно;\nотменить это нельзя.',
+    'trashPurgeFailed': 'Не удалось удалить навсегда',
+    'trashPurgeOk': 'Задача удалена навсегда',
+    'trashRestore': 'Восстановить',
+    'trashRestoreFailed': 'Не удалось восстановить задачу',
+    'trashRestoreOk': 'Задача восстановлена',
+    'trashSearchEmpty': 'Подходящих задач нет',
+    'trashSearchPlaceholder': 'Поиск по корзине',
+    'trashTitle': 'Корзина',
+    'dispatchActionDelete': 'Удалить',
+    'dispatchActionDistill': 'Дистиллировать',
+    'dispatchActionEdit': 'Изменить',
+    'dispatchActionMemory': 'Память',
+    'dispatchActionRefresh': 'Обновить',
     'turnMemory.title': 'Снимок памяти для контекста этого хода',
   },
   /*
-   * @hytime/dsh-client-ui-shortcuts@0.2.1@0.2.1 — словарь плагина dsh-shortcuts (MIT).
+   * @hytime/dsh-client-ui-shortcuts@0.2.1 — словарь плагина dsh-shortcuts (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55724,7 +57858,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'quick.write-failed': 'Не удалось сохранить сочетание. Предыдущая привязка остаётся активной; повторите попытку.',
   },
   /*
-   * @hjj345345/dsh-sm-version-display@1.2.24@1.2.24 — словарь плагина dsh-sm-version-display (MIT).
+   * @hjj345345/dsh-sm-version-display@1.2.24 — словарь плагина dsh-sm-version-display (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55788,7 +57922,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'update': 'Доступно обновление',
   },
   /*
-   * dsh-web-icon-indicator@0.6.0@0.6.0 — словарь плагина dsh-web-icon-indicator (MIT).
+   * dsh-web-icon-indicator@0.6.0 — словарь плагина dsh-web-icon-indicator (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55840,7 +57974,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-llm-fallbacks@0.6.7@0.6.7 — словарь плагина fallbacks (лицензия не указана).
+   * dsh-llm-fallbacks@0.6.7 — словарь плагина fallbacks (лицензия не указана).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55894,7 +58028,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usage': '  /fallbacks config   ${CONFIG_SUBCOMMAND_DESCRIPTION.en}\n  /fallbacks config revert-seed <role-id>   ${REVERT_SEED_SUBCOMMAND_DESCRIPTION.en}',
   },
   /*
-   * dsh-feishu-assistant@0.2.0@0.2.0 — словарь плагина feishu-assistant (MIT).
+   * dsh-feishu-assistant@0.2.0 — словарь плагина feishu-assistant (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -55953,7 +58087,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status.title': 'Состояние',
   },
   /*
-   * dsh-image-plugins@0.3.5@0.3.5 — словарь плагина image-plugin (MIT).
+   * dsh-image-plugins@0.3.5 — словарь плагина image-plugin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56011,7 +58145,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.vision.timeoutMsHint': 'По умолчанию 60 с',
   },
   /*
-   * dsh-labnana@0.3.5@0.3.5 — словарь плагина labnana (Apache-2.0).
+   * dsh-labnana@0.3.5 — словарь плагина labnana (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56073,7 +58207,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'version': 'v',
   },
   /*
-   * dsh-magpie-connect@0.4.1@0.4.1 — словарь плагина magpie-connect (MIT).
+   * dsh-magpie-connect@0.4.1 — словарь плагина magpie-connect (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56130,7 +58264,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Шлюз Magpie',
   },
   /*
-   * dsh-skills-mcp-group-manager@0.3.9@0.3.9 — словарь плагина mcp-skill-manager (MIT).
+   * dsh-skills-mcp-group-manager@0.3.9 — словарь плагина mcp-skill-manager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56192,7 +58326,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toggle.title': 'Менеджер MCP и навыков',
   },
   /*
-   * @gxx-labs/mcp-ui-dsh@0.2.6@0.2.6 — словарь плагина mcp-ui (MIT).
+   * @gxx-labs/mcp-ui-dsh@0.2.6 — словарь плагина mcp-ui (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56249,7 +58383,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'waiting': 'Подключение к службе хоста…',
   },
   /*
-   * dsh-opencode-free@0.3.6@0.3.6 — словарь плагина opencodeFree (MIT).
+   * dsh-opencode-free@0.3.6 — словарь плагина opencodeFree (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56309,7 +58443,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknownFreeWhy': 'их длина контекста и возможности неизвестны, и мы не проверили, что они отвечают по каждому из каналов, которые использует этот плагин, поэтому они не предлагаются; на строки ниже это не влияет.',
   },
   /*
-   * dsh-peakrate@0.3.1@0.3.1 — словарь плагина peakrate-model (MIT).
+   * dsh-peakrate@0.3.1 — словарь плагина peakrate-model (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56364,7 +58498,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warning.groupLoad': 'Не удалось загрузить {name}: {message}',
   },
   /*
-   * @liustack/pptwise@0.48.0@0.48.0 — словарь плагина pptwise (MIT).
+   * @liustack/pptwise@0.48.0 — словарь плагина pptwise (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56426,7 +58560,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'viewer.prev': 'Предыдущая страница',
   },
   /*
-   * dsh-repeat-tool-breaker@0.11.4@0.11.4 — словарь плагина repeat-tool-breaker.card (MIT).
+   * dsh-repeat-tool-breaker@0.11.4 — словарь плагина repeat-tool-breaker.card (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56482,7 +58616,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warnAtHint': 'Повторы одного вызова до лёгкого предупреждения с советом изменить подход.',
   },
   /*
-   * dsh-search-failover@0.3.9@0.3.9 — словарь плагина searchPool (MIT).
+   * dsh-search-failover@0.3.9 — словарь плагина searchPool (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56497,7 +58631,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'backend': 'Бэкенд',
     'cancel': 'Отмена',
     'customTag': 'свой',
-    'desc': 'Управляйте ключами API и маршрутизацией для бэкендов поиска и загрузки. Ключи хранятся в локальном файле settings.yaml и применяются сразу. Несколько ключей для одного движка: по одному в строке.',
+    'desc': 'Управляйте ключами API и маршрутизацией для бэкендов поиска и загрузки. Сохранения применяются сразу. Ключи записываются в конфигурацию профиля (cordis.patch.yml, который отслеживается git); лучше оставить apiKey пустым и указать в apiKeyEnv имя переменной окружения из .env. Несколько ключей для одного движка: по одному в строке.',
     'failover': '🎯 Аварийное переключение',
     'hasKey': 'настроен',
     'keysTitle': 'Бэкенды поиска',
@@ -56518,8 +58652,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'quotaUsed': 'Использовано',
     'refreshQuota': 'Обновить',
     'removeFailed': 'Не удалось удалить: ',
-    'reset': 'Сбросить к значениям по умолчанию',
-    'resetDone': 'Сброшено к встроенным значениям',
+    'reset': 'Сбросить к встроенной конфигурации',
+    'resetDone': 'Восстановлена встроенная конфигурация (снимок при запуске)',
     'resetting': 'Сброс…',
     'rotate': '🔄 Взвешенная ротация',
     'save': 'Сохранить изменения',
@@ -56539,10 +58673,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tipDesc': 'Поиск и загрузка обращаются напрямую к API движков без затрат модельных токенов. При необходимости ИИ может повторить запрос через web_search_from, выбрав конкретные движки.',
     'tipTitle': '💡 Ноль модельных токенов и переключение источников для ИИ',
     'weightHint': 'Вес распределения трафика в режиме ротации (1-10)',
+    'key': 'Учётные данные ключа API',
+    'nav': 'Пул поиска',
+    'resetUnchanged': 'Уже применена встроенная конфигурация — документ не изменён',
     'weightLabel': 'Вес',
   },
   /*
-   * @lynn123411/dsh-chat-translate@3.5.9@3.5.9 — словарь плагина settings.chatTranslate (MIT).
+   * @lynn123411/dsh-chat-translate@3.5.9 — словарь плагина settings.chatTranslate (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56594,7 +58731,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsavedHint': 'Изменения вступят в силу после сохранения',
   },
   /*
-   * dsh-checkpoint-rewind@0.6.33@0.6.33 — словарь плагина settings.checkpointRewind (Apache-2.0).
+   * dsh-checkpoint-rewind@0.6.33 — словарь плагина settings.checkpointRewind (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56650,7 +58787,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'treeNone': 'снимок копии',
   },
   /*
-   * @shatyuka/dsh-llm-codebuddy@0.9.1@0.9.1 — словарь плагина settings.codebuddy (MIT).
+   * @shatyuka/dsh-llm-codebuddy@0.9.1 — словарь плагина settings.codebuddy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56699,10 +58836,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unitUsd': 'USD',
     'usageResets': 'Сброс в',
     'usageUsed': 'Использование',
+    'nav': 'CodeBuddy',
+    'off': 'Выкл.',
+    'on': 'Вкл.',
+    'uid': 'UID',
+    'uin': 'UIN',
     'waiting': 'Ожидание завершения входа через браузер…',
   },
   /*
-   * @leisureyu/dsh-smart-dl@1.4.6@1.4.6 — словарь плагина smartdl (MIT).
+   * @leisureyu/dsh-smart-dl@1.4.6 — словарь плагина smartdl (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56766,7 +58908,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updatedAt': 'Последнее обновление',
   },
   /*
-   * dsh-theme-studio@0.10.0@0.10.0 — словарь плагина theme-studio (MIT).
+   * dsh-theme-studio@0.10.0 — словарь плагина theme-studio (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56824,7 +58966,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writeBackFailed': 'Токены темы не попали в документ — переопределение не сработало',
   },
   /*
-   * @perrylink/dsh-ticktick@0.1.20@0.1.20 — словарь плагина ticktick (Apache-2.0).
+   * @perrylink/dsh-ticktick@0.1.20 — словарь плагина ticktick (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56883,7 +59025,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warning': 'Предупреждение',
   },
   /*
-   * dsh-client-ui-quote@0.12.0@0.12.0 — словарь плагина ui-quote (MIT).
+   * dsh-client-ui-quote@0.12.0 — словарь плагина ui-quote (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -56944,10 +59086,33 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'threadCount': 'Сообщений: {n}',
     'threadExport': 'Экспорт в Markdown',
     'threadNone': 'В этой сессии пока нет бокового чата',
+    'draftbarLabel': 'Цитаты в этом черновике',
+    'draftEdit': 'Изменить эту цитату',
+    'draftRemove': 'Убрать эту цитату',
+    'draftRemoveHint': 'Не удалось убрать; нажмите клавишу Backspace один раз',
+    'healthLabel': 'Проверка хоста',
+    'healthSideBetter': 'побочный чат: better-sidebar',
+    'healthSideNative': 'побочный чат: запасной режим fork',
+    'healthSideNone': 'побочный чат: недоступен',
+    'healthToken': 'точное удаление метки',
+    'openFile': 'Открыть файл',
+    'openFileFailed': 'Не удалось открыть предпросмотр файла',
+    'originCode': 'Блок кода',
+    'originDiff': 'Различия',
+    'originPreview': 'Предпросмотр файла',
+    'originTerminal': 'Терминал',
+    'panelExportJson': 'Экспорт JSON',
+    'quoteTruncated': 'Цитата оказалась слишком длинной; символов после обрезки: {n}',
+    'replyInstruction': 'Инструкция: пронумеруйте блоки цитат этого сообщения по порядку как «Цитата 1» «Цитата 2»…, дайте отдельный ответ на каждый и добавляйте в начало каждого ответа «Цитата N».',
+    'sideChatNew': 'Открыть ещё один побочный чат',
+    'threadOpen': 'Открыть',
+    'turnAnswer': 'Процитировать ответ',
+    'turnEmpty': 'В этом раунде нечего цитировать',
+    'turnQuestion': 'Процитировать вопрос',
     'threadSection': 'Боковой чат',
   },
   /*
-   * @linbin-mk/dsh-workspace-prompt@0.9.0@0.9.0 — словарь плагина workspace-prompt (MIT).
+   * @linbin-mk/dsh-workspace-prompt@0.9.0 — словарь плагина workspace-prompt (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57002,7 +59167,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.unconfigured': 'Не настроено',
   },
   /*
-   * dsh-ai4scholar@0.3.7@0.3.7 — словарь плагина ai4scholar (MIT).
+   * dsh-ai4scholar@0.3.7 — словарь плагина ai4scholar (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57042,10 +59207,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'statSessionSpent': 'Потрачено за сессию',
     'testKey': 'Проверить ключ и показать баланс',
     'title': 'AI4Scholar',
+    'settingsIntro': 'Сохраните свой ключ, чтобы включить академический поиск. Здесь можно проверить его состояние и баланс кредитов.',
+    'settingsTitle': 'API-ключ AI4Scholar',
     'topUp': 'Пополнить на ai4scholar.net ↗',
   },
   /*
-   * dsh-approval-review@0.6.4@0.6.4 — словарь плагина approval-review (Apache-2.0).
+   * dsh-approval-review@0.6.4 — словарь плагина approval-review (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57095,7 +59262,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'uncertain': 'Неопределённо',
   },
   /*
-   * dsh-context-zip@0.1.10@0.1.10 — словарь плагина context-zip (MIT).
+   * dsh-context-zip@0.1.10 — словарь плагина context-zip (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57141,7 +59308,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'width': 'true',
   },
   /*
-   * dsh-drawio@0.1.0@0.1.0 — словарь плагина drawio (Apache-2.0).
+   * dsh-drawio@0.1.0 — словарь плагина drawio (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57187,7 +59354,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'source.tip': 'Переключить исходный XML',
   },
   /*
-   * dsh-antigravity@0.0.9@0.0.9 — словарь плагина dsh-antigravity (MIT).
+   * dsh-antigravity@0.0.9 — словарь плагина dsh-antigravity (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57234,7 +59401,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updatedAt': 'Обновлено: {time}',
   },
   /*
-   * dsh-delete-turn@0.1.13@0.1.13 — словарь плагина dsh-delete-turn (MIT).
+   * dsh-delete-turn@0.1.13 — словарь плагина dsh-delete-turn (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57278,7 +59445,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'error.stop-timeout': 'Выполняющийся раунд не остановился вовремя; попробуйте ещё раз через минуту.',
   },
   /*
-   * @addozhang/dsh-discord@0.5.0@0.5.0 — словарь плагина dsh-discord (MIT).
+   * @addozhang/dsh-discord@0.5.0 — словарь плагина dsh-discord (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57326,7 +59493,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Несохранённые изменения',
   },
   /*
-   * dsh-github-router@0.4.1@0.4.1 — словарь плагина dsh-github-router (MIT).
+   * dsh-github-router@0.4.1 — словарь плагина dsh-github-router (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57372,7 +59539,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'willClear': 'очищается при сохранении',
   },
   /*
-   * dsh-round-rightclick@0.2.0@0.2.0 — словарь плагина dsh-round-rightclick (MIT).
+   * dsh-round-rightclick@0.2.0 — словарь плагина dsh-round-rightclick (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57418,7 +59585,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unfinished': 'Этот раунд ещё выполняется; завершите или прервите его перед созданием ветки',
   },
   /*
-   * @y2zyyr/dsh-token-usage-sidebar@1.1.11@1.1.11 — словарь плагина dsh-token-usage-sidebar (MIT).
+   * @y2zyyr/dsh-token-usage-sidebar@1.1.11 — словарь плагина dsh-token-usage-sidebar (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57464,7 +59631,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'yesterday': 'Вчера',
   },
   /*
-   * dsh-villager-hmm@1.0.9@1.0.9 — словарь плагина dsh-villager-hmm (MIT).
+   * dsh-villager-hmm@1.0.9 — словарь плагина dsh-villager-hmm (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57509,7 +59676,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'waiting': 'ожидание мычания…',
   },
   /*
-   * dsh-git-credentials@0.5.0@0.5.0 — словарь плагина git-credentials (MIT).
+   * dsh-git-credentials@0.5.0 — словарь плагина git-credentials (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57554,10 +59721,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'sitesHeading': 'Настроенные сайты',
     'token': 'Токен',
     'tokenConfigured': 'Токен настроен',
+    'nav': 'Учётные данные Git',
     'tokenMissing': 'Токен отсутствует',
   },
   /*
-   * dsh-liao-sidebar@0.2.6@0.2.6 — словарь плагина liao-sidebar-organizer (MIT).
+   * dsh-liao-sidebar@0.2.6 — словарь плагина liao-sidebar-organizer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57607,7 +59775,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'show': 'Переместить в «Ещё»',
   },
   /*
-   * dsh-multi-folder@0.3.3@0.3.3 — словарь плагина multi-folder (MIT).
+   * dsh-multi-folder@0.3.3 — словарь плагина multi-folder (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57652,7 +59820,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title.remove': 'Удалить эту дополнительную рабочую область',
   },
   /*
-   * dsh-power-xc@0.1.6@0.1.6 — словарь плагина power.button (MIT).
+   * dsh-power-xc@0.1.6 — словарь плагина power.button (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57698,7 +59866,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'shutdownWaitingSub': 'Ожидание завершения процесса',
   },
   /*
-   * dsh-prompt-enhance@0.2.7@0.2.7 — словарь плагина prompt-enhance (Apache-2.0).
+   * dsh-prompt-enhance@0.2.7 — словарь плагина prompt-enhance (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57709,7 +59877,6 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'error.concurrencyLimit': 'Уже запущено улучшений: {max} — дождитесь окончания одного из них, затем повторите попытку.',
     'error.disabled': 'Улучшение промпта отключено в настройках плагина.',
     'error.empty': 'Поле ввода пусто — сначала введите промпт для улучшения.',
-    'error.imagesOnly': 'Прикреплены только изображения; улучшение промпта работает только с текстом.',
     'error.internal': 'Не удалось улучшить промпт. Повторите; черновик не изменён.',
     'error.occurrences': 'Черновик содержит команды или ссылки на файлы, которые пока не поддерживаются — сначала удалите их.',
     'error.phase': 'Поле ввода занято (отправка) — попробуйте ещё раз через мгновение.',
@@ -57745,10 +59912,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'panel.title': 'Улучшение промпта',
     'undo.applied': 'Исходный промпт заменён улучшенной версией',
     'undo.dismiss': 'Скрыть',
+    'error.attachmentsOnly': 'В поле ввода есть только вложения — добавьте текст, который нужно улучшить.',
+    'error.cooldown': 'Улучшений подряд не удалось: {failures} — вызовы приостановлены, чтобы не перегружать сервис модели. Повторите через {retryAfterSeconds} с или сначала проверьте настройки модели.',
     'undo.undo': 'Отменить',
   },
   /*
-   * dsh-prompt-optimizer@2.0.3@2.0.3 — словарь плагина prompt_optimizer (MIT).
+   * dsh-prompt-optimizer@2.0.3 — словарь плагина prompt_optimizer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57794,7 +59963,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settings.useSessionModelHint': 'Если включено, запросы оптимизации используют модель сессии; если выключено — собственную модель, указанную ниже.',
   },
   /*
-   * dsh-provider-usage@0.3.16@0.3.16 — словарь плагина provider-usage (MIT).
+   * dsh-provider-usage@0.3.16 — словарь плагина provider-usage (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57840,10 +60009,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usage.resetIn': 'Сброс через {countdown}',
     'usage.unlimited': 'Без ограничений',
     'usage.used': 'Использовано {used}',
+    'status.noSubscription': 'Нет активного тарифа (срок истёк или подписки нет)',
+    'status.noUsageData': 'Данные об использовании не поступали',
     'usage.weekly': 'Недельная квота',
   },
   /*
-   * dsh-rigorquant@0.7.0@0.7.0 — словарь плагина rq-model-router (MIT).
+   * dsh-rigorquant@0.7.0 — словарь плагина rq-model-router (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57890,7 +60061,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Маршрутизация моделей не поддерживается в этом профиле: строка rq-model-router отключена.',
   },
   /*
-   * dsh-session-title-pattern@0.8.9@0.8.9 — словарь плагина session-title-pattern (MIT).
+   * dsh-session-title-pattern@0.8.9 — словарь плагина session-title-pattern (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57936,7 +60107,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Это подключение не видит эти настройки',
   },
   /*
-   * dsh-autotier@0.2.19@0.2.19 — словарь плагина settings.autotier (Apache-2.0).
+   * dsh-autotier@0.2.19 — словарь плагина settings.autotier (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -57980,7 +60151,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknownAgent': 'Текущая сессия не зарегистрирована в службе маршрутизации, поэтому её режим пока нельзя изменить.',
   },
   /*
-   * dsh-nico-theme@0.3.8@0.3.8 — словарь плагина settings.nico (MIT).
+   * dsh-nico-theme@0.3.8 — словарь плагина settings.nico (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58031,7 +60202,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'aqua.wallpaperHint': 'Для светлых обоев используйте светлую тему, для тёмных обоев — тёмную ⚠️',
   },
   /*
-   * dsh-permission-rules@0.7.20@0.7.20 — словарь плагина settings.permissionRules (Apache-2.0).
+   * dsh-permission-rules@0.7.20 — словарь плагина settings.permissionRules (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58077,7 +60248,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'upstreamOff': 'выключен — разрешённые подключения устанавливаются напрямую',
   },
   /*
-   * dsh-web-search-zai@0.2.0@0.2.0 — словарь плагина settings.plugins.zai (MIT).
+   * dsh-web-search-zai@0.2.0 — словарь плагина settings.plugins.zai (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58127,7 +60298,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zhipuGuide': 'Настройка Zhipu Coding Plan ↗',
   },
   /*
-   * dsh-serper-search@0.4.0@0.4.0 — словарь плагина settings.serperSearch (MIT).
+   * dsh-serper-search@0.4.0 — словарь плагина settings.serperSearch (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58176,7 +60347,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'upToDate': 'Обновлений нет',
   },
   /*
-   * @khorsheed/dsh-taskpilot@0.3.4@0.3.4 — словарь плагина taskpilot (MIT).
+   * @khorsheed/dsh-taskpilot@0.3.4 — словарь плагина taskpilot (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58227,7 +60398,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status.stopping': 'останавливается',
   },
   /*
-   * dsh-tidy-display@0.4.2@0.4.2 — словарь плагина tidy-display (MIT).
+   * dsh-tidy-display@0.4.2 — словарь плагина tidy-display (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58269,10 +60440,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skillTitle': 'Навык generative-mcpapps',
     'skillUnavailable': 'Не удалось получить каталог навыков хоста. Скопируйте в .dsh/skills или .agents/skills (домашний каталог или проект), затем нажмите «Проверить ещё раз».',
     'takeoverDescription': 'Включено по умолчанию: в режиме диалога эта рейка заменяет официальный TurnNavigator у правого края (скрыт, а не размонтирован). Отключите, чтобы вернуть режиму диалога официальную рейку — там уступает эта рейка. Режим чтения всегда использует эту рейку. На узких экранах харнес автоматически скрывает официальную рейку; этот переключатель возвращает её, когда он выключен.',
+    'nav': 'Аккуратный вид',
     'takeoverTitle': 'Перехват официальной рейки',
   },
   /*
-   * kczx-user-management@1.7.0@1.7.0 — словарь плагина user-management (MIT).
+   * kczx-user-management@1.7.0 — словарь плагина user-management (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58317,7 +60489,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'usernameRule': '2–32 символа: буквы, цифры, подчёркивание или дефис',
   },
   /*
-   * dsh-view-manager@0.2.2@0.2.2 — словарь плагина viewManager (MIT).
+   * dsh-view-manager@0.2.2 — словарь плагина viewManager (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58365,7 +60537,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'sub': 'Управляйте вкладками представлений в заголовке сессии (Чат / Траектория / …). Отключение скрывает только вкладку; само представление не изменяется. Все настройки хранятся в этом браузере (localStorage).',
   },
   /*
-   * dsh-web-search-aggregation@0.1.11@0.1.11 — словарь плагина web-search-aggregation (MIT).
+   * dsh-web-search-aggregation@0.1.11 — словарь плагина web-search-aggregation (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58410,7 +60582,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'saving': 'Сохранение…',
   },
   /*
-   * dsh-auto-review@0.13.7@0.13.7 — словарь плагина autoReviewPanel (Apache-2.0).
+   * dsh-auto-review@0.13.7 — словарь плагина autoReviewPanel (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58447,10 +60619,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'switchFailed': 'Не удалось переключить: {text}',
     'title': 'Автоматическая проверка ИИ',
     'unavailable': 'Панель проверки недоступна (хост не предоставляет возможность проекции сессии).',
+    'avg': 'среднее',
+    'ms': 'мс',
     'verdicts': 'Вердикты ИИ за раунд',
   },
   /*
-   * dsh-bookmarks@0.1.5@0.1.5 — словарь плагина bookmarks (MIT).
+   * dsh-bookmarks@0.1.5 — словарь плагина bookmarks (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58487,7 +60661,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tags.placeholder': 'Теги через запятую (необязательно)',
   },
   /*
-   * dsh-cost-track@0.6.1@0.6.1 — словарь плагина costTrack (MIT).
+   * dsh-cost-track@0.6.1 — словарь плагина costTrack (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58528,7 +60702,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'totalCalls': 'Всего запросов',
   },
   /*
-   * dsh-custom-headers@0.3.0@0.3.0 — словарь плагина custom-headers (MIT).
+   * dsh-custom-headers@0.3.0 — словарь плагина custom-headers (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58566,7 +60740,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-argp@1.10.1@1.10.1 — словарь плагина dsh-argp (MIT).
+   * dsh-argp@1.10.1 — словарь плагина dsh-argp (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58602,7 +60776,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'windowRatioHint': 'Доля от лимита контекста',
   },
   /*
-   * dsh-context-imports@0.2.3@0.2.3 — словарь плагина dsh-context-imports (MIT).
+   * dsh-context-imports@0.2.3 — словарь плагина dsh-context-imports (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58644,7 +60818,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-desktop-shell@1.1.3@1.1.3 — словарь плагина dsh-desktop (MIT).
+   * dsh-desktop-shell@1.1.3 — словарь плагина dsh-desktop (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58685,7 +60859,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status.unsupported': 'пока не поддерживается на {platform} (только для Windows)',
   },
   /*
-   * @yadsh/dsh-doc-impact@0.5.2@0.5.2 — словарь плагина dsh-doc-impact (MIT).
+   * @yadsh/dsh-doc-impact@0.5.2 — словарь плагина dsh-doc-impact (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58724,7 +60898,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-improve-prompt@0.7.2@0.7.2 — словарь плагина dsh-improve-prompt (MIT).
+   * dsh-improve-prompt@0.7.2 — словарь плагина dsh-improve-prompt (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58760,7 +60934,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'undoTitle': 'Вернуть черновик до улучшения',
   },
   /*
-   * dsh-jev-tools@0.1.13@0.1.13 — словарь плагина dsh-jev-tools (MIT).
+   * dsh-jev-tools@0.1.13 — словарь плагина dsh-jev-tools (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58800,7 +60974,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknownSource': 'Неизвестно',
   },
   /*
-   * dsh-llm-trace@0.2.2@0.2.2 — словарь плагина dsh-llm-trace (Apache-2.0).
+   * dsh-llm-trace@0.2.2 — словарь плагина dsh-llm-trace (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58840,7 +61014,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unreachable': 'Хост недоступен',
   },
   /*
-   * @huanlin/dsh-plugin-mineru@0.4.2@0.4.2 — словарь плагина dsh-mineru (AGPL-3.0).
+   * @huanlin/dsh-plugin-mineru@0.4.2 — словарь плагина dsh-mineru (AGPL-3.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58877,7 +61051,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'test.unhealthy': 'Не работает',
   },
   /*
-   * dsh-movein@0.13.8@0.13.8 — словарь плагина dsh-movein (MIT).
+   * dsh-movein@0.13.8 — словарь плагина dsh-movein (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58917,7 +61091,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'working': 'Сканирование локальных файлов',
   },
   /*
-   * dsh-plugin-message-edit@1.2.1@1.2.1 — словарь плагина dsh-plugin-message-tree (MIT).
+   * dsh-plugin-message-edit@1.2.1 — словарь плагина dsh-plugin-message-tree (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58956,7 +61130,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view': 'Версии',
   },
   /*
-   * @eternalnight/dsh-theme@0.5.1@0.5.1 — словарь плагина dsh-theme (MIT).
+   * @eternalnight/dsh-theme@0.5.1 — словарь плагина dsh-theme (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -58994,7 +61168,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'videoMode': 'Режим видео',
   },
   /*
-   * dsh-image-pathify@0.2.1@0.2.1 — словарь плагина image-pathify (MIT).
+   * dsh-image-pathify@0.2.1 — словарь плагина image-pathify (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59028,10 +61202,11 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'visionBaseUrl': 'Адрес',
     'visionBaseUrlHint': 'По умолчанию — https://api.deepseek.com. Подойдёт любой совместимый с OpenAI адрес (некоторым адресам нужно дописать /v1).',
     'visionModel': 'Модель для изображений',
+    'add': 'Добавить',
     'visionModelHint': 'По умолчанию — deepseek-flash. Также подойдут Qwen, GLM и другие совместимые с OpenAI модели для изображений.',
   },
   /*
-   * dsh-lcx-codex@0.5.2@0.5.2 — словарь плагина lcx-codex (MIT).
+   * dsh-lcx-codex@0.5.2 — словарь плагина lcx-codex (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59073,7 +61248,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'webHelp': 'Оставляет web_search DSH единственным обычным инструментом поиска и следует активному маршруту GPT Responses агента.',
   },
   /*
-   * dsh-openrouter-providers@1.5.3@1.5.3 — словарь плагина openrouter-providers (MIT).
+   * dsh-openrouter-providers@1.5.3 — словарь плагина openrouter-providers (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59110,10 +61285,32 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'saving': 'Сохранение…',
     'settingsDoc': 'Файл конфигурации: {path}',
     'summary': 'Ограничивает запросы OpenRouter настроенным списком провайдеров и ограничением квантования.',
+    'addRule': '＋ Добавить правило модели',
+    'pickerAdd': 'Добавить',
+    'pickerClear': 'Очистить',
+    'pickerCustomPlaceholder': 'Свой идентификатор',
+    'pickerEmpty': 'Каталог пуст или не загружен — введите ниже идентификатор, чтобы добавить его.',
+    'pickerNoMatch': 'Подходящих провайдеров нет',
+    'pickerOffline': 'Нет сети или данные не обновлены: показан встроенный снимок провайдеров — он может быть неполным или устаревшим.',
+    'pickerSearch': 'Поиск провайдеров (название или идентификатор)…',
+    'pickerSelected': 'Выбрано: {n}',
+    'providersHint': 'Общий список по умолчанию: отметьте провайдеров в каталоге ниже или добавьте свой идентификатор вручную. Пусто = без общей подстановки (правила для моделей всё равно применяются).',
+    'removeRule': 'Удалить',
+    'ruleMode': 'Режим',
+    'ruleModeInherit': 'Как в общем режиме',
+    'ruleModeOff': 'Без ограничений (без подстановки)',
+    'ruleModeOnly': 'Только провайдеры из правил',
+    'ruleModeOrder': 'Пробовать по порядку',
+    'rulePattern': 'Совпадение с моделью',
+    'rulePatternPlaceholder': 'e.g. xiaomi/mimo* or anthropic/*',
+    'ruleProviders': 'Провайдеры правил',
+    'rules': 'Правила для моделей (необязательно; побеждает первое совпадение сверху)',
+    'rulesHint': 'Поддерживает подстановки *; без * правило совпадает по префиксу или пространству имён. Совпавшая модель использует режим и провайдеров правила; «Без ограничений» пропускает подстановку для неё.',
+    'savedWithRules': 'Сохранено: {list}; правил для моделей: {rules}',
     'unsaved': 'Не сохранено',
   },
   /*
-   * @kasenri/dsh-orbit@0.6.7@0.6.7 — словарь плагина orbit-model (MIT).
+   * @kasenri/dsh-orbit@0.6.7 — словарь плагина orbit-model (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59156,7 +61353,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'watchdogModel': 'Модель сторожа',
   },
   /*
-   * dsh-intellij-mcp@1.0.5@1.0.5 — словарь плагина plugin.intellijMcp (MIT).
+   * dsh-intellij-mcp@1.0.5 — словарь плагина plugin.intellijMcp (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59199,23 +61396,18 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Эти настройки можно изменить только на машине, где работает DSH. Откройте на ней адрес, который выводит `dsh web` (хост 127.0.0.1), или пробросьте этот порт через SSH и откройте эту страницу заново.',
   },
   /*
-   * dsh-select-quote@0.3.7@0.3.7 — словарь плагина select-quote (MIT).
+   * dsh-select-quote@0.3.7 — словарь плагина select-quote (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'select-quote': {
-    'card.ariaIndexed': 'Аннотация {index}',
-    'card.ariaPlain': 'Аннотация выделения',
-    'card.commentSubtitle': 'Комментарий · {comment}',
-    'card.editComment': 'Изменить комментарий',
-    'card.remove': 'Удалить аннотацию',
     'chip.annotation': 'Аннотация {index}',
     'common.cancel': 'Отмена',
     'common.commentPlaceholder': 'Добавьте необязательный комментарий…',
     'common.save': 'Сохранить',
     'common.selectedText': 'Выделенный текст',
-    'summary.aria.one': 'Аннотаций: {count}. Наведите курсор, чтобы посмотреть подробности.',
-    'summary.aria.other': 'Аннотаций: {count}. Наведите курсор, чтобы посмотреть подробности.',
+    'summary.aria.one': 'Аннотаций: {count}. Откройте, чтобы посмотреть подробности.',
+    'summary.aria.other': 'Аннотаций: {count}. Откройте, чтобы посмотреть подробности.',
     'summary.dialogAria': 'Сведения об аннотациях: {count}',
     'summary.edit': 'Изменить аннотацию {index}',
     'summary.hint': 'Наведите курсор, чтобы посмотреть аннотации',
@@ -59235,10 +61427,15 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toolbar.openLink': 'Открыть ссылку',
     'summary.title.few': 'Аннотаций: {count}',
     'summary.title.many': 'Аннотаций: {count}',
+    'chip.jump': 'Оригинал',
+    'chip.jumpAria': 'Перейти к оригиналу',
+    'chip.previewAria': 'Просмотр аннотаций',
+    'common.close': 'Закрыть',
+    'summary.hintTouch': 'Нажмите, чтобы посмотреть аннотации',
     'toolbar.skipComment': 'Пропустить комментарий',
   },
   /*
-   * dsh-budget@0.4.20@0.4.20 — словарь плагина settings.budget (Apache-2.0).
+   * dsh-budget@0.4.20 — словарь плагина settings.budget (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59280,7 +61477,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warnAlert': 'Пороговое оповещение',
   },
   /*
-   * @tr1v3r/dsh-proxy@0.2.5@0.2.5 — словарь плагина settings.dshProxy (MIT).
+   * @tr1v3r/dsh-proxy@0.2.5 — словарь плагина settings.dshProxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59323,7 +61520,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Сетевой прокси',
   },
   /*
-   * @superfish058/dsh-llm-proxy@1.5.0@1.5.0 — словарь плагина settings.llm-proxy (MIT).
+   * @superfish058/dsh-llm-proxy@1.5.0 — словарь плагина settings.llm-proxy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59362,7 +61559,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Прокси-модель (dsh-llm-proxy)',
   },
   /*
-   * dsh-subagent-default-model@2.1.7@2.1.7 — словарь плагина settings.subagentModel (MIT).
+   * dsh-subagent-default-model@2.1.7 — словарь плагина settings.subagentModel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59405,7 +61602,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.trajectoryModel': 'Текущий провайдер и модель',
   },
   /*
-   * dsh-step-trace@0.6.1@0.6.1 — словарь плагина stepTrace (MIT).
+   * dsh-step-trace@0.6.1 — словарь плагина stepTrace (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59443,7 +61640,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'type': 'Тип',
   },
   /*
-   * deepseek-harness-background@0.6.1@0.6.1 — словарь плагина ui-background (MIT).
+   * deepseek-harness-background@0.6.1 — словарь плагина ui-background (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59480,7 +61677,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'background.wallpaperBlur': 'Размытие обоев',
   },
   /*
-   * dsh-vision-recognizer@0.2.0@0.2.0 — словарь плагина vision-recognizer (MIT).
+   * dsh-vision-recognizer@0.2.0 — словарь плагина vision-recognizer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59520,7 +61717,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Настройка API для распознавания изображений',
   },
   /*
-   * dsh-vision-web@0.1.0@0.1.0 — словарь плагина vision (MIT).
+   * dsh-vision-web@0.1.0 — словарь плагина vision (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59562,7 +61759,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tooMany': 'Выберите до восьми изображений',
   },
   /*
-   * win-pilot@0.4.0@0.4.0 — словарь плагина win-pilot (MIT).
+   * win-pilot@0.4.0 — словарь плагина win-pilot (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59603,7 +61800,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Редактируемые настройки этого плагина недоступны. Проверьте, включён ли плагин, и заново откройте страницу его настроек.',
   },
   /*
-   * dsh-agent-lang@0.12.0@0.12.0 — словарь плагина agentLang (MIT).
+   * dsh-agent-lang@0.12.0 — словарь плагина agentLang (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59631,7 +61828,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'undetected': 'Язык не определён (ничего не внедрено)',
   },
   /*
-   * @biggerboy123/dsh-conversation-anchors@0.1.21@0.1.21 — словарь плагина conversation-anchors (MIT).
+   * @biggerboy123/dsh-conversation-anchors@0.1.21 — словарь плагина conversation-anchors (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59661,7 +61858,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'turnN': 'Раунд {n}',
   },
   /*
-   * dsh-daruma@0.1.9@0.1.9 — словарь плагина daruma (MIT).
+   * dsh-daruma@0.1.9 — словарь плагина daruma (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59696,7 +61893,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status': 'Состояние канала',
   },
   /*
-   * dsh-diff-stat@0.1.9@0.1.9 — словарь плагина diff-stat (MIT).
+   * dsh-diff-stat@0.1.9 — словарь плагина diff-stat (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59726,7 +61923,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'peek.truncated': 'обрезано (начало лимита чтения)',
   },
   /*
-   * dsh-draw@0.2.24@0.2.24 — словарь плагина draw (Apache-2.0).
+   * dsh-draw@0.2.24 — словарь плагина draw (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59757,7 +61954,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tab.setKey': 'Задать ключ',
   },
   /*
-   * @eddyskywalker/dsh-chatgpt-subscription@0.31.0@0.31.0 — словарь плагина dsh-chatgpt-subscription (MIT).
+   * @eddyskywalker/dsh-chatgpt-subscription@0.31.0 — словарь плагина dsh-chatgpt-subscription (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59792,7 +61989,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'settingsUnavailable': 'Эту настройку сейчас нельзя изменить (хост не отдаёт форму конфигурации)',
   },
   /*
-   * dsh-image-viewer@0.1.15@0.1.15 — словарь плагина dsh-image-viewer (MIT).
+   * dsh-image-viewer@0.1.15 — словарь плагина dsh-image-viewer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59827,7 +62024,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zoomHint': 'Колесо мыши — масштаб · перетаскивание — сдвиг · двойной щелчок — 100%',
   },
   /*
-   * dsh-plugin-smooth-stream@1.3.0@1.3.0 — словарь плагина dsh-plugin-smooth-stream (MIT).
+   * dsh-plugin-smooth-stream@1.3.0 — словарь плагина dsh-plugin-smooth-stream (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59853,13 +62050,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'reveal': 'Анимация показа',
   },
   /*
-   * dsh-rerun-turn@0.1.27@0.1.27 — словарь плагина dsh-rerun-turn (MIT).
+   * dsh-rerun-turn@0.1.27 — словарь плагина dsh-rerun-turn (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'dsh-rerun-turn': {
     'action.rerun': 'Повторить этот раунд',
-    'confirm.body': 'Ответ и всё, что после него, сначала покидают контекст модели; собственный промпт раунда отправляется заново, а последующие раунды воспроизводятся дословно. Следующий вызов прочитает A B C1 D E F G.',
+    'confirm.body': 'Ответ и всё, что после него, сначала покидают контекст модели; собственный промпт раунда отправляется заново, а последующие раунды воспроизводятся дословно.',
     'confirm.no': 'Отмена',
     'confirm.title': 'Повторить этот раунд?',
     'confirm.yes': 'Повторить',
@@ -59880,10 +62077,16 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'error.session-not-found': 'Журнал сессии для этого идентификатора не найден.',
     'error.stale': 'Сессия только что изменилась; попробуйте снова.',
     'notice.deferred': 'Повтор прерван: воспроизведение последующих раундов возобновится автоматически, когда сессия освободится.',
+    'config.ask': 'Спрашивать перед повтором',
+    'config.hint.ask': 'Показывать шаг подтверждения перед каждым повтором.',
+    'config.hint.auto': 'Повторять сразу, без вопросов.',
+    'config.summary.ask': 'Спрашивать перед повтором',
+    'config.summary.auto': 'Повторять без вопросов',
+    'confirm.note': 'Повтор меняет только то, что модель прочитает дальше; журнал сессии никогда не перезаписывается.',
     'notice.loadError': 'Не удалось загрузить состояние; попробуйте чуть позже.',
   },
   /*
-   * dsh-eval-control@0.4.0@0.4.0 — словарь плагина dsh.eval-control (Apache-2.0).
+   * dsh-eval-control@0.4.0 — словарь плагина dsh.eval-control (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59915,7 +62118,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'статус управления оценкой aeval (только чтение)',
   },
   /*
-   * dshmarketplace-plugin@0.2.0@0.2.0 — словарь плагина dshmarketplace (MIT).
+   * dshmarketplace-plugin@0.2.0 — словарь плагина dshmarketplace (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59944,7 +62147,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'topicOnly': 'Из темы dsh-plugin',
   },
   /*
-   * @tianbuyu-wwx/dsh-formatforge@3.0.0@3.0.0 — словарь плагина formatforge (MIT).
+   * @tianbuyu-wwx/dsh-formatforge@3.0.0 — словарь плагина formatforge (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -59973,7 +62176,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'panel.title': 'FormatForge',
   },
   /*
-   * dsh-job-progress@1.0.5@1.0.5 — словарь плагина jobProgress (MIT).
+   * dsh-job-progress@1.0.5 — словарь плагина jobProgress (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60000,7 +62203,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'status.stopping': 'Останавливается',
   },
   /*
-   * dsh-markdown-input@0.2.0-alpha.20@0.2.0-alpha.20 — словарь плагина markdown-input (MIT).
+   * dsh-markdown-input@0.2.0-alpha.20 — словарь плагина markdown-input (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60030,7 +62233,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warning.groupLoad': 'Не удалось загрузить {name}: {message}',
   },
   /*
-   * dsh-model-arena@0.6.1@0.6.1 — словарь плагина modelArena (MIT).
+   * dsh-model-arena@0.6.1 — словарь плагина modelArena (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60062,7 +62265,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wins': 'Победы',
   },
   /*
-   * @bittersmilezzz/dsh-model-selector@0.4.3@0.4.3 — словарь плагина modelSelector (MIT).
+   * @bittersmilezzz/dsh-model-selector@0.4.3 — словарь плагина modelSelector (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60096,7 +62299,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'warning.groupLoad': 'Не удалось загрузить {name}: {message}',
   },
   /*
-   * dsh-prompt-vcs@0.6.1@0.6.1 — словарь плагина promptVcs (MIT).
+   * dsh-prompt-vcs@0.6.1 — словарь плагина promptVcs (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60130,7 +62333,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'watched': 'Отслеживается',
   },
   /*
-   * dsh-advisor@0.6.0@0.6.0 — словарь плагина settings.advisor (MIT).
+   * dsh-advisor@0.6.0 — словарь плагина settings.advisor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60157,10 +62360,36 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'staleModel': 'Сохранённая модель больше недоступна для этого провайдера. Выберите другую или оставьте сохранённое значение.',
     'staleProvider': 'Сохранённый провайдер больше не настроен. Выберите другого или оставьте сохранённое значение.',
     'systemPrompt': 'Системный промпт',
+    'defaultEnabledHint': 'Новые сессии начинаются с включённым советником; выключите его, чтобы советник включался отдельно в каждой сессии (включение — командой /advisor on).',
+    'discard': 'Отменить',
+    'namespaceUnavailable': 'Канал настройки советника пока недоступен — шлюз настроек на этом хосте ещё не готов. Настройте советник через строку конфигурации плагина (`- id: advisor` в DSH, где карта `config:` задаёт `provider`/`model`, например `config: { provider: …, model: … }`) в файле `$DSH_HOME/profiles/<name>/cordis.patch.yml`. Плагин советника полностью работает из своей строки конфигурации; веб-форма настроек снова станет доступна при следующей загрузке, как только шлюз будет доступен. Обратите внимание: `/advisor` только включает и выключает советника в рамках сессии; провайдера и модель он не задаёт.',
+    'nextPromptAccept': '→ Принять',
+    'nextPromptHint': 'Показывать предложенный советником следующий запрос подсказкой под полем ввода; нажмите →, чтобы вставить его.',
+    'nextPromptPrefix': 'Предложение',
+    'readOnly': 'В этой среде настройки доступны только для чтения.',
+    'reasoningEffortStoredPending': 'Сохранено: {id}',
+    'reasoningEffortStoredStale': 'Сохранено: {id} (не заявлено)',
+    'save': 'Сохранить',
+    'saved': 'Настройки советника сохранены. Новые сессии сразу применят их.',
+    'saving': 'Сохранение…',
+    'sessionAdvisorOff': 'Советник выключен в этой сессии.',
+    'sessionCollapse': 'Свернуть элементы управления советником в этой сессии',
+    'sessionExpand': 'Развернуть элементы управления советником в этой сессии',
+    'sessionGateBlocked': 'Вызов модели не может начаться: {reason}',
+    'sessionLifetime': 'Действует только в этой сессии — не сохраняется; очищается при завершении или перезапуске. Новая сессия или ответвление наследуют глобальные значения по умолчанию.',
+    'sessionLoading': 'Загрузка…',
+    'sessionModelHeading': 'Модель советника для этой сессии',
+    'sessionNoPair': 'Нет модели советника — у глобального значения по умолчанию нет пары провайдер/модель.',
+    'sessionPending': 'Применение…',
+    'sessionPinAction': 'Закрепить эту модель',
+    'sessionReset': 'Использовать глобальное значение по умолчанию',
+    'sessionSourceGlobal': 'глобальное значение по умолчанию',
+    'sessionSourceSession': 'переопределение сессии',
+    'sessionUnavailable': 'Элементы управления советником в сессии недоступны на этом хосте. Глобальные значения по умолчанию задаются на странице «Плагины», а в сессии помогает команда /advisor model.',
     'systemPromptHint': 'Оставьте пустым, чтобы использовать системный промпт по умолчанию',
   },
   /*
-   * @aiwayds/dsh-web-search-anysearch@0.8.0@0.8.0 — словарь плагина settings.anysearchApiKey (MIT).
+   * @aiwayds/dsh-web-search-anysearch@0.8.0 — словарь плагина settings.anysearchApiKey (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60186,7 +62415,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'В этом развёртывании нет службы учётных данных, поэтому записать ключ здесь нельзя.',
   },
   /*
-   * dsh-composer-layout@0.1.24@0.1.24 — словарь плагина settings.composerLayout (MIT).
+   * dsh-composer-layout@0.1.24 — словарь плагина settings.composerLayout (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60213,7 +62442,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'wide': 'Широкая',
   },
   /*
-   * @jcy2387/dsh-conversation-ui@0.1.7-rc.2.1@0.1.7-rc.2.1 — словарь плагина settings.conversationUi (MIT).
+   * @jcy2387/dsh-conversation-ui@0.1.7-rc.2.1 — словарь плагина settings.conversationUi (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60243,7 +62472,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'version': 'Версия {version}',
   },
   /*
-   * deepseek-harness-zhipu_plan_tools@0.1.8@0.1.8 — словарь плагина settings.dsh-zhipu (MIT).
+   * deepseek-harness-zhipu_plan_tools@0.1.8 — словарь плагина settings.dsh-zhipu (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60273,7 +62502,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'zreadDesc': 'Registers github_search_doc / github_get_repo_structure / github_read_file.',
   },
   /*
-   * dsh-plugin-install@0.4.12@0.4.12 — словарь плагина settings.pluginInstall (MIT).
+   * dsh-plugin-install@0.4.12 — словарь плагина settings.pluginInstall (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60301,7 +62530,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updating': 'Обновление…',
   },
   /*
-   * dsh-tool-stats@0.6.1@0.6.1 — словарь плагина toolStats (MIT).
+   * dsh-tool-stats@0.6.1 — словарь плагина toolStats (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60333,7 +62562,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'totalFailures': 'Всего отказов',
   },
   /*
-   * @kenz1117/dsh-ui-rainbowspeak@0.0.2@0.0.2 — словарь плагина ui-rainbowspeak (MIT).
+   * @kenz1117/dsh-ui-rainbowspeak@0.0.2 — словарь плагина ui-rainbowspeak (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60362,7 +62591,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'width': 'Толщина кольца',
   },
   /*
-   * dsh-verdict@0.6.1@0.6.1 — словарь плагина verdict (MIT).
+   * dsh-verdict@0.6.1 — словарь плагина verdict (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60398,7 +62627,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writing': 'Запись…',
   },
   /*
-   * dsh-web-fetch-playwright@0.2.12@0.2.12 — словарь плагина web-fetch-playwright (MIT).
+   * dsh-web-fetch-playwright@0.2.12 — словарь плагина web-fetch-playwright (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60434,7 +62663,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'shareBrowserContextHint': 'Каждая загрузка открывает вкладку в настоящем профиле удалённого браузера — cookie и localStorage общие, действуют его постоянные входы. Если флажок снят, каждая загрузка использует новый изолированный контекст.',
   },
   /*
-   * @wenqi_bian/dsh-web-search-anysearch@0.2.0-rc.2@0.2.0-rc.2 — словарь плагина web-search-anysearch (MIT).
+   * @wenqi_bian/dsh-web-search-anysearch@0.2.0-rc.2 — словарь плагина web-search-anysearch (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60464,7 +62693,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * dsh-computer-use-win@0.5.0@0.5.0 — словарь плагина windowsComputerUse.settings (MIT).
+   * dsh-computer-use-win@0.5.0 — словарь плагина windowsComputerUse.settings (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60499,7 +62728,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Настройки недоступны для записи. Откройте эту страницу в локальном хосте DSH.',
   },
   /*
-   * dsh-workbuddy-console@2.0.53@2.0.53 — словарь плагина workbuddy-console (MIT).
+   * dsh-workbuddy-console@2.0.53 — словарь плагина workbuddy-console (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60534,7 +62763,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'useHint': 'Нажмите «Использовать», чтобы вставить /skill в поле ввода и вызвать его',
   },
   /*
-   * @sagmans/dsh-tui@0.15.0@0.15.0 — словарь плагина ERR_UNSAFE_PROFILING_DIRECTORY (MIT).
+   * @sagmans/dsh-tui@0.15.0 — словарь плагина ERR_UNSAFE_PROFILING_DIRECTORY (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60551,10 +62780,12 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'removed': 'tool.diff.removed',
     'source': 'tool.web.source',
     'status': 'tool.terminal.status',
+    'cwd': 'tool.terminal.cwd',
+    'url': 'tool.web.url',
     'truncated': 'tool.web.truncated',
   },
   /*
-   * dsh-approval-voice@0.3.0@0.3.0 — словарь плагина approvalVoice (MIT).
+   * dsh-approval-voice@0.3.0 — словарь плагина approvalVoice (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60579,7 +62810,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'volume.label': 'Громкость',
   },
   /*
-   * dsh-better-display@0.3.8@0.3.8 — словарь плагина better-display (MIT).
+   * dsh-better-display@0.3.8 — словарь плагина better-display (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60604,7 +62835,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skillUnavailable': 'Не удалось запросить каталог навыков хоста. Скопируйте в .dsh/skills или .agents/skills (домашний каталог или проект), затем нажмите «Проверить ещё раз».',
   },
   /*
-   * dsh-smooth-cursor-patched@0.1.9-patched.6@0.1.9-patched.6 — словарь плагина cursor-effect (MIT).
+   * dsh-smooth-cursor-patched@0.1.9-patched.6 — словарь плагина cursor-effect (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60624,7 +62855,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'cursor.trailDescription': 'Оставляет за кареткой затухающий след при движении',
   },
   /*
-   * @chestnut23/dsh-conversation-outline@0.2.2@0.2.2 — словарь плагина dsh-conversation-outline (MIT).
+   * @chestnut23/dsh-conversation-outline@0.2.2 — словарь плагина dsh-conversation-outline (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60644,7 +62875,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Структура',
   },
   /*
-   * @wszhoho/dsh-file-attachment@0.6.4@0.6.4 — словарь плагина dsh-file-attachment (MIT).
+   * @wszhoho/dsh-file-attachment@0.6.4 — словарь плагина dsh-file-attachment (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60669,7 +62900,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'vlm.title': 'Мультимодальная VLM',
   },
   /*
-   * @perrylink/dsh-github@0.7.24@0.7.24 — словарь плагина dsh-github (Apache-2.0).
+   * @perrylink/dsh-github@0.7.24 — словарь плагина dsh-github (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60688,7 +62919,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsaved': 'Не сохранено',
   },
   /*
-   * @dsh-one/dsh-llm-provider@0.2.2@0.2.2 — словарь плагина dsh-llm-provider (MIT).
+   * @dsh-one/dsh-llm-provider@0.2.2 — словарь плагина dsh-llm-provider (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60711,7 +62942,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tabProviders': 'Провайдер',
   },
   /*
-   * @goodandready/dsh-model-search@0.1.12@0.1.12 — словарь плагина dsh-model-search (MIT).
+   * @goodandready/dsh-model-search@0.1.12 — словарь плагина dsh-model-search (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60732,7 +62963,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'updater_updating': 'Обновление…',
   },
   /*
-   * dsh-global-rules@0.2.2@0.2.2 — словарь плагина global-rules (MIT).
+   * dsh-global-rules@0.2.2 — словарь плагина global-rules (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60751,7 +62982,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknownError': 'Неизвестная ошибка',
   },
   /*
-   * dsh-vitals@0.1.15@0.1.15 — словарь плагина hardwareMonitor (MIT).
+   * dsh-vitals@0.1.15 — словарь плагина hardwareMonitor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60776,7 +63007,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'temp.max': 'Максимум',
   },
   /*
-   * dsh-inline-comments@0.1.2@0.1.2 — словарь плагина inline-comments (MIT).
+   * dsh-inline-comments@0.1.2 — словарь плагина inline-comments (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60798,7 +63029,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'trash': 'Удалить комментарий',
   },
   /*
-   * @wisdoverse/dsh-inline-media-viewer@1.0.12@1.0.12 — словарь плагина inlineMedia (MIT).
+   * @wisdoverse/dsh-inline-media-viewer@1.0.12 — словарь плагина inlineMedia (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60817,7 +63048,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'writable': 'Это подключение не может записывать настройки: значения действуют только в текущей сессии, пока не используется подключение loopback.',
   },
   /*
-   * dsh-markdown-preview@0.4.0@0.4.0 — словарь плагина markdown-preview (MIT).
+   * dsh-markdown-preview@0.4.0 — словарь плагина markdown-preview (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60838,7 +63069,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'produced.showInFolder': 'Показать в папке',
   },
   /*
-   * dsh-peak-indicator@0.1.32@0.1.32 — словарь плагина peakIndicator (MIT).
+   * dsh-peak-indicator@0.1.32 — словарь плагина peakIndicator (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60857,7 +63088,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'turn.tip': 'Оценочная стоимость токенов за этот раунд',
   },
   /*
-   * dsh-ptc-cordis-preset@0.21.3@0.21.3 — словарь плагина ptcCordis (MIT).
+   * dsh-ptc-cordis-preset@0.21.3 — словарь плагина ptcCordis (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60876,7 +63107,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Режим создания PTC',
   },
   /*
-   * dsh-ab-publish@0.1.12@0.1.12 — словарь плагина publish (MIT).
+   * dsh-ab-publish@0.1.12 — словарь плагина publish (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60895,7 +63126,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.url': 'Цель',
   },
   /*
-   * dsh-reasoning-effort@0.2.8@0.2.8 — словарь плагина reasoning-effort (MIT).
+   * dsh-reasoning-effort@0.2.8 — словарь плагина reasoning-effort (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60916,7 +63147,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unsupported': 'Недоступно',
   },
   /*
-   * dsh-session-colorful-unread-pin-jobs@2.0.0@2.0.0 — словарь плагина session-colorful-unread-pin-jobs (MIT).
+   * dsh-session-colorful-unread-pin-jobs@2.0.0 — словарь плагина session-colorful-unread-pin-jobs (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60935,7 +63166,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'section.unnamed': '(сессия без названия)',
   },
   /*
-   * @idoall/dsh-session-colors@0.1.11@0.1.11 — словарь плагина sessionColor (MIT).
+   * @idoall/dsh-session-colors@0.1.11 — словарь плагина sessionColor (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60959,7 +63190,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'theme': 'Цвета темы',
   },
   /*
-   * dsh-catppuccin@0.2.3@0.2.3 — словарь плагина settings.catppuccin (MIT).
+   * dsh-catppuccin@0.2.3 — словарь плагина settings.catppuccin (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60975,10 +63206,32 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skin.updateError': 'Не удалось проверить обновления',
     'skin.updateLatest': 'Последняя',
     'skin.updateUpToDate': 'У вас последняя версия',
+    'skin.glassBlur': 'Размытие',
+    'skin.glassBrightness': 'Яркость',
+    'skin.glassBrightnessDark': 'Тёмная схема: 0 — чистый чёрный, 50 — без изменений',
+    'skin.glassBrightnessLight': 'Светлая схема: 50 — без изменений, 100 — чистый белый',
+    'skin.glassDesc': 'Матовое стекло — размытие, матирование и яркость настраиваются',
+    'skin.glassEnable': 'Включить стекло',
+    'skin.glassFrost': 'Матирование',
+    'skin.glassMode': 'Режим',
+    'skin.glassModeCompat': 'Совместимый',
+    'skin.glassModeHint': 'Mica показывает интерфейс матовыми карточками, а режим «Совместимый» сохраняет обычную компоновку и меняет только материал',
+    'skin.glassModeMica': 'Mica',
+    'skin.glassPreset': 'Пресеты',
+    'skin.glassPresetClear': 'Прозрачное',
+    'skin.glassPresetFrosted': 'Матовое',
+    'skin.glassPresetStandard': 'Обычное',
+    'skin.glassReset': 'Сбросить настройки по умолчанию',
+    'skin.glassTitle': 'Стеклянный дизайн',
+    'skin.glowHint': 'Мягкие градиенты и ореолы — при выключении возвращается плоский вид',
+    'skin.glowTitle': 'Пастельное свечение',
+    'skin.updateBeta': 'бета-канал',
+    'skin.updateGit': 'Установлено по ссылке, из файла или через git: команда обновления npm не подходит — используйте git pull или пересоберите',
+    'skin.updateLatestTag': 'канал latest',
     'skin.updating': 'Проверка…',
   },
   /*
-   * dsh-code-index@0.10.2@0.10.2 — словарь плагина settings.codeIndex (MIT).
+   * dsh-code-index@0.10.2 — словарь плагина settings.codeIndex (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -60997,7 +63250,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Служба настроек недоступна.',
   },
   /*
-   * dsh-model-visibility@0.2.1@0.2.1 — словарь плагина settings.modelVisibility (MIT).
+   * dsh-model-visibility@0.2.1 — словарь плагина settings.modelVisibility (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61020,7 +63273,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'visibleCount': 'Видимых моделей: {visible} / {total}',
   },
   /*
-   * dsh-reach@0.1.22@0.1.22 — словарь плагина settings.reach (Apache-2.0).
+   * dsh-reach@0.1.22 — словарь плагина settings.reach (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61044,7 +63297,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'user': 'Привязанный пользователь',
   },
   /*
-   * dsh-talk@0.3.25@0.3.25 — словарь плагина settings.talk (Apache-2.0).
+   * dsh-talk@0.3.25 — словарь плагина settings.talk (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61067,7 +63320,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'ttsEngine': 'Движок синтеза речи',
   },
   /*
-   * dsh-ths-holdings@0.3.2@0.3.2 — словарь плагина settings.ths-holdings (MIT).
+   * dsh-ths-holdings@0.3.2 — словарь плагина settings.ths-holdings (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61091,7 +63344,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unavailable': 'Настройки недоступны. Проверьте, что плагин включён, и снова откройте настройки.',
   },
   /*
-   * dsh-theme-gallery@0.8.3@0.8.3 — словарь плагина theme-gallery (MIT).
+   * dsh-theme-gallery@0.8.3 — словарь плагина theme-gallery (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61116,7 +63369,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Скины тем',
   },
   /*
-   * dsh-ab-market-research@0.2.12@0.2.12 — словарь плагина tradeSearch (MIT).
+   * dsh-ab-market-research@0.2.12 — словарь плагина tradeSearch (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61138,7 +63391,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.title': 'Поиск сделок',
   },
   /*
-   * @twinsearth/w2m-dsh-plugin@1.2.6@1.2.6 — словарь плагина w2m.target (MIT).
+   * @twinsearth/w2m-dsh-plugin@1.2.6 — словарь плагина w2m.target (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61154,10 +63407,20 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'routeMissing': 'этот узел не обслуживает маршрут W2M',
     'targetLabel': 'целевая машина: {name}',
     'unconfirmed': ' (не подтверждено, что в сети)',
+    'all': 'Все машины',
+    'capDenied': 'отказано',
+    'capLabel': 'Выполнение Node: {state}',
+    'capMenuLabel': 'Возможность выполнения кода Node',
+    'capPermanent': 'постоянно',
+    'capRefused': 'в переключателе возможности отказано: {error}',
+    'capRemaining': 'Осталось {hours} ч',
+    'capRouteMissing': 'этот узел не обслуживает маршрут возможности',
+    'capTemporary': 'временно 24 ч',
+    'capWarning': 'после включения эта машина выполняет произвольный код Node (эквивалентно удалённому выполнению кода)',
     'unreachable': 'не удалось связаться с плагином',
   },
   /*
-   * dsh-zhihu-search@2.2.1@2.2.1 — словарь плагина zhihu-search (MIT).
+   * dsh-zhihu-search@2.2.1 — словарь плагина zhihu-search (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61183,7 +63446,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'secretShadowed': 'Эту ссылку предоставляет источник только для чтения (например, переменная окружения процесса); здесь её нельзя переопределить.',
   },
   /*
-   * dsh-usage-badge@0.1.9@0.1.9 — словарь плагина .ndjson.zst (MIT).
+   * dsh-usage-badge@0.1.9 — словарь плагина .ndjson.zst (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61192,7 +63455,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'label': 'Английская страница (USD)',
   },
   /*
-   * dsh-agent-shell@0.4.0@0.4.0 — словарь плагина agent-shell-consent (MIT).
+   * dsh-agent-shell@0.4.0 — словарь плагина agent-shell-consent (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61201,7 +63464,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'reason': 'hash-mismatch',
   },
   /*
-   * dsh-ab-chart@0.1.19@0.1.19 — словарь плагина chart (MIT).
+   * dsh-ab-chart@0.1.19 — словарь плагина chart (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61215,7 +63478,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'row.title': 'График',
   },
   /*
-   * dsh-chat-timeline@0.1.5@0.1.5 — словарь плагина chat-timeline (MIT).
+   * dsh-chat-timeline@0.1.5 — словарь плагина chat-timeline (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61229,7 +63492,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unmark': 'Снять отметку',
   },
   /*
-   * @shuind/dsh-codex-harness@0.2.21@0.2.21 — словарь плагина codex (MIT).
+   * @shuind/dsh-codex-harness@0.2.21 — словарь плагина codex (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61241,7 +63504,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'onSelect': 'эта сессия ещё не создана',
   },
   /*
-   * dsh-plugin-control-your-development@0.6.2@0.6.2 — словарь плагина devDashboard (MIT).
+   * dsh-plugin-control-your-development@0.6.2 — словарь плагина devDashboard (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61252,7 +63515,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Dev Dashboard',
   },
   /*
-   * dsh-concise@0.11.3@0.11.3 — словарь плагина dsh-concise (MIT).
+   * dsh-concise@0.11.3 — словарь плагина dsh-concise (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61262,7 +63525,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unknown': '…',
   },
   /*
-   * dsh-engram@0.7.4@0.7.4 — словарь плагина dsh-engram (MIT).
+   * dsh-engram@0.7.4 — словарь плагина dsh-engram (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61271,7 +63534,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'refresh': 'Обновить',
   },
   /*
-   * dsh-film@0.6.1@0.6.1 — словарь плагина dsh-film-studio (MIT).
+   * dsh-film@0.6.1 — словарь плагина dsh-film-studio (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61285,7 +63548,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tab.title': 'Film Studio',
   },
   /*
-   * dsh-harmony@0.8.18@0.8.18 — словарь плагина dsh-harmony-bootstrap (MIT).
+   * dsh-harmony@0.8.18 — словарь плагина dsh-harmony-bootstrap (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61297,7 +63560,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'retry': 'Повторить',
   },
   /*
-   * dsh-model-capability@1.0.1@1.0.1 — словарь плагина dsh-model-capability (MIT).
+   * dsh-model-capability@1.0.1 — словарь плагина dsh-model-capability (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61310,7 +63573,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'textImage': 'Текст + изображение',
   },
   /*
-   * dsh-openrouter-live@0.2.2@0.2.2 — словарь плагина dsh-openrouter-live (MIT).
+   * dsh-openrouter-live@0.2.2 — словарь плагина dsh-openrouter-live (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61320,7 +63583,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'tooltipSplit': 'Расход OpenRouter в этой сессии: {total}. Этот агент: {own}; субагенты: {subagents}; сессий: {sessions}.',
   },
   /*
-   * dsh-task-worktree@0.4.4@0.4.4 — словарь плагина dsh-task-worktree (MIT).
+   * dsh-task-worktree@0.4.4 — словарь плагина dsh-task-worktree (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61336,7 +63599,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'worktreeMode': 'Режим рабочего дерева',
   },
   /*
-   * dsh-vscode-mode@0.17.0@0.17.0 — словарь плагина dsh-vscode-mode (MIT).
+   * dsh-vscode-mode@0.17.0 — словарь плагина dsh-vscode-mode (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61349,7 +63612,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'slot.settings': 'VSCodeMode',
   },
   /*
-   * dsh-whale-particles@0.6.0@0.6.0 — словарь плагина dsh-whale-particles (MIT).
+   * dsh-whale-particles@0.6.0 — словарь плагина dsh-whale-particles (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61360,7 +63623,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Whale particle background',
   },
   /*
-   * dsh-client-liang-intensity-skin@0.1.6@0.1.6 — словарь плагина liang.skin (лицензия не указана).
+   * dsh-client-liang-intensity-skin@0.1.6 — словарь плагина liang.skin (лицензия не указана).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61372,7 +63635,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'appearance.title': 'Оформление',
   },
   /*
-   * dsh-mimo-connect@0.3.4@0.3.4 — словарь плагина mimo (MIT).
+   * dsh-mimo-connect@0.3.4 — словарь плагина mimo (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61383,7 +63646,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'quota.title': 'Квота MiMo: осталось {percent}%',
   },
   /*
-   * @doitian/dsh-music@1.2.0@1.2.0 — словарь плагина music (MIT).
+   * @doitian/dsh-music@1.2.0 — словарь плагина music (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61396,7 +63659,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'unreachableTitle': 'Музыка недоступна',
   },
   /*
-   * picturereader@3.3.3@3.3.3 — словарь плагина picturereader (MIT).
+   * picturereader@3.3.3 — словарь плагина picturereader (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61406,7 +63669,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'strict': 'Строгий',
   },
   /*
-   * dsh-quote-followup@0.2.10@0.2.10 — словарь плагина quote-followup (MIT).
+   * dsh-quote-followup@0.2.10 — словарь плагина quote-followup (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61424,7 +63687,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'quote.turn': 'раунд {n}',
   },
   /*
-   * dsh-blue-whale@0.1.0@0.1.0 — словарь плагина settings.blue-whale (MIT).
+   * dsh-blue-whale@0.1.0 — словарь плагина settings.blue-whale (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61436,7 +63699,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Blue Whale',
   },
   /*
-   * dsh-browser-harness@0.4.4@0.4.4 — словарь плагина settings.browser-harness (MIT).
+   * dsh-browser-harness@0.4.4 — словарь плагина settings.browser-harness (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61452,7 +63715,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'typesafeTitle': 'Ключ API TypeSafe',
   },
   /*
-   * dsh-dracula-theme@1.1.0@1.1.0 — словарь плагина settings.dracula (MIT).
+   * dsh-dracula-theme@1.1.0 — словарь плагина settings.dracula (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61463,7 +63726,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skin.title': 'Тема Dracula',
   },
   /*
-   * dsh-neu-theme@0.1.2@0.1.2 — словарь плагина settings.neu (MIT).
+   * dsh-neu-theme@0.1.2 — словарь плагина settings.neu (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61475,7 +63738,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'skin.title': 'Тема неоморфизма',
   },
   /*
-   * dsh-plugin-shop@0.8.7@0.8.7 — словарь плагина settings.shop (Apache-2.0).
+   * dsh-plugin-shop@0.8.7 — словарь плагина settings.shop (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61489,10 +63752,131 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'retry': 'Повторить',
     'search': 'Поиск плагинов',
     'tabCrashed': 'При показе этой страницы в магазине плагинов произошла ошибка.',
+    'all': 'Все',
+    'ambiguousIdentityCode': 'Неоднозначная запись',
+    'authorLine': 'Автор: {author}',
+    'cancel': 'Отмена',
+    'capabilitiesNote': 'заявлено автором, не проверяется',
+    'categoryIntegration': 'Интеграция',
+    'categoryOther': 'Другое',
+    'categoryProvider': 'Провайдер',
+    'categoryTheme': 'Темы',
+    'categoryTool': 'Инструмент',
+    'categoryUi': 'Интерфейс',
+    'categoryWorkflow': 'Рабочий процесс',
+    'checkUpdate': 'Проверить',
+    'checkUpdateTitle': 'Проверка обновлений',
+    'commitVersionLabel': 'Коммит GitHub {version}',
+    'customLicense': 'Своя лицензия',
+    'deniedCode': 'Отказано',
+    'desktopProfileCode': 'Управляется настольным приложением',
+    'dismiss': 'Скрыть',
+    'downloading': 'Загрузка…',
+    'empty': 'В каталоге нет плагинов.',
+    'emptyIncompatibleFiltered': 'Все подходящие плагины помечены как несовместимые, и фильтр несовместимых исключает их.',
+    'emptySearch': 'Подходящих плагинов нет.',
+    'enabledSwitch': 'Включить',
+    'github': 'GitHub',
+    'githubSource': 'исходный код на GitHub',
+    'harnessPeersDetail': 'dsh {running} на этой машине отказывается устанавливать этот плагин: требуется {peers}.',
+    'harnessPeersRemedy': 'Чтобы принять риск сбоев или потери данных для этой версии, выполните это в терминале, затем нажмите «Обновить»:',
+    'harnessProfileDetail': 'Автор заявляет поддержку профилей {declared}; этот dsh запущен с профилем {running}.',
+    'harnessRangeDetail': 'Автор заявляет поддержку dsh {range}; на этой машине работает {running}.',
+    'hideIncompatible': 'Скрыть несовместимые: {count}',
+    'hotAlreadyLoadedNotice': 'установлено; этот dsh уже один раз загрузил плагин, поэтому только что установленные файлы вступят в силу после перезапуска dsh',
+    'hotApplyNote': 'применено без перезапуска',
+    'hotHostUnsupportedNotice': 'этот harness не поддерживает горячее подключение; перезапустите dsh, чтобы применить',
+    'hotMountFailedNotice': 'горячее подключение не удалось; перезапустите dsh, чтобы применить',
+    'hotNoPatchNotice': 'нет файла патча для горячего подключения; перезапустите dsh, чтобы применить',
+    'hotNotSimpleNotice': 'в патче есть строки конфигурации, которые нельзя подключить на лету; перезапустите dsh, чтобы применить',
+    'hotTimeoutNotice': 'горячее подключение не уложилось в время; перезапустите dsh, чтобы применить',
+    'incompatibleBadge': 'Несовместимо',
+    'incompatibleDetail': 'Отсутствующие компоненты и плагины: {modules}\nПлагин может быть рассчитан на другую версию DSH.',
+    'incompatibleFilterTitle': 'Исключать плагины, помеченные как несовместимые с этим dsh',
+    'install': 'Установить',
+    'installed': 'Установлено',
+    'installedLoading': 'Чтение списка установленного…',
+    'installedNoRestartNotice': 'установлено и подключено на лету; уже работает, перезапуск не нужен',
+    'installedReloadNotice': 'уже применено; перезагрузите страницу, чтобы увидеть',
+    'installedRestartNotice': 'установлено; перезапустите dsh, чтобы применить',
+    'installedVersion': 'установлено {version}',
+    'installFailed': 'Не удалось установить',
+    'installing': 'Установка…',
+    'installTransportFailed': 'Запрос на установку не удалось доставить. Повторите попытку.',
+    'latestVersion': 'последняя {version}',
+    'lessRedLines': 'Показать меньше',
+    'license': 'Лицензия',
+    'listedOn': 'Опубликован {date}',
+    'moreRedLines': 'Показать больше',
+    'nameTakenBadge': 'Имя занято',
+    'nameTakenCode': 'Это имя занято другим плагином',
+    'nameTakenDetail': 'Установлен другой плагин с таким именем ({holder}).\nДва плагина с одинаковым именем объявляют один и тот же идентификатор точки входа загрузчика и не могут загрузиться одновременно; установка этого плагина заменит прежний.',
+    'needsAcknowledgementCode': 'Не подтверждено',
+    'notInCatalogCode': 'Нет в каталоге',
+    'notRestartedLogNotice': 'Итог этого перезапуска записан в {log}.',
+    'notRestartedNotice': 'dsh не перезапустился: после перезагрузки процесс, который просили перезапустить, всё ещё отвечает, поэтому изменение не вступило в силу. Перезапустите вручную: завершите работу dsh, затем выполните dsh web.',
+    'notRestartedPidNotice': 'dsh не перезапустился: после перезагрузки процесс, который просили перезапустить (pid {pid}), всё ещё отвечает, поэтому изменение не вступило в силу. Перезапустите вручную: выполните (kill {pid} — если dsh не завершится, выполните kill -9 {pid}), затем выполните dsh web.',
+    'npmPage': 'страница npm',
+    'npmSource': 'пакет npm',
+    'npmVersionLabel': 'версия npm {version}',
+    'openShop': 'Открыть магазин плагинов',
+    'refresh': 'Обновить',
+    'refreshFailed': 'Не удалось обновить; показан последний каталог',
+    'refreshing': 'Обновление…',
+    'releaseVersionLabel': 'Релиз GitHub {version}',
+    'reload': 'Перезагрузить страницу',
+    'reloadNote': 'Сервер уже в новом состоянии; эта страница всё ещё показывает прежние данные. Перезагрузка отменит всё, что сейчас выполняется на этой странице.',
+    'repository': 'Репозиторий',
+    'restart': 'Перезапустить dsh',
+    'restartBlockedDesktopNotice': 'Этим профилем управляет настольное приложение DeepSeek Harness, поэтому магазин не может его перезапустить. Перезапустите приложение, чтобы применить изменение.',
+    'restartBlockedFromDefaultProfileNotice': 'Этот dsh был запущен с --from-default-profile. Начиная с dsh 0.2.1 перезапуск пересоздал бы профиль по его шаблону и удалил все установленные в нём плагины, включая этот магазин. Перезапустите dsh вручную без этого флага, чтобы применить изменение.',
+    'restartBlockedPortZeroNotice': 'Этот dsh был запущен с --port 0, поэтому перезапуск занял бы другой порт и эта страница не смогла бы перейти на него. Перезапустите dsh вручную, чтобы применить изменение.',
+    'restartBlockedSystemdNotice': 'Процесс dsh работает как служба systemd, поэтому магазин не может безопасно его перезапустить. Перезапустите службу вручную или задайте <allowRestart>: true в конфигурации строки магазина.',
+    'restartBlockedWindowsNotice': 'Магазин пока не может перезапустить dsh в Windows. Завершите dsh и запустите его снова, чтобы применить изменение.',
+    'restartBody': 'Перезапуск отключит эту страницу и прервёт текущий разговор или задачу; браузер сам перейдёт на адрес после перезапуска, поэтому подождите несколько секунд.',
+    'restartConfirm': 'Перезапустить',
+    'restartFailedLogNotice': 'После перезапуска сервер не вернулся или не остался работать. Новый процесс пишет журнал в {log}; его можно запустить и вручную: dsh web',
+    'restartFailedNotice': 'После перезапуска сервер не вернулся. Запустите его вручную: dsh web (файл restart.log в каталоге кэша магазина)',
+    'restarting': 'Перезапуск; страница обновится, как только сервер вернётся…',
+    'restartTitle': 'Перезапустить dsh?',
+    'restartTransportFailed': 'Запрос на перезапуск не удалось доставить. Повторите попытку.',
+    'reviewedPinLine': 'проверено {pin} / текущая версия {current} не проверена',
+    'reviewedVersionLine': 'проверено {reviewed} / текущая версия {current} не проверена',
+    'shadowedBadge': 'Нет в текущем каталоге',
+    'shadowedDetail': 'Пакет установлен, но в текущем каталоге его нет (возможно, он перекрыт одноимённым пакетом npm, удалён автором или никогда не был опубликован); он работает как прежде.',
+    'showIncompatibleTitle': 'Вернуть помеченные как несовместимые плагины на полку',
+    'showing': 'показано первых {shown} из {total} — прокрутите, чтобы загрузить ещё',
+    'sizeLabel': '{size} на диске',
+    'sortAdded': 'Новые',
+    'sortStars': 'Звёзды',
+    'sortUpdated': 'Недавно обновлённые',
+    'staleLabel': 'показано {date}',
+    'stars': 'Звёзд: {count}',
+    'tarballIntegrityCode': 'проверка целостности архива не пройдена',
+    'tierCommunity': 'Сообщество',
+    'tierVerified': 'Проверен',
+    'tierVerifiedStale': 'Проверенная версия устарела',
+    'toggleFailed': 'Не удалось обновить. Повторите попытку.',
+    'toggleRestartNote': 'сохранено; вступит в силу после перезапуска dsh',
+    'uninstall': 'Удалить',
+    'uninstalledLiveNotice': 'Удалено и сразу остановлено. Состав загрузки профиля учтёт удаление при следующем перезапуске.',
+    'uninstalledReloadNotice': 'удалено; перезагрузите страницу, чтобы плагин исчез. Состав загрузки профиля учтёт удаление при следующем перезапуске.',
+    'uninstalledRestartNotice': 'удалено; перезапустите dsh, чтобы применить',
+    'uninstallFailed': 'Не удалось удалить',
+    'uninstalling': 'Удаление…',
+    'uninstallTransportFailed': 'Запрос на удаление не удалось доставить. Повторите попытку.',
+    'updatableSection': 'Обновляемые',
+    'update': 'Обновить',
+    'updatedOn': 'Обновлено {date}',
+    'updateFailed': 'Не удалось обновить',
+    'updateTransportFailed': 'Запрос на обновление не удалось доставить. Повторите попытку.',
+    'upToDate': 'Актуальная версия',
+    'versionMismatchCode': 'Несовпадение версий',
+    'viewInShop': 'Открыть в магазине плагинов',
     'title': 'Магазин плагинов',
   },
   /*
-   * dsh-skills-anywhere@0.19.0@0.19.0 — словарь плагина skills-anywhere (MIT).
+   * dsh-skills-anywhere@0.19.0 — словарь плагина skills-anywhere (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61503,7 +63887,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'method': 'POST',
   },
   /*
-   * dsh-status-rotator@0.37.0@0.37.0 — словарь плагина status-rotator (MIT).
+   * dsh-status-rotator@0.37.0 — словарь плагина status-rotator (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61514,7 +63898,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'thinking': 'thinking',
   },
   /*
-   * dsh-output-styles@0.8.1@0.8.1 — словарь плагина style (Apache-2.0).
+   * dsh-output-styles@0.8.1 — словарь плагина style (Apache-2.0).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61524,7 +63908,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'option.offDetail': 'Восстановить для проекта стиль вывода по умолчанию',
   },
   /*
-   * dsh-maze@2.4.0@2.4.0 — словарь плагина traceCompare (MIT).
+   * dsh-maze@2.4.0 — словарь плагина traceCompare (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61541,7 +63925,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view.live': 'Live Maze',
   },
   /*
-   * @starwish-ai/xingyuan-dsh@0.6.7@0.6.7 — словарь плагина xingyuan (MIT).
+   * @starwish-ai/xingyuan-dsh@0.6.7 — словарь плагина xingyuan (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61552,7 +63936,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'weekly': 'weekly',
   },
   /*
-   * @dsh-plugin-agent-community/ui-agent-community@0.3.8@0.3.8 — словарь плагина agent-community (MIT).
+   * @dsh-plugin-agent-community/ui-agent-community@0.3.8 — словарь плагина agent-community (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61560,15 +63944,75 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'panel': 'Bots团队',
   },
   /*
-   * dsh-agent-toolkit@0.4.11@0.4.11 — словарь плагина agent-schedule (MIT).
+   * dsh-agent-toolkit@0.4.11 — словарь плагина agent-schedule (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'agent-schedule': {
+    'desc.at': 'Однократно в {time}',
+    'desc.cron': 'Своё выражение: {expr}',
+    'desc.daily': 'Ежедневно в {time}',
+    'desc.everySeconds': 'Каждые {seconds} с',
+    'desc.hourly': 'Каждый час в минуту {minute}',
+    'desc.weekday.0': 'Вс',
+    'desc.weekday.1': 'Пн',
+    'desc.weekday.2': 'Вт',
+    'desc.weekday.3': 'Ср',
+    'desc.weekday.4': 'Чт',
+    'desc.weekday.5': 'Пт',
+    'desc.weekday.6': 'Сб',
+    'desc.weekdays': 'По будням в {time}',
+    'desc.weekly': 'Еженедельно, {weekday} в {time}',
+    'feedback.deleted': 'Удалено',
+    'feedback.saved': 'Сохранено',
+    'feedback.triggered': 'Запущено',
+    'form.atTime': 'Время запуска',
+    'form.cancel': 'Отмена',
+    'form.catchup': 'Догонять пропущенные запуски после перезапуска',
+    'form.cronExpr': 'Выражение (минута час день месяц день недели)',
+    'form.enabled': 'Включено',
+    'form.everySeconds': 'Интервал в секундах (не меньше 60)',
+    'form.name': 'Название',
+    'form.preview': 'Следующие три запуска',
+    'form.project': 'Проект',
+    'form.prompt': 'Запрос',
+    'form.save': 'Сохранить',
+    'form.saveFailed': 'Не удалось сохранить: {message}',
+    'form.schedule': 'Расписание',
+    'form.scheduleAt': 'Время однократного запуска',
+    'form.scheduleCron': 'Выражение cron',
+    'form.scheduleEvery': 'Фиксированный интервал',
+    'form.target': 'Цель',
+    'form.targetMain': 'Основной агент',
+    'form.targetRole': 'Роль',
+    'form.timeZone': 'Часовой пояс (необязательно)',
+    'list.confirmDelete': 'Подтвердить удаление?',
+    'list.create': 'Новая задача',
+    'list.delete': 'Удалить',
+    'list.deleteFailed': 'Не удалось удалить: {message}',
+    'list.edit': 'Изменить',
+    'list.empty': 'Пока нет задач по расписанию. Нажмите «Новая задача», чтобы начать.',
+    'list.error': 'Не удалось загрузить, повторите попытку',
+    'list.history': 'История запусков',
+    'list.historyEmpty': 'Запусков пока нет',
+    'list.loading': 'Загрузка…',
+    'list.nextRun': 'Следующий запуск: {time}',
+    'list.noNextRun': 'Отключено',
+    'list.targetMain': 'Основной агент',
+    'list.targetRole': 'Роль {roleId}',
+    'list.trigger': 'Запустить сейчас',
+    'list.triggerFailed': 'Не удалось запустить: {message}',
+    'modal.close': 'Закрыть',
+    'modal.title': 'Задачи по расписанию',
+    'run.error': 'Ошибка',
+    'run.ok': 'Успешно',
+    'run.openSession': 'Открыть сессию',
+    'run.running': 'Выполняется',
+    'run.skipped-overlap': 'Пропущено (пересечение)',
     'name': 'tool.call.toolview',
   },
   /*
-   * @crazy_th/dsh-computer-use@0.2.4@0.2.4 — словарь плагина computer-use (MIT).
+   * @crazy_th/dsh-computer-use@0.2.4 — словарь плагина computer-use (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61576,7 +64020,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'settings.plugin.item',
   },
   /*
-   * dsh-delegate-router@0.4.5@0.4.5 — словарь плагина delegateRouter (MIT).
+   * dsh-delegate-router@0.4.5 — словарь плагина delegateRouter (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61584,7 +64028,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'shell.overlay',
   },
   /*
-   * dsh-chat-tidy@0.4.0@0.4.0 — словарь плагина dsh-chat-tidy (MIT).
+   * dsh-chat-tidy@0.4.0 — словарь плагина dsh-chat-tidy (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61592,7 +64036,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'conversation.session.header.utilities',
   },
   /*
-   * dsh-git-badge@0.20.1@0.20.1 — словарь плагина dsh-git-badge (MIT).
+   * dsh-git-badge@0.20.1 — словарь плагина dsh-git-badge (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61600,7 +64044,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'namespace': 'git-badge',
   },
   /*
-   * dsh-novel-solo@0.2.1@0.2.1 — словарь плагина dsh-novel-solo (MIT).
+   * dsh-novel-solo@0.2.1 — словарь плагина dsh-novel-solo (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61609,7 +64053,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'title': 'Число субагентов',
   },
   /*
-   * dsh-thoughtdag@0.5.20@0.5.20 — словарь плагина dsh-thoughtdag (MIT).
+   * dsh-thoughtdag@0.5.20 — словарь плагина dsh-thoughtdag (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61617,7 +64061,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'panel': 'ThoughtDAG',
   },
   /*
-   * dsh-sidebar-plus@0.4.4@0.4.4 — словарь плагина dshSidebarPlus (MIT).
+   * dsh-sidebar-plus@0.4.4 — словарь плагина dshSidebarPlus (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61625,7 +64069,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'sidebar.right.tab.document',
   },
   /*
-   * meow-cachebilling@0.8.0@0.8.0 — словарь плагина meow-cachebilling (MIT).
+   * meow-cachebilling@0.8.0 — словарь плагина meow-cachebilling (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61634,7 +64078,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'type': 'scalar',
   },
   /*
-   * relay-dsh-plugin-session-import@0.2.3@0.2.3 — словарь плагина relay.session-import (MIT).
+   * relay-dsh-plugin-session-import@0.2.3 — словарь плагина relay.session-import (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61642,7 +64086,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'importSessions': 'Импорт сессий…',
   },
   /*
-   * dsh-eteams@0.2.22@0.2.22 — словарь плагина remix-router-transitions (MIT).
+   * dsh-eteams@0.2.22 — словарь плагина remix-router-transitions (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61650,7 +64094,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'lineSuffix': 'hardBreakTrailing',
   },
   /*
-   * @stolyarovmn/dsh-client-ui-schedule-tab@0.8.0@0.8.0 — словарь плагина schedule-attention-enhancer (MIT).
+   * @stolyarovmn/dsh-client-ui-schedule-tab@0.8.0 — словарь плагина schedule-attention-enhancer (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61658,7 +64102,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'plugins.detail.section',
   },
   /*
-   * @xiaoyuy搠/dsh-backup@0.13.4@0.13.4 — словарь плагина settings.backupPanel (MIT).
+   * @xiaoyuy搠/dsh-backup@0.13.4 — словарь плагина settings.backupPanel (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61667,7 +64111,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'name': 'settings.plugins.tab',
   },
   /*
-   * dsh-smooth-stream@0.7.0@0.7.0 — словарь плагина smoothStream.chat (MIT).
+   * dsh-smooth-stream@0.7.0 — словарь плагина smoothStream.chat (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61676,7 +64120,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'message.think': 'Размышление',
   },
   /*
-   * @jcy2387/dsh-codex-provider@0.1.7-rc.2.1@0.1.7-rc.2.1 — словарь плагина sse (MIT).
+   * @jcy2387/dsh-codex-provider@0.1.7-rc.2.1 — словарь плагина sse (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
@@ -61685,12 +64129,616 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'source': 'OAuth',
   },
   /*
-   * @xiaoso/dsh-tool-plus@0.1.15@0.1.15 — словарь плагина tool-plus-cards (MIT).
+   * @xiaoso/dsh-tool-plus@0.1.15 — словарь плагина tool-plus-cards (MIT).
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
   'tool-plus-cards': {
     'label': 'nav',
+    'astEdit.files': 'Файлов: {count}',
+    'astEdit.parseErrors': 'Ошибки разбора',
+    'astEdit.replacements': 'Замен: {count}',
+    'astEdit.rules': 'Правила',
+    'astEdit.rulesRest': '… ещё {count}',
+    'bash.background': 'Фоновая задача {jobId}',
+    'cancelled': 'Отменено',
+    'codeBlock.title': 'Блок кода',
+    'codeBlock.unwrap': 'Не переносить строки',
+    'codeBlock.wrap': 'Переносить строки',
+    'collapse': 'Свернуть',
+    'collapseAria': 'Свернуть',
+    'copied': 'Скопировано',
+    'copy': 'Копировать',
+    'done': 'Готово',
+    'expand': 'Развернуть',
+    'expandAria': 'Развернуть ещё строк: {count}',
+    'expandRest': '… ещё строк: {count}',
+    'failed': 'Не удалось',
+    'files.one': 'Файлов: {count}',
+    'files.other': 'Файлов: {count}',
+    'generic.noDetail': 'Дополнительных сведений нет',
+    'generic.params': 'Параметров: {count}',
+    'image.caption': '{name} · {width}×{height} · {size}',
+    'image.close': 'Закрыть',
+    'image.dialog': 'Исходное изображение',
+    'image.loadFailed': 'Не удалось загрузить',
+    'image.loading': 'Загрузка',
+    'image.open': 'Открыть оригинал',
+    'image.openNamed': 'Открыть оригинал: {name}',
+    'image.unnamed': 'Изображение',
+    'inspect': 'Подробнее',
+    'noOutput': 'Нет вывода',
+    'read.collapseAria': 'Свернуть содержимое',
+    'read.expandAria': 'Развернуть ещё строк: {count}',
+    'read.expandRest': '… ещё строк: {count}',
+    'read.window': 'Показано строк: {shown} из {total}',
+    'running': 'Выполняется',
+    'search.collapseAria': 'Свернуть результаты',
+    'search.expandAria': 'Развернуть ещё строк результатов: {count}',
+    'search.expandRest': '… ещё строк: {count}',
+    'search.matches': 'Совпадений: {shown} · файлов: {files}',
+    'search.matches.truncated': 'Совпадений: {shown} из {total} · файлов: {files}',
+    'search.noResults': 'Ничего не найдено',
+    'search.paths': 'Путей: {shown}',
+    'search.paths.truncated': 'Путей: {shown} из {total}',
+    'search.scope': 'в {path}',
+    'stopped': 'Остановлено',
+    'terminal.commandLine': 'Командная строка {n}',
+    'terminal.done': 'Готово',
+    'terminal.exitCode': 'код выхода {code}',
+    'terminal.failed': 'Не удалось',
+    'terminal.noExitCode': 'кода выхода нет',
+    'terminal.noOutput': 'Нет вывода',
+    'terminal.running': 'Выполняется',
+    'terminal.signal': 'сигнал {signal}',
+    'timedOut': 'Превышено время ожидания',
+    'title.astEdit': 'Правка синтаксического дерева',
+    'title.astGrep': 'Поиск по синтаксическому дереву',
+    'title.bash': 'Bash',
+    'title.edit': 'Правка',
+    'title.glob': 'Поиск по шаблону',
+    'title.grep': 'Поиск по содержимому',
+    'title.read': 'Чтение',
+    'title.write': 'Запись',
+    'write.lines': 'Строк: {count}',
+    'write.madeExecutable': 'Сделан исполняемым',
     'name': 'settings.section',
+    'files.few': 'Файлов: {count}',
+    'files.many': 'Файлов: {count}',
+  },
+  /*
+   * billion-context@0.1.204 — словарь плагина acp_turn_sep_ (MIT).
+   * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
+   * сверяют наш перевод с ним, а не с чужим пакетом локализации.
+   */
+  'acp_turn_sep_': {
+    'advisory.desc': ': в текущей версии есть серьёзный дефект; bili сам обновляет её до безопасной версии. Причина:',
+    'advisory.hint': '. Если обновление не завершилось автоматически, выполните его вручную:',
+    'advisory.on': 'Уведомление о критическом дефекте',
+    'advisory.restartDesc': ': безопасная версия уже установлена на диске, но этот процесс всё ещё работает на затронутой версии. Причина:',
+    'advisory.restartHint': '. Перезапустите bili, чтобы она вступила в силу.',
+    'alert.dismiss': 'Понятно',
+    'alert.hint.connect_refused': 'TCP отклонён (через прокси, если он настроен, иначе напрямую к апстриму) — эндпоинт недоступен или указан неверный порт',
+    'alert.hint.connect_timeout': 'Рукопожатие TCP так и не завершилось — апстрим или прокси недоступен либо трафик уходит в никуда; возможна ограниченная повторная попытка отправки (BILI_REPLAY_RETRY_MAX)',
+    'alert.hint.dns': 'не удалось разрешить имя — ошибка DNS-сервера или опечатка в имени узла; возможна ограниченная повторная попытка отправки (BILI_REPLAY_RETRY_MAX)',
+    'alert.hint.proxy_reset': 'прокси разорвал соединение до получения ответа — проверьте ограничения прокси на простой и на размер передаваемых данных (BILI_PROXY_KEEPALIVE_MAX_MS может сократить окно переиспользования соединения); возможна ограниченная повторная попытка отправки (BILI_REPLAY_RETRY_MAX)',
+    'alert.hint.tls': 'Сбой TLS или сертификата на шаге CONNECT или рукопожатия с апстримом — проверьте настройки CA и MITM в прокси; если цепочку считают недоверенной или самоподписанной, переподписать апстрим может защитное ПО со сканированием HTTPS (Kaspersky, корпоративный DLP) или корпоративный прокси — выгрузите корневой CA в PEM и задайте NODE_EXTRA_CA_CERTS=/path/to/ca.pem (или network.caFile в настройках bili), либо исключите node.exe из сканирования',
+    'alert.hint.unknown': 'неклассифицированный сбой транспорта — сообщите с полной цепочкой ошибок',
+    'alert.hint.upstream_reset': 'апстрим или сеть сбросили соединение до получения ответа — проверьте апстрим и локальную сеть; возможна ограниченная повторная попытка отправки (BILI_REPLAY_RETRY_MAX)',
+    'alert.item': 'Не удаётся связаться с {host} ({kind} ×{count}, с {first}) — {hint}',
+    'alert.note.skipped_proxy': 'доступный прокси {proxy} ({source}) пропущен — upstreamProxyMode не задан (прямое подключение предусмотрено по умолчанию, #346/#357); задайте «upstreamProxyMode»: «auto» или BILI_UPSTREAM_PROXY_MODE=auto либо назначьте этому провайдеру канал «proxy», чтобы включить его',
+    'alert.title': 'Проблемы с подключением к апстриму',
+    'ca.not_ready': '(ещё не создан; появится при первом MITM)',
+    'card.claude_key': 'Claude Code',
+    'card.codex_key': 'Codex',
+    'card.codex_login': 'Codex (вход через ChatGPT)',
+    'card.opencode': 'OpenCode',
+    'card.other': 'Другие клиенты',
+    'card.pi': 'Pi',
+    'cfg.file': 'Файл конфигурации',
+    'cfg.file_desc': 'Эта карточка правит файл конфигурации напрямую — действуют все поля верхнего уровня в этом JSON (маршруты, сжатие, сеть, проброс, promptPack, ccr, …). Сохранение применяется сразу',
+    'cfg.invalid_json': 'Некорректный JSON — не сохранено',
+    'cfg.parse_error': 'Файл конфигурации не содержит корректный JSON — вместо него показан пустой вид',
+    'cfg.passthrough': 'Проброс',
+    'cfg.passthrough_desc': 'Определяет, проходит ли трафик, не подпадающий ни под один маршрут, в целевую службу без изменений (без перехвата и без переписывания). Состояние хранится в файле конфигурации; если его принудительно задала переменная окружения ACP_PASSTHROUGH, интерфейс помечает источник, и вам нужно сбросить переменную и перезапустить, прежде чем менять её здесь',
+    'cfg.pt_clear': 'Отключить проброс',
+    'cfg.pt_off': 'Выключено',
+    'cfg.pt_on': 'Включено',
+    'cfg.q_absorb': 'Мгновенное поглощение результатов инструментов (absorb) — крупные результаты модель перерабатывает сразу при получении; оригиналы скрыты до следующего раунда сжатия (по умолчанию выключено)',
+    'cfg.q_absorb_hint': 'по умолчанию поглощаются только результаты с изображениями (#3422); задайте mediaOnly: false, чтобы поглощать и текст целиком. Подполя (minToolTokens, contextThresholdPct, excludeTools) указываются в редакторе JSON ниже',
+    'cfg.q_debug': 'Отладочный журнал (debug)',
+    'cfg.q_imgrescale': 'Уменьшение исходящих изображений (imageRescale) — крупные исходящие изображения сжимаются до отправки модели; оригиналы остаются в локальном хранилище сессии (по умолчанию включено)',
+    'cfg.q_imgrescale_hint': 'порог по длинной стороне через переменную окружения BILI_IMAGE_RESCALE_MAX_DIM (по умолчанию 1600)',
+    'cfg.q_mitm': 'Домены для расшифровки MITM, через запятую (mitm.domains)',
+    'cfg.q_mitm_ph': 'api.anthropic.com, open.bigmodel.cn',
+    'cfg.q_more': 'Другие настройки (полный справочник полей)',
+    'cfg.q_more_url': 'https://github.com/ranxianglei/billion-context/blob/master/CONFIGURATION.md',
+    'cfg.q_never': 'Исключить инструменты из сохранения недавних сообщений (compress.neverPreserveRecentTools)',
+    'cfg.q_never_note': 'По умолчанию исключаются decompress, search_context, read, bash — при массовом чтении уберите read из списка, чтобы только что прочитанные файлы не сжимались сразу',
+    'cfg.q_never_ph': 'через запятую, допускаются маски *; пусто — встроенный список ядра (включая read, bash)',
+    'cfg.q_nudge': 'Порог прироста для сжатия, токены (compress.nudgeGrowthTokens)',
+    'cfg.q_nudge_high': 'выше 100000: слишком длинный контекст между сжатиями может ослабить внимание модели',
+    'cfg.q_nudge_low': 'ниже 20000: слишком частое сжатие ухудшает качество сводки (по умолчанию ядра 50000)',
+    'cfg.q_nudge_step': 'шаг 5000',
+    'cfg.q_pack': 'Набор промптов для сжатия (compress.promptPack)',
+    'cfg.q_pack_custom': 'свой набор — загружается по имени из ~/.config/billion-context/packs/ (или из каталога проекта .billion-context/packs/)',
+    'cfg.q_pack_default_desc': 'по умолчанию (полный набор): подробные описания инструментов и полные правила сжатия — самые полные указания. Замерено ≈2 900+ токенов на запрос (токенизатор qwen)',
+    'cfg.q_pack_lean_desc': 'краткий: однострочные описания инструментов, сжатые правила — более краткие указания. Замерено ≈1 400 токенов на запрос (токенизатор qwen), примерно вдвое меньше, чем в наборе по умолчанию',
+    'cfg.q_parse_err': 'Расширенный JSON сейчас не разбирается — быстрые настройки приостановлены, пока он снова не станет корректным',
+    'cfg.q_passthrough': 'Режим проброса (passthrough) — только проксирование, без внедрения и без сжатия',
+    'cfg.q_prm': 'Сохранение недавних сообщений (compress.preserveRecentMessages)',
+    'cfg.q_prm_ph': 'пусто — по умолчанию ядра',
+    'cfg.q_ptools': 'Имена защищённых инструментов (protectedTools, никогда не сжимаются)',
+    'cfg.q_ptools_ph': 'через запятую, допускаются маски *, например skill, skill_*; по умолчанию пусто',
+    'cfg.q_ptools_warn': 'Не защищайте многословные инструменты вроде read / bash / edit — их вывод занимает большую часть токенов большинства сессий; защита означает, что он никогда не сжимается, и контекст продолжает расти',
+    'cfg.q_tiers': 'Пороги срабатывания сжатия по уровням, токены (compress.tierNudgeTokens; предзаполнены расчётными значениями по умолчанию, сохраняются только изменённые)',
+    'cfg.q_tiers_auto': 'авто',
+    'cfg.q_tiers_desc': 'Предзаполнены текущими расчётными значениями по умолчанию (T1 = шаг роста, T2/T3 = ×1.5); неизменённые значения не сохраняются. Обратите внимание: T2/T3 считают токены СВОДКИ нижнего уровня, а не сырые — при значении по умолчанию 75K и коэффициенте сжатия сводки примерно 10:1 один блок T2 несёт около 750K сырого контекста; для длинных проектов увеличьте T2.',
+    'cfg.q_tiers_step': 'шаг 5000',
+    'cfg.q_tiers_tip_t1': 'Порог сжатия сырых сообщений T1 (измеряется в сырых токенах) — по умолчанию равен порогу роста для сжатия выше',
+    'cfg.q_tiers_tip_t2': 'Порог повторной переработки T2 (измеряется в токенах сводки T1) — по умолчанию равен порогу роста × 1.5; увеличьте его, чтобы каждый блок T2 содержал больше истории проекта',
+    'cfg.q_tiers_tip_t3': 'Порог уплотнения T3 (измеряется в токенах сводки T2) — по умолчанию равен порогу роста × 1.5',
+    'cfg.quick': 'Быстрые настройки',
+    'cfg.quick_desc': 'Переключайте частые параметры, не трогая JSON — каждое изменение сразу попадает в редактор ниже (тот же файл, новых полей конфигурации нет); сложные структуры вроде таблицы провайдеров остаются в JSON',
+    'cfg.relay_warn': 'Черновик включает security.adminRelay (админ-релей): любой, кто доберётся до веб-точки входа dsh, получит через неё ПОЛНУЮ админ-панель bili — включая правку конфигурации и запись учётных данных. Убедитесь, что эта точка входа закрыта аутентификацией или обратным прокси; чтобы вернуть всё как было, удалите поле.',
+    'cfg.resign': 'Подписанные апстримы (переподпись)',
+    'cfg.resign_awaiting': 'ожидание поддержки переподписи в bili (по контракту «сжать или отказать» никакая конфигурация не может пропустить это)',
+    'cfg.resign_builtin': 'Встроенная схема {scheme} ({label}): bili переподписывает автоматически (обычное сжатие), когда срабатывает служба учётных данных dsh; иначе — локальный отказ',
+    'cfg.resign_copy_hint': 'Скопируйте этот фрагмент в файл конфигурации: эта ссылка передаётся без изменений байтов и БЕЗ сжатия (только для встроенной схемы)',
+    'cfg.resign_desc': 'Апстримы, подписывающие тело запроса: любое переписывание ломает их проверку подписи (401). По контракту «сжать или отказать» у подписанного запроса ровно два исхода — переподписан и сжат либо отклонён локально (403); режима передачи без подписи нет. Встроенная схема может включить проброс (явно согласившись на передачу без сжатия), если учётные данные не найдены; любая другая схема остаётся недоступной, пока bili не поставит переподписант (никакая конфигурация это не обойдёт). Записи появляются по подписям, наблюдаемым во время работы',
+    'cfg.resign_disabled': 'защита отключена (поведение до переподписи: тело переписывается, апстрим может вернуть 401)',
+    'cfg.resign_loading': 'Загрузка…',
+    'cfg.resign_none': 'Отказов по подписи нет — подписанных запросов, которые нельзя переподписать, не наблюдалось',
+    'cfg.resign_passthrough': 'напрямую (без сжатия)',
+    'cfg.resign_refusing': 'отказ по умолчанию',
+    'cfg.resign_row': '{origin} · отказов {count}× (с {firstSeen})',
+    'cfg.save': 'Сохранить',
+    'cfg.saved': 'Сохранено в файл конфигурации ✓',
+    'cfg.state': 'Состояние подключения',
+    'cfg.state_reached': 'HTTP {status} · доступен (аутентификацию берёт на себя клиент)',
+    'cfg.sub': 'Правки сразу попадают в файл конфигурации и применяются на ходу — проверьте синтаксис JSON перед сохранением',
+    'cfg.test_btn': 'Проверить подключение',
+    'cfg.test_hint': 'Отправляет один минимальный запрос, чтобы проверить доступность; ничего не меняет',
+    'cfg.title': 'Конфигурация',
+    'cfg.unsaved': '⚠ Есть несохранённые изменения — ничего не записывается, пока вы не нажмёте «Сохранить»',
+    'cfg.untested': 'Ещё не проверено',
+    'cfg.up_auto': 'авто (следовать системному прокси)',
+    'cfg.up_direct': 'напрямую (принудительно напрямую)',
+    'cfg.up_manual': 'вручную (явный прокси)',
+    'cfg.upstream_net': 'Сеть апстрима',
+    'common.back': '← К списку сессий',
+    'common.context': 'контекст',
+    'common.copied_hint': 'Скопировано ✓',
+    'common.copy': 'Копировать',
+    'common.ctx_est': 'оценка',
+    'common.ctx_est_calib': 'оценка·с калибровкой',
+    'common.ctx_est_raw': 'оценка·без калибровки',
+    'common.ctx_meas': 'замерено',
+    'common.ctx_upper': 'оценка·верхняя граница',
+    'common.empty': 'Данных пока нет',
+    'common.label': 'метка',
+    'common.live': 'активно',
+    'common.loading': 'Загрузка…',
+    'common.none': '—',
+    'common.protocol': 'протокол',
+    'common.requests': 'запросы',
+    'common.saved': 'сохранено',
+    'common.sessions': 'сессии',
+    'common.title': 'заголовок',
+    'common.upstream': 'апстрим',
+    'common.window': 'окно',
+    'con.launcher_help_pre': 'Полный список:',
+    'con.launcher_mitm': 'Добавьте домены в белый список для расшифровки по сертификату MITM (например, собственный релей): bili pi --mitm-domain api.foo.com',
+    'con.method_a': 'Способ 3 · Универсальный прокси (маршрутизация по префиксу URL)',
+    'con.method_a_hint': 'Только для клиентов, у которых можно изменить baseURL (добавьте указанный ниже адрес к их базовому URL); для большинства клиентов лучше средство запуска выше',
+    'con.method_b': 'Альтернатива: маршрутизация через сертификат MITM',
+    'con.method_b_hint': 'Клиенты с жёстко заданными эндпоинтами используют перехват HTTPS; сначала доверьте сертификату CA',
+    'con.method_launcher': 'Способ 2 · Средство запуска bili (без установки — заменяет привычную команду запуска)',
+    'con.method_launcher_hint': 'Когда billion-context установлен, запускайте клиент одной из команд ниже вместо обычного способа: bili proxy + состояние сжатия подставляется автоматически, правки конфигурации клиента не нужны',
+    'con.method_plugin': 'Способ 1 · Установить плагин (рекомендуется · нативный режим)',
+    'con.method_plugin_hint': 'Рекомендуется — после установки просто запускайте агента как обычно; он автоматически пойдёт через billion-context и получит самый полный набор возможностей. Частые команды управления:',
+    'con.note_aider': 'Aider (парное программирование на Python): сертификат MITM через HTTPS_PROXY + SSL_CERT_FILE/REQUESTS_CA_BUNDLE; адрес берётся из унаследованного окружения, из --openai-api-base или из .aider.conf.yml; локальные адреса напрямую через NO_PROXY (#1048)',
+    'con.note_amp': 'Amp CLI (Sourcegraph, закрытый бинарник на Go) — сертификат MITM; ampcode.com в белом списке (#1049)',
+    'con.note_antigravity': 'Antigravity CLI (agy, Google, преемник Gemini CLI): CLOUD_CODE_URL /bili/ переписан в daily-cloudcode-pa.googleapis.com — реальный апстрим по умолчанию (чистый cloudcode-pa отвечает 400 на /v1internal:*, #3129; недокументированный переопределитель окружения языкового сервера, проверен в бинарнике v2.19.1; обмен распознаётся как нативный Google по пути) (#2115)',
+    'con.note_claude': 'Запустите claude',
+    'con.note_codebuddy': 'Tencent CodeBuddy Code CLI: переписывание CODEBUDDY_BASE_URL /bili/ (протокол OpenAI chat-completions); бюджет согласован через CODEBUDDY_AUTO_COMPACT_WINDOW; настоящий ~/.codebuddy не затрагивается',
+    'con.note_codex': 'Запустите codex',
+    'con.note_copilot': 'Copilot CLI (GitHub, закрытый бинарник на Go) — сертификат MITM; api.githubcopilot.com и поддомены уровней в белом списке (#1049)',
+    'con.note_dsh': 'deepseek-harness: полный нативный плагин внедряется через --patch (#941) — compress/decompress/acp_status регистрируются как настоящие инструменты dsh; нелокальный апстрим через переменные окружения прокси, локальный сохраняет подмены DSH_HOME; встроенный маршрут deepseek через DEEPSEEK_BASE_URL; нативное автосжатие отключено',
+    'con.note_gemini': 'Gemini CLI (Google): GOOGLE_GEMINI_BASE_URL /bili/ переписывается в generativelanguage.googleapis.com (нативный протокол Google); настоящий ~/.gemini не затрагивается',
+    'con.note_goose': 'Goose (Block, Rust/reqwest): сборки rustls не доверяют файлам CA — переменных окружения прокси нет вовсе; встроенные ветки openai/anthropic перенаправляются через OPENAI_HOST/ANTHROPIC_HOST; собственные декларативные провайдеры получают заново созданный наложенный каталог GOOSE_PATH_ROOT, который переписывает base_url в /bili/; сторонние провайдеры с фиксированным адресом вызывают предупреждение (#1049)',
+    'con.note_hermes': 'без файлов (#535): HTTPS_PROXY + SSL_CERT_FILE с объединённым пакетом CA — https через CONNECT MITM, http с пересылкой в абсолютной форме; настоящий ~/.hermes не затрагивается',
+    'con.note_iflow': 'iFlow CLI: IFLOW_BASE_URL /bili/ переписывается в apis.iflow.cn/v1 (протокол OpenAI chat-completions); настоящий ~/.iflow не затрагивается',
+    'con.note_jcode': 'Терминальный агент для кода на Rust — запуск с сертификатом MITM через переменные окружения; api.z.ai по умолчанию в белом списке; локальный провайдер напрямую через NO_PROXY',
+    'con.note_kimi': 'Kimi Code CLI (Moonshot): кроме безусловного обхода локальных адресов весь трафик идёт по стандартным переменным окружения прокси — для нелокальных адресов https идёт через сертификат MITM, http пересылается в абсолютной форме; узлы берутся из ~/.kimi-code/config.toml; локальные адреса собраны с ручными подсказками о префиксе /bili/ (#757)',
+    'con.note_mcode': 'MiniMax Code CLI: кроме безусловного обхода локальных адресов — стандартные переменные окружения прокси; для нелокальных адресов https идёт через сертификат MITM, http пересылается в абсолютной форме; узлы берутся из ~/.minimax*/config.yaml; сессии связываются заголовком X-Mavis-Session-Id (#1050)',
+    'con.note_omp': 'Тот же подход, что и у pi, без файлов (#535): переменные окружения + расширение registerProvider; настоящий ~/.omp не затрагивается',
+    'con.note_opencode': 'OpenCode (1.x и 2.x): подробное руководство в разделе OpenCode ниже',
+    'con.note_pi': 'Запустите pi через прокси — без файлов (#535): переменные окружения + расширение registerProvider; настоящий ~/.pi не затрагивается',
+    'con.note_qoder': 'адрес модели жёстко задан по https (переписать на /bili/ нельзя) — сертификат MITM (HTTPS_PROXY + NODE_EXTRA_CA_CERTS); узел модели по умолчанию заранее в белом списке (#653)',
+    'con.note_qwen': 'Qwen Code (форк gemini-cli с несколькими протоколами, без перехвата базового URL): сертификат MITM через HTTPS_PROXY + NODE_EXTRA_CA_CERTS; узлы моделей DashScope/Qwen по умолчанию в белом списке; собственные релеи добавляются через --mitm-domain',
+    'con.note_trae': 'Trae CLI (ByteDance, закрытый бинарник на Go, без переопределения базового URL) — сертификат MITM; узел модели берётся из TRAE_CLI_API_HOST или из корпоративного шлюза по умолчанию (#655)',
+    'con.origin': 'Адрес прокси',
+    'con.plugin_note': 'Режим плагина сейчас охватывает эти 9 агентов: pi · omp · claude · codex · opencode · dsh · kimi · hermes · zcode — остальные клиенты используют способ 2 или способ 3. Для opencode добавьте --with-mcp при установке, чтобы зарегистрировать и его инструменты MCP',
+    'con.sub': 'Направьте ИИ-клиентов на этот прокси',
+    'con.title': 'Подключение клиентов',
+    'conflict.age_active': 'Последние 7 дней: {n}',
+    'conflict.age_historical': 'Старше: {n}',
+    'conflict.clear_btn': 'Очистить записи',
+    'conflict.cleared': 'Записи о конфликтах очищены',
+    'conflict.dismiss': 'Больше не показывать',
+    'conflict.dismissed': 'Скрыто — баннер появится снова, если произойдёт новое событие конфликта',
+    'conflict.docs': 'полная матрица: CONFIGURATION.md → «Определение других плагинов сжатия (#1206)»',
+    'conflict.found': ': следы ',
+    'conflict.hint_label': 'Что делать (для каждого клиента):',
+    'conflict.hint_more': 'Ещё клиентов: {n} — смотрите страницу «Сессии» ниже',
+    'conflict.hint.claude': 'claude: запускайте через bili claude — он сам выравнивает CLAUDE_CODE_AUTO_COMPACT_WINDOW; либо задайте CLAUDE_CODE_AUTO_COMPACT_WINDOW равным действующему окну bili',
+    'conflict.hint.codex': 'codex: bili по умолчанию перехватывает штатное сжатие (BILI_CODEX_COMPACT=intercept) — если вы задали pass, уберите переопределение, чтобы остановить перехват; иначе сообщите версию bili',
+    'conflict.hint.generic': 'отключите собственное автосжатие клиента (или направьте эту сессию в обход bili), затем начните новую сессию — реестр ведётся по сессиям, поэтому старые записи исчезают вместе со старой сессией',
+    'conflict.hint.omp': 'omp: расширение bili отменяет штатное автосжатие клиента, пока ведёт беседу — если это видно, вероятно, не хватает подтверждения переноса или версия устарела; сообщите версию клиента и bili',
+    'conflict.hint.opencode': 'opencode: отключите автосжатие в конфигурации opencode (в секции compaction задайте auto: false) — либо используйте bili opencode / установку плагина opencode через bili, оба варианта настроят всё сами',
+    'conflict.hint.pi': 'pi: расширение bili отменяет штатное автосжатие клиента, пока ведёт беседу — если это видно, вероятно, не хватает подтверждения переноса или версия устарела; сообщите версию клиента и bili',
+    'conflict.on': 'Обнаружен конфликт сжатия',
+    'conflict.on_suspected': 'Обнаружен возможный плагин сжатия',
+    'conflict.on_unconfirmed': 'Обнаружены неподтверждённые признаки, связанные со сжатием',
+    'conflict.risk_active': ' были найдены. Два сжимателя в одной беседе сжимают дважды и портят ссылки на сообщения, из-за чего контекст может перемешаться — оставьте ровно один сжиматель.',
+    'conflict.risk_historical': ' были найдены (за последние 7 дней событий не было — только штатные записи) — как только вы убедитесь, что второй сжиматель удалён или заблокирован bili, очистите их кнопкой.',
+    'conflict.risk_sibling': ' были найдены. Это СОБСТВЕННЫЕ расширения bili, а не сторонние сжиматели: пока сессию ведёт bili, они автоматически бездействуют (метка BILLION_CONTEXT_NATIVE в штатном режиме, иначе — самопроверка baseUrl по /bili/), поэтому второй сжиматель не активен — проверьте, что версии свежие, и очистите эту запись; ничего удалять не нужно.',
+    'conflict.risk_suspected': ' — это лишь сигнал по имени [подозрение], а не наблюдаемое свидетельство двойного сжатия. Прежде чем действовать, убедитесь, что он действительно переписывает контекст модели; плагин, который только сворачивает вывод инструментов (например, pi-compact-transcript), дважды не сжимает и удаления не требует.',
+    'conflict.risk_unconfirmed': ' — все перечисленные выше сигналы НЕПОДТВЕРЖДЁННЫ: они не доказывают, что существует второй сжиматель (возможные причины: правки на стороне клиента, нераспознанная форма сжатия или другой плагин). Прежде чем действовать, проверьте; просмотрщик контекста только для чтения или плагин, который сворачивает вывод инструментов, сжимателем не является и удаления не требует.',
+    'conflict.what_join': ' и ',
+    'conflict.what_native': 'штатное автосжатие клиента, переписывающее историю беседы',
+    'conflict.what_plugin': 'сторонний плагин сжатия, работающий рядом с bili',
+    'conflict.what_signal': 'переписывание истории беседы (изменение замечено, причина пока не установлена)',
+    'conflict.what_suspected': 'плагин, имя которого совпадает с ключевыми словами сжатия (ещё не подтверждено, что он действительно сжимает контекст)',
+    'conflict.where': 'Подробности: страница «Сессии» ниже или поле conflicts в ответе GET /__bili/stats.',
+    'copy.ca': 'Скопировать путь к CA',
+    'data.error': 'Не удалось загрузить данные: {msg} · идёт автоматический повтор с задержкой',
+    'data.generic': 'сетевая ошибка или истекло время ожидания запроса',
+    'data.timeout': 'истекло время ожидания запроса (20 с)',
+    'det.active_pack': 'Набор промптов',
+    'det.attr_abort': '⏻ Связано с прерыванием',
+    'det.attr_abort_tip': 'Пропущенные выборки закрылись в течение 30 с после прерывания клиента в середине потока — повторы переписывают отправляемый хвост; это корреляция, а не причина (метка наложения, а не отдельная группа)',
+    'det.attr_client': '✎ Переписывание истории клиентом',
+    'det.attr_client_tip': 'Собственная переотправленная история клиента разошлась в середине списка (вставка или переписывание — другой плагин на хосте, перенос вставок, повторный рендер): пара отпечатков входящих сообщений не совпадает на этом индексе, и точная пересборка bili перенесла изменение в запрос. Пересчёт на стороне клиента, а не шов пересборки bili (#3023)',
+    'det.attr_provider': '▲ Пропуск на стороне провайдера (аномалия)',
+    'det.attr_provider_tip': 'Запрос пришёл вскоре после предыдущего, чей весь список сообщений вернулся байт в байт (целиком или своим префиксом с добавленными только хвостовыми сообщениями; выше предела криминалистики в 512 КиБ, что доказывают устойчивая записанная голова и точный рост числа сообщений), но апстрим не отдал свой кэш — аномалия: вытеснение из кэша или ротация узлов ретранслятора. Долгие промежутки учитываются как истечение TTL у апстрима',
+    'det.attr_rest': 'остаток {x}',
+    'det.attr_rest_tip': 'небольшие остатки ниже порога классификации (<8K или <30% входа на выборку), по отдельности не классифицируются',
+    'det.attr_restart': '⟳ потеря после перезапуска',
+    'det.attr_restart_tip': 'После перезапуска bili или восстановления сессии окно реестра нарушается: первый запрос после перезапуска не может сопоставиться с выборками до него, поэтому его пропуск засчитывается как первый расчёт (начальное содержимое)',
+    'det.attr_rewind': '↩ История отмотана назад',
+    'det.attr_rewind_tip': 'Откат или обрезка на стороне клиента уменьшили число сообщений — разрешённый однократный пересчёт сохранённого префикса, а не дефект',
+    'det.attr_seam': '⚠ Шов кэша',
+    'det.attr_seam_tip': 'Исходящие тела разошлись в середине истории без указания на сворачивание, смену модели или перезапуск — подозрение на шов пересборки. Значение — токены, пересчитанные на подозрительных выборках. Если сворачивание было за несколько минут до этого, обычно это пересчёт клиентского эха после сворачивания (сворачивание отвечает за него с #2929)',
+    'det.attr_ttl': '⏱ Истечение TTL у апстрима (нормально)',
+    'det.attr_ttl_tip': 'Пропуски с неизменившимися байтами или с дописанным хвостом закрылись больше чем через 10 минут после предыдущей выборки — префиксный кэш апстрима просто устарел; это ожидаемая стоимость, ничего делать не нужно',
+    'det.auto_mode_forge': 'вердикты авто-режима',
+    'det.auto_mode_forge_local': 'вердикты авто-режима, на которые отвечает сам bili (без трафика к апстриму)',
+    'det.auto_mode_forge_short': 'forge',
+    'det.auto_mode_forge_tip': 'Проверки безопасности авто-режима в этой сессии отвечает сам bili — без вызова модели апстрима и без оплаты (#2740)',
+    'det.block_active': 'активно',
+    'det.block_external': 'внешний',
+    'det.block_inactive': 'неактивно',
+    'det.blocks_copy_md': 'скопировать в Markdown',
+    'det.blocks_count': 'Всего: {total} · активно: {active}',
+    'det.blocks_download': 'скачать блоки (.md)',
+    'det.blocks_empty': 'Блоков сжатия пока нет',
+    'det.blocks_title': 'Блоки сжатия',
+    'det.cache_econ': 'Экономика кэша',
+    'det.calib_chip': 'k̂={k} · выборок: {n} · разброс {spread}× · {origin}',
+    'det.calib_tip': 'Коэффициент калибровки k̂: среднее по последним согласованным выборкам ({n}, разброс {spread}×) на этом маршруте и этой модели; он занижает только оценки и переобучается после смены маршрута или модели. Источник {origin}{model}.',
+    'det.cause_cold': 'холодный старт (кэша раньше не было)',
+    'det.cause_comp': 'пересборка после сворачивания',
+    'det.cause_ttl': 'необъяснённый пересчёт · остаток',
+    'det.cause_unattrib': 'необъяснённый пересчёт',
+    'det.ccr': 'CCR: поиск по содержимому',
+    'det.ccr_detail': 'вызовов: {calls} · попаданий: {hits} · промахов: {misses}',
+    'det.ce_balanced': 'Реестр сходится ✓',
+    'det.ce_breakdown': 'из них:',
+    'det.ce_comp': 'Пересборка после сворачивания',
+    'det.ce_comp_hint': 'Подсказка: уменьшение compress.preserveRecentMessages (число защищённых недавних сообщений) снижает это значение — минимум 1',
+    'det.ce_new': 'Новое содержимое',
+    'det.ce_residual': 'Остаток',
+    'det.ce_ttl': 'Необъяснённый пересчёт',
+    'det.ce_unbalanced': 'Реестр не сходится ✗',
+    'det.client_hint': 'клиент',
+    'det.conflicts_clear': 'Очистить записи этой сессии',
+    'det.conflicts_cleared': 'Очищено',
+    'det.conflicts_hint': 'Признаки того, что к этой сессии прикасался другой сжиматель (диагностика, а не история)',
+    'det.conflicts_more': 'Более ранних событий: {n}…',
+    'det.conflicts_title': 'Конфликты сжатия',
+    'det.covlost_sub': 'Сворачиваний без покрытия: {n} ({x} заморожено): покрытые ими сообщения исчезли из переотправляемой истории — накопление остановилось',
+    'det.ctx_age': 'снимок {v} назад',
+    'det.ctx_age_tip': 'Когда это число контекста было измерено или оценено; оно перестаёт обновляться при восстановлении или простое — старый снимок не отражает текущий отправленный вид',
+    'det.fold_h': 'попадания после сворачивания, %',
+    'det.fold_s': 'сжато S',
+    'det.fold_short': 'сворачивание',
+    'det.fold_sigma': 'сводка σ',
+    'det.fold_t': 'накопленный пересчёт T',
+    'det.fold_time': 'когда',
+    'det.folds': 'Разбивка по сворачиваниям',
+    'det.folds_empty': 'Событий сворачивания пока нет',
+    'det.handoff': 'Документ передачи',
+    'det.handoff_copy_md': 'Скопировать в Markdown',
+    'det.handoff_download': 'Скачать .md',
+    'det.handoff_hint': 'То же содержимое, что и в экспорте bili — вставьте в новую сессию, чтобы продолжить',
+    'det.handoff_truncated': '⚠️ Содержимое усечено для показа',
+    'det.hit_pct': 'доля попаданий в кэш',
+    'det.hitrate': 'Доля попаданий в кэш',
+    'det.hitrate_empty': 'Выборок кэша для этой сессии пока нет',
+    'det.hitrate_sub': 'Попадания в % по каждому запросу; провалы окрашены по реестру (те же группы, что на графике динамики)',
+    'det.identity': 'Идентификация',
+    'det.keepalive': 'поддержание кэша',
+    'det.keepalive_last_hit': 'последнее попадание',
+    'det.keepalive_pings': 'пинги',
+    'det.keepalive_short': 'KA',
+    'det.keepalive_tip': 'включено поддержание кэша промптов при простое (уровень · интервал)',
+    'det.key_events': 'Смены ключа ({n})',
+    'det.key_events_tip': 'Смена отпечатка учётных данных означает, что ретранслятор перешёл на другой аккаунт; отпечатки — это 12-символьные префиксы sha256, а не сами ключи',
+    'det.key_fp': 'отпечаток ключа',
+    'det.last_input': 'Последний ввод в одном раунде',
+    'det.ledger_gap': 'Пропущено запросов в реестре: {n}',
+    'det.ledger_gap_tip': 'Реестр попаданий и промахов учитывает только запросы с момента последней пересборки; запросы вне окна не считаются — это часто бывает при нескольких экземплярах с общей папкой состояния. Сворачивания внутри разрыва тоже не попадают в экономику сворачиваний',
+    'det.leg_client': '✎ переписывание клиентом',
+    'det.leg_pside': '▲ пропуск на стороне провайдера',
+    'det.leg_pttl': '⏱ истечение TTL у апстрима',
+    'det.leg_rest': 'остаток',
+    'det.leg_rewind': '↩ откат',
+    'det.legend_base': 'базовая линия системного промпта (измерена, не сжимается)',
+    'det.legend_base_est': 'оценка базовой линии (системный промпт и инструменты, не сжимается)',
+    'det.legend_cached': 'из них в кэше',
+    'det.legend_fold': 'сворачивание при сжатии',
+    'det.legend_hitline': 'попадания, %',
+    'det.legend_input': 'ввод',
+    'det.legend_seam': 'шов кэша',
+    'det.legend_window': 'предел окна контекста',
+    'det.log': 'Журнал',
+    'det.log_view': 'показать журнал этой сессии ▸',
+    'det.miss_split_line': 'разбивка пропущенных токенов по доле попаданий: новое содержимое {n} (−{pn}%) · пересборка после сворачивания {c} (−{pc}%) · необъяснённый пересчёт {x} (−{px}%, истечение TTL у апстрима, вытеснение из кэша, неизвестно)',
+    'det.miss_sub': 'необъяснённый пересчёт −{x}% · пересборка после сворачивания −{c}% · новое −{n}%',
+    'det.not_found': 'Сессия не найдена',
+    'det.not_found_hint': 'Возможно, её удалили или она находится вне этой папки с данными',
+    'det.obudget_degraded': '⚠️ У модели {model} НЕТ известного предела вывода: её бюджет вывода поднят до значения {value}; берётся большее из собственной оценки клиента и абсолютного минимума, подтверждающего предела нет, поэтому длинные ответы могут обрываться на пределе вывода. Задайте предел вывода для этого провайдера и модели в конфигурации bili или укажите maxTokens для модели в профиле хоста (#2904/#3071)',
+    'det.omitted': 'Самые ранние выборки ({n}) были обрезаны при записи: каждая сессия хранит только 4096 последних выборок кэша (восстановить их нельзя), поэтому график начинается с самой старой сохранённой выборки',
+    'det.proj_events': 'Смены проекции и режима ({n})',
+    'det.proj_events_tip': 'Отпечаток перенаправляемой проекции изменился, хотя каноническое входящее содержимое системы и разработчика осталось прежним, — значит, сам прокси переключил режим сжатия или проекцию (например, при самовосстановлении перешёл на прокси); отпечатки — это 16-символьные префиксы sha256, а не исходный текст (#2867)',
+    'det.proj_fp': 'отпечаток проекции',
+    'det.prompt_events': 'Переписывания системного промпта ({n})',
+    'det.prompt_events_tip': 'Отпечаток перенаправляемой проекции изменился, и каноническое входящее содержимое тоже изменилось, — значит, хост переписал свой системный промпт между запросами; отпечатки — это 16-символьные префиксы sha256, а не исходный текст (#2350/#2867)',
+    'det.prompt_fp': 'отпечаток промпта',
+    'det.report_dl': 'скачать отчёт по кэшу (.md)',
+    'det.report_masked': '[скрыто]',
+    'det.report_md': 'полный отчёт · Markdown',
+    'det.report_note': 'заголовок и другие персональные данные по умолчанию скрыты',
+    'det.report_png': 'полный отчёт · изображение (PNG)',
+    'det.rpt_cached': 'из кэша',
+    'det.rpt_hit': 'попаданий %',
+    'det.rpt_input': 'ввод',
+    'det.rpt_missed': 'промахи',
+    'det.seam_col_div': 'первое расхождение',
+    'det.seam_col_hit': 'попаданий %',
+    'det.seam_col_input': 'ввод',
+    'det.seam_events': '⚠ Событий шва кэша: {n}',
+    'det.seam_events_tip': 'Первое расхождение между соседними исходящими телами; если оно воспроизводится, приложите bili.log за это время (семейство #1548)',
+    'det.seam_mark_tip': '⚠ ШОВ КЭША #{seq} · {at} · попаданий {hit}% · первое расхождение ≥{lcp} байт @ сообщение[{msg}] ({prev}→{cur} сообщ.)',
+    'det.seam_msg': 'сообщение[{i}] ({prev}→{cur} сообщ.)',
+    'det.self_heal': 'Самовосстановление',
+    'det.self_heal_degrade_to_proxy': 'плагин исчез → деградация до режима прокси (инструменты перевнедрены)',
+    'det.self_heal_short': 'починка',
+    'det.self_heal_suppress_nudge': 'цикл напоминаний простаивает → подавлен (отменяется при возобновлении сжатия)',
+    'det.self_heal_tip': 'Самовосстановление застрявшей сессии взяло управление на себя — смотрите подробности сессии (#2155)',
+    'det.stab_append': 'добавление в конец',
+    'det.stab_gap': 'медиана пауз между запросами: низкое попадание (<80%) — {a} с, высокое попадание — {b} с',
+    'det.stab_head': 'начало <1КиБ (изменение параметров)',
+    'det.stab_identical': 'побайтово идентичны',
+    'det.stab_mid': 'перезапись середины истории',
+    'det.stab_pairs': 'Соседних пар: {n}',
+    'det.stab_size': 'попаданий % по размеру ввода (медиана)',
+    'det.stab_tail': 'хвост (параметры / временные заметки)',
+    'det.stab_tip': 'Побайтовое сравнение SHA-256 каждого исходящего тела с предыдущим завершённым запросом: идентично = побайтовое совпадение (например, повтор передачи); расходящиеся пары классифицируются по первому расхождению — начало <1КиБ = изменение параметров на стороне хоста (модель/инструменты/сэмплирование), добавление в конец = чистый рост хвоста, середина истории = настоящая перезапись префикса, хвост = завершающие параметры верхнего уровня или временные заметки в конце массива сообщений и за ним (байты истории не тронуты, кэш не затронут), смещение неизвестно = тела выше предела хранения (неравенство всё равно доказано по хешу)',
+    'det.stab_title': 'Стабильность тела (побайтовое доказательство по вызову)',
+    'det.stab_unknown': 'смещение неизвестно (превышен предел)',
+    'det.storage_mode': 'Режим хранения',
+    'det.storage_mode_full': 'полный (сначала единое хранилище, параллельная запись)',
+    'det.storage_mode_legacy': 'устаревший (только JSON)',
+    'det.storage_mode_shadow': 'теневой (пробная параллельная запись)',
+    'det.store': 'Хранилище содержимого',
+    'det.tab_blocks': 'Структура',
+    'det.tab_handoff': 'Передача',
+    'det.tab_overview': 'Обзор',
+    'det.thinking': 'Размышление',
+    'det.traj_reset': 'Сбросить вид',
+    'det.traj_zoom_hint': 'Проведите по графику, чтобы приблизить диапазон выборки; дважды щёлкните или нажмите Esc для сброса',
+    'det.traj_zoomed': 'Вид #{a}-#{b} ({times})',
+    'det.trajectory': 'Траектория контекста',
+    'det.trajectory_empty': 'Для этой сессии пока нет выборок использования',
+    'det.trajectory_sub': 'Входные токены и попадания в кэш по каждому запросу; красные отметки — свёртки сжатия',
+    'det.tree_active': 'Активных: {n}',
+    'det.tree_direct': 'Прямых: {n}',
+    'det.tree_graph_hint': 'Общая форма: каждый прямоугольник — один блок, сверху вниз видно, какой блок свёрнул какой. Щёлкните по прямоугольнику, чтобы перейти к этой строке в списке.',
+    'det.tree_graph_legend': 'сплошная рамка = активный блок, пунктирная = архивный блок',
+    'det.tree_hint': 'Вложенность по родителю свёртки: T1 сворачивает исходные сообщения, T2 — блоки T1 и так далее. Исходник по требованию загружает закрытые байты.',
+    'det.tree_msg_gone': 'Этого сообщения больше нет в сессии (удалено штатным сжатием)',
+    'det.tree_msgs': 'Сообщений: {n}',
+    'det.tree_msgs_unavailable': 'Прямых сообщений этого блока больше нет в сессии (удалены штатным сжатием) — их m-ссылки нельзя перечислить',
+    'det.tree_orig_full': 'Исходник (полный)',
+    'det.tree_orig_meta': 'Сообщений: {n} · {b}',
+    'det.tree_orig_missing': 'Для этого блока нет снимка содержимого (не сохранён при свёртке или уже удалён)',
+    'det.tree_orig_one': 'Исходник (этот уровень)',
+    'det.tree_orig_truncated': 'обрезано на {b}',
+    'det.tree_split': 'закрыто {x} → сводка {y} ({p})',
+    'det.tree_total': 'Блоков: {n}',
+    'det.tree_view_graph': 'Карта дерева',
+    'det.tree_view_list': 'Список',
+    'det.upper_bound': 'ограничение {v} (верхняя граница по числу символов — только защита, не фактическое использование)',
+    'det.usage': 'Использование',
+    'det.version': 'Версия прокси',
+    'dt.auth': 'Авторизация',
+    'dt.ca_cert': 'Сертификат CA',
+    'dt.config_file': 'Файл конфигурации',
+    'dt.env': 'Окружение',
+    'dt.example': 'Пример',
+    'dt.setting': 'Настройка',
+    'fork.label': '★ Форкнуть меня на GitHub',
+    'hostplug.desc': 'Состав сегментов и лента времени оцениваются по локальному счётчику до сжатия (по требованиям архитектуры dsh постоянный журнал остаётся без потерь), поэтому доли сегментов могут не совпадать с тем, что отправляется на самом деле; итоговый размер контекста отражает реальный отправленный объём.',
+    'hostplug.dismiss_btn': 'Скрыть',
+    'hostplug.dismissed': 'Уведомление скрыто',
+    'hostplug.hint': 'Достоверный действующий контекст: /acp или GET /__bili/plugin/status → contextTokens.',
+    'hostplug.on': 'Обнаружен плагин на стороне хоста',
+    'logs.count': 'показано последних {n} из {total} подходящих строк',
+    'logs.ctx': 'контекст ±3 строки',
+    'logs.dl': 'скачать текущий вид (.txt)',
+    'logs.dl_all': 'скачать полный журнал (.txt)',
+    'logs.empty': 'подходящих строк нет (файл журнала ещё может не существовать)',
+    'logs.filter_ph': 'фильтр (идентификатор сессии или ключевое слово)',
+    'logs.omitted': ' · ещё {o} более старых строк обрезано (увеличьте предел строк)',
+    'logs.path': 'файл журнала',
+    'logs.sub': 'живой хвост bili.log · фильтр по идентификатору сессии или ключевому слову, с расширением контекста и временного окна',
+    'logs.title': 'Журнал запуска',
+    'logs.win': 'временное окно ±2 мин',
+    'nav.config': 'Конфигурация',
+    'nav.connect': 'Подключение',
+    'nav.logs': 'Журналы',
+    'nav.overview': 'Обзор',
+    'nav.sessions': 'Сессии',
+    'other.rule': 'Добавьте в начало любого baseURL:',
+    'ov.by_protocol': 'По сетевому протоколу',
+    'ov.cached_tokens': 'Токены из кэша',
+    'ov.covlost_note': 'Потеряно покрытие у {n} свёрток, заморожено: {x}',
+    'ov.global_hitpct': 'Общая доля попаданий в кэш',
+    'ov.gross_note': 'суммирует экономию каждой свёртки по всем последующим запросам (теоретический верхний предел)',
+    'ov.gross_saved': 'Экономия от сжатия (накопительно)',
+    'ov.hist': 'исторические',
+    'ov.input_tokens': 'Входные токены',
+    'ov.live_now': 'сейчас активны',
+    'ov.miss_split': 'непопавшие токены (учтённые сессии): новое содержимое {n} · пересборка после свёртки {c} · возврат без атрибуции {x} (TTL/вытеснение/неизвестно у вышестоящего сервиса)',
+    'ov.net_excl': 'сессии до разметки без выборок не включены',
+    'ov.net_saved': 'Чистая экономия',
+    'ov.output_tokens': 'Выходные токены',
+    'ov.recent': 'Недавно активные сессии',
+    'ov.saved_from_legacy': 'из этого {n} оценено локально по сессиям до разметки',
+    'ov.saved_neg_tip': 'Отрицательная чистая экономия: пересборка после свёртки (стоимость повторного чтения сводки) превысила теоретическую выгоду; типично для коротких сессий, завершившихся сразу после свёртки',
+    'ov.sub': 'Общая статистика по всем активным и сохранённым на диске сессиям',
+    'ov.sub_repay': 'после вычета пересборки после свёртки {r} и стоимости сводки {s}',
+    'ov.title': 'Обзор',
+    'ov.tokens_saved': 'Сэкономлено сжатием',
+    'ov.total_requests': 'Всего запросов',
+    'ov.total_sessions': 'Всего сессий',
+    'ov.view_all': 'Показать все →',
+    'pck.hint': 'Этот вышестоящий сервис отклонял запросы с prompt_cache_key (400 с ключом, без ключа принимал), поэтому bili не передаёт туда ключ до перезапуска. Если это ваш релей или пул аккаунтов, привязка к префиксному кэшу для таких сессий может ухудшиться.',
+    'pck.on': 'Ключ маршрутизации кэша (prompt_cache_key) не передаётся',
+    'pck.sessions': 'Затронутые сессии: {ids}',
+    'pluginadv.desc': 'Этот плагин заново отправляет всю беседу модели перед каждым вызовом инструмента для проверки, поэтому префиксный кэш вышестоящего сервиса почти не срабатывает (доля попаданий обычно однозначное число процентов) и расход токенов растёт резко. Это не связано со сжатием в bili: bili выносит такие запросы в отдельную подсессию, оставляя префиксный кэш основной сессии нетронутым.',
+    'pluginadv.hint': 'Подумайте об отключении плагина или попросите его авторов оптимизировать его; подробности — в ссылке выше (эта тема).',
+    'pluginadv.on': 'Обнаружен дорогостоящий плагин',
+    'protocol.unmarked': 'не размечено (устаревшие сессии)',
+    'routing.codex_auth_note': '(Передача токена OAuth, сертификат не нужен)',
+    'routing.codex_note_a': 'Провайдер по умолчанию — openai, model_provider не нужен; если вы изменили',
+    'routing.codex_note_b': 'в config.toml, также добавьте',
+    'routing.codex_note_c': '. Если подключение не работает и задан HTTP(S)_PROXY, также добавьте',
+    'routing.codex_note_d': '; если bili работает в WSL2/Docker, используйте',
+    'routing.codex_note_e': 'из Windows (пересылается автоматически); 127.0.0.1 не сработает.',
+    'ses.badge_live_tip': 'Сессия обрабатывается текущим демоном (актуальные данные)',
+    'ses.count': 'Сессий: {count}',
+    'ses.covlost_tip': 'Потеряно покрытие у {n} свёрток ({x} заморожено): хост удалил сжатые оригиналы вне ведения bili (например, штатным сжатием dsh) — их экономия больше не начисляется',
+    'ses.drop_ph': 'потеря попаданий как доля от всего ввода, порядок: новое содержимое / пересборка после свёртки / возврат без атрибуции',
+    'ses.empty': 'Сессий пока нет',
+    'ses.empty_hidden': 'Скрыто пустых сессий: {n} (нет запросов, контекста и учёта; по прямой ссылке они всё ещё доступны)',
+    'ses.empty_hint': 'Первый запрос через прокси создаёт сессию автоматически',
+    'ses.filter_all': 'Все протоколы',
+    'ses.filter_all_clients': 'Все клиенты',
+    'ses.filter_client_tip': 'Фильтр по клиенту',
+    'ses.filter_protocol_tip': 'Фильтр по протоколу',
+    'ses.filter_state_all': 'Все состояния',
+    'ses.filter_state_history': 'История',
+    'ses.filter_state_live': 'Активные',
+    'ses.filter_state_tip': 'Фильтр по состоянию выполнения',
+    'ses.filter_unknown': 'Неизвестно',
+    'ses.filtered_count': 'Сессий: {shown} / {total}',
+    'ses.next_page': 'Далее',
+    'ses.no_title': 'без названия',
+    'ses.page_label': 'Страница {page} из {pages}',
+    'ses.prev_page': 'Назад',
+    'ses.refresh': 'Обновить',
+    'ses.reset_filters': 'Сбросить фильтры',
+    'ses.search_ph': 'Искать по названию, метке или идентификатору…',
+    'ses.sub': 'Все сессии из памяти и с диска — щёлкните по строке, чтобы открыть подробности, траекторию и документ передачи',
+    'ses.th_blocks': 'Блоки',
+    'ses.th_client': 'Клиент',
+    'ses.th_ctx': 'Контекст сейчас',
+    'ses.th_folds': 'Сжатия',
+    'ses.th_hit': 'Попаданий %',
+    'ses.th_input': 'Ввод всего',
+    'ses.th_keyswitches_tip': 'Ротация ключей и аккаунтов релея (отпечаток учётных данных изменился за тем же URL) · токены пересчитаны, потому что переключённый аккаунт начинает с холодного кэша (#2131)',
+    'ses.th_projswitches_tip': 'Прокси переключил свой режим сжатия или проекцию (например, самовосстановление с понижением до прокси возвращает сообщения разработчика из середины истории в блок системы) · каждое переключение обесценивает все последующие записи префиксного кэша — токены пересчитаны для неизменного префикса (#2867)',
+    'ses.th_promptswitches_tip': 'Хост переписал свой системный промпт (отпечаток изменился между запросами, например из-за периодического динамического раздела) · каждая перезапись обесценивает все последующие записи префиксного кэша — токены пересчитаны для неизменного префикса (#2350)',
+    'ses.th_proto': 'Протокол',
+    'ses.th_reqs': 'Запросы',
+    'ses.th_saved': 'Сэкономлено',
+    'ses.th_seen': 'Последняя активность',
+    'ses.th_switches': 'Переключения',
+    'ses.th_switches_tip': 'Смена модели в середине сессии · токены пересчитаны, потому что новая модель начинает с холодного префиксного кэша (#1535) · u{1F511} = ротация ключей и аккаунтов релея (изменение отпечатка учётных данных, #2131) · ✍️ = переписывание системного промпта хостом (изменение отпечатка промпта, #2350) · u{1F500} = переключения режима сжатия или проекции прокси (например, самовосстановление с понижением до прокси, #2867)',
+    'ses.th_title': 'Сессия',
+    'ses.th_upstream': 'Вышестоящий',
+    'ses.title': 'Сессии',
+    'summary.add': 'Добавить цель',
+    'summary.bytes': 'Лимит сводки (байты)',
+    'summary.concurrency': 'Размер пула (1-32, по умолчанию 4)',
+    'summary.credentials': 'Учётные данные рецепта',
+    'summary.down': 'Переместить вниз',
+    'summary.enabled': 'Включено',
+    'summary.invalid': 'Некорректная конфигурация сводки; исправьте её в JSON',
+    'summary.key': 'API-ключ',
+    'summary.key_bad_ref': 'Некорректный формат ссылки',
+    'summary.key_delete': 'Удалить ключ',
+    'summary.key_invalid': 'Значение непригодно (пусто, пробельные или управляющие символы либо слишком длинное)',
+    'summary.key_missing': 'Не настроено',
+    'summary.key_save': 'Сохранить ключ',
+    'summary.key_saved': 'Ключ сохранён',
+    'summary.key_set': 'Настроено',
+    'summary.key_unreadable': 'Хранилище учётных данных недоступно для чтения (права доступа или содержимое)',
+    'summary.no_recipes': 'В провайдерах пока нет именованных рецептов набора (записей без URL, с baseUrl/api) — сначала добавьте один в JSON',
+    'summary.ref': 'Цель (провайдер/модель)',
+    'summary.remove': 'Удалить цель',
+    'summary.timeout': 'Тайм-аут на цель (мс)',
+    'summary.title': 'Общая служба сводок (экспериментально)',
+    'summary.total': 'Общий срок (мс)',
+    'summary.up': 'Переместить вверх',
+    'sys.attribution_broken': 'Ошибка атрибуции перехвата ({agent}): запросы к модели идут напрямую (без сжатия) — отправлено без сжатия запросов: {n}',
+    'sys.attribution_error': 'Ошибка: {err}',
+    'sys.attribution_impact': 'Влияние: с {since} запросы этого хоста к модели полностью обходят сжатие. Исправление: перезапустите процесс хоста, чтобы восстановить перехват; если это повторяется после перезапуска, отправьте диагностику ниже.',
+    'sys.blind_tunnels': 'Слепые туннели MITM (CONNECT без TLS)',
+    'sys.disk_version': 'Версия на диске',
+    'sys.inflight': 'Запросы в работе',
+    'sys.policy_hold': 'HOLD для всего парка активен — автообновления заморожены, вручную всё ещё работает: bili update',
+    'sys.policy_pinned': 'парк закреплён на v{version} — более новое не установится автоматически; ручной выход: npm install -g billion-context@<version>',
+    'sys.policy_title': 'Автообновления по политике удалённого обновления:',
+    'sys.pt_env': 'Переменная окружения ACP_PASSTHROUGH (или флаг --passthrough)',
+    'sys.pt_file': 'сквозной режим в файле конфигурации: true',
+    'sys.pt_on': 'Сквозной режим включён: все запросы передаются как есть, сжатие отключено. Источник:',
+    'sys.report_copy': 'Копировать диагностику',
+    'sys.report_issue': 'Сообщить на GitHub',
+    'sys.snapshot_shadow': 'Движок снимков исходящих запросов (пока не включён — только теневой режим) нашёл {n} расхождений с тем, что было отправлено на самом деле{worst}. На сегодня то, что вы отправляете, не затронуто — это предупреждение проверки перед включением. Пожалуйста, отправьте диагностику, чтобы это исправили до переключения.',
+    'sys.snapshot_shadow_title': 'Теневой рендер снимков нашёл расхождения',
+    'sys.stale': 'На диске новая версия v{disk} — работает v{running}; перезапустите хост, чтобы загрузить новый код',
+    'sys.stale_auto': 'Автоперезапуск включён — переключается автоматически в простое',
+    'sys.stale_manual': 'Автоперезапуск не включён (нужен --auto-restart-on-update)',
+    'sys.storage_degraded': 'Единое хранилище SQLite станет стандартным в следующем выпуске, но эта система не может его использовать ({reason}). Система автоматически вернула вас к хранилищу JSON — на сегодня ничего не затронуто. Пожалуйста, сообщите об этом, чтобы вашу среду подготовили до переключения.',
+    'sys.storage_degraded_title': 'Хранилище SQLite работает с ограничениями:',
+    'sys.title': 'Состояние системы',
+    'sys.update': 'Уведомление об обновлении:',
+    'sys.update_available': 'доступно критическое исправление — обновитесь до v{version} или новее: {summary}',
+    'sys.update_ready': 'критическое исправление готово (v{version}) — перезапустите bili, чтобы применить',
+    'sys.version': 'Версия',
+    'toast.connect_ok': 'Подключение выполнено, HTTP {status}',
+    'toast.failed': 'Операция не удалась: {msg}',
+    'toast.passthrough_cleared': 'Сквозной режим отключён ✓',
+    'toast.upstream_reachable': 'Доступен (HTTP {status}) — сеть в порядке; авторизацию обрабатывает клиент',
+    'zcode.hint_a': 'Путь к CA — это абсолютный путь, который bili действительно создал на этой машине — нажмите «Скопировать путь к CA» и вставьте прямо в ZCode. ⚠️ В Windows ZCode не разворачивает',
+    'zcode.hint_b': ', не набирайте вручную',
+    'zcode.hint_c': 'пути с шаблоном «-style».',
+    'zcode.method': 'Прозрачный прокси MITM',
+    'zcode.title': 'ZCode (тариф для разработки)',
   },
 }

@@ -1,10 +1,10 @@
 {
   "namespace": "settings.codeIndex",
-  "package": "dsh-code-index@0.10.2",
-  "version": "0.10.2",
+  "package": "dsh-code-index",
+  "version": "0.11.0",
   "license": "MIT",
   "repository": "git+https://github.com/lemonxiny55/dsh-code-index.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-22",
   "en": {
     "autoInject": "Inject repo map",
     "autoInjectHint": "Add a compact ranked map of the current project to the system prompt.",
