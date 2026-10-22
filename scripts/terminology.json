@@ -606,7 +606,9 @@
     "toolfailureguard": "имя параметра конфигурации",
     "toolfailureprefixes": "имя параметра конфигурации",
     "pwsh": "имя оболочки",
-    "v2rayn": "имя программы V2rayN"
+    "v2rayn": "имя программы V2rayN",
+    "serper": "имя продукта",
+    "examples": "имя папки набора навыка"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
@@ -713,6 +715,21 @@
     ],
     "taskid": [
       "labnana · toolTaskId"
+    ],
+    "apply": [
+      "context-zip · opacity"
+    ],
+    "const": [
+      "context-zip · opacity"
+    ],
+    "function": [
+      "context-zip · opacity"
+    ],
+    "props": [
+      "context-zip · opacity"
+    ],
+    "apikey": [
+      "settings.plugins.zai · literalKey"
     ]
   }
 }

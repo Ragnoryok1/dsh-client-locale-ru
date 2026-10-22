@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **377 namespace** — 54672 строк. Колонка «как это выглядит»
+Пакет переводит **407 namespace** — 55870 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -19,8 +19,10 @@
 | `agentlex-moot-court` | — | 202 | dsh-legal-suite@0.2.25@0.2.25 |
 | `agentStudio` | — | 247 | dsh-agent-studio@0.1.7@0.1.7 |
 | `agentTeams` | — | 210 | @nanmicoder/dsh-agent-teams@0.1.25@0.1.25 |
+| `ai4scholar` | AI4Scholar | 36 | dsh-ai4scholar@0.3.7@0.3.7 |
 | `apiDashboard` | 哦鲸鲸 | 166 | dsh-api-dashboard@1.7.0@1.7.0 |
 | `approval` | — | 5 | харнесс |
+| `approval-review` | Журнал согласований | 43 | dsh-approval-review@0.6.4@0.6.4 |
 | `archive-manager-workspace` | — | 272 | @michengai/dsh-archive-manager@1.1.6@1.1.6 |
 | `artifact` | — | 56 | dsh-artifact@0.8.1@0.8.1 |
 | `atlas` | — | 119 | @sidequest-007/dsh-atlas@1.0.9@1.0.9 |
@@ -45,6 +47,7 @@
 | `common` | — | 41 | харнесс |
 | `completion-alert` | — | 65 | dsh-completion-alert@1.8.4@1.8.4 |
 | `config-manager` | — | 36 | dsh-config-manager@0.1.78 |
+| `context-zip` | ContextZip | 39 | dsh-context-zip@0.1.10@0.1.10 |
 | `contextMemory` | Контекстная память | 48 | dsh-context-memory@0.9.0@0.9.0 |
 | `conversation` | — | 379 | харнесс |
 | `conversation.session.header.actions` | Подробное использование | 303 | dsh-damage-pulse@4.2.8@4.2.8 |
@@ -55,10 +58,12 @@
 | `deliverables` | — | 60 | харнесс |
 | `documentHtml` | HTML | 4 | харнесс |
 | `documentMarkdown` | — | 4 | харнесс |
+| `drawio` | — | 39 | dsh-drawio@0.1.0@0.1.0 |
 | `ds-balance` | — | 71 | dsh-ds-balance@3.1.0@3.1.0 |
 | `ds-harness-remote` | — | 270 | ds-harness-remote@0.5.14@0.5.14 |
 | `dsh-actions` | DSH Actions | 121 | dsh-actions@0.4.1@0.4.1 |
 | `dsh-agent-extension-preset` | Плагины агента | 464 | dsh-agent-plugins-market@0.11.0@0.11.0 |
+| `dsh-antigravity` | — | 40 | dsh-antigravity@0.0.9@0.0.9 |
 | `dsh-approval-gate` | Шлюз подтверждений | 30 | @goodandready/dsh-approval-gate@0.1.30 |
 | `dsh-auto-title` | — | 209 | dsh-auto-title@1.7.0@1.7.0 |
 | `dsh-automation` | Триггер | 255 | @alpacachen/dsh-automation@0.3.32@0.3.32 |
@@ -74,14 +79,17 @@
 | `dsh-database` | — | 218 | dsh-database-explorer@0.9.25@0.9.25 |
 | `dsh-decision-layer` | Слой решений | 152 | dsh-decision-layer@0.6.4@0.6.4 |
 | `dsh-delete-session` | Удалить сессию | 87 | dsh-delete-session@0.2.1@0.2.1 |
+| `dsh-delete-turn` | — | 37 | dsh-delete-turn@0.1.13@0.1.13 |
 | `dsh-desktop-restart` | — | 72 | @luoshuizhiwei/dsh-desktop-restart@0.4.2@0.4.2 |
 | `dsh-ding` | — | 75 | dsh-ding@1.0.6@1.0.6 |
+| `dsh-discord` | — | 41 | @addozhang/dsh-discord@0.5.0@0.5.0 |
 | `dsh-dupguard` | Защита от повторов | 108 | dsh-dupguard@1.10.0@1.10.0 |
 | `dsh-emoji` | Whale Emoji | 64 | dsh-emoji@0.3.6@0.3.6 |
 | `dsh-env-inspector` | Окружение ПК | 56 | @dsh-plugins/dsh-env-inspector@0.2.9@0.2.9 |
 | `dsh-fonttune` | — | 158 | dsh-fonttune@0.7.1@0.7.1 |
 | `dsh-gitea` | Gitea | 132 | @goodandready/dsh-gitea@0.7.36 |
 | `dsh-github-ops` | Работа с GitHub | 109 | @goodandready/dsh-github-ops@0.6.5 |
+| `dsh-github-router` | — | 39 | dsh-github-router@0.4.1@0.4.1 |
 | `dsh-goal` | — | 97 | @goodandready/dsh-goal@0.2.28 |
 | `dsh-graph.hidden-versions.` | — | 1206 | dsh-graph@0.22.0@0.22.0 |
 | `dsh-grok-xsearch` | — | 55 | @goodandready/dsh-grok-xsearch@0.3.30 |
@@ -126,6 +134,7 @@
 | `dsh-remote` | — | 278 | dsh-remote@0.8.48@0.8.48 |
 | `dsh-remote-ssh` | — | 111 | @zhangfengshun/dsh-remote-ssh@2.4.33 |
 | `dsh-remote-workspace` | Удалённая рабочая область | 201 | @goodandready/dsh-remote-workspace@0.3.17 |
+| `dsh-round-rightclick` | — | 39 | dsh-round-rightclick@0.2.0@0.2.0 |
 | `dsh-scheduler` | — | 96 | dsh-scheduler@2026.9.192@2026.9.192 |
 | `dsh-server-monitor` | Монитор серверов | 168 | @goodandready/dsh-server-monitor@0.1.19 |
 | `dsh-service-console` | — | 72 | @jiyr0119/dsh-service-console@0.7.0@0.7.0 |
@@ -149,6 +158,7 @@
 | `dsh-task-ledger` | — | 122 | dsh-task-ledger@0.0.70@0.0.70 |
 | `dsh-tavily-pool` | Пул ключей Tavily | 126 | dsh-tavily-pool@0.3.1@0.3.1 |
 | `dsh-time-machine` | Машина времени и точки отката | 41 | @goodandready/dsh-time-machine@0.1.30 |
+| `dsh-token-usage-sidebar` | Расход токенов | 39 | @y2zyyr/dsh-token-usage-sidebar@1.1.11@1.1.11 |
 | `dsh-top100` | dsh-top100 | 510 | @evaldock/dsh-top100-plugin@1.3.14@1.3.14 |
 | `dsh-tree-view` | — | 67 | dsh-tree-view@1.2.3@1.2.3 |
 | `dsh-treekeeper` | TreeKeeper | 65 | dsh-treekeeper@0.5.0@0.5.0 |
@@ -158,6 +168,7 @@
 | `dsh-usage-guard` | Сторож расхода | 42 | @goodandready/dsh-usage-guard@0.1.19 |
 | `dsh-usage-stats` | — | 210 | @xfqz86/dsh-usage-stats@0.5.1 |
 | `dsh-vibedev` | — | 103 | @vibedev-si/dsh-vibedev@0.3.5@0.3.5 |
+| `dsh-villager-hmm` | Мычание жителя | 38 | dsh-villager-hmm@1.0.9@1.0.9 |
 | `dsh-vision-bridge` | Зрение | 116 | @goodandready/dsh-vision-bridge@0.6.21 |
 | `dsh-voice` | Голос | 321 | @goodandready/dsh-voice@0.9.39 |
 | `dsh-vsceditor` | — | 158 | dsh-vsceditor@0.5.6@0.5.6 |
@@ -189,6 +200,7 @@
 | `foldPositions` | — | 481 | billion-context@0.1.202 |
 | `free-proxy` | — | 88 | dsh-freeroute@0.8.24@0.8.24 |
 | `genui` | — | 77 | dsh-plugin-genui@0.15.1@0.15.1 |
+| `git-credentials` | — | 41 | dsh-git-credentials@0.5.0@0.5.0 |
 | `git-graph` | — | 63 | @linxin666/dsh-client-ui-git-graph@0.4.7 |
 | `git-panel` | — | 94 | @fengbinmov/dsh-git-panel@0.1.1@0.1.1 |
 | `git-review` | — | 322 | dsh-git-review@0.1.8@0.1.8 |
@@ -208,6 +220,7 @@
 | `job` | — | 50 | харнесс |
 | `labnana` | Генерация изображений Labnana | 55 | dsh-labnana@0.3.5@0.3.5 |
 | `liangshen` | — | 42 | @linxin666/dsh-liangshen@0.4.7 |
+| `liao-sidebar-organizer` | Название ссылки | 43 | dsh-liao-sidebar@0.2.6@0.2.6 |
 | `llm-qoder` | — | 168 | @eghrhegpe/dsh-connect-qoder@0.7.3@0.7.3 |
 | `local.vcs` | Изменения VCS | 251 | @feng0531/dsh-vcs@0.4.10@0.4.10 |
 | `lume` | — | 82 | lume-dsh-plugin@0.9.0@0.9.0 |
@@ -223,6 +236,7 @@
 | `model-pricing` | Цены моделей | 97 | dsh-model-pricing@0.6.1@0.6.1 |
 | `modeltester` | — | 212 | dsh-modeltester@0.0.7-alpha.6@0.0.7-alpha.6 |
 | `mstar-panel` | — | 134 | @mstar-harness/dsh@4.0.4@4.0.4 |
+| `multi-folder` | Несколько папок | 38 | dsh-multi-folder@0.3.3@0.3.3 |
 | `nested-followups` | — | 63 | dsh-nested-followups@0.2.2@0.2.2 |
 | `net-proxy` | — | 95 | dsh-net-proxy@0.8.0@0.8.0 |
 | `noletme` | — | 79 | dsh-noletme@0.3.9@0.3.9 |
@@ -244,8 +258,12 @@
 | `pluginMarket` | Обзор плагинов | 78 | харнесс |
 | `pluginTopology` | Топология плагинов | 82 | @sleetdrop/dsh-plugin-topology@0.7.0@0.7.0 |
 | `pocketMobileNav` | 📱 Доступ с телефона | 96 | dsh-pocket@2.12.0@2.12.0 |
+| `power.button` | — | 39 | dsh-power-xc@0.1.6@0.1.6 |
 | `pptwise` | — | 55 | @liustack/pptwise@0.48.0@0.48.0 |
+| `prompt_optimizer` | — | 39 | dsh-prompt-optimizer@2.0.3@2.0.3 |
+| `prompt-enhance` | — | 43 | dsh-prompt-enhance@0.2.7@0.2.7 |
 | `prompt-library` | — | 66 | @sunjuntao/dsh-prompt-library@0.17.2@0.17.2 |
+| `provider-usage` | — | 42 | dsh-provider-usage@0.3.16@0.3.16 |
 | `providerUsage` | — | 293 | @wingsky-1/dsh-provider-usage@0.2.9@0.2.9 |
 | `question` | — | 31 | харнесс |
 | `quota` | — | 99 | dsh-quota@0.14.5@0.14.5 |
@@ -258,6 +276,7 @@
 | `retrace` | — | 172 | dsh-retrace@0.4.134@0.4.134 |
 | `reverse-proxy` | — | 175 | dsh-full-remote@0.3.7@0.3.7 |
 | `roundtable` | — | 215 | @y9931666/dsh-plugin-roundtable@1.0.0-rc.3@1.0.0-rc.3 |
+| `rq-model-router` | Маршрутизация моделей RigorQuant | 40 | dsh-rigorquant@0.7.0@0.7.0 |
 | `russian-lang` | — | 94 | @goodandready/dsh-russian-lang@0.4.0@0.4.0 |
 | `schedule.catalog` | — | 90 | харнесс |
 | `schedule.manager` | Задачи автоматизации | 207 | харнесс |
@@ -267,6 +286,7 @@
 | `session-inspector` | — | 52 | харнесс |
 | `session-log-download` | — | 10 | харнесс |
 | `session-manager` | — | 282 | dsh-session-manager@0.7.4@0.7.4 |
+| `session-title-pattern` | — | 39 | dsh-session-title-pattern@0.8.9@0.8.9 |
 | `sessionGraph` | — | 288 | @benz-ai-x/dsh-research-graph@0.1.5-rc.1@0.1.5-rc.1 |
 | `sessions` | — | 399 | dsh-plugin-ideas-manager@0.10.2@0.10.2 |
 | `settings` | Настройки | 41 | харнесс |
@@ -275,6 +295,7 @@
 | `settings.agentLoop` | Цикл агента | 12 | харнесс |
 | `settings.agentPreset` | Пресеты агента | 47 | харнесс |
 | `settings.archived-chats` | Архив чатов | 344 | dsh-archived-chats@1.5.2@1.5.2 |
+| `settings.autotier` | — | 37 | dsh-autotier@0.2.19@0.2.19 |
 | `settings.awiki` | — | 121 | @awiki/dsh-plugin@0.3.18@0.3.18 |
 | `settings.chatTranslate` | — | 45 | @lynn123411/dsh-chat-translate@3.5.9@3.5.9 |
 | `settings.checkpointRewind` | Хронология чекпоинтов | 49 | dsh-checkpoint-rewind@0.6.33@0.6.33 |
@@ -304,22 +325,26 @@
 | `settings.modelProxy` | Прокси моделей | 77 | dsh-plugin-model-proxy@0.1.6@0.1.6 |
 | `settings.models` | Модели | 134 | харнесс |
 | `settings.multi2api` | Аккаунты Multi2API | 78 | dsh-multi2api@0.1.9@0.1.9 |
+| `settings.nico` | — | 44 | dsh-nico-theme@0.3.8@0.3.8 |
 | `settings.openai-codex` | Codex Connect | 340 | dsh-codex-connect@0.2.0-alpha.1@0.2.0-alpha.1 |
 | `settings.openai-codex-auth` | OpenAI Codex | 77 | dsh-openai-codex-auth@0.6.3@0.6.3 |
 | `settings.opencode-go` | OpenCode Go | 177 | dsh-opencode-go@0.1.24@0.1.24 |
 | `settings.packyCodeApi` | — | 200 | dsh-packycode-api@1.3.6@1.3.6 |
 | `settings.permission` | Права доступа | 20 | харнесс |
+| `settings.permissionRules` | — | 39 | dsh-permission-rules@0.7.20@0.7.20 |
 | `settings.pluginCapabilities` | — | 169 | dsh-plugin-capabilities@0.4.1@0.4.1 |
 | `settings.pluginConsole` | — | 627 | @noob-stupid/dsh-plugin-console@0.5.92 |
 | `settings.pluginHub` | — | 110 | @nanmicoder/dsh-plugin-market@0.2.0@0.2.0 |
 | `settings.pluginInventory` | — | 37 | харнесс |
 | `settings.pluginManagerPro` | Менеджер плагинов | 209 | dsh-plugin-manager-pro@0.9.1@0.9.1 |
 | `settings.plugins` | Встроенные плагины | 5 | харнесс |
+| `settings.plugins.zai` | Веб-поиск (Z.ai) | 43 | dsh-web-search-zai@0.2.0@0.2.0 |
 | `settings.promptSetting` | Настройки промпта | 586 | dsh-prompt-setting@0.2.4@0.2.4 |
 | `settings.qoderCredential` | Учётные данные Qoder | 69 | dsh-provider-qoder@0.4.3@0.4.3 |
 | `settings.researchMarket` | Исследовательские плагины | 67 | dsh-research@0.4.3@0.4.3 |
 | `settings.runninghub` | RunningHub | 98 | dsh-runninghub-api@0.1.6@0.1.6 |
 | `settings.security` | — | 138 | dsh-plugin-security@0.5.0@0.5.0 |
+| `settings.serperSearch` | Поиск Serper + DeepSeek | 42 | dsh-serper-search@0.4.0@0.4.0 |
 | `settings.sessionLog` | — | 4 | харнесс |
 | `settings.shell` | Командная оболочка | 14 | харнесс |
 | `settings.subagent` | — | 35 | харнесс |
@@ -356,10 +381,12 @@
 | `task-board` | — | 437 | @linxin666/dsh-client-ui-task-board@0.4.7 |
 | `task-board-github` | — | 113 | @linxin666/dsh-client-ui-task-board-github@0.4.7 |
 | `task-runner` | — | 61 | @xiaoso/dsh-run-config@0.2.4@0.2.4 |
+| `taskpilot` | — | 44 | @khorsheed/dsh-taskpilot@0.3.4@0.3.4 |
 | `theme-studio` | Студия тем | 51 | dsh-theme-studio@0.10.0@0.10.0 |
 | `themeManager` | — | 178 | dsh-theme-manager@1.3.1@1.3.1 |
 | `theone` | — | 341 | dsh-theone@0.3.40@0.3.40 |
 | `ticktick` | TickTick | 52 | @perrylink/dsh-ticktick@0.1.20@0.1.20 |
+| `tidy-display` | — | 38 | dsh-tidy-display@0.4.2@0.4.2 |
 | `token-ledger` | Обзор использования токенов | 160 | @chenmiao8563/dsh-token-ledger@1.1.2@1.1.2 |
 | `token-meter-panel` | Расход токенов | 92 | dsh-token-meter-panel@0.6.4@0.6.4 |
 | `token-monitor` | — | 231 | dsh-token-monitor@1.0.12@1.0.12 |
@@ -376,9 +403,12 @@
 | `usage-meter` | — | 72 | dsh-plugin-usage-meter@1.10.0@1.10.0 |
 | `usage-state` | Состояние использования | 75 | dsh-usage-state@0.4.8@0.4.8 |
 | `usageBilling` | Расход | 351 | @kenz1117/dsh-ui-usage-billing@1.6.5@1.6.5 |
+| `user-management` | — | 38 | kczx-user-management@1.7.0@1.7.0 |
 | `version-update` | Текущая установка | 164 | dsh-version-update@1.4.4@1.4.4 |
+| `viewManager` | Менеджер вкладок представлений | 41 | dsh-view-manager@0.2.2@0.2.2 |
 | `voice-input` | — | 109 | харнесс |
 | `voice-mode` | — | 205 | dsh-voice-mode@0.7.25@0.7.25 |
+| `web-search-aggregation` | — | 38 | dsh-web-search-aggregation@0.1.11@0.1.11 |
 | `web-ui-plugins` | Веб-плагины | 1 | @linxin666/dsh-client-ui-web-ui-settings@0.4.7 |
 | `webSearchEnhanced` | — | 207 | dsh-web-search-enhanced@0.1.10@0.1.10 |
 | `whale-meter` | — | 59 | dsh-whale-meter@0.1.0@0.1.0 |
@@ -390,4 +420,4 @@
 | `xiaomi-mimo-tts` | — | 303 | dsh-xiaomi-tts@4.0.1@4.0.1 |
 | `xrn1997-dsh-novel` | — | 159 | @xrn1997/dsh-novel@0.7.0@0.7.0 |
 
-Итого: **377** namespace, **54672** строк.
+Итого: **407** namespace, **55870** строк.

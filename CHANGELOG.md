@@ -10,9 +10,9 @@
 
 ### Добавлено
 
-- **Словари сторонних плагинов: ещё 247.** За этот релиз их стало на 313, а пакет
-  покрывает 377 namespace и 54 672 строк (из них 2 996 — namespace самого харнесса,
-  51 676 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
+- **Словари сторонних плагинов: ещё 277.** За этот релиз их стало на 343, а пакет
+  покрывает 407 namespace и 55 870 строк (из них 2 996 — namespace самого харнесса,
+  52 874 — словари плагинов). Крупнейшие новые: `dsh-graph.hidden-versions.`
   (1 206 ключей), `dsh-task-board` (963), `settings.codexSubscription` (841),
   `research` (831), `mnemon` (753), `tracescope` (611), `settings.promptSetting` (586),
   `ui-mpkg-wallpaper` (546), `dsh-workspace-combiner` (527), `dsh-top100` (510),
@@ -45,6 +45,9 @@
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Ещё 30 словарей плагинов (партия 47).** `dsh-sm-version-display` (57), `smartdl` (57), `ui-quote` (57), `artifact` (56), `dsh-env-inspector` (56), `dsh-notify-yimit` (55), `labnana` (55), `mcp-skill-manager` (55), `pptwise` (55), `agent-skills` (53), `opencodeFree` (53), `searchPool` (53), `dsh-shortcuts` (52), `feishu-assistant` (52), `ticktick` (52), `image-plugin` (51), `theme-studio` (51), `magpie-connect` (50), `mcp-ui` (50), `dsh-mcp-market` (49), `dsh-session-kit` (49), `repeat-tool-breaker.card` (49), `settings.checkpointRewind` (49), `contextMemory` (48), `peakrate-model` (48), `workspace-prompt` (48), `fallbacks` (47), `dsh-web-icon-indicator` (45), `settings.chatTranslate` (45), `settings.codebuddy` (45). Английский текст каждого
+  словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
+  лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
+- **Ещё 30 словарей плагинов (партия 48).** `settings.nico` (44), `taskpilot` (44), `approval-review` (43), `liao-sidebar-organizer` (43), `prompt-enhance` (43), `settings.plugins.zai` (43), `provider-usage` (42), `settings.serperSearch` (42), `dsh-discord` (41), `git-credentials` (41), `viewManager` (41), `dsh-antigravity` (40), `rq-model-router` (40), `context-zip` (39), `drawio` (39), `dsh-github-router` (39), `dsh-round-rightclick` (39), `dsh-token-usage-sidebar` (39), `power.button` (39), `prompt_optimizer` (39), `session-title-pattern` (39), `settings.permissionRules` (39), `dsh-villager-hmm` (38), `multi-folder` (38), `tidy-display` (38), `user-management` (38), `web-search-aggregation` (38), `dsh-delete-turn` (37), `settings.autotier` (37), `ai4scholar` (36). Английский текст каждого
   словаря выгружен из его собственной публикации (`npm run fetch:plugins`) вместе с версией и
   лицензией, перевод сделан с этого английского текста, а не с чужого пакета локали.
 - **Переводы строк, потерянные при выгрузке, восстановлены.** Разбор бандла плагина
