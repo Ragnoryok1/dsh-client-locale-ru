@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Russian (ru) language pack, browser half. Registers `ru` as an external
  * selectable language and contributes a `ru` dictionary for every client
  * locale namespace, following the language-pack pattern from
@@ -47,13 +47,6 @@ function skipDuplicate(
 /** Required service: the locale registry that owns languages and dictionaries. */
 export const inject = ['locale']
 
-/*
- * The browser half never receives the profile row's config — the client boot graph
- * carries none — so the host half publishes the switches as a global and this reads
- * it. A config argument still wins when a host passes one, which keeps the shape the
- * loader documents for client plugins.
- */
-const HOST_OPTIONS = readBootOptions()
 /**
  * Run a Russian-only pass while Russian is the active language, and stop it on a switch.
  *
@@ -98,6 +91,12 @@ function followLanguage(ctx: ClientContext, start: (isActive: () => boolean) => 
  * @param config - the switches that turn the extra passes off; omitted means on.
  */
 export function apply(ctx: ClientContext, config: Config = {}): void {
+  /*
+   * An explicit config wins over the injected global: a host that learns to pass the
+   * row config straight to the browser needs no change here, and a surface that never
+   * sees the global still honours what it was given.
+   */
+  const options: Config = { ...HOST_OPTIONS, ...config }
   /*
    * The language and every namespace can already be taken: by an earlier Russian pack, or
    * by a host that registers them itself. Either way the pack's own text is not what the
@@ -145,7 +144,7 @@ export function apply(ctx: ClientContext, config: Config = {}): void {
    * behaviour. The check is written as `!== false` rather than a truthiness test so
    * that a config which never mentions the key reads as «on».
    */
-  if (config.plurals !== false) {
+  if (options.plurals !== false) {
     ctx.effect(
       () => startRussianPlurals(ctx.locale),
       'locale-ru: plurals',
@@ -159,7 +158,7 @@ export function apply(ctx: ClientContext, config: Config = {}): void {
    * the language, not the installation. `locale/change` fires on a language
    * switch only, not on dictionary registration.
    */
-  if (config.typography !== false) {
+  if (options.typography !== false) {
     ctx.effect(
       () => followLanguage(ctx, isRussian => startRussianTypography(document, isRussian)),
       'locale-ru: typography',
@@ -170,7 +169,7 @@ export function apply(ctx: ClientContext, config: Config = {}): void {
    * reach, so a Russian name exists only where the pack carries it. The pass rewrites
    * the rendered name and description, and follows the language like the typography.
    */
-  if (config.pluginNames !== false) {
+  if (options.pluginNames !== false) {
     ctx.effect(
       () => followLanguage(ctx, isRussian => startRussianPluginNames(document, isRussian)),
       'locale-ru: plugin names',
