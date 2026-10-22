@@ -93,5 +93,5 @@ regenerated:
 - `npm run report:descriptors -- <harness tree>` — the measurement above, repeatable.
 
 The translations themselves come from `@ragnoryok1/dsh-client-locale-ru`, the Russian
-language pack for the harness web GUI, which already ships 57574 strings across 467 namespaces
+language pack for the harness web GUI, which already ships 58013 strings across 497 namespaces
 and audits them against the harness tree in CI.

@@ -786,6 +786,14 @@
     ],
     "verdict": [
       "verdict · empty"
+    ],
+    "steer": [
+      "dsh-conversation-outline · steerTag",
+      "settings.reach · steerLabel"
+    ],
+    "report": [
+      "settings.ths-holdings · componentsDisabled",
+      "settings.ths-holdings · showCardHint"
     ]
   }
 }
