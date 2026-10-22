@@ -391,7 +391,7 @@ Searching the npm registry — six queries instead of one «dsh» — found 40 m
 a dictionary of their own. 39 are translated; three names (`dsh-automation`, `remote`,
 `settings.ip-pool`) are already taken by other plugins' dictionaries and stay with their
 owners, so that nobody's product gets somebody else's translation. As of 22 October 2026:
-**584 namespaces, 67 724 values, 520 dictionaries, 48 086 distinct Russian strings** in the
+**584 namespaces, 67 724 values, 520 dictionaries, 47 700 distinct Russian strings** in the
 built package. The competitor measurement, by the same method —
 [docs/competitors.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/competitors.md).
 

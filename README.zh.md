@@ -178,7 +178,7 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 我们按六个关键词（而不是只用「dsh」一个）检索 npm，又找到 40 个自带词典的插件：其中 39 个
 已翻译，三个名字（`dsh-automation`、`remote`、`settings.ip-pool`）已被别的插件的词典占用，
 仍归原来的所有者，以免把别人的翻译安到另一个产品上。截至 2026 年 10 月 22 日：**584 个
-namespace、67 724 条、520 个词典、构建产物中 48 086 条不同的俄文**。用同样方法做
+namespace、67 724 条、520 个词典、构建产物中 47 700 条不同的俄文**。用同样方法做
 的竞争对手测量见 [docs/competitors.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/competitors.md)。
 
 此前插件词典不在范围内，理由是：`dshmarket` 已经到 1.66.44 版本，它的 key 变化与 harness
