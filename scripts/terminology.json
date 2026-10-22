@@ -608,7 +608,10 @@
     "pwsh": "имя оболочки",
     "v2rayn": "имя программы V2rayN",
     "serper": "имя продукта",
-    "examples": "имя папки набора навыка"
+    "examples": "имя папки набора навыка",
+    "startup": "имя события сессии",
+    "imports": "имя директивы импорта",
+    "subagent": "имя инструмента"
   },
   "latinInValues": {
     "_comment": "Слова, допустимые только в конкретном значении: «install» и «enable» — части команд npm/brew, и в обычной прозе они остаются дефектом.",
@@ -651,9 +654,6 @@
     "ghbdtn": [
       "russian-lang · layoutConversionDesc"
     ],
-    "subagent": [
-      "harden · api.compactionScopeInvalid"
-    ],
     "systemprompt": [
       "russian-lang · secAgentPromptDesc"
     ],
@@ -678,7 +678,8 @@
       "bgjobs · notify.pending.title"
     ],
     "force": [
-      "bgjobs · force.ask.confirm.title"
+      "bgjobs · force.ask.confirm.title",
+      "dsh-mineru · parse.ocr"
     ],
     "circuit": [
       "dsh-skins.ui · personalization.uefi.art"
@@ -730,6 +731,43 @@
     ],
     "apikey": [
       "settings.plugins.zai · literalKey"
+    ],
+    "idea": [
+      "plugin.intellijMcp · commandHint"
+    ],
+    "initialize": [
+      "plugin.intellijMcp · testHandshakeFailed",
+      "plugin.intellijMcp · testToolsListFailed"
+    ],
+    "stdiomcpserver": [
+      "plugin.intellijMcp · commandHint",
+      "plugin.intellijMcp · testStarted"
+    ],
+    "allows": [
+      "autoReviewPanel · allows"
+    ],
+    "denies": [
+      "autoReviewPanel · denies"
+    ],
+    "deny": [
+      "autoReviewPanel · decisionDeny"
+    ],
+    "pipeline": [
+      "dsh-mineru · backend.hybrid-engine",
+      "dsh-mineru · backend.pipeline"
+    ],
+    "only": [
+      "dsh-mineru · backend.vlm-engine",
+      "dsh-mineru · parse.txt"
+    ],
+    "model": [
+      "image-pathify · modelPlaceholder"
+    ],
+    "agentapi": [
+      "vision · chAntigravity"
+    ],
+    "right": [
+      "vision · regionPlaceholder"
     ]
   }
 }
