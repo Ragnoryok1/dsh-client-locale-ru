@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **584 namespace** — 67724 строк. Колонка «как это выглядит»
+Пакет переводит **584 namespace** — 67666 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -15,7 +15,6 @@
 | `.ndjson.zst` | Английская страница (USD) | 2 | dsh-usage-badge@0.1.9 |
 | `.runs.json` | Название | 70 | dsh-tongflow@0.8.4 |
 | `about.huaqiu` | О плагине | 9 | @huaqiu/dsh-huaqiu-about@0.6.6 |
-| `acp_turn_sep_` | — | 528 | billion-context@0.1.204 |
 | `agency` | — | 94 | @michengai/dsh-agency-agents@1.2.10 |
 | `agent-community` | Bots团队 | 1 | @dsh-plugin-agent-community/ui-agent-community@0.3.9 |
 | `agent-schedule` | tool.call.toolview | 61 | dsh-agent-toolkit@0.4.13 |
@@ -423,6 +422,7 @@
 | `settings.catppuccin` | — | 34 | dsh-catppuccin@0.2.6 |
 | `settings.chatTranslate` | — | 45 | @lynn123411/dsh-chat-translate@3.5.9 |
 | `settings.checkpointRewind` | Хронология чекпоинтов | 49 | dsh-checkpoint-rewind@0.6.33 |
+| `settings.claude-code` | Claude Code | 470 | @norman-else/dsh-claude@0.1.66 |
 | `settings.codebuddy` | CodeBuddy | 50 | @shatyuka/dsh-llm-codebuddy@0.9.3 |
 | `settings.codebuddy-cli` | Подключение DSH CodeBuddy CLI | 162 | dsh-codebuddy-cli@0.4.3 |
 | `settings.codeIndex` | — | 12 | dsh-code-index@0.11.0 |
@@ -597,4 +597,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **584** namespace, **67724** строк.
+Итого: **584** namespace, **67666** строк.
