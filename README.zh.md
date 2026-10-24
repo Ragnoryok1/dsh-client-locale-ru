@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.16",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67666 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -24,7 +24,15 @@
 [![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-67666-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web 界面（`dsh`）的俄语（`ru`）语言包。它通过 locale 服务（`ctx.locale.addLanguage`）把 `ru` 注册为可选的客户端语言，并为每个 namespace 提供一份词典——共 584 个 namespace、67,666 条翻译，基于 dsh `0.2.1-rc.2` 构建。用 `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru` 安装，然后在 Settings → General 中选择 **Русский**。缺失的 key 会回退到英文，因此更新的 harness 也能照常工作。覆盖范围是 harness 自带的客户端界面（64 个 namespace，2 996 条翻译），以及 521 个第三方插件的词典——它们各自发布的英文原文都被取来翻译。MIT 许可，由社区维护，与 DeepSeek 无隶属关系。
+插件把 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的界面变成俄语。你看到的一切都会被翻译：设置、侧边栏、对话框、提示、错误信息——以及没有自带俄语的三方插件菜单。
+
+目前包里有 584 个分区、67 666 条文案，其中 520 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
+
+安装只需一条命令：`dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`，然后在设置 General 里选择俄语。
+
+除了翻译，插件还做三件 harness 自己做不到的事：按数字选择俄语复数形式（而不是中性标签）、套用俄语排版（«ёлочки»、长破折号、省略号），以及翻译没有自带 locale 的插件名称。每一项都能在配置里用一行关闭——翻译本身保留。
+
+插件不会修改 harness 的文件，也不会碰你的数据。如果新版 harness 出现包里还没有的文案，它会保持英文：界面照常工作。MIT 许可，由社区维护，与 DeepSeek 无关联。
 
 > **如果这个包对你有用，请给仓库点一颗 star。** 这是表明「有人需要这份翻译」的唯一信号，它也决定了接下来优先做哪些部分。
 

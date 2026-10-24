@@ -1612,11 +1612,28 @@ const packValueCount = packCount === null ? packKeys.size : packCount.values
 const packNamespaceCount = packCount === null ? packNamespaces.size : packCount.namespaces
 const ADVERTISED = [
   { label: 'строк', pattern: /badge\/strings-(\d+)%2C(\d+)-/u, read: match => `${match[1]}${match[2]}`, expected: packValueCount },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*translated strings/u, read: readGrouped, expected: packValueCount },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*strings/u, read: readGrouped, expected: packValueCount },
-  { label: 'строк', pattern: /,\s*(\d[\d,\u00A0]*)\s*перевод/u, read: readGrouped, expected: packValueCount },
-  { label: 'строк', pattern: /、\s*(\d[\d,\u00A0]*)\s*条翻译/u, read: readGrouped, expected: packValueCount },
+  /*
+   * `(?<!\d)` перед ведущим разделителем сохраняет группированное число целым:
+   * в «67,666 strings» есть собственная запятая, и шаблон «,<цифры> strings» цеплялся
+   * за её хвост — аудит объявлял 666 строк там, где стоит 67 666.
+   *
+   * Общий шаблон «<число> строк» не годится и с другой стороны: он ловит в тексте
+   * посторонние числа — пример форматирования («2 542 строки») и длину самого файла
+   * словаря («71 453 строки»). Это другие факты, сверять их с числом строк пакета
+   * нельзя, поэтому ниже — отдельные шаблоны под формулировки вступлений.
+   */
+  { label: 'строк', pattern: /(?<!\d),\s*(\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d{4,})\s*translated strings/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /(?<!\d),\s*(\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d{4,})\s*strings/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /(?<!\d),\s*(\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d{4,})\s*перевод/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /(?<!\d)、\s*(\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d{4,})\s*条翻译/u, read: readGrouped, expected: packValueCount },
   { label: 'namespace', pattern: /(\d+)\s*(?:namespaces?|个 namespace)\s*[,、]/u, expected: packNamespaceCount },
+  /* вступления: «в пакете N раздела и M строк», «holds N sections and M strings», «包里有 N 个分区、M 条文案» */
+  { label: 'namespace', pattern: /в пакете (\d{1,3}(?:[\u00A0\u202F ]\d{3})+|\d+) раздела/u, read: readGrouped, expected: packNamespaceCount },
+  { label: 'namespace', pattern: /holds (\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+) sections/u, read: readGrouped, expected: packNamespaceCount },
+  { label: 'namespace', pattern: /包里有 (\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+) 个分区/u, read: readGrouped, expected: packNamespaceCount },
+  { label: 'строк', pattern: /в пакете (?:\d{1,3}(?:[\u00A0\u202F ]\d{3})+|\d+) раздела и (\d{1,3}(?:[\u00A0\u202F ]\d{3})+|\d+)/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /holds (?:\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+) sections and (\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+)/u, read: readGrouped, expected: packValueCount },
+  { label: 'строк', pattern: /包里有 (?:\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+) 个分区、(\d{1,3}(?:[,\u00A0\u202F ]\d{3})+|\d+)/u, read: readGrouped, expected: packValueCount },
 ]
 
 /**

@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.16",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67666 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -24,7 +24,15 @@
 [![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-67666-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Русский (`ru`) язык для веб-интерфейса [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`). Пакет регистрирует `ru` как выбираемый язык клиента через сервис локали (`ctx.locale.addLanguage`) и везёт по словарю на каждый namespace — 584 namespace, 67 666 строк, сборка под dsh `0.2.1-rc.2`. Установка: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, затем **Русский** в Settings → General. Недостающие ключи падают в английский, поэтому более новый харнесс продолжает работать. Область — собственный интерфейс харнесса (64 namespace и 2 996 строк) и словари 521 стороннего плагина, переведённые с английского, который публикует сам плагин. MIT, поддерживается сообществом, не связан с DeepSeek.
+Плагин делает интерфейс [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) русским. Переводится всё, что вы видите: настройки, боковые панели, диалоги, подсказки, сообщения об ошибках — и меню сторонних плагинов, у которых нет своего русского перевода.
+
+Сейчас в пакете 584 раздела и 67 666 строк, из них 520 словарей сторонних плагинов — больше, чем у любого другого русского пакета для харнесса, который я смог найти.
+
+Установка — одна команда: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, дальше русский выбирается в настройках, в разделе General.
+
+Кроме перевода плагин делает три вещи, которых харнесс сам не умеет: подставляет русские формы числа («1 вызов», «2 вызова», «5 вызовов»), приводит текст к русской типографике («ёлочки», длинное тире, многоточие) и переводит названия плагинов, у которых нет своей локали. Каждую из этих надстроек можно выключить одной строкой в профиле — перевод при этом останется.
+
+Пакет не меняет файлы харнесса и не трогает ваши данные. Если в новой версии харнесса появится строка, которой в пакете ещё нет, она останется английской: интерфейс продолжит работать. Лицензия MIT, пакет поддерживается сообществом и не связан с DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.

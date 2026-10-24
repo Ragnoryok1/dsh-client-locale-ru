@@ -1,6 +1,6 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67666 strings, 520 third-party plugin dictionaries, ru plural forms and screen typography. Hybrid dsh.bundle + dsh.client plugin.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
   "version": "0.2.16",
   "keywords": [
     "dsh",

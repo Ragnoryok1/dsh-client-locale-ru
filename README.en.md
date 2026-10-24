@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.16",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Full Russian (ru) interface for the DeepSeek Harness web GUI: 584 namespaces, 67666 strings, 520 third-party plugin dictionaries, Russian screen typography and Russian plural forms, with a locale audit in CI pinned to a harness tag.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -24,7 +24,15 @@
 [![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 [![strings](https://img.shields.io/badge/strings-67666-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
-Russian (`ru`) language pack for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) web GUI (`dsh`). It registers `ru` as a selectable client language through the locale service (`ctx.locale.addLanguage`) plus one dictionary per namespace — 584 namespaces, 67,666 strings, built against dsh `0.2.1-rc.2`. Install with `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, then pick **Русский** in Settings → General. Missing keys fall back to English, so a newer harness keeps working. The scope is the harness's own client interface — 64 namespaces (2 996 strings) — plus the dictionaries of 520 third-party plugins, translated from the English each plugin publishes. MIT, community-maintained, not affiliated with DeepSeek.
+The plugin makes the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) interface Russian. Everything you see is translated: settings, side panels, dialogs, hints, error messages — and the menus of third-party plugins that ship no Russian of their own.
+
+The pack currently holds 584 sections and 67,666 strings, 520 of them dictionaries of third-party plugins — more than any other Russian pack for the harness I could find.
+
+Install is one command: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`; Russian is then picked in the settings, under General.
+
+Beyond translation the pack does three things the harness cannot do by itself: it chooses the Russian plural form by the number instead of a neutral label, applies Russian typography («ёлочки», em dashes, ellipses), and translates plugin names whose package ships no locale of its own. Each extra can be turned off with one line in the profile — the translation stays.
+
+The pack does not modify harness files and does not touch your data. If a newer harness adds a string the pack does not know yet, it stays English: the interface keeps working. MIT, maintained by the community, not affiliated with DeepSeek.
 
 > **If the pack was useful to you, please star the repository.** It is the only signal that a
 > translation is wanted, and it is what decides which parts get worked on next.
