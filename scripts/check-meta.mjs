@@ -17,7 +17,7 @@ const manifest = JSON.parse(read('package.json'))
 const version = manifest.version
 const problems = []
 
-for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
+for (const file of ['README.md', 'README-en.md', 'README-zh.md']) {
   const text = read(file)
   const block = /<!--\s*deepseek-harness-meta\s*([\s\S]*?)-->/u.exec(text)
   if (block === null) {

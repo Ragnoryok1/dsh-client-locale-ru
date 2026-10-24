@@ -1687,7 +1687,7 @@ const BUILT_AGAINST = /(?:built|verified) against dsh\s+`?v?([\w.+-]+)`?/gu
  * both phrasings — «built against dsh» in the leads, «verified against dsh» in
  * the manifest — because both name the harness release a reader relies on.
  */
-const ADVERTISED_FILES = ['README.md', 'README.en.md', 'README.zh.md', 'package.json']
+const ADVERTISED_FILES = ['README.md', 'README-en.md', 'README-zh.md', 'package.json']
 
 const advertisedWrong = []
 for (const file of ADVERTISED_FILES) {

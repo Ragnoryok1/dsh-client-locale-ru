@@ -1,7 +1,7 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
   "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
@@ -13,7 +13,7 @@
 
 # @ragnoryok1/dsh-client-locale-ru
 
-[Русский](README.md) | **English** | [中文](README.zh.md)
+[Русский](README.md) | **English** | [中文](README-zh.md)
 
 ![Russian language pack for DeepSeek Harness](assets/banner.jpg)
 
@@ -107,7 +107,7 @@ two (the message names the version) or drop the `minimumReleaseAge` limit in the
 settings.
 The manifest is checked against the harness's own rules rather than by eye (`npm run check:manifest`, part of `verify`). Each rule was read out of the harness sources and each is a failure the user would otherwise meet first: `parseDshClient` accepts `platform` as any string while the consumers keep only `platform === 'web'`, so a typo like `'Web'` would **silently drop** the client half; a declared `dsh.client` without the `./client` export makes `client-modules` throw; and `dsh.bundle.patch` has to point at a file that exists.
 
-Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 1975 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
+Installing from GitHub works too: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (the form the plugin catalogue generates, without the npm scope) installs the repository archive, and the built `lib/` is committed — no build runs on your machine, and none is needed. That is exactly why `npm run check:built` (part of `verify`) rebuilds `lib/` and compares it with the commit: a stale bundle in git would reach the user, while the audit would never see it, because the audit reads the sources. The published package is 1976 kB: the banner ships as JPEG, and the icon and source map stay out of the npm payload.
 
 ## Why hybrid
 

@@ -2,7 +2,7 @@
  * Drift guard for the translated READMEs.
  *
  * Three files describe the same document — `README.md` (Russian, the primary
- * one), `README.en.md` and `README.zh.md`. Nothing stops a later edit from
+ * one), `README-en.md` and `README-zh.md`. Nothing stops a later edit from
  * touching one of them and leaving the others behind, and a stale translation
  * announces nothing on its own. The harness solves this with a per-section hash
  * record (`README.i18n.yaml`); this is a smaller, honest version of the same
@@ -32,7 +32,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const FILES = ['README.md', 'README.en.md', 'README.zh.md']
+const FILES = ['README.md', 'README-en.md', 'README-zh.md']
 
 /** Structural fingerprint of one README, ignoring everything inside code fences. */
 function fingerprint(rawText) {

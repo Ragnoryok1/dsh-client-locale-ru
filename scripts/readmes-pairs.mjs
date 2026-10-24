@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url'
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const RECORD = join(ROOT, 'scripts', 'readme-pairs.json')
 const LANGUAGES = ['ru', 'en', 'zh']
-const FILES = { ru: 'README.md', en: 'README.en.md', zh: 'README.zh.md' }
+const FILES = { ru: 'README.md', en: 'README-en.md', zh: 'README-zh.md' }
 
 /**
  * Split a README into sections in document order.

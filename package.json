@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
   "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "keywords": [
     "dsh",
     "deepseek-harness",
@@ -127,10 +127,10 @@
     "assets/banner.jpg",
     "cordis.patch.yml",
     "README.md",
+    "README-en.md",
+    "README-zh.md",
     "CHANGELOG.md",
     "LICENSE",
-    "README.en.md",
-    "README.zh.md",
     "NAMESPACES.md"
   ]
 }

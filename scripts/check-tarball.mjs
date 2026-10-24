@@ -69,7 +69,7 @@ try {
   }
 
   /* The docs the READMEs link to travel with the package. */
-  for (const doc of ['NAMESPACES.md', 'README.md', 'README.en.md', 'README.zh.md', 'CHANGELOG.md', 'LICENSE']) {
+  for (const doc of ['NAMESPACES.md', 'README.md', 'README-en.md', 'README-zh.md', 'CHANGELOG.md', 'LICENSE']) {
     if (!existsSync(join(inner, doc))) note(`${doc} обещан в files, но в архиве его нет`)
   }
 

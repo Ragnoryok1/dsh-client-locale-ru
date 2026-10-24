@@ -96,7 +96,7 @@ const shipped = (path) => FILES.some((entry) => {
   return entry === normalized
 })
 
-for (const readme of ['README.md', 'README.en.md', 'README.zh.md']) {
+for (const readme of ['README.md', 'README-en.md', 'README-zh.md']) {
   const file = join(ROOT, readme)
   if (!existsSync(file)) {
     note(`${readme} отсутствует`)

@@ -40,7 +40,7 @@ const files = packed.entryCount
 
 const CLAIM = /(\d+)\s*(?:КБ|kB|KB|Кб)/gu
 const wrong = []
-for (const file of ['README.md', 'README.en.md', 'README.zh.md']) {
+for (const file of ['README.md', 'README-en.md', 'README-zh.md']) {
   const text = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8')
   const claims = [...text.matchAll(CLAIM)]
   if (claims.length === 0) continue
