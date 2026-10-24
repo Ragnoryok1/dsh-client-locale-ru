@@ -95,7 +95,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 2013 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 1997 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -163,7 +163,7 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 
 审计在 CI（`.github/workflows/verify.yml`）中针对**锁定的 harness 标签**运行，而不是针对随便一份本地 checkout。同一次运行还会**每周按计划**触发一次：即使没人改动，译文也会腐坏——上游继续前进，本地一切正常，而偏差只在用户构建时才浮现。门禁覆盖完整性（key 与 namespace）、复数形式、占位符、英文与中文残留、术语、正文中的拉丁词、文本卫生、首尾空格、风格、取值的排版、«ё»、组合短语、设置侧栏标签的长度以及对外宣称的数字——每一项都已经抓到过真实缺陷。除此之外，审计还会打印**参考报告**——它们不是门禁，因为需要人来判断：比对了多少个 namespace、哪些无法建立对应关系、是否还留有「数字 + 需变格的名词」，以及短字符串是否长到英文的 2.8 倍以上（排版风险——«Effort» → «Уровень рассуждения» 是俄语的正常长度，不是缺陷）。
 
-审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 2013 kB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
+审计按 harness 实际书写的形式读取模板：字符串、**段落数组**（各模式的指南就是这样存储的）以及**常量引用**（`'hint.plan': PLAN_NEXT_ACTION_EN`）。在只读取第一种形式时，有十个 key——其中八个是整篇指南——悄悄退出了所有比对。反过来也一样：空的策略文件（`keep-english.json`、`terminology.json` 的某个分区）现在会让审计失败，而不是在无人察觉的情况下放宽门禁。README 中宣称的数字也按同样方式与包体核对，因为过期的数字就是错误的说法——同样的数字还会从 `package.json` 的 description 中读取，那是 npm 在搜索与包页面上显示的内容（「55 namespaces」正是在那里活得最久）——包括带千位分隔符的写法：旧版开头写的是 `2 489`，而检查此前只读取不带分隔符的形式，所以数字模式现在也接受千位分隔符。紧随其后还核对「针对哪个 harness 版本构建」这句话：它必须与 workflow 中锁定的标签一致，因为真正验证这个包的是那个 workflow（两个 README 的开头都还写着 `0.2.1-alpha.2`，而 CI 早已换成 `dsh-v0.2.1-rc.2`）。发布包的体积也在这里实测：`npm run check:size` 会打包归档，并把声明的千字节数与实际值对比（允许 1997 kB 误差——不同 Node 构建下的 gzip 压缩结果略有差别，而这句话本身也只精确到整千字节）。
 
 - **无效 namespace**——包注册的每一个 namespace 都必须在 harness 中存在。在 0.1.6 中，日程目录的翻译被注册在 `schedule.manager` 名下，而读取它们的是 `schedule.catalog`：此时按 key 做的覆盖率检查还报告「全部已翻译」；
 - **复数形式配对**——`.one`/`.other` 的集合必须一致，因为客户端按 `count === 1 ? '.one' : '.other'` 选择形式。这对俄语还不够：每一对还需要 `.few` 与 `.many`，否则包装层会悄悄退回中性的 `.other`，本该是 «2 дня» 的地方显示成 «2 д»。该检查**按 namespace** 进行——包装层在提问的那个 namespace 里查找形式，因此「某个界面上有、另一个界面上缺」这种情况否则不会被发现。它找到了四个时间单位（`schedule.catalog` 中的 `unit.day/hour/minute/second`）和任务管理器里的 `trigger`；同时这些单位不再是缩写（«д»、«ч»、«мин»），而是带正确格位的完整形式——«через 2 дня»、«через 5 часов»，而 «Каждые 2 дня» 现在写作 «Раз в 2 дня»。同样的要求也覆盖本包自己添加的 key（`terminal.expand` 及其同类：harness 会把计数传给它，却从不配对）——这些形式只由我们维护，少一个不会有任何其他检查发现；
@@ -175,125 +175,6 @@ npm run diff:harness -- <old> <new>  # harness 改写了哪些英文
 标签的新旧由单独的 workflow 盯守：`watch-upstream` 每周把锁定的标签与 harness 的标签比对一次，出现更新的标签就开一个 issue（内含操作步骤）并把运行标红——让「落后」按计划被发现，而不是靠用户的截图。版本比较无需网络即可验证（`npm run check:upstream`，五个用例），并且纳入 `verify`：正式版本必须比自己的预发布版本更新，否则盯守会永远报警。
 
 覆盖率数字不是门禁：有些分区是有意保留英文的。紧随其后，审计会打印**按 namespace** 的报告：它根据注册方重建「namespace → 词典」的对应关系（`NS` 声明，或 `locale.register` 里的字面量；`bind` 与 `PropsLocale` 只是读取 namespace），并列出既不在自己 namespace、也不在运行时回退所用的 `common` 词典中的 key。全局比较 key 名称看不到这类空洞：放在别的 namespace 下的翻译会被算作已覆盖，而那个界面实际显示英文。该报告仅供参考——同名 key 在不同 namespace 下含义可能不同（`list.aria` 在提醒目录里是「活动提醒」，在任务里是「后台任务」），因此只有在两个 namespace 由同一份词典提供服务时才会跨 namespace 搬运翻译。在锁定的标签上，该报告为空：harness 在我们注册的 namespace 里渲染的每一条字符串，都位于该 namespace。本包的全部 584 个 namespace 都会被比对——对应关系既来自紧邻注册处的词典导入，也来自注册语句本身传入的名称（`locale.register(NS, { zh, en })`）；若没有第二条规则，词典位于相邻目录的 `common` 与 `settings.locale` 就会落在检查之外。反方向是硬失败而不是参考报告：harness 注册并填充了 key、而本包从不注册的 namespace，会让那个界面停留在英文，而按 key 名称统计的覆盖率看起来依然完整。`settings.sessionLog` 正是这样被发现的——通用设置页上的「上传 Session Log」开关。
-
-## 覆盖范围：harness 与插件词典
-本包翻译 **harness 客户端自有的 namespace**——共 64 个 namespace，已与锁定标签核对——以及
-**第三方插件的词典**：520 个插件，其英文文本连同版本与许可证一起从它们自己的发布物中提取。
-
-我们按六个关键词（而不是只用「dsh」一个）检索 npm，又找到 40 个自带词典的插件：其中 39 个
-已翻译，三个名字（`dsh-automation`、`remote`、`settings.ip-pool`）已被别的插件的词典占用，
-仍归原来的所有者，以免把别人的翻译安到另一个产品上。截至 2026 年 10 月 22 日：**584 个
-namespace、67 666 条、520 个词典、构建产物中 47 700 条不同的俄文**。用同样方法做
-的竞争对手测量见 [docs/competitors.md](https://github.com/Ragnoryok1/dsh-client-locale-ru/blob/main/docs/competitors.md)。
-
-此前插件词典不在范围内，理由是：`dshmarket` 已经到 1.66.44 版本，它的 key 变化与 harness
-无关，而「全部都覆盖了」这种无声承诺不是承诺，是一笔没人能讨的债。答案其实很简单：把
-别人的英文文本**提取出来**（`npm run fetch:plugins`），与翻译放在一起——带上包名、版本与
-许可证，审计比对的正是这份快照，而不是别人的俄语。我们检查了生态中下载量最高的 17 个
-插件（npm、`keywords:dsh-plugin`、月下载量），看其中哪些会提供自己的字符串：
-
-| 发现的情况 | 插件数 |
-|---|---|
-| **没有自己的字符串**——界面文本取自 harness 的 namespace | **17 个中的 11 个** |
-| 较大的自有词典（已人工确认） | 2 个——`dshmarket`（733 个 key）、`@nanmicoder/dsh-agent-teams`（420） |
-| 只有 `.d.ts` 类型，没有字符串 | 1 个——`dsh-plugin-model-proxy` |
-| 需要单独检查 | 3 个 |
-
-在最流行的 17 个插件里，有 11 个的俄语界面无需单独词典即可工作——它们的文本位于 harness
-的公共 namespace 中，而本包已把这些 namespace 完整翻译。词典存在于插件自带字符串的地方，
-共 32 个，每个都记着提取英文文本时所依据的版本。
-
-这样的词典意味着要跟进别人的发布节奏，但现在这份责任是可核查的：插件的新版本带来不同的
-key 时，表现为与快照的差异，而不是一片沉默。需要某个具体插件——请开 issue：可以为它做一个
-绑定版本的独立层词典，而不是默默地承诺「全部都覆盖了」。
-
-## 开发
-
-```sh
-pnpm install
-pnpm run build     # tsdown -> lib/index.js (node half) + lib/client.js (client bundle)
-npm pack           # -> ragnoryok1-dsh-client-locale-ru-<version>.tgz
-```
-
-`lib/client.js` 会编译成 `dsh` 客户端加载器（`__ModuleLoader__.load`）能够识别的格式，并导出 `inject`/`apply`。
-
-## 发布
-
-发布到 npm 由 `publish` workflow 按标签执行——凭据保存在仓库 secret（`NPM_TOKEN`）中，因此既不需要在终端里输入 token，也不需要转发它。从本机手动发布是可行的，但没有必要。
-
-```
-npm version 0.3.0 --no-git-tag-version      # поднять версию в package.json
-# …и синхронно обновить версию в блоке deepseek-harness-meta в этом README
-git commit -am "release: 0.3.0" && git tag v0.3.0 && git push origin v0.3.0
-```
-
-发布前 workflow 会检查：
-
-1. 标签中的版本与 `package.json` 中的版本一致；
-2. `deepseek-harness-meta` 块中的版本与 `package.json` 一致——marketplace 从那里读取版本，而且**只在首次索引时**读取，因此版本不一致不会自行修正；
-3. 排版（18 条规则）；
-4. 针对锁定 harness 标签的本地化审计——无效 namespace、重复项、复数形式配对和占位符不一致会报错并中止发布；
-5. **与 `compatible_versions` 中每个版本的兼容性**：从 npm 下载该版本的 locale 运行时，并对它运行三套测试——语言共存、复数形式与组合短语（`npm run check:compat`，已纳入 CI）——meta 块里的承诺是被验证的，而不是被假定的。
-
-声明本身也单独检查（`npm run check:peers`，包含在 `verify` 中）：harness 并不把我们对 `@deepseek-ai/dsh*` 的 `peerDependencies` 当作包的版本，而是当作**运行时版本**的范围，并带上 `includePrerelease`；若该范围不满足正在运行的 dsh，用户就会看到不兼容警告与豁免提示。脚本把这条 harness 规则套用到所有被声明的版本上——目前八个都通过。
-
-在本地做完全相同的检查，但不发布：
-
-```
-npm run verify -- путь/к/дереву/харнесса
-```
-
-该 workflow 还支持手动触发，并带有「只检查、不发布」的开关（`workflow_dispatch` → `dry-run`）。
-
-## 内容
-
-- `src/client/dicts.ts`——俄语词典：584 个 namespace、67,666 条字符串，文件 71,506 行。这正是本包的核心价值。
-- `src/client/index.ts`——客户端插件入口（注册 `ru` 和词典）。
-- `src/index.ts`——空的宿主部分（`apply()`）。
-- `cordis.patch.yml`——profile 补丁（`- insert:` 客户端条目 `locale-ru`）。
-
-## 翻译内容
-
-当前键集按 harness 的标签确定：key 取自对应 profile 的提交，之后新增的 key 在查找时会回退到 `en`，因此本包不会在新版本上弄坏界面。
-
-### 0.1.7 — 修复无效 namespace，翻译任务管理器，重写复数形式
-
-本版本的重点是**修复 0.1.6 中的错误**。当时记录说 namespace `schedule.catalog` 已被取消，位置由 `schedule.manager` 取代。实际上 harness 中**两个** namespace 各自独立存在：`schedule.catalog` 是会话头部带有频率和单位的提醒目录，`schedule.manager` 则是新的自动化任务管理器。由于这个错误结论，约 30 条翻译字符串（提醒、频率、时间单位）被注册在一个无人读取的名称下，**从未显示**在界面中。现在该目录注册为 `schedule.catalog`。
-
-- **已修复：**日程目录的翻译重新可见——`trigger.*`、`list.*`、`delete.*`、`frequency.*`、`cron.*`、`unit.*`、`relative.*`、`mark.aria`、`hover.more`；
-- **新增 `schedule.manager`**（188 个 key）——完全俄语化的自动化任务管理器：任务面板与任务目录、搜索、状态筛选、任务详情及其标签页、带保留规则的**运行日志**、日程编辑器（日期、时间、时、分、秒、时区、重复间隔）、重复规则（一次性、每 N 分钟/小时/秒、每天、周一至周五、每周、自定义 cron）、可选择日期和分钟的 cron 表单、带确认的删除、通知与卡片；
-- **重写复数形式**（17 组 key）：把在 2–4 这些数字上出错的写法，换成在任意 `n ≥ 2` 下都正确的写法——例如 «2 субагентов» → «Субагентов: 2»、«каждые 2 часов» → «каждые 2 ч»。另有 8 条把 `{count}` 放在需要变格的词之前的字符串改用缩写：«ещё 3 строк» → «ещё 3 стр.»；
-- **新增 7 个此前缺失的 key**：`blocked.composer`、`defaultWorkspace.title`、`schedule.active`、`settings.transcript.expanded`、`status.scheduled`、`status.overdue`，以及 namespace `shortcuts.layout`（显示左侧面板的命令标签）；
-- **项目中的新检查：**namespace 名称审计。此前的覆盖率检查只比对 namespace 内部的 key，却不比对名称本身，因此整个 namespace 可能注册在一个不存在的名称下并悄悄失效。现在会从所有声明方式（`const NS`/`SETTINGS_NS`/`namespace`、`locale.register`、`locale.bind`、`PropsLocale<…>`）中提取名称，并按集合比较。
-
-0.1.2 新增了 0.1.1 中没有的分区：`open-in-app`（«Открыть в приложении»）、`sidebarFiles`、`sidebarRight`（带文件的右侧边栏）和 `sidebarCodePreview`（代码预览）。同时更新了在 harness 0.1.5 中发生变化的 key，并删除了其中已不存在的 21 个 key。
-
-0.1.3 让本包跟上了 harness 0.1.6-alpha.1：新增 139 个 key 和 7 个新分区——`sidebarTerminal`（右侧边栏中的终端）、`settings.archivedSessions`（已归档会话）以及文档预览系列（`sidebarDocumentPreview`、`documentHtml`、`sidebarImage`、`documentMarkdown`、`sidebarPdf`）。此外还翻译了实验性的「自动检查」（`permission.access`：`auto.*`）、命令面板的标签与 token、模型设置中的端点字段，以及 `conversation`、`trajectory`、`chat`、`session-log-download` 中的变更。已从 harness 中消失的 28 个 key 已删除。
-
-覆盖率检查基于 harness 的源码进行：对每个 namespace 比较 key 集合，因此下一个版本总是从一份精确的「新增 / 检查 / 删除」清单开始。
-
-0.1.6 让本包跟上了 harness **0.1.7-rc.2**：新增 **252 个 key**，更新 18 个，删除 26 个，并新增两个 namespace。变更如下：
-
-- **`shortcuts`**（新 namespace，56 个 key）——快捷键编辑器：录制组合键、冲突、保留组合、macOS 与 Windows 的提示、恢复默认值；
-- **`schedule.manager`**（当时为 70 个 key）——自动化任务管理器：列表、删除、重复、运行历史、Cron 表达式。**当时错误地记录说 namespace `schedule.catalog` 就此被取消；0.1.7 已修正——两个 namespace 并存**；
-- **`settings.account`**（50 个 key）——应用首次启动：欢迎语、选择用途与工作过程展示的详细程度、充值余额、在任务执行期间退出账号；
-- 新增了运行中增删工具的标签（`message.tools*`、`trajectory.layout.*`）、右侧边栏命令（`sidebarRight`）、面板中的「请先选择会话」状态，并更新了设置分区名称：由 «Инструментов разработчика» 改为 «Инструменты для кода»；
-- 18 个 key 按变更后的英文文本更新，26 个删除。有一处把 «рабочей области» 统一改为 «рабочая папка»。
-
-0.1.5 让本包跟上了 harness **0.1.7-rc.1**：新增 **49 个 key**，更新 13 个，删除 16 个，移除了 namespace `directory-browser`（rc.1 中已不再有它）。新增了工具执行步骤的标签（`message.stepProcess.prepare.*` 和 `done.*`——读取图像、写入文件、准备代码搜索、网页搜索、子代理协同等）、全屏查看图像（`image.*`）、«Стандартный» 与 «Подробный» 两种过程展示模式、从 GitHub 安装插件（带超时与中国镜像）、插件版本不兼容警告、语音输入的模型下载源选择，以及 `Cordis` 命令的消息。还修订了 upstream 把 «teammate/agent» 改为 «subagent»、把 «Beta» 改为 «Experimental» 的那些措辞。
-
-另外，0.1.5 修复了插件清单中的计数单位：原来是 «187 плагины»，现在是 «187 плагинов»。内置界面截图也已翻译，补充了 npm keywords，并修正了 `@deepseek-ai/dsh-client-locale` 的 peer 范围（`>=0.1.0-rc.2 <0.2.0`）——此前 `^0.1.0` 无法解析，因为该包只以 prerelease 版本发布。
-
-0.1.4 让本包跟上了 harness **0.1.7-alpha.2**——这是跨度最大的一次：新增 **905 个 key**，修改 29 个，删除 126 个。新增分区：
-
-- **`pluginManager`**——内置插件面板：安装、删除、启用与停用组件、版本、注册表以及安装提示；
-- **`settings.account`**——DeepSeek 账号：登录、余额、消费、API 密钥；
-- 原先的 `settings.plugins` 拆分成的几个独立设置分区：**`settings.agentLoop`**、**`settings.shell`**、**`settings.subagent`**、**`settings.webSearch`**；
-- **`sidebarBrowser`**——右侧面板中的内置浏览器（地址、沙箱、恢复页面）；
-- **`sidebarExcel`** 和 **`sidebarOffice`**——表格与 Office 文档的预览；PDF 和图像中新增了缩放（`zoom.*`）；
-- **`voice-input`**——实验性语音输入。
-
-此外还翻译了 `conversation`（+194）、`chat`（+53）、`workspace`（+43：会话归档、置顶）、`deliverables`（+31：过程变更概览）、`job`（+24：后台任务的实时输出）、`settings`（+22：桌面应用更新）、`plan`、`open-in-app`、`trajectory`、`model`、`reference`、`session-log-download` 中的新文本，以及代理模式指南中的文本（`settings.agentPreset`，12 段长文本）。`settings.archivedSessions` 分区已删除：0.1.7 中 upstream 去掉了这个包，会话归档迁移到了 `workspace`。
 
 ## 许可证
 

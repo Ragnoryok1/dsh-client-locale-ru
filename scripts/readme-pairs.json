@@ -23,9 +23,9 @@
   {
     "section": 3,
     "heading": "Установка",
-    "ru": "ae2d03eeb062cc5d",
-    "en": "eb195c82184b1567",
-    "zh": "6bd237a2ec626675"
+    "ru": "d5b7210e7de5c4e4",
+    "en": "468e67108c23d8ff",
+    "zh": "fe98720a6caa277b"
   },
   {
     "section": 4,
@@ -60,52 +60,17 @@
     "heading": "Проверки",
     "ru": "e66d6274ff0bc9bc",
     "en": "05b8746858e61f18",
-    "zh": "96d8a3c68aafb74f"
+    "zh": "4a3b03170e802623"
   },
   {
     "section": 9,
-    "heading": "Область покрытия: харнесс и словари плагинов",
-    "ru": "fc994251312963c8",
-    "en": "bc089590f4f23d9e",
-    "zh": "80a6b74a398d7397"
-  },
-  {
-    "section": 10,
-    "heading": "Разработка",
-    "ru": "040475902f058161",
-    "en": "a25b3ba9ce06377b",
-    "zh": "cabb9860e29ec087"
-  },
-  {
-    "section": 11,
-    "heading": "Релизы",
-    "ru": "b8191540df2ed7bf",
-    "en": "36efe115778cf9c4",
-    "zh": "b1292e3593602065"
-  },
-  {
-    "section": 12,
-    "heading": "Содержимое",
-    "ru": "db338c5e6006a69c",
-    "en": "17c14961fa9f0f3c",
-    "zh": "35914112a928a2ed"
-  },
-  {
-    "section": 13,
-    "heading": "Что переведено",
-    "ru": "bca7cd701d073581",
-    "en": "a808d33bf7dd3370",
-    "zh": "9f8352f3ba6861c1"
-  },
-  {
-    "section": 14,
     "heading": "Лицензия",
     "ru": "66dbcf0d2b10c03d",
     "en": "66dbcf0d2b10c03d",
     "zh": "66dbcf0d2b10c03d"
   },
   {
-    "section": 15,
+    "section": 10,
     "heading": "История изменений",
     "ru": "04f3a0409bafbd10",
     "en": "4eb99b02c522dabe",
