@@ -1,11 +1,11 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 584 sections, 67 666 strings.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 585 sections, 67 678 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
-  "compatible_versions": ["v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
+  "compatible_versions": ["v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
   "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
 }
@@ -20,13 +20,13 @@
 [![npm](https://img.shields.io/npm/v/%40ragnoryok1%2Fdsh-client-locale-ru)](https://www.npmjs.com/package/@ragnoryok1/dsh-client-locale-ru)
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
-[![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-584-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-67666-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
+[![namespaces](https://img.shields.io/badge/namespaces-585-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-67678-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 The plugin makes the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) interface Russian. Everything you see is translated: settings, side panels, dialogs, hints, error messages — and the menus of third-party plugins that ship no Russian of their own.
 
-The pack currently holds 584 sections and 67,666 strings, 520 of them dictionaries of third-party plugins — more than any other Russian pack for the harness I could find.
+The pack currently holds 585 sections and 67,678 strings, 520 of them dictionaries of third-party plugins — more than any other Russian pack for the harness I could find.
 
 Install is one command: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`; Russian is then picked in the settings, under General.
 
@@ -39,7 +39,7 @@ The pack does not modify harness files and does not touch your data. If a newer 
 
 ---
 
-The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 584 namespaces, 67,666 strings, with the bundled plugin dictionaries marked.
+The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 585 namespaces, 67,678 strings, with the bundled plugin dictionaries marked.
 
 Plugins outside the harness tree are translated the same way, but their English text comes from their own publication: `plugins/<namespace>.json` records the package, the version, the licence and the strings extracted from its bundle. What is still English in your installation is shown by `npm run report:plugins`: it walks the profile's `node_modules`, finds each plugin's own dictionary and compares its keys with ours, and a plugin without a dictionary is reported as such — there is nothing to translate until it asks for one.
 

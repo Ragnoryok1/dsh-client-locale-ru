@@ -50,6 +50,13 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'codeBlock.unwrap': 'Не переносить строки',
     'workspace.defaultName': 'Рабочая папка по умолчанию',
   },
+  'entryCustomization': {
+    'install': 'Посмотреть другие плагины',
+    'create': 'Создать свой плагин',
+    'createPrompt.sidebar': 'Создать плагин DSH с пунктом в левой панели.',
+    'createPrompt.conversation': 'Создать плагин DSH с собственным видом беседы.',
+    'createPrompt.rightbar': 'Создать плагин DSH с пунктом в правой панели.',
+  },
   'settings.locale': {
     'language.title': 'Язык',
   },
@@ -519,6 +526,8 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'detail.weekday.join': ', ',
     'row.imageSize': '{width}×{height} px, {bytes} Б',
     'row.imageSizeDownscaled': '{width}×{height} px (уменьшено с {originalWidth}×{originalHeight} px), {bytes} Б',
+    'session.moreViews': 'Другие виды беседы',
+    'session.moreViewsCurrent': 'Другие виды беседы · {name}',
   },
   'deliverables': {
     'presented.all': 'Все файлы: {count}',
@@ -727,6 +736,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'confirm.acknowledge': 'Я понимаю риски и хочу продолжить',
     'confirm.cancel': 'Отмена',
     'confirm.enable': 'Включить «Полный доступ»',
+    'close': 'Закрыть',
   },
   'permission.access': {
     'description': 'Выберите режим прав по умолчанию для новых сессий',
@@ -749,6 +759,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'auto.confirm.description': 'Автопроверка работает без песочницы. Перед каждым вызовом нативного инструмента и внутренним вызовом PTC та же модель, что и у текущего агента, решает, разрешить ли его; вы подтверждаете или отклоняете каждый вызов, который она запретила. Возможность экспериментальная: она может ошибочно разрешить или запретить действие и расходует дополнительные токены.',
     'auto.confirm.acknowledge': 'Я понимаю эти риски и хочу продолжить',
     'auto.confirm.enable': 'Включить автопроверку',
+    'loading': 'Загрузка',
   },
   'plan': {
     'chip.label': 'План',
@@ -1017,6 +1028,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toggle.open': 'Открыть боковую панель',
     'toggle.collapse': 'Свернуть боковую панель',
     'panels.label': 'Глобальные панели',
+    'panels.more': 'Ещё',
   },
   'skill': {
     'row.title': 'Навык',
@@ -1922,6 +1934,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'command.empty': 'Сначала откройте страницу',
     'command.budget': 'Максимум две области',
     'command.width': 'Недостаточно ширины для разделения — расширьте боковую панель',
+    'tab.guide.more': 'Другие инструменты',
   },
   'documentHtml': {
     'title': 'HTML',
@@ -2291,6 +2304,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'toggle': 'Показать или скрыть инспектор Node.js',
     'resize': 'Изменить высоту панели NodeJS Inspector',
     'frameTitle': 'Инспектор Node.js',
+    'close': 'Свернуть',
   },
   'session-inspector': {
     'tab.title': 'Журнал сессии',

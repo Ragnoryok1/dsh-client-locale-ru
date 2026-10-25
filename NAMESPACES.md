@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **584 namespace** — 67666 строк. Колонка «как это выглядит»
+Пакет переводит **585 namespace** — 67678 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -68,7 +68,7 @@
 | `config-manager` | — | 36 | dsh-config-manager@0.1.79 |
 | `context-zip` | ContextZip | 39 | dsh-context-zip@0.1.10 |
 | `contextMemory` | Контекстная память | 48 | dsh-context-memory@0.9.0 |
-| `conversation` | — | 379 | харнесс |
+| `conversation` | — | 381 | харнесс |
 | `conversation-anchors` | Якоря | 23 | @biggerboy123/dsh-conversation-anchors@0.1.21 |
 | `conversation.session.header.actions` | Подробное использование | 303 | dsh-damage-pulse@4.2.9 |
 | `cordis` | — | 51 | харнесс |
@@ -267,6 +267,7 @@
 | `ego-browser` | ego-browser | 81 | dsh-ego-browser@0.9.0 |
 | `EMPTY_RESPONSE` | — | 194 | dsh-sidenote@0.6.4 |
 | `engram` | Дворец памяти | 408 | @kenz1117/dsh-engram@0.9.8 |
+| `entryCustomization` | — | 5 | харнесс |
 | `ERR_UNSAFE_PROFILING_DIRECTORY` | — | 15 | @sagmans/dsh-tui@0.16.0 |
 | `expertSources` | — | 127 | dsh-expert-orchestrator@2.9.9 |
 | `fallbacks` | — | 47 | dsh-llm-fallbacks@0.6.8 |
@@ -300,7 +301,7 @@
 | `image-plugin` | — | 51 | dsh-image-plugins@0.3.5 |
 | `inline-comments` | — | 15 | dsh-inline-comments@0.1.2 |
 | `inlineMedia` | — | 12 | @wisdoverse/dsh-inline-media-viewer@1.0.12 |
-| `inspectorPanel` | Инспектор Node.js | 4 | харнесс |
+| `inspectorPanel` | Инспектор Node.js | 5 | харнесс |
 | `instruction-memory` | — | 274 | dsh-instruction-memory@1.4.1 |
 | `job` | — | 50 | харнесс |
 | `jobProgress` | — | 20 | dsh-job-progress@1.0.5 |
@@ -348,7 +349,7 @@
 | `orbit-model` | — | 36 | @kasenri/dsh-orbit@0.6.7 |
 | `peakIndicator` | — | 12 | dsh-peak-indicator@0.1.32 |
 | `peakrate-model` | — | 48 | dsh-peakrate@0.3.1 |
-| `permission.access` | Права доступа | 20 | харнесс |
+| `permission.access` | Права доступа | 21 | харнесс |
 | `personaDafeiyu` | Персоны | 81 | dsh-persona-dafeiyu@0.5.0 |
 | `personalDirective` | Переключение личной директивы | 5 | dsh-personal-directive@0.2.11 |
 | `pet` | — | 81 | @linxin666/dsh-pet@0.4.8 |
@@ -464,7 +465,7 @@
 | `settings.openai-codex-auth` | OpenAI Codex | 77 | dsh-openai-codex-auth@0.6.3 |
 | `settings.opencode-go` | OpenCode Go | 177 | dsh-opencode-go@0.1.24 |
 | `settings.packyCodeApi` | PackyCode | 230 | dsh-packycode-api@1.3.9 |
-| `settings.permission` | Права доступа | 20 | харнесс |
+| `settings.permission` | Права доступа | 21 | харнесс |
 | `settings.permissionRules` | — | 39 | dsh-permission-rules@0.7.20 |
 | `settings.pluginCapabilities` | — | 169 | dsh-plugin-capabilities@0.4.1 |
 | `settings.pluginConsole` | — | 627 | @noob-stupid/dsh-plugin-console@0.5.92 |
@@ -501,7 +502,7 @@
 | `shortcuts` | Горячие клавиши | 56 | харнесс |
 | `shortcuts.layout` | — | 1 | харнесс |
 | `shorts.sidebar` | — | 58 | dsh-shorts-wall@1.4.2 |
-| `sidebar` | — | 5 | харнесс |
+| `sidebar` | — | 6 | харнесс |
 | `sidebarBrowser` | — | 26 | харнесс |
 | `sidebarCodePreview` | Код | 3 | харнесс |
 | `sidebarDocumentPreview` | — | 22 | харнесс |
@@ -510,7 +511,7 @@
 | `sidebarImage` | Изображение | 11 | харнесс |
 | `sidebarOffice` | Документ Office | 15 | харнесс |
 | `sidebarPdf` | PDF | 15 | харнесс |
-| `sidebarRight` | — | 34 | харнесс |
+| `sidebarRight` | — | 35 | харнесс |
 | `sidebarTerminal` | Терминал | 28 | харнесс |
 | `skill` | — | 8 | харнесс |
 | `skill-center` | Центр навыков | 73 | @restregular/dsh-skill-center@0.3.11 |
@@ -597,4 +598,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **584** namespace, **67666** строк.
+Итого: **585** namespace, **67678** строк.

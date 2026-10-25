@@ -937,6 +937,43 @@ const harnessNamespaceGaps = [...harnessNamespaceKeys]
   .sort()
 
 /**
+ * Новые ключи внутри namespace, который пак уже регистрирует.
+ *
+ * Проверка выше видит только целиком непокрытые namespace: если харнесс добавил
+ * ключ к давно переведённой секции, она молчит. Так и вышло на rc.3 — четыре
+ * новых ключа в `conversation`, `sidebar` и `sidebarRight` не заметила ни одна
+ * проверка, их нашёл только ручной дифф файлов локалей.
+ *
+ * Формы числа не считаются пропуском: у нас хватает `.few` и `.many` там, где
+ * харнесс держит `.one`/`.other`, и это не дыра, а способ образовать форму.
+ */
+const PLURAL_SUFFIX = /^(.*)\.(one|few|many|other)$/u
+const harnessMissingKeys = []
+for (const [namespace, keys] of harnessNamespaceKeys) {
+  if (keys.size === 0) continue
+  const ours = packValuesByNamespace.get(namespace)
+  if (ours === undefined) continue
+  const missing = [...keys].filter(key => {
+    if (ours.has(key)) return false
+    const plural = PLURAL_SUFFIX.exec(key)
+    if (plural === null) return true
+    const base = plural[1]
+    if (ours.has(base)) return false
+    return !['one', 'few', 'many', 'other'].some(kind => ours.has(`${base}.${kind}`))
+  })
+  if (missing.length === 0) continue
+  /* Английский шаблон рядом с ключом: иначе отчёт сообщает о дыре, но не о том, что в неё писать. */
+  const templates = namespaceEnglish.get(namespace) ?? new Map()
+  const shown = missing
+    .slice(0, 8)
+    .map(key => (templates.has(key) ? `${key} («${templates.get(key)}»)` : key))
+    .join(', ')
+  harnessMissingKeys.push(`${namespace} — ${missing.length}: ${shown}${missing.length > 8 ? ', …' : ''}`)
+}
+harnessMissingKeys.sort()
+
+
+/**
  * Keys the harness renders in a namespace the pack translates but omits there.
  *
  * Global name coverage hides these: a key translated under another namespace
@@ -2066,6 +2103,7 @@ report('ключи без шаблона в харнессе — сверить 
 report('ключи, которых нет в своём namespace', namespaceGaps)
 report('namespace пака, которых не сверить с харнессом (нет привязки к словарю)', uncomparedNamespaces)
 report('namespace харнесса с ключами, которых пак не регистрирует', harnessNamespaceGaps)
+report('ключи, добавленные харнессом в уже переведённые namespace', harnessMissingKeys)
 report('значения с китайскими иероглифами', cjkResidue)
 report('пустые значения там, где шаблон не пуст', emptyResidue)
 report('значения, совпадающие с английским шаблоном без решения в keep-english.json', englishResidue)
@@ -2102,7 +2140,7 @@ const failures = duplicateNamespaces.length + deadNamespaces.length + namespaceC
   + englishResidue.length + deadUnreferenced.length + terminologyViolations.length + latinProse.length
   + staleLatinInValues.length + productNameCasing.length
   + hygiene.length + edgeSpaces.length + style.length + advertisedWrong.length + tagDrift.length + capitalizedAddress.length
-  + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length
+  + splitRenderings.length + staleSplitRenderings.length + harnessNamespaceGaps.length + harnessMissingKeys.length
   + pluralFormMismatches.length + keepEnglishStale.length + missingRussianForms.length
   + typographicValues.length + yoVariants.length + yoStale.length + navOverflow.length
 if (failures === 0) {
