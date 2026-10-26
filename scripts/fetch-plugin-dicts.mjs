@@ -518,7 +518,14 @@ for (const name of packages) {
     const registrations = (() => {
       const found = []
       for (const [bundle, text] of texts) {
-        for (const call of text.matchAll(/locale\.register\(/gu)) {
+        /*
+         * Регистрация бывает не только `locale.register`: плагины пишут
+         * `localeService.register(...)` и `defineLocale(ID, { zh, en })`. Строгое
+         * совпадение по `locale.register(` пропускало оба случая, и дальше в дело шёл
+         * запасной путь — первый строковый литерал, похожий на имя. На этом и выросли
+         * два призрака.
+         */
+        for (const call of text.matchAll(/(?:\w*[Ll]ocale\w*\.register|defineLocale)\(/gu)) {
           const open = call.index + call[0].length - 1
           const args = argumentsOf(text, open)
           if (args.length < 2) continue
@@ -527,7 +534,7 @@ for (const name of packages) {
           const literal = /^["'`]([\w.-]+)["'`]$/u.exec(first)
           if (literal !== null) namespace = literal[1]
           else if (/^[A-Za-z_$][\w$]*$/u.test(first)) namespace = constantOf(first)
-          if (namespace === null) continue
+          if (namespace === null || namespace.endsWith('.')) continue
           found.push({ namespace, bundle, text, args })
         }
       }
@@ -593,7 +600,13 @@ for (const name of packages) {
     const fallback = (() => {
       for (const text of texts.values()) {
         const found = /(?:const|var|let)\s+\w*NS\w*\s*=\s*['"]([\w.-]+)['"]/u.exec(text)
-        if (found !== null) return { namespace: found[1], bundle: null }
+        /*
+         * Имя, кончающееся точкой, — это префикс, а не namespace: так в пакет попали
+         * `dsh-graph.hidden-versions.` (префикс ключа localStorage) и
+         * `h3.internal.event.` (префикс `Symbol.for` из h3). Оба словаря лежали под
+         * именами, которые никто не спрашивает, — 1 316 строк не показывались ни разу.
+         */
+        if (found !== null && !found[1].endsWith('.')) return { namespace: found[1], bundle: null }
       }
       return null
     })()

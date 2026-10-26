@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **585 namespace** — 67678 строк. Колонка «как это выглядит»
+Пакет переводит **585 namespace** — 67679 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -140,7 +140,7 @@
 | `dsh-github-ops` | Работа с GitHub | 146 | @goodandready/dsh-github-ops@0.6.15 |
 | `dsh-github-router` | — | 39 | dsh-github-router@0.4.1 |
 | `dsh-goal` | — | 130 | @goodandready/dsh-goal@0.2.33 |
-| `dsh-graph.hidden-versions.` | — | 1206 | dsh-graph@0.22.0 |
+| `dsh-graph` | — | 1206 | dsh-graph@0.22.0 |
 | `dsh-grok-xsearch` | — | 55 | @goodandready/dsh-grok-xsearch@0.3.30 |
 | `dsh-harmony-bootstrap` | — | 5 | dsh-harmony@0.8.18 |
 | `dsh-image-gen` | Студия ИИ-изображений | 330 | @goodandready/dsh-image-gen@0.12.9 |
@@ -164,6 +164,7 @@
 | `dsh-market` | Магазин плагинов | 741 | dshmarket@1.67.0 |
 | `dsh-mcp-manager-plus` | Серверы MCP | 64 | dsh-mcp-manager-plus@0.4.4 |
 | `dsh-mcp-market` | — | 49 | dsh-mcp-market@0.1.2 |
+| `dsh-mcp-studio` | — | 111 | dsh-mcp-studio@1.0.6 |
 | `dsh-message-ops` | — | 57 | @240xu/dsh-message-ops@0.11.1 |
 | `dsh-messenger-gateway` | Шлюз мессенджеров | 138 | @goodandready/dsh-messenger-gateway@0.4.19 |
 | `dsh-mineru` | — | 30 | @huanlin/dsh-plugin-mineru@0.4.2 |
@@ -289,7 +290,6 @@
 | `global-rules` | Глобальные правила | 12 | dsh-global-rules@0.2.2 |
 | `goal` | — | 12 | харнесс |
 | `goodandready-smart-restart` | Сторож перезапуска | 53 | @goodandready/dsh-smart-restart@0.1.14 |
-| `h3.internal.event.` | — | 110 | dsh-mcp-studio@1.0.6 |
 | `harbor-evolution` | — | 62 | dsh-harbor-evolution@0.10.4 |
 | `harden` | — | 92 | dsh-harden@0.0.2 |
 | `hardwareMonitor` | — | 18 | dsh-vitals@0.1.15 |
@@ -598,4 +598,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **585** namespace, **67678** строк.
+Итого: **585** namespace, **67679** строк.

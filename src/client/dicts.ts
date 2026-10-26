@@ -16265,7 +16265,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
-  'dsh-graph.hidden-versions.': {
+  'dsh-graph': {
     'activity.allTypes': 'Все типы',
     'activity.colActor': 'Исполнитель',
     'activity.colEvent': 'Событие',
@@ -48383,7 +48383,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
    * Английский текст выгружен из его собственной сборки (`npm run fetch:plugins`), поэтому проверки
    * сверяют наш перевод с ним, а не с чужим пакетом локализации.
    */
-  'h3.internal.event.': {
+  'dsh-mcp-studio': {
     'addServer': 'Добавить сервер',
     'args': 'Аргументы (по одному в строке)',
     'cancel': 'Отмена',
@@ -48494,6 +48494,7 @@ export const RU_DICTS: Record<string, Record<string, string>> = {
     'view': 'Просмотр',
     'viewSkill': 'Просмотр навыка',
     'workspaceUnavailable': 'Рабочая область недоступна. Откройте или подключите рабочую область перед созданием навыка.',
+    'url': 'URL',
   },
   /*
    * dsh-hypatia-auto-memory@2.4.1 — словарь плагина hypatia-auto-memory (MIT).

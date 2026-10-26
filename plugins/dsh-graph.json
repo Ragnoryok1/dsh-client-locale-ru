@@ -1,5 +1,5 @@
 {
-  "namespace": "dsh-graph.hidden-versions.",
+  "namespace": "dsh-graph",
   "package": "dsh-graph@0.22.0",
   "version": "0.22.0",
   "license": "MIT",

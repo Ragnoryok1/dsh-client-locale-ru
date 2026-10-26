@@ -1,10 +1,10 @@
 {
-  "namespace": "h3.internal.event.",
-  "package": "dsh-mcp-studio@1.0.6",
+  "namespace": "dsh-mcp-studio",
+  "package": "dsh-mcp-studio",
   "version": "1.0.6",
   "license": "MIT",
   "repository": "git+https://github.com/functy23/dsh-mcp-studio.git",
-  "fetched": "2026-10-20",
+  "fetched": "2026-10-26",
   "meta": {
     "title": "MCP & Skills Studio",
     "description": "Manage MCP servers and skills from a panel in the DSH sidebar; embeds the plugin market when dshmarket is installed."
@@ -116,6 +116,7 @@
     "transport": "Transport",
     "transportHttp": "streamable-http (URL)",
     "transportStdio": "stdio (local command)",
+    "url": "URL",
     "userInvocable": "User-invocable (/)",
     "view": "View",
     "viewSkill": "View skill",

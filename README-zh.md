@@ -3,7 +3,7 @@
   "name": "Russian (ru) language pack for DeepSeek Harness",
   "version": "0.2.19",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 585 sections, 67 678 strings.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 585 sections, 67 679 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,11 +22,11 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-585-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-67678-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-67679-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 插件把 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的界面变成俄语。你看到的一切都会被翻译：设置、侧边栏、对话框、提示、错误信息——以及没有自带俄语的三方插件菜单。
 
-目前包里有 585 个分区、67 678 条文案，其中 520 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
+目前包里有 585 个分区、67 679 条文案，其中 520 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
 
 安装只需一条命令：`dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`，然后在设置 General 里选择俄语。
 
@@ -38,7 +38,7 @@
 
 ---
 
-完整清单见 [NAMESPACES.md](NAMESPACES.md)：585 个 namespace、67,678 条字符串，随包附带的插件词典单独标注。
+完整清单见 [NAMESPACES.md](NAMESPACES.md)：585 个 namespace、67,679 条字符串，随包附带的插件词典单独标注。
 
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json` 记录包名、版本、许可证，以及从其 bundle 中提取的字符串。安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，找出每个插件自己的词典并与我们的对照；没有词典的插件会照实标注——在它请求翻译之前无从翻译。
 
