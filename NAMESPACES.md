@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **585 namespace** — 67679 строк. Колонка «как это выглядит»
+Пакет переводит **587 namespace** — 68227 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -496,6 +496,7 @@
 | `settings.tokenUsage` | — | 177 | dsh-token-use@0.3.4 |
 | `settings.trae` | — | 347 | dsh-connect-trae@4.4.0 |
 | `settings.webSearch` | Веб-поиск | 27 | харнесс |
+| `settings.workbuddy` | — | 423 | dsh-connect-workbuddy@5.10.0 |
 | `settings.workbuddy-xdpool` | — | 427 | dsh-workbuddy-xdpool@2.0.1 |
 | `settings.workbuddy2api` | — | 126 | dsh-workbuddy2api@0.6.11 |
 | `settings.xdpool` | — | 500 | @anyaer/dsh-workbuddy-xdpool@2.3.2 |
@@ -581,6 +582,7 @@
 | `web-fetch-playwright` | — | 29 | dsh-web-fetch-playwright@0.2.12 |
 | `web-search-aggregation` | — | 38 | dsh-web-search-aggregation@0.1.11 |
 | `web-search-anysearch` | Служба поиска AnySearch | 23 | @wenqi_bian/dsh-web-search-anysearch@0.2.0-rc.2 |
+| `web-search-free` | — | 125 | dsh-free-search@0.9.15 |
 | `web-ui-plugins` | Веб-плагины | 14 | @linxin666/dsh-client-ui-web-ui-settings@0.4.8 |
 | `webSearchEnhanced` | — | 207 | dsh-web-search-enhanced@0.1.10 |
 | `whale-meter` | — | 59 | dsh-whale-meter@0.1.0 |
@@ -598,4 +600,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **585** namespace, **67679** строк.
+Итого: **587** namespace, **68227** строк.

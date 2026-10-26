@@ -406,7 +406,21 @@ for (const name of packages) {
     })
     const archive = readdirSync(work).find(entry => entry.endsWith('.tgz'))
     if (archive === undefined) throw new Error('npm pack не создал архив')
-    execFileSync('tar', ['-xzf', join(work, archive), '-C', work])
+    /*
+     * Распаковываем не весь архив, а только то, где живут словари.
+     *
+     * У крупных плагинов в архиве лежит ещё и рантайм (`runtime/electron-helper`,
+     * 60 МБ у `dsh-pet`) — и на Windows `tar` спотыкается на таких путях, роняя всю
+     * распаковку с «Archive entry has empty or unreadable filename»: два плагина
+     * (`dsh-pet`, `dsh-ops`) из-за этого оставались нечитаемыми. Выборочная
+     * распаковка обходит проблемные записи, а ненулевой код возврата игнорируется —
+     * нужные файлы к этому моменту уже на месте.
+     */
+    try {
+      execFileSync('tar', ['-xzf', join(work, archive), '-C', work, 'package/package.json', 'package/lib', 'package/client', 'package/dist', 'package/locale'], { stdio: 'ignore' })
+    } catch {
+      /* часть записей архива нечитаема — проверяем ниже, что нам нужно, на месте */
+    }
 
     /*
      * The client bundle is not always in `lib/`: `dshmarket` ships it in `client/`, and

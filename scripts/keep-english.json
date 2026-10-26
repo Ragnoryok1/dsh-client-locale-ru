@@ -1080,5 +1080,11 @@
   "settings.claude-code · nav": "название продукта",
   "settings.claude-code · title": "название продукта",
   "settings.claude-code · updateSource_registry": "название реестра",
-  "dsh-mcp-studio · url": "«URL» — аббревиатура, латиница в русском тексте"
+  "dsh-mcp-studio · url": "«URL» — аббревиатура, латиница в русском тексте",
+  "settings.workbuddy · cliLive.running": "имя продукта CodeBuddy",
+  "settings.workbuddy · composer.pointsCn": "короткое обозначение счёта WB CN",
+  "settings.workbuddy · composer.pointsGlobal": "короткое обозначение счёта WB AI",
+  "web-search-free · keyStorageCredHint": "шаблон на JavaScript: подставляется список настроенных ключей",
+  "web-search-free · toggleLang": "подпись переключателя языка: иероглифы совпадают с исходником",
+  "dsh-key-rotation · testOk": "«OK» — стандартный ответ успеха, латиницей"
 }

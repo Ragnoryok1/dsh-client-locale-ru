@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 585 sections, 67 679 strings.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 587 sections, 68 227 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -21,12 +21,12 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-585-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-67679-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-587-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-68227-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 插件把 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的界面变成俄语。你看到的一切都会被翻译：设置、侧边栏、对话框、提示、错误信息——以及没有自带俄语的三方插件菜单。
 
-目前包里有 585 个分区、67 679 条文案，其中 520 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
+目前包里有 587 个分区、68 227 条文案，其中 520 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
 
 安装只需一条命令：`dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`，然后在设置 General 里选择俄语。
 
@@ -38,7 +38,7 @@
 
 ---
 
-完整清单见 [NAMESPACES.md](NAMESPACES.md)：585 个 namespace、67,679 条字符串，随包附带的插件词典单独标注。
+完整清单见 [NAMESPACES.md](NAMESPACES.md)：587 个 namespace、68,227 条字符串，随包附带的插件词典单独标注。
 
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json` 记录包名、版本、许可证，以及从其 bundle 中提取的字符串。安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，找出每个插件自己的词典并与我们的对照；没有词典的插件会照实标注——在它请求翻译之前无从翻译。
 
@@ -95,7 +95,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 1976 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 1996 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 

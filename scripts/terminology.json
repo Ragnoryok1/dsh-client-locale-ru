@@ -1161,6 +1161,49 @@
       "worktree · error.worktreeNotFound",
       "worktree · error.worktreeSessionRepairRequired",
       "worktree · worktree.repairGuidance"
+    ],
+    "injectResult": [
+      "settings.workbuddy · row.cliBridgeHint"
+    ],
+    "cliBridge": [
+      "settings.workbuddy · row.cliBridgePickersHint"
+    ],
+    "workbuddy": [
+      "settings.workbuddy · row.tabHint"
+    ],
+    "blockedDomains": [
+      "web-search-free · blockedDomainsLabel"
+    ],
+    "fallbackOn": [
+      "web-search-free · fallbackOnLabel"
+    ],
+    "multiMaxEngines": [
+      "web-search-free · multiMaxEngines"
+    ],
+    "multiMinSources": [
+      "web-search-free · multiMinSources"
+    ],
+    "adlt": [
+      "web-search-free · safeSearchHint",
+      "web-search-free · safeSearchLabel"
+    ],
+    "bing": [
+      "web-search-free · safeSearchHint"
+    ],
+    "transient": [
+      "web-search-free · classTransient"
+    ],
+    "unknown": [
+      "web-search-free · classUnknown"
+    ],
+    "configured": [
+      "web-search-free · keyStorageCredHint"
+    ],
+    "highest": [
+      "web-search-free · keyStorageCredHint"
+    ],
+    "priority": [
+      "web-search-free · keyStorageCredHint"
     ]
   }
 }
