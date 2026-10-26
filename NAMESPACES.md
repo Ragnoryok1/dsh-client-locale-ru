@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **587 namespace** — 68227 строк. Колонка «как это выглядит»
+Пакет переводит **589 namespace** — 68425 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -260,6 +260,7 @@
 | `dshhub-market` | Магазин dshhub.co | 393 | dshhub-market@0.8.60 |
 | `dshm` | — | 302 | dsh-m@0.10.8 |
 | `dshmarketplace` | DSH Marketplace | 22 | dshmarketplace-plugin@0.2.0 |
+| `dshOps` | — | 48 | dsh-ops@0.4.1 |
 | `dshPluginsPlus` | DSH Plus | 2 | @sidleo3/dsh-plugins-plus@0.2.0 |
 | `dshRemoteExplorer` | Удалённые сессии | 114 | dsh-remote-explorer@0.8.6 |
 | `dshSidebarPlus` | sidebar.right.tab.document | 1 | dsh-sidebar-plus@0.4.4 |
@@ -353,6 +354,7 @@
 | `personaDafeiyu` | Персоны | 81 | dsh-persona-dafeiyu@0.5.0 |
 | `personalDirective` | Переключение личной директивы | 5 | dsh-personal-directive@0.2.11 |
 | `pet` | — | 81 | @linxin666/dsh-pet@0.4.8 |
+| `pet.config` | Настройки питомца | 150 | dsh-pet@0.3.8 |
 | `picturereader` | — | 3 | picturereader@3.3.3 |
 | `pin` | — | 2 | @vlln/dsh-navbar@0.4.0 |
 | `plan` | — | 17 | харнесс |
@@ -600,4 +602,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **587** namespace, **68227** строк.
+Итого: **589** namespace, **68425** строк.

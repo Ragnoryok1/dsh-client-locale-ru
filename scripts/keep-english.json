@@ -1086,5 +1086,12 @@
   "settings.workbuddy · composer.pointsGlobal": "короткое обозначение счёта WB AI",
   "web-search-free · keyStorageCredHint": "шаблон на JavaScript: подставляется список настроенных ключей",
   "web-search-free · toggleLang": "подпись переключателя языка: иероглифы совпадают с исходником",
-  "dsh-key-rotation · testOk": "«OK» — стандартный ответ успеха, латиницей"
+  "dsh-key-rotation · testOk": "«OK» — стандартный ответ успеха, латиницей",
+  "pet.config · font.comic": "название шрифта",
+  "pet.config · font.kaiti": "название шрифта",
+  "pet.config · font.simsun": "название шрифта",
+  "pet.config · font.yahei": "названия шрифтов",
+  "pet.config · font.youyuan": "название шрифта",
+  "pet.config · saveHotkey": "обозначение горячих клавиш",
+  "pet.config · uninstallCmd": "команда для терминала"
 }

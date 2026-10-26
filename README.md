@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 587 sections, 68 227 strings.",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 589 sections, 68 425 strings.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -21,12 +21,12 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.1--rc.3%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-587-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-68227-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-589-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-68425-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 Плагин делает интерфейс [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) русским. Переводится всё, что вы видите: настройки, боковые панели, диалоги, подсказки, сообщения об ошибках — и меню сторонних плагинов, у которых нет своего русского перевода.
 
-Сейчас в пакете 587 разделов и 68 227 строк, из них 520 словарей сторонних плагинов — больше, чем у любого другого русского пакета для харнесса, который я смог найти.
+Сейчас в пакете 587 разделов и 68 425 строк, из них 520 словарей сторонних плагинов — больше, чем у любого другого русского пакета для харнесса, который я смог найти.
 
 Установка — одна команда: `dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`, дальше русский выбирается в настройках, в разделе General.
 
@@ -39,7 +39,7 @@
 
 ---
 
-Полный список переведённого — в [NAMESPACES.md](NAMESPACES.md): 587 namespace, 68 227 строк, словари плагинов помечены отдельно.
+Полный список переведённого — в [NAMESPACES.md](NAMESPACES.md): 589 namespace, 68 425 строк, словари плагинов помечены отдельно.
 
 Плагины за пределами дерева харнесса переводятся так же, но их английский текст берётся из собственной публикации: `plugins/<namespace>.json` хранит пакет, версию, лицензию и строки, выгруженные из бандла. Что осталось английским в вашей установке, покажет `npm run report:plugins`: он обходит `node_modules` профиля, находит у каждого плагина его собственный словарь и сверяет ключи с нашими, а плагин без словаря так и помечает — переводить нечего, пока он не спросит перевод.
 
@@ -106,7 +106,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 половину; declared `dsh.client` без экспорта `./client` заставляет `client-modules` бросить
 ошибку; `dsh.bundle.patch` обязан указывать на существующий файл.
 
-Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 1996 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
+Установка из GitHub тоже работает: `dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru` (в таком виде команду генерирует каталог плагинов, без `@`-скоупа) ставит архив репозитория, а собранный `lib/` лежит в git — сборка на вашей машине не запускается и не требуется. Поэтому `npm run check:built` (входит в `verify`) пересобирает `lib/` и сверяет его с коммитом: устаревший бандл в git иначе получил бы именно пользователь, а аудит этого не увидел бы — он читает исходники. Публикуемый пакет занимает 2003 КБ: баннер отдаётся JPEG, а иконка и карта исходников в npm не входят.
 
 ## Почему гибрид
 

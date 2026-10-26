@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 587 sections, 68 227 strings.",
-  "version": "0.2.20",
+  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 589 sections, 68 425 strings.",
+  "version": "0.2.21",
   "keywords": [
     "dsh",
     "deepseek-harness",

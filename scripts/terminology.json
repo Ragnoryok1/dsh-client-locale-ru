@@ -619,7 +619,8 @@
       "settings.tokenUsage · remoteDenied"
     ],
     "remove": [
-      "settings.pluginManagerPro · uninstallLocalBlocked"
+      "settings.pluginManagerPro · uninstallLocalBlocked",
+      "pet.config · uninstallCmd"
     ],
     "access": [
       "settings.tokenUsage · remoteDenied"
@@ -1204,6 +1205,22 @@
     ],
     "priority": [
       "web-search-free · keyStorageCredHint"
+    ],
+    "pwshPath": [
+      "dshOps · pwshHelp"
+    ],
+    "memes": [
+      "pet.config · chatImageToggleHint",
+      "pet.config · whisperImageToggleHint"
+    ],
+    "both": [
+      "pet.config · displayHint"
+    ],
+    "desktop": [
+      "pet.config · displayHint"
+    ],
+    "candy": [
+      "pet.config · fontHint"
     ]
   }
 }
