@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **589 namespace** — 68425 строк. Колонка «как это выглядит»
+Пакет переводит **596 namespace** — 68747 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -15,6 +15,7 @@
 | `.ndjson.zst` | Английская страница (USD) | 2 | dsh-usage-badge@0.1.9 |
 | `.runs.json` | Название | 70 | dsh-tongflow@0.8.4 |
 | `about.huaqiu` | О плагине | 9 | @huaqiu/dsh-huaqiu-about@0.6.6 |
+| `actionCards` | — | 14 | харнесс |
 | `agency` | — | 94 | @michengai/dsh-agency-agents@1.2.10 |
 | `agent-community` | Bots团队 | 1 | @dsh-plugin-agent-community/ui-agent-community@0.3.9 |
 | `agent-schedule` | tool.call.toolview | 61 | dsh-agent-toolkit@0.4.13 |
@@ -76,6 +77,8 @@
 | `costTrack` | Стоимость | 34 | dsh-cost-track@0.6.1 |
 | `cotTranslation` | — | 32 | харнесс |
 | `cpa-panel` | — | 126 | dsh-cpa-switch@0.18.1 |
+| `creationRecommendations` | Персональные страницы | 55 | харнесс |
+| `cuaPermissions` | Разрешить управление компьютером | 49 | харнесс |
 | `cursor-effect` | — | 13 | dsh-smooth-cursor-patched@0.1.9-patched.6 |
 | `custom-headers` | — | 31 | dsh-custom-headers@0.3.0 |
 | `daruma` | — | 28 | dsh-daruma@0.1.10 |
@@ -276,6 +279,7 @@
 | `feedback` | — | 20 | харнесс |
 | `feishu-assistant` | Ассистент Feishu | 52 | dsh-feishu-assistant@0.2.0 |
 | `file-review` | — | 71 | dsh-file-review@0.8.10 |
+| `fileDrag` | — | 1 | харнесс |
 | `fileExplorer` | — | 79 | @jaxzhou/dsh-file-explorer@0.1.11 |
 | `foldPositions` | — | 481 | billion-context@0.1.202 |
 | `formatforge` | — | 22 | @tianbuyu-wwx/dsh-formatforge@3.0.0 |
@@ -323,6 +327,7 @@
 | `memory-porter` | — | 83 | dsh-memory-porter@0.1.0 |
 | `meow-cachebilling` | — | 2 | meow-cachebilling@0.8.0 |
 | `meow-memory` | — | 92 | meow-memory@0.31.1 |
+| `messageQuotes` | — | 1 | харнесс |
 | `michengai.codexUi` | — | 293 | @michengai/dsh-codex-ui@1.1.47 |
 | `mimo` | — | 4 | dsh-mimo-connect@0.3.5 |
 | `misakanet.panel.density.v1` | — | 149 | misakanet@2.48.0 |
@@ -362,6 +367,7 @@
 | `plugin.intellijMcp` | IntelliJ IDEA MCP | 36 | dsh-intellij-mcp@1.0.5 |
 | `pluginManager` | Плагины | 227 | харнесс |
 | `pluginMarket` | Обзор плагинов | 78 | харнесс |
+| `pluginRecommendations` | Рекомендуемый плагин | 25 | харнесс |
 | `pluginTopology` | Топология плагинов | 82 | @sleetdrop/dsh-plugin-topology@0.9.0 |
 | `pocketMobileNav` | 📱 Доступ с телефона | 96 | dsh-pocket@2.12.0 |
 | `power.button` | — | 39 | dsh-power-xc@0.1.6 |
@@ -527,6 +533,7 @@
 | `smoothStream.chat` | — | 2 | dsh-smooth-stream@0.7.0 |
 | `solution-explorer` | — | 194 | dsh-solution-explorer@1.0.2 |
 | `sse` | OpenAI Codex OAuth | 2 | @jcy2387/dsh-codex-provider@0.1.7-rc.2.1 |
+| `stats` | — | 177 | харнесс |
 | `status-rotator` | — | 4 | dsh-status-rotator@0.37.0 |
 | `stepTrace` | Трассировка шагов | 31 | dsh-step-trace@0.6.1 |
 | `style` | — | 3 | dsh-output-styles@0.8.1 |
@@ -602,4 +609,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **589** namespace, **68425** строк.
+Итого: **596** namespace, **68747** строк.
