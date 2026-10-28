@@ -19,16 +19,16 @@
     "title": "Командная работа",
     "description": "Управление участниками команды, сообщениями участников и общими задачами.",
     "en": {
-      "title": "Team Collaboration",
+      "title": "Team collaboration",
       "description": "Manage team members, member messages, and shared tasks."
     }
   },
   "@deepseek-ai/dsh-experimental-agent-team-profile": {
     "title": "Команды агентов",
-    "description": "Включает командную работу, инструменты команды, список участников и общую доску задач.",
+    "description": "Позволяет агенту распределить работу между названными участниками, вести её на общей доске задач и вернуться с их результатами.",
     "en": {
-      "title": "Agent Teams",
-      "description": "Enable team collaboration, team tools, the member roster, and the shared task board."
+      "title": "Agent teams",
+      "description": "Lets the agent you talk to split a job among named teammates, track it on a shared task board, and report back with their results."
     }
   },
   "@deepseek-ai/dsh-experimental-api-speech-to-text": {
@@ -41,10 +41,10 @@
   },
   "@deepseek-ai/dsh-experimental-auto-review": {
     "title": "Автоматическая проверка разрешений",
-    "description": "Добавляет режим разрешений с автоматической проверкой: модель оценивает запрос перед каждым вызовом инструмента.",
+    "description": "Добавляет режим доступа с автоматической проверкой: перед каждым вызовом инструмента модель сверяет его с вашим запросом, разрешённые выполняет сразу, а отклонённые отдаёт вам на подтверждение.",
     "en": {
-      "title": "Auto Authorization Review",
-      "description": "Add an Auto review permission mode that uses the model to assess authorization before each tool call."
+      "title": "Auto authorization review",
+      "description": "Adds an Auto review access mode: before each tool call, a model checks it against what you asked for, runs allowed calls at once, and holds denied calls for your approval."
     }
   },
   "@deepseek-ai/dsh-experimental-badge-skill-bundle": {
@@ -59,7 +59,7 @@
     "title": "Работа в браузере (Chrome DevTools)",
     "description": "Позволяет модели просматривать веб-страницы и управлять ими через Chrome DevTools MCP в запущенном Chrome.",
     "en": {
-      "title": "Browser Use (Chrome DevTools)",
+      "title": "Browser use (Chrome DevTools)",
       "description": "Let the model inspect and operate web pages through Chrome DevTools MCP in a launched Chrome."
     }
   },
@@ -67,7 +67,7 @@
     "title": "Работа в браузере (Playwright)",
     "description": "Позволяет модели просматривать веб-страницы и управлять ими через Playwright MCP в запущенном Chromium.",
     "en": {
-      "title": "Browser Use (Playwright)",
+      "title": "Browser use (Playwright)",
       "description": "Let the model browse and operate web pages through Playwright MCP in a launched Chromium."
     }
   },
@@ -75,7 +75,7 @@
     "title": "Панель команды",
     "description": "Показывает участников команды и общие задачи, позволяет переходить в разговоры участников.",
     "en": {
-      "title": "Team Panel",
+      "title": "Team panel",
       "description": "View team members and shared tasks, and navigate to member conversations."
     }
   },
@@ -99,7 +99,7 @@
     "title": "Управление компьютером (Cua Driver MCP)",
     "description": "Позволяет модели управлять рабочим столом через отдельно установленный исполняемый файл cua-driver.",
     "en": {
-      "title": "Computer Use (Cua Driver MCP)",
+      "title": "Computer use (Cua Driver MCP)",
       "description": "Let the model operate the desktop through a separately installed cua-driver executable."
     }
   },
@@ -107,72 +107,72 @@
     "title": "Управление компьютером (Cua Driver)",
     "description": "Позволяет модели управлять рабочим столом встроенной средой Cua Driver; нужны разрешения рабочего стола для приложения, запускающего dsh.",
     "en": {
-      "title": "Computer Use (Cua Driver)",
+      "title": "Computer use (Cua Driver)",
       "description": "Let the model operate the desktop with the bundled Cua Driver runtime; needs desktop permissions for the app that launches dsh."
     }
   },
   "@deepseek-ai/dsh-experimental-cot-translation-bundle": {
     "title": "Машинный перевод рассуждений",
-    "description": "Машинный перевод развёрнутых рассуждений; исходный текст отправляется в выбранную службу",
+    "description": "Переводит развёрнутые строки рассуждений на выбранный язык по мере их появления, а «Показать оригинал» возвращает исходный текст.",
     "en": {
       "title": "Machine translation of reasoning",
-      "description": "Machine translation of expanded reasoning; source text is sent to the selected service"
+      "description": "Translates expanded Think rows into your chosen language as the agent writes them, and View original switches back."
     }
   },
   "@deepseek-ai/dsh-experimental-inspector": {
     "title": "Инспектор NodeJS",
     "description": "Открывает Chrome DevTools в нижней панели по Ctrl/Cmd+Shift+. для разработки и отладки.",
     "en": {
-      "title": "NodeJS Inspector",
+      "title": "NodeJS inspector",
       "description": "Press Ctrl/Cmd+Shift+. to open Chrome DevTools in the bottom panel for development and debugging."
     }
   },
   "@deepseek-ai/dsh-experimental-inspector-profile": {
     "title": "Инструменты разработчика",
-    "description": "Просмотр и отладка сырых данных сессии, сгруппированных сообщений чата и серверной части на NodeJS.",
+    "description": "Для разбора проблем: показывает, что DSH записал о сессии, в журнале сессии, считает статистику по раундам и шагам на вкладке «Статистика» и отлаживает серверную часть DSH в Chrome DevTools.",
     "en": {
-      "title": "Developer Tools",
-      "description": "Inspect and debug raw session data, grouped chat messages, and the NodeJS backend."
+      "title": "Developer tools",
+      "description": "For troubleshooting: view what DSH recorded for a session in Session log, inspect per-turn and per-step statistics in the Statistics tab, and debug the DSH backend in Chrome DevTools."
     }
   },
   "@deepseek-ai/dsh-experimental-plugin-market-bundle": {
     "title": "Свои магазины плагинов",
-    "description": "Добавляет в раздел «Плагины» вкладку «Обзор» для просмотра и установки наборов из указанных вами каталогов магазинов плагинов",
+    "description": "Добавляет в раздел «Плагины» вкладку «Обзор», где вы просматриваете и ставите плагины из добавленных вами каталогов.",
     "en": {
-      "title": "Custom plugin markets",
-      "description": "Adds a Discover tab to Plugins for browsing and installing bundles from plugin market indexes you add"
+      "title": "Custom plugin indexes",
+      "description": "Adds a Discover tab to Plugins, where you browse and install plugins from plugin indexes you add."
     }
   },
   "@deepseek-ai/dsh-experimental-ralph-bundle": {
     "title": "Циклы Ralph",
-    "description": "Выполняет явно запрошенную повторяющуюся работу свежими агентами.",
+    "description": "По запросу цикла «Ральф» с целью агент запускает свежего агента раунд за раундом, пока цель не достигнута, не сообщено о препятствии или не исчерпан предел раундов.",
     "en": {
       "title": "Ralph loops",
-      "description": "Run explicitly requested repeated work with fresh agents."
+      "description": "Ask for a Ralph loop with a goal, and the agent starts a fresh agent on it round after round until the goal is met, a blocker is reported, or the round limit is reached."
     }
   },
   "@deepseek-ai/dsh-experimental-session-inspector": {
     "title": "Журнал сессии",
     "description": "Включает разбор сырых данных текущей сессии и сгруппированных сообщений чата в боковой панели сессии.",
     "en": {
-      "title": "Session Log",
+      "title": "Session log",
       "description": "Enable analysis of the current session's raw data and grouped chat messages in the session sidebar."
     }
   },
   "@deepseek-ai/dsh-experimental-session-search": {
     "title": "Поиск по сессиям",
-    "description": "Даёт агентам инструменты для поиска и чтения прежних сессий этой рабочей области.",
+    "description": "Спросите о прошлой работе — например, «Как мы на прошлой неделе починили утечку в пуле?» — и агент поищет ответ в ваших прежних сессиях этой рабочей области.",
     "en": {
       "title": "Session search",
-      "description": "Give Agents tools to search and read earlier sessions from the current workspace."
+      "description": "Ask about earlier work, such as “How did we fix the pool leak last week?”, and the agent searches your earlier sessions in the same workspace to answer."
     }
   },
   "@deepseek-ai/dsh-experimental-session-titles-bundle": {
     "title": "Названия, следующие за разговором",
-    "description": "Обновляет названия сессий по мере поступления новых запросов человека.",
+    "description": "Строит название сессии по всем вашим сообщениям и обновляет его, когда меняется основная задача, а не только по первому сообщению.",
     "en": {
       "title": "Conversation-following titles",
-      "description": "Refresh session titles as new human prompts arrive."
+      "description": "Writes a session's title from all of your messages and updates it when the main task changes, instead of only from the first message."
     }
   },
   "@deepseek-ai/dsh-skill-badge": {
@@ -201,34 +201,34 @@
   },
   "@deepseek-ai/dsh-experimental-terminal-bundle": {
     "title": "Постоянные терминалы",
-    "description": "Сохраняет оболочки живыми между вызовами инструментов.",
+    "description": "Даёт агенту терминалы, процессы которых продолжают работать в фоне между вызовами инструментов: можно запустить сервер разработки или REPL и позже вернуться, чтобы прочитать вывод или ввести команды.",
     "en": {
       "title": "Persistent terminals",
-      "description": "Keep shell processes alive across tool calls."
+      "description": "Gives the agent terminals whose processes keep running in the background between tool calls, so it can start a dev server or REPL and come back later to read output or type input."
     }
   },
   "@deepseek-ai/dsh-experimental-tool-agent-team": {
     "title": "Инструменты команды",
     "description": "Даёт агентам инструменты для согласования участников, обмена сообщениями и управления общими задачами.",
     "en": {
-      "title": "Team Tools",
+      "title": "Team tools",
       "description": "Give agents tools to coordinate members, exchange messages, and manage shared tasks."
     }
   },
   "@deepseek-ai/dsh-experimental-tool-worktree": {
     "title": "Рабочие деревья Git",
-    "description": "Позволяет агенту создать новую ветку и рабочее дерево Git и продолжить работу в нём.",
+    "description": "Попросите поработать в новой ветке — агент создаст отдельное рабочее дерево Git и продолжит там, не трогая ваш текущий чекаут.",
     "en": {
-      "title": "Git Worktrees",
-      "description": "Let the agent create a new Git branch and worktree, then continue there."
+      "title": "Git worktrees",
+      "description": "Ask for work on a new branch, and the agent creates a separate Git worktree and continues there, leaving your current checkout as it is."
     }
   },
   "@deepseek-ai/dsh-experimental-voice-input-bundle": {
     "title": "Голосовой ввод",
-    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости",
+    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости.",
     "en": {
       "title": "Voice input",
-      "description": "Transcribe recordings locally with SenseVoice; first use requires installing dependencies"
+      "description": "Transcribe recordings locally with SenseVoice; first use requires installing dependencies."
     }
   },
   "@deepseek-ai/dsh-schedule": {
