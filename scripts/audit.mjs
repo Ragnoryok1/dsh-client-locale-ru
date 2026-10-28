@@ -572,6 +572,14 @@ for (const file of HARNESS_FILES) {
   for (const entry of dictionaryEntries(text)) {
     if (NOT_A_KEY.has(entry.key) || entry.value === null) continue
     stringKeys.add(entry.key)
+    /*
+     * Шаблон не может содержать кириллицу: это либо чужая локализация, лежащая в
+     * дереве (у харнесса появились русские словари приложения и установщика),
+     * либо словарь плагина, который отдаёт русский в поле `en`. Без этой отсечки
+     * наши же русские значения «совпадали с английским шаблоном» — на 0.2.2 это
+     * дало 2 368 ложных находок и скрыло настоящие.
+     */
+    if (/[\u0400-\u04FF]/u.test(entry.value)) continue
     if (!harnessTemplates.has(entry.key)) harnessTemplates.set(entry.key, new Set())
     harnessTemplates.get(entry.key).add(entry.value)
     const scope = dictionaryScope(text, entry.index)
@@ -625,6 +633,8 @@ if (existsSync(pluginsDir)) {
       if (typeof value !== 'string') continue
       keys.add(key)
       english.set(key, value)
+      /* Кириллица в поле `en` — не английский шаблон, см. отсечку выше. */
+      if (/[\u0400-\u04FF]/u.test(value)) continue
       if (!harnessTemplates.has(key)) harnessTemplates.set(key, new Set())
       harnessTemplates.get(key).add(value)
     }

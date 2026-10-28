@@ -1221,6 +1221,15 @@
     ],
     "candy": [
       "pet.config · fontHint"
+    ],
+    "subject": [
+      "liveshare · viewer.picker.subjectLabel"
+    ],
+    "liveshare": [
+      "liveshare · viewer.refused",
+      "liveshare · viewer.relayAnswered",
+      "liveshare · viewer.relaySilent",
+      "liveshare · viewer.unreachable"
     ]
   }
 }

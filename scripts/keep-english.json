@@ -1,8 +1,5 @@
 {
   "_comment": "Значения, которые сознательно совпадают с шаблоном харнесса. Аудит валит сборку на любом другом совпадении, поэтому сюда попадает только осознанное решение. Шаблон с `*` разрешает закрытый список (например `chat · app.*` — названия приложений), и он обязан называть namespace. Значения без слов вне плейсхолдеров (`{from}–{to}`, `{percent}%`) решением не нуждаются: переводить в них нечего. Запись, которая больше ничего не разрешает, тоже валит сборку.",
-  ".ndjson.zst · currency": "идентификатор",
-  ".runs.json · json": "название формата",
-  ".runs.json · studio": "название продукта",
   "agency · settings.viewProject": "название продукта",
   "agent-community · panel": "текст плагина оставлен на китайском",
   "agent-schedule · name": "идентификатор",
@@ -980,7 +977,6 @@
   "sessions · settings.languageZh": "идентификатор",
   "settings.codexSubscription · voiceLang_ja": "идентификатор",
   "settings.codexSubscription · voiceLang_ko": "идентификатор",
-  "settings.codexSubscription · voiceLang_ru": "идентификатор",
   "settings.codexSubscription · voiceLang_zh": "идентификатор",
   "dsh-auto-title · localeZh": "язык",
   "apiDashboard · title": "название продукта",
@@ -1093,5 +1089,8 @@
   "pet.config · font.yahei": "названия шрифтов",
   "pet.config · font.youyuan": "название шрифта",
   "pet.config · saveHotkey": "обозначение горячих клавиш",
-  "pet.config · uninstallCmd": "команда для терминала"
+  "pet.config · uninstallCmd": "команда для терминала",
+  "liveshare · viewer.brand": "имя продукта LiveShare",
+  "liveshare · viewer.picker.version": "обозначение DSH",
+  "liveshare · viewer.picker.subjectLabel": "шаблон из одного плейсхолдера с латинским префиксом"
 }
