@@ -24,14 +24,14 @@ index 0000000000..e7f4ebb095
 +}
 diff --git a/packages/experimental/agent-team-profile/locale/ru.json b/packages/experimental/agent-team-profile/locale/ru.json
 new file mode 100644
-index 0000000000..3ca7cc0534
+index 0000000000..12a76b2e65
 --- /dev/null
 +++ b/packages/experimental/agent-team-profile/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Команды агентов",
-+    "description": "Включает командную работу, инструменты команды, список участников и общую доску задач."
++    "description": "Позволяет агенту распределить работу между названными участниками, вести её на общей доске задач и вернуться с их результатами."
 +  }
 +}
 diff --git a/packages/experimental/agent-team/locale/ru.json b/packages/experimental/agent-team/locale/ru.json
@@ -60,14 +60,14 @@ index 0000000000..1fbcd509fd
 +}
 diff --git a/packages/experimental/auto-review/locale/ru.json b/packages/experimental/auto-review/locale/ru.json
 new file mode 100644
-index 0000000000..143988a8e3
+index 0000000000..a790bfcc9c
 --- /dev/null
 +++ b/packages/experimental/auto-review/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Автоматическая проверка разрешений",
-+    "description": "Добавляет режим разрешений с автоматической проверкой: модель оценивает запрос перед каждым вызовом инструмента."
++    "description": "Добавляет режим доступа с автоматической проверкой: перед каждым вызовом инструмента модель сверяет его с вашим запросом, разрешённые выполняет сразу, а отклонённые отдаёт вам на подтверждение."
 +  }
 +}
 diff --git a/packages/experimental/badge-skill-bundle/locale/ru.json b/packages/experimental/badge-skill-bundle/locale/ru.json
@@ -168,26 +168,26 @@ index 0000000000..fcc7985c74
 +}
 diff --git a/packages/experimental/cot-translation-bundle/locale/ru.json b/packages/experimental/cot-translation-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..a3ca845485
+index 0000000000..e7f73d5019
 --- /dev/null
 +++ b/packages/experimental/cot-translation-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Машинный перевод рассуждений",
-+    "description": "Машинный перевод развёрнутых рассуждений; исходный текст отправляется в выбранную службу"
++    "description": "Переводит развёрнутые строки рассуждений на выбранный язык по мере их появления, а «Показать оригинал» возвращает исходный текст."
 +  }
 +}
 diff --git a/packages/experimental/inspector-profile/locale/ru.json b/packages/experimental/inspector-profile/locale/ru.json
 new file mode 100644
-index 0000000000..7b4b703c98
+index 0000000000..5f30552f73
 --- /dev/null
 +++ b/packages/experimental/inspector-profile/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Инструменты разработчика",
-+    "description": "Просмотр и отладка сырых данных сессии, сгруппированных сообщений чата и серверной части на NodeJS."
++    "description": "Для разбора проблем: показывает, что DSH записал о сессии, в журнале сессии, считает статистику по раундам и шагам на вкладке «Статистика» и отлаживает серверную часть DSH в Chrome DevTools."
 +  }
 +}
 diff --git a/packages/experimental/inspector/locale/ru.json b/packages/experimental/inspector/locale/ru.json
@@ -204,26 +204,26 @@ index 0000000000..dda8b11647
 +}
 diff --git a/packages/experimental/plugin-market-bundle/locale/ru.json b/packages/experimental/plugin-market-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..d8b26db7de
+index 0000000000..2d7909d4e7
 --- /dev/null
 +++ b/packages/experimental/plugin-market-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Свои магазины плагинов",
-+    "description": "Добавляет в раздел «Плагины» вкладку «Обзор» для просмотра и установки наборов из указанных вами каталогов магазинов плагинов"
++    "description": "Добавляет в раздел «Плагины» вкладку «Обзор», где вы просматриваете и ставите плагины из добавленных вами каталогов."
 +  }
 +}
 diff --git a/packages/experimental/ralph-bundle/locale/ru.json b/packages/experimental/ralph-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..d9197a49fd
+index 0000000000..13e46eba79
 --- /dev/null
 +++ b/packages/experimental/ralph-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Циклы Ralph",
-+    "description": "Выполняет явно запрошенную повторяющуюся работу свежими агентами."
++    "description": "По запросу цикла «Ральф» с целью агент запускает свежего агента раунд за раундом, пока цель не достигнута, не сообщено о препятствии или не исчерпан предел раундов."
 +  }
 +}
 diff --git a/packages/experimental/session-inspector/locale/ru.json b/packages/experimental/session-inspector/locale/ru.json
@@ -240,26 +240,26 @@ index 0000000000..93bb99d226
 +}
 diff --git a/packages/experimental/session-search/locale/ru.json b/packages/experimental/session-search/locale/ru.json
 new file mode 100644
-index 0000000000..802ee1064d
+index 0000000000..f71d5bcb5c
 --- /dev/null
 +++ b/packages/experimental/session-search/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Поиск по сессиям",
-+    "description": "Даёт агентам инструменты для поиска и чтения прежних сессий этой рабочей области."
++    "description": "Спросите о прошлой работе — например, «Как мы на прошлой неделе починили утечку в пуле?» — и агент поищет ответ в ваших прежних сессиях этой рабочей области."
 +  }
 +}
 diff --git a/packages/experimental/session-titles-bundle/locale/ru.json b/packages/experimental/session-titles-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..f2f655a611
+index 0000000000..96276e297e
 --- /dev/null
 +++ b/packages/experimental/session-titles-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Названия, следующие за разговором",
-+    "description": "Обновляет названия сессий по мере поступления новых запросов человека."
++    "description": "Строит название сессии по всем вашим сообщениям и обновляет его, когда меняется основная задача, а не только по первому сообщению."
 +  }
 +}
 diff --git a/packages/experimental/skill-badge/locale/ru.json b/packages/experimental/skill-badge/locale/ru.json
@@ -300,14 +300,14 @@ index 0000000000..64210c364d
 +}
 diff --git a/packages/experimental/terminal-bundle/locale/ru.json b/packages/experimental/terminal-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..f648d96694
+index 0000000000..130014693f
 --- /dev/null
 +++ b/packages/experimental/terminal-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Постоянные терминалы",
-+    "description": "Сохраняет оболочки живыми между вызовами инструментов."
++    "description": "Даёт агенту терминалы, процессы которых продолжают работать в фоне между вызовами инструментов: можно запустить сервер разработки или REPL и позже вернуться, чтобы прочитать вывод или ввести команды."
 +  }
 +}
 diff --git a/packages/experimental/tool-agent-team/locale/ru.json b/packages/experimental/tool-agent-team/locale/ru.json
@@ -324,26 +324,26 @@ index 0000000000..e3c2abaa52
 +}
 diff --git a/packages/experimental/tool-worktree/locale/ru.json b/packages/experimental/tool-worktree/locale/ru.json
 new file mode 100644
-index 0000000000..7e340c5fef
+index 0000000000..b54c6c1c58
 --- /dev/null
 +++ b/packages/experimental/tool-worktree/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Рабочие деревья Git",
-+    "description": "Позволяет агенту создать новую ветку и рабочее дерево Git и продолжить работу в нём."
++    "description": "Попросите поработать в новой ветке — агент создаст отдельное рабочее дерево Git и продолжит там, не трогая ваш текущий чекаут."
 +  }
 +}
 diff --git a/packages/experimental/voice-input-bundle/locale/ru.json b/packages/experimental/voice-input-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..cddf9469a8
+index 0000000000..e5b171662e
 --- /dev/null
 +++ b/packages/experimental/voice-input-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Голосовой ввод",
-+    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости"
++    "description": "Расшифровывает записи локально с помощью SenseVoice; для первого запуска нужно установить зависимости."
 +  }
 +}
 diff --git a/packages/schedule/schedule/locale/ru.json b/packages/schedule/schedule/locale/ru.json
