@@ -30,7 +30,7 @@ const card = `
         <div class="titleRow">
           <button type="button" class="cardTitle cardOpen" aria-label="Открыть Session search" aria-describedby="one">Session search</button>
         </div>
-        <span class="cardDesc" id="one">Give Agents tools to search and read earlier sessions from the current workspace.</span>
+        <span class="cardDesc" id="one">Ask about earlier work, such as “How did we fix the pool leak last week?”, and the agent searches your earlier sessions in the same workspace to answer.</span>
       </div>
     </div>
   </li>`
@@ -139,7 +139,7 @@ test('the name and the one-liner of a card are translated', () => {
   assert.equal(plain(body.querySelector('button').textContent), 'Поиск по сессиям')
   assert.equal(
     plain(body.querySelector('.cardDesc').textContent),
-    'Даёт агентам инструменты для поиска и чтения прежних сессий этой рабочей области.',
+    'Спросите о прошлой работе — например, «Как мы на прошлой неделе починили утечку в пуле?» — и агент поищет ответ в ваших прежних сессиях этой рабочей области.',
   )
   dispose()
 })
