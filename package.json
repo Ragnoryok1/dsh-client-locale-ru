@@ -131,6 +131,7 @@
     "README-zh.md",
     "CHANGELOG.md",
     "LICENSE",
-    "NAMESPACES.md"
+    "NAMESPACES.md",
+    "docs/how-to-translate-dsh.md"
   ]
 }

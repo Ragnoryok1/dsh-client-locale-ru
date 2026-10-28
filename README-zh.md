@@ -95,7 +95,7 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 清单按 harness 自身的规则检查，而不是靠肉眼（`npm run check:manifest`，包含在 `verify` 中）。每一条规则都取自 harness 源码，每一条都对应一种否则会先落到用户头上的失败：`parseDshClient` 接受任意字符串作为 `platform`，但消费方只保留 `platform === 'web'` 的行，因此写成 `'Web'` 这样的笔误会**悄悄关掉**客户端那一半；声明了 `dsh.client` 却没有 `./client` 导出会让 `client-modules` 抛错；`dsh.bundle.patch` 必须指向确实存在的文件。
 
-从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 2019 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
+从 GitHub 安装同样可用：`dsh plugin --profile web add Ragnoryok1/dsh-client-locale-ru`（插件目录生成的就是这种不带 npm scope 的写法）安装的是仓库归档，而构建好的 `lib/` 已提交进 git——你的机器上不会运行构建，也不需要运行。正因如此，`npm run check:built`（包含在 `verify` 中）会重新构建 `lib/` 并与提交内容比对：git 里过期的构建产物会直接落到用户手里，而审计看不到它——审计读的是源码。发布的包为 2023 kB：横幅以 JPEG 提供，图标与源码映射不进入 npm 包。
 
 ## 为什么是混合插件
 
@@ -134,6 +134,12 @@ dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru
 
 同样这 32 个名称会作为补丁（`docs/harness-descriptors-ru.patch`）送到 harness：在 harness 自己的界面里插件也有俄文名称，而这个补丁先到。补丁是构建产物——它由翻译和 harness 目录树生成，门禁 `npm run check:descriptor-patch` 在生成的补丁与仓库里那份不一致时失败。第三方插件的名称放在 `src/client/plugin-names-ru.json`：这个文件由插件词典生成（`npm run build:plugin-names`），门禁 `npm run check:plugin-names:map` 在它与词典不一致时失败。同一个英文名称不能有两种译法——harness 与插件各说各话。`npm run check:plugin-names` 在真实文档上证明（jsdom，12 个用例）这个流程会翻译标题、说明、朗读名称和 bundle 的一行，而该不动的它不动。
 
+
+## 想把 harness 翻译成自己的语言
+
+我们走过的顺序、坑和检查都整理在 [docs/how-to-translate-dsh.md](docs/how-to-translate-dsh.md)：
+如何找到各个命名空间、为什么不能跨文件按 key 收集模板、运行时依赖变更会怎样影响译文，
+以及如何把发布交给 CI。
 
 ## 许可证
 
