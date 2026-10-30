@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 594 sections, 69 177 strings.",
+  "description": "Russian language pack for the DeepSeek Harness web GUI: the whole interface plus the menus of 522 third-party plugins — 594 sections, 69 177 strings. Русский язык для веб-интерфейса DeepSeek Harness: весь интерфейс и меню 522 плагинов, 594 раздела, 69 177 строк.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.2-alpha.2", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",

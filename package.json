@@ -1,7 +1,7 @@
 {
   "name": "@ragnoryok1/dsh-client-locale-ru",
-  "description": "Russian for the DeepSeek Harness web GUI: the whole interface plus the menus of 520 third-party plugins — 594 sections, 69 177 strings.",
-  "version": "0.2.22",
+  "description": "Russian language pack for the DeepSeek Harness web GUI: the whole interface plus the menus of 522 third-party plugins — 594 sections, 69 177 strings. Русский язык для веб-интерфейса DeepSeek Harness: весь интерфейс и меню 522 плагинов, 594 раздела, 69 177 строк.",
+  "version": "0.2.23",
   "keywords": [
     "dsh",
     "deepseek-harness",
@@ -10,8 +10,11 @@
     "dsh-locale",
     "dsh-i18n",
     "dsh-russian",
+    "russian-language-pack",
+    "russian-localization",
     "language-pack",
     "locale",
+    "ru-RU",
     "i18n",
     "l10n",
     "localization",

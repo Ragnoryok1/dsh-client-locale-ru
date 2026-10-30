@@ -15,7 +15,9 @@ import { buildPatch, readTranslations } from './descriptor-patch.mjs'
 
 const args = process.argv.slice(2)
 const write = args.includes('--write')
-const root = resolve(args.find(argument => !argument.startsWith('--')) ?? '../deepseek-harness/packages')
+const root = resolve(
+  args.find(argument => !argument.startsWith('--')) ?? process.env.DSH_HARNESS_TREE ?? '../deepseek-harness/packages',
+)
 const target = fileURLToPath(new URL('../docs/harness-descriptors-ru.patch', import.meta.url))
 
 if (!existsSync(root)) {

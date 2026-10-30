@@ -16,7 +16,15 @@ import { basename, dirname, join, relative, resolve } from 'node:path'
 const args = process.argv.slice(2)
 const write = args.includes('--write')
 const check = args.includes('--check')
-const root = resolve(args.find(argument => !argument.startsWith('--')) ?? '../deepseek-harness/packages')
+/*
+ * Дерево харнесса: первый аргумент, иначе `DSH_HARNESS_TREE`, иначе соседний
+ * чекаут. Переменная нужна потому, что локальный чекаут может стоять на другой
+ * версии (его переключают под другие задачи), и тогда проверка сравнивает
+ * описания не с тем деревом — молча, «в обратную сторону».
+ */
+const root = resolve(
+  args.find(argument => !argument.startsWith('--')) ?? process.env.DSH_HARNESS_TREE ?? '../deepseek-harness/packages',
+)
 const translations = JSON.parse(readFileSync(new URL('../src/client/descriptor-ru.json', import.meta.url), 'utf8'))
 
 if (!existsSync(root)) {
