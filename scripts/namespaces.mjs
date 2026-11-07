@@ -171,6 +171,16 @@ if (process.argv.includes('--check')) {
     for (const row of currentRows) {
       if (!namespaces.some(item => item.namespace === row)) console.error(`  лишняя строка: ${row}`)
     }
+    /* Первая разошедшаяся строка: без неё отчёт «файл разошёлся» ничего не объясняет. */
+    const left = normalize(current).split('\n')
+    const right = normalize(document).split('\n')
+    for (let i = 0; i < Math.max(left.length, right.length); i += 1) {
+      if (left[i] === right[i]) continue
+      console.error(`  строка ${i + 1}:`)
+      console.error(`    в файле: ${(left[i] ?? '—').slice(0, 160)}`)
+      console.error(`    в пакете: ${(right[i] ?? '—').slice(0, 160)}`)
+      break
+    }
     process.exit(1)
   }
   console.log(`check:namespaces: NAMESPACES.md сходится с пакетом (${namespaces.length} namespace, ${total} значений)`)
