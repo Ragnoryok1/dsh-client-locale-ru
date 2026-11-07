@@ -787,7 +787,8 @@
       "dsh.eval-control · stepEnv"
     ],
     "stderr": [
-      "dsh.eval-control · stepFailed"
+      "dsh.eval-control · stepFailed",
+      "dsh-context · cmds.hasStderr"
     ],
     "learn": [
       "verdict · empty"

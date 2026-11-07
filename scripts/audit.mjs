@@ -616,7 +616,7 @@ const externalNamespaces = new Map()
 const externalNamespaceKeys = new Map()
 const externalNamespaceEnglish = new Map()
 if (existsSync(pluginsDir)) {
-  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json'))) {
+  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json') && !entry.startsWith('_'))) {
     const record = JSON.parse(readFileSync(new URL(name, pluginsDir), 'utf8'))
     if (typeof record.namespace !== 'string' || typeof record.en !== 'object' || record.en === null) {
       console.error(`plugins/${name}: нужны поля namespace и en`)

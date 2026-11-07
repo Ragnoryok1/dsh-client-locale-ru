@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **594 namespace** — 69177 строк. Колонка «как это выглядит»
+Пакет переводит **598 namespace** — 69454 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -20,6 +20,10 @@
 | `agent-shell-consent` | — | 2 | dsh-agent-shell@0.4.0 |
 | `agent-skills` | Навыки агента | 53 | dsh-agent-skills@0.1.14 |
 | `agent-team` | Команда агентов | 25 | харнесс |
+| `agentero.host` | — | 2 | agentero-dsh-host@0.1.6 |
+| `agentero.library` | Библиотека | 35 | agentero-dsh-library@0.1.6 |
+| `agentero.notes` | Заметки | 34 | agentero-dsh-notes@0.1.6 |
+| `agentero.pdf` | PDF | 67 | agentero-dsh-pdf@0.1.6 |
 | `agentLang` | Управление языком | 21 | dsh-agent-lang@0.12.0 |
 | `agentlex-moot-court` | — | 202 | dsh-legal-suite@0.2.26 |
 | `agentStudio` | — | 248 | dsh-agent-studio@0.1.8 |
@@ -111,7 +115,7 @@
 | `dsh-clinebot` | ClineBot | 368 | @goodandready/dsh-clinebot@0.6.14 |
 | `dsh-concise` | — | 3 | dsh-concise@0.11.3 |
 | `dsh-console` | — | 105 | dsh-console-plugin@0.5.29 |
-| `dsh-context` | — | 599 | dsh-context@0.74.0 |
+| `dsh-context` | — | 738 | dsh-context@0.82.2 |
 | `dsh-context-imports` | Импорты контекста | 35 | dsh-context-imports@0.2.3 |
 | `dsh-context-lens` | Линза контекста | 11 | @goodandready/dsh-context-lens@0.1.34 |
 | `dsh-conversation-outline` | Структура | 13 | @chestnut23/dsh-conversation-outline@0.2.2 |
@@ -607,4 +611,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **594** namespace, **69177** строк.
+Итого: **598** namespace, **69454** строк.

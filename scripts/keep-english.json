@@ -1092,5 +1092,9 @@
   "pet.config · uninstallCmd": "команда для терминала",
   "liveshare · viewer.brand": "имя продукта LiveShare",
   "liveshare · viewer.picker.version": "обозначение DSH",
-  "liveshare · viewer.picker.subjectLabel": "шаблон из одного плейсхолдера с латинским префиксом"
+  "liveshare · viewer.picker.subjectLabel": "шаблон из одного плейсхолдера с латинским префиксом",
+  "agentero.library · importPlaceholder": "подсказка из идентификаторов источников, переводить нечего",
+  "agentero.pdf · title": "название формата",
+  "dsh-context · cmds.hasStderr": "имя потока stderr",
+  "dsh-context · cmds.heredoc": "название конструкции heredoc"
 }
