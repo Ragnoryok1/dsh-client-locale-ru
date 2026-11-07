@@ -98,8 +98,11 @@ const escape = text => text.replace(/\|/gu, '\\|')
 const pluginsDir = new URL('../plugins/', import.meta.url)
 const external = new Map()
 try {
-  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json'))) {
+  for (const name of readdirSync(pluginsDir).filter(entry => entry.endsWith('.json') && !entry.startsWith('_'))) {
     const record = JSON.parse(readFileSync(new URL(name, pluginsDir), 'utf8'))
+    /* Служебные файлы (`_conflicts.json`) и записи без происхождения пропускаем: */
+    /* иначе их разбор роняет весь список, и все строки показывают «харнесс». */
+    if (typeof record.package !== 'string' || typeof record.version !== 'string') continue
     /* в записи некоторых словарей поле package уже содержит версию */
     const origin = record.package.endsWith(`@${record.version}`) ? record.package : `${record.package}@${record.version}`
     external.set(record.namespace, origin)
