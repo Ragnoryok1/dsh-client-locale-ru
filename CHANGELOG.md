@@ -10,9 +10,22 @@
   `agentero.notes` (34), `agentero.host` (2). Всего 138 строк: библиотека статей,
   панель PDF с закладками и переводом, заметки и сообщения хоста.
 
+### Харнесс 0.2.2-alpha.3
+
+- **Две новые секции:** `fileActions` (12) — «Показать в Finder», «Скачать»,
+  «Копировать изображение»; `contextMenu` (1).
+- **89 строк в существующие секции:** `forgePanel` +55 (ревью, комментарии на
+  GitHub, дерево файлов), `open-in-app` +11, `conversation` +7, `sidebarFiles` 4,
+  `trajectory` 4, `sidebarRight` 3, `pluginManager` 3, `sidebar` 1, `subagent` 1.
+- **44 мёртвых ключа убрано:** харнесс переделал форму cron и панель агентов.
+- **Три значения с неверными плейсхолдерами:** `detail.next` терял `{countdown}`
+  и `{next}`, `frequency.cron` и `frequency.cronLocal` несли лишний `{expression}`.
+- Пин на `dsh-client-locale@0.2.2-alpha.3`, `cordis@4.0.6-alpha.2`; в списке
+  совместимости появились alpha.3 и 0.2.1-rc.5.
+
 ### Итог
 
-598 namespace, 69 454 строки, 526 словарей плагинов.
+598 namespace, 69 454 строк, 526 словарей плагинов.
 
 ## [0.2.24] — 2026-10-30
 

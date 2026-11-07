@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **598 namespace** — 69454 строк. Колонка «как это выглядит»
+Пакет переводит **600 namespace** — 69512 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -71,7 +71,8 @@
 | `config-manager` | — | 36 | dsh-config-manager@0.1.79 |
 | `context-zip` | ContextZip | 39 | dsh-context-zip@0.1.10 |
 | `contextMemory` | Контекстная память | 48 | dsh-context-memory@0.9.0 |
-| `conversation` | — | 382 | харнесс |
+| `contextMenu` | — | 1 | харнесс |
+| `conversation` | — | 389 | харнесс |
 | `conversation-anchors` | Якоря | 23 | @biggerboy123/dsh-conversation-anchors@0.1.21 |
 | `conversation.session.header.actions` | Подробное использование | 303 | dsh-damage-pulse@4.2.9 |
 | `cordis` | — | 51 | харнесс |
@@ -280,10 +281,11 @@
 | `feedback` | — | 20 | харнесс |
 | `feishu-assistant` | Ассистент Feishu | 52 | dsh-feishu-assistant@0.2.0 |
 | `file-review` | — | 71 | dsh-file-review@0.8.10 |
+| `fileActions` | — | 12 | харнесс |
 | `fileDrag` | — | 1 | харнесс |
 | `fileExplorer` | — | 79 | @jaxzhou/dsh-file-explorer@0.1.11 |
 | `foldPositions` | — | 481 | billion-context@0.1.202 |
-| `forgePanel` | — | 199 | харнесс |
+| `forgePanel` | — | 253 | харнесс |
 | `formatforge` | — | 22 | @tianbuyu-wwx/dsh-formatforge@3.0.0 |
 | `free-proxy` | — | 88 | dsh-freeroute@0.10.3 |
 | `genui` | — | 77 | dsh-plugin-genui@0.15.1 |
@@ -352,7 +354,7 @@
 | `office-ppt` | — | 63 | dsh-workbuddy-ppt@0.1.0 |
 | `om-compaction` | — | 84 | dsh-plugin-om@0.0.61 |
 | `oomol.settings` | Подключения OOMOL | 71 | dsh-oomol@1.0.0 |
-| `open-in-app` | — | 47 | харнесс |
+| `open-in-app` | — | 58 | харнесс |
 | `opencodeFree` | Видимость моделей | 53 | dsh-opencode-free@0.3.7 |
 | `openrouter-providers` | — | 55 | dsh-openrouter-providers@1.6.0 |
 | `orbit-model` | — | 36 | @kasenri/dsh-orbit@0.6.7 |
@@ -367,7 +369,7 @@
 | `plan` | — | 16 | харнесс |
 | `plugin-store` | — | 77 | dsh-plugins-store@0.1.4 |
 | `plugin.intellijMcp` | IntelliJ IDEA MCP | 36 | dsh-intellij-mcp@1.0.5 |
-| `pluginManager` | Плагины | 294 | харнесс |
+| `pluginManager` | Плагины | 297 | харнесс |
 | `pluginMarket` | Обзор плагинов | 87 | харнесс |
 | `pluginRecommendations` | Рекомендуемый плагин | 25 | харнесс |
 | `pluginTopology` | Топология плагинов | 82 | @sleetdrop/dsh-plugin-topology@0.9.0 |
@@ -402,7 +404,7 @@
 | `russian-lang` | — | 95 | @goodandready/dsh-russian-lang@0.4.5 |
 | `schedule-attention-enhancer` | plugins.detail.section | 1 | @stolyarovmn/dsh-client-ui-schedule-tab@0.8.0 |
 | `schedule.catalog` | — | 90 | харнесс |
-| `schedule.manager` | Задачи автоматизации | 209 | харнесс |
+| `schedule.manager` | Задачи автоматизации | 166 | харнесс |
 | `searchPool` | Пул поиска | 56 | dsh-search-failover@0.3.23 |
 | `secretMask` | — | 2 | харнесс |
 | `select-quote` | — | 32 | dsh-select-quote@0.3.9 |
@@ -513,16 +515,16 @@
 | `shortcuts` | Горячие клавиши | 56 | харнесс |
 | `shortcuts.layout` | — | 1 | харнесс |
 | `shorts.sidebar` | — | 58 | dsh-shorts-wall@1.4.2 |
-| `sidebar` | — | 7 | харнесс |
+| `sidebar` | — | 8 | харнесс |
 | `sidebarBrowser` | — | 26 | харнесс |
 | `sidebarCodePreview` | Код | 3 | харнесс |
 | `sidebarDocumentPreview` | — | 22 | харнесс |
 | `sidebarExcel` | Таблица | 15 | харнесс |
-| `sidebarFiles` | — | 17 | харнесс |
+| `sidebarFiles` | — | 21 | харнесс |
 | `sidebarImage` | Изображение | 11 | харнесс |
 | `sidebarOffice` | Документ Office | 15 | харнесс |
 | `sidebarPdf` | PDF | 15 | харнесс |
-| `sidebarRight` | — | 35 | харнесс |
+| `sidebarRight` | — | 38 | харнесс |
 | `sidebarTerminal` | Терминал | 28 | харнесс |
 | `skill` | — | 8 | харнесс |
 | `skill-center` | Центр навыков | 73 | @restregular/dsh-skill-center@0.3.11 |
@@ -539,7 +541,7 @@
 | `status-rotator` | — | 4 | dsh-status-rotator@0.37.0 |
 | `stepTrace` | Трассировка шагов | 31 | dsh-step-trace@0.6.1 |
 | `style` | — | 3 | dsh-output-styles@0.8.1 |
-| `subagent` | — | 79 | харнесс |
+| `subagent` | — | 80 | харнесс |
 | `swarm` | — | 246 | dsh-swarm-orchestrator@0.6.32 |
 | `task-board` | — | 439 | @linxin666/dsh-client-ui-task-board@0.4.8 |
 | `task-board-github` | — | 113 | @linxin666/dsh-client-ui-task-board-github@0.4.8 |
@@ -563,7 +565,7 @@
 | `traceCompare` | Maze | 10 | dsh-maze@2.4.0 |
 | `tracescope` | — | 611 | @rebornace/dsh-tracescope@0.3.5 |
 | `tradeSearch` | — | 15 | dsh-ab-market-research@0.2.12 |
-| `trajectory` | — | 199 | харнесс |
+| `trajectory` | — | 203 | харнесс |
 | `trust` | — | 246 | dsh-trust-check@0.2.4 |
 | `ui-background` | — | 30 | deepseek-harness-background@0.6.1 |
 | `ui-enhancer` | — | 120 | dsh-ui-enhancer@0.2.0 |
@@ -611,4 +613,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **598** namespace, **69454** строк.
+Итого: **600** namespace, **69512** строк.
