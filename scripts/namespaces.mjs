@@ -84,7 +84,12 @@ for (const [namespace, byLocale] of locale.dicts) {
   }
   namespaces.push({ namespace, label, count })
 }
-namespaces.sort((left, right) => left.namespace.localeCompare(right.namespace, 'en'))
+/*
+ * Сортировка по кодовым точкам, а не localeCompare: сравнение с локалью зависит
+ * от ICU в среде, и на CI (Ubuntu, small-icu) порядок строк расходился с
+ * локальным — проверка падала на неизменном файле.
+ */
+namespaces.sort((left, right) => (left.namespace < right.namespace ? -1 : left.namespace > right.namespace ? 1 : 0))
 
 const total = namespaces.reduce((sum, item) => sum + item.count, 0)
 const escape = text => text.replace(/\|/gu, '\\|')
