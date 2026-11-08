@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **600 namespace** — 69512 строк. Колонка «как это выглядит»
+Пакет переводит **600 namespace** — 69538 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -47,7 +47,7 @@
 | `balance` | — | 87 | @alanzhao/dsh-balance-monitor@0.8.2 |
 | `better-display` | — | 18 | dsh-better-display@0.3.8 |
 | `better-input` | — | 123 | dsh-better-input@0.2.6 |
-| `betterSidebar` | — | 627 | dsh-better-sidebar@0.28.0 |
+| `betterSidebar` | — | 653 | dsh-better-sidebar@0.30.1 |
 | `betterWorkspace` | Рабочие области | 173 | dsh-better-workspace@0.35.1 |
 | `bgjobs` | — | 71 | bgjobs@0.2.6 |
 | `bigfish` | Компаньон Bigfish | 113 | dsh-bigfish@0.6.0 |
@@ -613,4 +613,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **600** namespace, **69512** строк.
+Итого: **600** namespace, **69538** строк.

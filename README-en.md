@@ -1,9 +1,9 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 600 sections, 69 512 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 600 разделов, 69 512 строк.",
+  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 600 sections, 69 538 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 600 разделов, 69 538 строк.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
   "compatible_versions": ["v0.2.2-rc.1", "v0.2.2-alpha.3", "v0.2.1-rc.5", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
@@ -22,7 +22,7 @@
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.2--alpha.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
 [![namespaces](https://img.shields.io/badge/namespaces-600-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-69512-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-69538-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 The plugin makes the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) interface Russian. Everything you see is translated: settings, side panels, dialogs, hints, error messages — and the menus of third-party plugins that ship no Russian of their own.
 
