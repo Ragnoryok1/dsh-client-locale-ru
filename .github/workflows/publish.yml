@@ -123,6 +123,8 @@ jobs:
       - name: Translated namespace inventory
         run: npm run check:namespaces
 
+      - name: Coverage file matches the pack
+        run: npm run check:coverage
       - name: Plugin manifest rules
         run: npm run check:manifest
 

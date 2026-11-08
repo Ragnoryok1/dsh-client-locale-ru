@@ -1,0 +1,5300 @@
+{
+  "schema": "dsh-locale-coverage/1",
+  "generated": "2026-11-08",
+  "pack": {
+    "name": "@ragnoryok1/dsh-client-locale-ru",
+    "version": "0.2.27",
+    "license": "MIT",
+    "repository": "https://github.com/Ragnoryok1/dsh-client-locale-ru",
+    "install": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
+  },
+  "harness": {
+    "audited_against": "v0.2.2-rc.1",
+    "compatible_versions": [
+      "v0.2.2-rc.1",
+      "v0.2.2-alpha.3",
+      "v0.2.1-rc.5",
+      "v0.2.1-rc.3",
+      "v0.2.1-rc.2",
+      "v0.2.1-rc.1",
+      "v0.2.1-alpha.5",
+      "v0.2.1-alpha.4",
+      "v0.2.1-alpha.3",
+      "v0.2.1-alpha.2",
+      "v0.2.1-alpha.1",
+      "v0.2.0-rc.2",
+      "v0.2.0-rc.1",
+      "v0.1.7-rc.2",
+      "v0.1.7-rc.1",
+      "v0.1.7-alpha.2"
+    ]
+  },
+  "totals": {
+    "namespaces": 600,
+    "strings": 69538,
+    "plugins": 526,
+    "plugin_strings": 65601
+  },
+  "plugins": [
+    {
+      "package": "@240xu/dsh-message-ops",
+      "version": "0.11.1",
+      "license": "MIT",
+      "repository": "https://github.com/240xu/dsh-message-ops.git",
+      "namespaces": [
+        "dsh-message-ops"
+      ],
+      "strings": 57
+    },
+    {
+      "package": "@aa2246740/dsh-skillhub",
+      "version": "1.0.7",
+      "license": "MIT",
+      "repository": "https://github.com/aa2246740/dsh-skillhub.git",
+      "namespaces": [
+        "skillhub"
+      ],
+      "strings": 58
+    },
+    {
+      "package": "@addozhang/dsh-discord",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/addozhang/dsh-discord.git",
+      "namespaces": [
+        "dsh-discord"
+      ],
+      "strings": 41
+    },
+    {
+      "package": "@aiwayds/dsh-web-search-anysearch",
+      "version": "0.8.0",
+      "license": "MIT",
+      "repository": "https://github.com/fan56/dsh-web-search-anysearch.git",
+      "namespaces": [
+        "settings.anysearchApiKey"
+      ],
+      "strings": 19
+    },
+    {
+      "package": "@alanzhao/dsh-balance-monitor",
+      "version": "0.8.2",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "balance"
+      ],
+      "strings": 87
+    },
+    {
+      "package": "@alpacachen/dsh-automation",
+      "version": "0.3.32",
+      "license": "MIT",
+      "repository": "https://github.com/alpacachen/dsh-automation.git",
+      "namespaces": [
+        "dsh-automation"
+      ],
+      "strings": 255
+    },
+    {
+      "package": "@anarkhgatsby/deepseek-harness-channel-config",
+      "version": "0.1.13",
+      "license": "MIT",
+      "repository": "https://github.com/mapan0424/deepseek-harness-plugins.git",
+      "namespaces": [
+        "harness-channel-config"
+      ],
+      "strings": 64
+    },
+    {
+      "package": "@anyaer/dsh-workbuddy-xdpool",
+      "version": "2.3.2",
+      "license": "MIT",
+      "repository": "https://github.com/sucooer/dsh-workbuddy-xdpool.git",
+      "namespaces": [
+        "settings.xdpool"
+      ],
+      "strings": 500
+    },
+    {
+      "package": "@awiki/dsh-plugin",
+      "version": "0.3.19",
+      "license": "MIT",
+      "repository": "https://github.com/AgentConnect/dsh-awiki.git",
+      "namespaces": [
+        "settings.awiki"
+      ],
+      "strings": 134
+    },
+    {
+      "package": "@benz-ai-x/dsh-research-graph",
+      "version": "0.1.5-rc.1",
+      "license": "MIT",
+      "repository": "https://github.com/benz-ai-x/dsh-research-graph.git",
+      "namespaces": [
+        "sessionGraph"
+      ],
+      "strings": 288
+    },
+    {
+      "package": "@biggerboy123/dsh-conversation-anchors",
+      "version": "0.1.21",
+      "license": "MIT",
+      "repository": "https://github.com/biggerboy/dsh-conversation-anchors.git",
+      "namespaces": [
+        "conversation-anchors"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "@bittersmilezzz/dsh-model-selector",
+      "version": "0.4.3",
+      "license": "MIT",
+      "repository": "https://github.com/bitterSmilezzz/dsh-model-selector.git",
+      "namespaces": [
+        "modelSelector"
+      ],
+      "strings": 27
+    },
+    {
+      "package": "@cerbur/clutch-dsh-title",
+      "version": "0.1.7",
+      "license": "MIT",
+      "repository": "https://github.com/Cerbur/clutch-dsh.git",
+      "namespaces": [
+        "clutch.title"
+      ],
+      "strings": 80
+    },
+    {
+      "package": "@cerbur/clutch-dsh-worktree",
+      "version": "0.1.18",
+      "license": "MIT",
+      "repository": "https://github.com/Cerbur/clutch-dsh.git",
+      "namespaces": [
+        "worktree"
+      ],
+      "strings": 410
+    },
+    {
+      "package": "@chance722/dsh-inbox",
+      "version": "0.2.15",
+      "license": "MIT",
+      "repository": "https://github.com/Chance722/dsh-inbox.git",
+      "namespaces": [
+        "dsh-inbox"
+      ],
+      "strings": 264
+    },
+    {
+      "package": "@chenmiao8563/dsh-token-ledger",
+      "version": "1.1.2",
+      "license": "MIT",
+      "repository": "https://github.com/chenmiao8563/dsh-token-ledger.git",
+      "namespaces": [
+        "token-ledger"
+      ],
+      "strings": 160
+    },
+    {
+      "package": "@chestnut23/dsh-conversation-outline",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/lzbaclz/dsh-conversation-outline.git",
+      "namespaces": [
+        "dsh-conversation-outline"
+      ],
+      "strings": 13
+    },
+    {
+      "package": "@cola1900/dsh-ppt",
+      "version": "0.3.4",
+      "license": "MIT",
+      "repository": "https://github.com/boe1900/dsh-ppt.git",
+      "namespaces": [
+        "dsh-ppt"
+      ],
+      "strings": 63
+    },
+    {
+      "package": "@crazy_th/dsh-computer-use",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/ThreeBody6666/dsh-computer-use.git",
+      "namespaces": [
+        "computer-use"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "@dan-ai-studio/dshopencodego",
+      "version": "0.1.65",
+      "license": "MIT",
+      "repository": "https://github.com/dan-ai-studio/dshopencodego.git",
+      "namespaces": [
+        "settings.dshopencodego"
+      ],
+      "strings": 174
+    },
+    {
+      "package": "@doitian/dsh-music",
+      "version": "1.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/doitian/dsh-music.git",
+      "namespaces": [
+        "music"
+      ],
+      "strings": 6
+    },
+    {
+      "package": "@dsh-electron/dsh-plugin-git",
+      "version": "0.2.7",
+      "license": "MIT",
+      "repository": "https://github.com/cherrchen/dsh-plugin-git.git",
+      "namespaces": [
+        "git"
+      ],
+      "strings": 135
+    },
+    {
+      "package": "@dsh-one/dsh-llm-provider",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/imchangchang/dsh-llm-provider.git",
+      "namespaces": [
+        "dsh-llm-provider"
+      ],
+      "strings": 16
+    },
+    {
+      "package": "@dsh-plugin-agent-community/ui-agent-community",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/Leo-sail/dsh-plugin-agent-collaboration.git",
+      "namespaces": [
+        "agent-community"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "@dsh-plugins/dsh-env-inspector",
+      "version": "0.2.9",
+      "license": "MIT",
+      "repository": "https://github.com/webkubor/dsh-env-inspector.git",
+      "namespaces": [
+        "dsh-env-inspector"
+      ],
+      "strings": 56
+    },
+    {
+      "package": "@dsh-plugins/dsh-llm-hub",
+      "version": "1.9.6",
+      "license": "MIT",
+      "repository": "https://github.com/webkubor/dsh-llm-hub.git",
+      "namespaces": [
+        "dsh-llm-hub"
+      ],
+      "strings": 159
+    },
+    {
+      "package": "@eddyskywalker/dsh-chatgpt-subscription",
+      "version": "0.36.2",
+      "license": "MIT",
+      "repository": "https://github.com/Aa728848/dsh-chatgpt-subscription.git",
+      "namespaces": [
+        "dsh-chatgpt-subscription"
+      ],
+      "strings": 28
+    },
+    {
+      "package": "@eghrhegpe/dsh-connect-qoder",
+      "version": "0.7.5",
+      "license": "MIT",
+      "repository": "https://github.com/eghrhegpe/dsh-connect-qoder.git",
+      "namespaces": [
+        "llm-qoder"
+      ],
+      "strings": 168
+    },
+    {
+      "package": "@eternalnight/dsh-theme",
+      "version": "0.5.1",
+      "license": "MIT",
+      "repository": "https://github.com/EternalNight996/dsh-theme.git",
+      "namespaces": [
+        "dsh-theme"
+      ],
+      "strings": 31
+    },
+    {
+      "package": "@evaldock/dsh-top100-plugin",
+      "version": "1.3.14",
+      "license": "MIT",
+      "repository": "https://github.com/evaldock/dsh-top100.git",
+      "namespaces": [
+        "dsh-top100"
+      ],
+      "strings": 510
+    },
+    {
+      "package": "@feng0531/dsh-vcs",
+      "version": "0.4.10",
+      "license": "SEE LICENSE IN LICENSE",
+      "repository": "https://github.com/f-e-n-g-0531/dsh-vcs.git",
+      "namespaces": [
+        "local.vcs"
+      ],
+      "strings": 260
+    },
+    {
+      "package": "@fengbinmov/dsh-git-panel",
+      "version": "0.1.1",
+      "license": "MIT",
+      "repository": "https://github.com/fengbinmov/dsh-git-panel.git",
+      "namespaces": [
+        "git-panel"
+      ],
+      "strings": 94
+    },
+    {
+      "package": "@firetruck666/dsh-task-board",
+      "version": "1.3.21",
+      "license": "MIT",
+      "repository": "https://github.com/FiretrUCK666/dsh-task-board.git",
+      "namespaces": [
+        "dsh-task-board"
+      ],
+      "strings": 969
+    },
+    {
+      "package": "@gamegeek-saikel/dsh-cost-meter",
+      "version": "0.5.1",
+      "license": "MIT",
+      "repository": "https://github.com/Saikel-Orado-Liu/dsh-cost-meter.git",
+      "namespaces": [
+        "cost-meter"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "@ggboy123/dsh-paper-reader",
+      "version": "1.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/GGboya/dsh-paper-reader.git",
+      "namespaces": [
+        "dsh-paper-reader"
+      ],
+      "strings": 107
+    },
+    {
+      "package": "@goodandready/dsh-approval-gate",
+      "version": "0.1.30",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-approval-gate.git",
+      "namespaces": [
+        "dsh-approval-gate"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "@goodandready/dsh-clinebot",
+      "version": "0.6.14",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-clinebot.git",
+      "namespaces": [
+        "dsh-clinebot"
+      ],
+      "strings": 368
+    },
+    {
+      "package": "@goodandready/dsh-context-lens",
+      "version": "0.1.34",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-context-lens.git",
+      "namespaces": [
+        "dsh-context-lens"
+      ],
+      "strings": 11
+    },
+    {
+      "package": "@goodandready/dsh-cost-meter",
+      "version": "0.8.25",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "dsh-cost-meter"
+      ],
+      "strings": 85
+    },
+    {
+      "package": "@goodandready/dsh-cron",
+      "version": "0.3.18",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-cron.git",
+      "namespaces": [
+        "dsh-cron"
+      ],
+      "strings": 399
+    },
+    {
+      "package": "@goodandready/dsh-gitea",
+      "version": "0.7.39",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-gitea.git",
+      "namespaces": [
+        "dsh-gitea"
+      ],
+      "strings": 132
+    },
+    {
+      "package": "@goodandready/dsh-github-ops",
+      "version": "0.6.15",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-github-ops.git",
+      "namespaces": [
+        "dsh-github-ops"
+      ],
+      "strings": 146
+    },
+    {
+      "package": "@goodandready/dsh-goal",
+      "version": "0.2.33",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-goal.git",
+      "namespaces": [
+        "dsh-goal"
+      ],
+      "strings": 130
+    },
+    {
+      "package": "@goodandready/dsh-grok-xsearch",
+      "version": "0.3.30",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-grok-xsearch.git",
+      "namespaces": [
+        "dsh-grok-xsearch"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "@goodandready/dsh-image-gen",
+      "version": "0.12.9",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-image-gen.git",
+      "namespaces": [
+        "dsh-image-gen"
+      ],
+      "strings": 330
+    },
+    {
+      "package": "@goodandready/dsh-issue-reporter",
+      "version": "0.1.14",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-issue-reporter.git",
+      "namespaces": [
+        "dsh-issue-reporter"
+      ],
+      "strings": 99
+    },
+    {
+      "package": "@goodandready/dsh-kanban",
+      "version": "0.2.38",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-kanban.git",
+      "namespaces": [
+        "dsh-kanban"
+      ],
+      "strings": 501
+    },
+    {
+      "package": "@goodandready/dsh-key-limits",
+      "version": "0.2.34",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-key-limits.git",
+      "namespaces": [
+        "dsh-key-limits"
+      ],
+      "strings": 198
+    },
+    {
+      "package": "@goodandready/dsh-key-rotation",
+      "version": "0.8.71",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-key-rotation.git",
+      "namespaces": [
+        "dsh-key-rotation"
+      ],
+      "strings": 251
+    },
+    {
+      "package": "@goodandready/dsh-lanmode",
+      "version": "0.8.51",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-lanmode.git",
+      "namespaces": [
+        "dsh-lanmode"
+      ],
+      "strings": 21
+    },
+    {
+      "package": "@goodandready/dsh-live-canvas",
+      "version": "0.2.33",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-live-canvas.git",
+      "namespaces": [
+        "dsh-live-canvas"
+      ],
+      "strings": 161
+    },
+    {
+      "package": "@goodandready/dsh-messenger-gateway",
+      "version": "0.4.19",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-messenger-gateway.git",
+      "namespaces": [
+        "dsh-messenger-gateway"
+      ],
+      "strings": 138
+    },
+    {
+      "package": "@goodandready/dsh-moa",
+      "version": "0.2.58",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-moa.git",
+      "namespaces": [
+        "dsh-moa"
+      ],
+      "strings": 182
+    },
+    {
+      "package": "@goodandready/dsh-model-search",
+      "version": "0.1.12",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-model-search.git",
+      "namespaces": [
+        "dsh-model-search"
+      ],
+      "strings": 14
+    },
+    {
+      "package": "@goodandready/dsh-model-sync",
+      "version": "0.5.20",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-model-sync.git",
+      "namespaces": [
+        "dsh-model-sync"
+      ],
+      "strings": 195
+    },
+    {
+      "package": "@goodandready/dsh-remote-workspace",
+      "version": "0.3.23",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-remote-workspace.git",
+      "namespaces": [
+        "dsh-remote-workspace"
+      ],
+      "strings": 217
+    },
+    {
+      "package": "@goodandready/dsh-russian-lang",
+      "version": "0.4.5",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-russian-lang.git",
+      "namespaces": [
+        "russian-lang"
+      ],
+      "strings": 95
+    },
+    {
+      "package": "@goodandready/dsh-server-monitor",
+      "version": "0.1.20",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-server-monitor.git",
+      "namespaces": [
+        "dsh-server-monitor"
+      ],
+      "strings": 168
+    },
+    {
+      "package": "@goodandready/dsh-session-control",
+      "version": "0.2.10",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-session-control.git",
+      "namespaces": [
+        "dsh-session-control"
+      ],
+      "strings": 113
+    },
+    {
+      "package": "@goodandready/dsh-shadow-auditor",
+      "version": "0.2.35",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-shadow-auditor.git",
+      "namespaces": [
+        "dsh-shadow-auditor"
+      ],
+      "strings": 74
+    },
+    {
+      "package": "@goodandready/dsh-smart-restart",
+      "version": "0.1.14",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-smart-restart.git",
+      "namespaces": [
+        "goodandready-smart-restart"
+      ],
+      "strings": 53
+    },
+    {
+      "package": "@goodandready/dsh-subscriptions",
+      "version": "0.7.18",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-subscriptions.git",
+      "namespaces": [
+        "dsh-subscriptions"
+      ],
+      "strings": 368
+    },
+    {
+      "package": "@goodandready/dsh-time-machine",
+      "version": "0.1.30",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-time-machine.git",
+      "namespaces": [
+        "dsh-time-machine"
+      ],
+      "strings": 41
+    },
+    {
+      "package": "@goodandready/dsh-tts",
+      "version": "0.4.35",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-tts.git",
+      "namespaces": [
+        "dsh-tts"
+      ],
+      "strings": 226
+    },
+    {
+      "package": "@goodandready/dsh-usage-guard",
+      "version": "0.1.19",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-usage-guard.git",
+      "namespaces": [
+        "dsh-usage-guard"
+      ],
+      "strings": 42
+    },
+    {
+      "package": "@goodandready/dsh-vision-bridge",
+      "version": "0.6.22",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-vision-bridge.git",
+      "namespaces": [
+        "dsh-vision-bridge"
+      ],
+      "strings": 116
+    },
+    {
+      "package": "@goodandready/dsh-voice",
+      "version": "0.9.41",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-voice.git",
+      "namespaces": [
+        "dsh-voice"
+      ],
+      "strings": 321
+    },
+    {
+      "package": "@goodandready/dsh-web-gateway",
+      "version": "0.2.3",
+      "license": "MIT",
+      "repository": "https://github.com/GooDAnDReaDY/dsh-web-gateway.git",
+      "namespaces": [
+        "dsh-web-gateway"
+      ],
+      "strings": 117
+    },
+    {
+      "package": "@guowenzhang/dsh-mcp-manager",
+      "version": "1.5.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhang-guo-wen/dsh-mcp-manager.git",
+      "namespaces": [
+        "settings.mcpManager"
+      ],
+      "strings": 161
+    },
+    {
+      "package": "@gxx-labs/mcp-ui-dsh",
+      "version": "0.2.6",
+      "license": "MIT",
+      "repository": "https://github.com/gxx950224/mcp-ui-dsh.git",
+      "namespaces": [
+        "mcp-ui"
+      ],
+      "strings": 50
+    },
+    {
+      "package": "@hanxuanliang/dsh-chaos",
+      "version": "0.1.2",
+      "license": "MIT",
+      "repository": "https://github.com/hanxuanliang/dsh-chaos.git",
+      "namespaces": [
+        "chaos"
+      ],
+      "strings": 239
+    },
+    {
+      "package": "@hjj345345/dsh-sm-version-display",
+      "version": "1.2.25",
+      "license": "MIT",
+      "repository": "https://github.com/hjj345/dsh-sm-version-display.git",
+      "namespaces": [
+        "dsh-sm-version-display"
+      ],
+      "strings": 57
+    },
+    {
+      "package": "@huanlin/dsh-plugin-mineru",
+      "version": "0.4.2",
+      "license": "AGPL-3.0",
+      "repository": null,
+      "namespaces": [
+        "dsh-mineru"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "@huaqiu/dsh-huaqiu-about",
+      "version": "0.6.6",
+      "license": null,
+      "repository": null,
+      "namespaces": [
+        "about.huaqiu"
+      ],
+      "strings": 9
+    },
+    {
+      "package": "@hytime/dsh-client-ui-shortcuts",
+      "version": "0.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/hytime/dsh-client-ui-shortcuts.git",
+      "namespaces": [
+        "dsh-shortcuts"
+      ],
+      "strings": 52
+    },
+    {
+      "package": "@iasiv5/dsh-skins",
+      "version": "1.5.14",
+      "license": "MIT",
+      "repository": "https://github.com/iasiv5/dsh-skins.git",
+      "namespaces": [
+        "dsh-skins.ui"
+      ],
+      "strings": 71
+    },
+    {
+      "package": "@icedcola/dsh-provider-veark",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/IcedWatermelonJuice/dsh-provider-veark.git",
+      "namespaces": [
+        "dsh-provider-veark"
+      ],
+      "strings": 68
+    },
+    {
+      "package": "@idoall/dsh-session-colors",
+      "version": "0.1.11",
+      "license": "MIT",
+      "repository": "https://github.com/idoall/dsh-session-colors.git",
+      "namespaces": [
+        "sessionColor"
+      ],
+      "strings": 17
+    },
+    {
+      "package": "@jaxzhou/dsh-file-explorer",
+      "version": "0.1.11",
+      "license": "MIT",
+      "repository": "https://github.com/jaxzhou/dsh-file-explorer.git",
+      "namespaces": [
+        "fileExplorer"
+      ],
+      "strings": 79
+    },
+    {
+      "package": "@jcy2387/dsh-codex-provider",
+      "version": "0.1.7-rc.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/DamonBao/dsh-codex-suite.git",
+      "namespaces": [
+        "sse"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "@jcy2387/dsh-conversation-ui",
+      "version": "0.1.7-rc.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/DamonBao/dsh-codex-suite.git",
+      "namespaces": [
+        "settings.conversationUi"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "@jiyr0119/dsh-service-console",
+      "version": "0.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/Jiyr0119/dsh-service-console.git",
+      "namespaces": [
+        "dsh-service-console"
+      ],
+      "strings": 72
+    },
+    {
+      "package": "@kasenri/dsh-orbit",
+      "version": "0.6.7",
+      "license": "MIT",
+      "repository": "https://github.com/KasenRi/dsh-orbit-browser-plugins.git",
+      "namespaces": [
+        "orbit-model"
+      ],
+      "strings": 36
+    },
+    {
+      "package": "@kenz1117/dsh-engram",
+      "version": "0.9.8",
+      "license": "MIT",
+      "repository": "https://github.com/kenz1117/dsh-engram.git",
+      "namespaces": [
+        "engram"
+      ],
+      "strings": 408
+    },
+    {
+      "package": "@kenz1117/dsh-ui-rainbowspeak",
+      "version": "0.0.2",
+      "license": "MIT",
+      "repository": "https://github.com/kenz1117/dsh-ui-rainbowspeak.git",
+      "namespaces": [
+        "ui-rainbowspeak"
+      ],
+      "strings": 22
+    },
+    {
+      "package": "@kenz1117/dsh-ui-usage-billing",
+      "version": "1.6.8",
+      "license": "MIT",
+      "repository": "https://github.com/kenz1117/dsh-ui-usage-billing.git",
+      "namespaces": [
+        "usageBilling"
+      ],
+      "strings": 353
+    },
+    {
+      "package": "@khorsheed/dsh-taskpilot",
+      "version": "0.3.5",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "taskpilot"
+      ],
+      "strings": 44
+    },
+    {
+      "package": "@laoyuehanni/dsh-git-worktree",
+      "version": "0.4.12",
+      "license": "MIT",
+      "repository": "https://github.com/LaoYueHanNi/dsh-git-worktree.git",
+      "namespaces": [
+        "git-worktree"
+      ],
+      "strings": 209
+    },
+    {
+      "package": "@leisureyu/dsh-smart-dl",
+      "version": "1.4.6",
+      "license": "MIT",
+      "repository": "https://github.com/LeiSureYu/dsh-smart-download.git",
+      "namespaces": [
+        "smartdl"
+      ],
+      "strings": 57
+    },
+    {
+      "package": "@liaozhi/dsh-comfyui-based-tools",
+      "version": "0.8.9",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "comfyui-tools.panel"
+      ],
+      "strings": 131
+    },
+    {
+      "package": "@liaozhi/dsh-meme-gen",
+      "version": "0.9.2",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "settings.meme"
+      ],
+      "strings": 113
+    },
+    {
+      "package": "@lijian-ui/dsh-im-gateway",
+      "version": "0.3.5",
+      "license": "MIT",
+      "repository": "https://github.com/lijian-ui/dsh-im-gateway.git",
+      "namespaces": [
+        "im-gateway"
+      ],
+      "strings": 82
+    },
+    {
+      "package": "@linbin-mk/dsh-workspace-prompt",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/linbin-mk/dsh-workspace-prompt.git",
+      "namespaces": [
+        "workspace-prompt"
+      ],
+      "strings": 48
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-git-graph",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "git-graph"
+      ],
+      "strings": 63
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-market",
+      "version": "0.4.8",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "dsh-web-ui-market"
+      ],
+      "strings": 106
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-model-capabilities",
+      "version": "0.4.6",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "model-caps"
+      ],
+      "strings": 48
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-plugin-manager",
+      "version": "0.4.8",
+      "license": "BSD-3-Clause",
+      "repository": null,
+      "namespaces": [
+        "settings.pluginManager"
+      ],
+      "strings": 37
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-preset-center",
+      "version": "0.4.8",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/zhu1090093659/dsh-presets.git",
+      "namespaces": [
+        "dsh-web-ui-preset-center"
+      ],
+      "strings": 46
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-skill-explorer",
+      "version": "0.4.8",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "dsh-skill-explorer"
+      ],
+      "strings": 114
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-task-board",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "task-board"
+      ],
+      "strings": 439
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-task-board-github",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "task-board-github"
+      ],
+      "strings": 113
+    },
+    {
+      "package": "@linxin666/dsh-client-ui-web-ui-settings",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "web-ui-plugins"
+      ],
+      "strings": 14
+    },
+    {
+      "package": "@linxin666/dsh-desktop-launcher",
+      "version": "0.3.13",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "desktop-launcher"
+      ],
+      "strings": 47
+    },
+    {
+      "package": "@linxin666/dsh-doctor",
+      "version": "0.3.24",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "doctor"
+      ],
+      "strings": 138
+    },
+    {
+      "package": "@linxin666/dsh-liangshen",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "liangshen"
+      ],
+      "strings": 42
+    },
+    {
+      "package": "@linxin666/dsh-pet",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-pet.git",
+      "namespaces": [
+        "pet"
+      ],
+      "strings": 81
+    },
+    {
+      "package": "@linxin666/dsh-remote-web-ui",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "remote"
+      ],
+      "strings": 117
+    },
+    {
+      "package": "@linxin666/dsh-session-archive",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": null,
+      "namespaces": [
+        "dsh-web-ui-session-archive"
+      ],
+      "strings": 124
+    },
+    {
+      "package": "@linxin666/dsh-ssh",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "dsh-ssh"
+      ],
+      "strings": 158
+    },
+    {
+      "package": "@linxin666/dsh-update",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "update"
+      ],
+      "strings": 43
+    },
+    {
+      "package": "@linxin666/dsh-usage",
+      "version": "0.4.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/zhu1090093659/dsh-web.git",
+      "namespaces": [
+        "dsh-web-ui-usage"
+      ],
+      "strings": 67
+    },
+    {
+      "package": "@liustack/pptwise",
+      "version": "0.48.0",
+      "license": "MIT",
+      "repository": "https://github.com/liustack/pptwise.git",
+      "namespaces": [
+        "pptwise"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "@luoshuizhiwei/dsh-desktop-restart",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/luoshuizhiwei/dsh-desktop-restart.git",
+      "namespaces": [
+        "dsh-desktop-restart"
+      ],
+      "strings": 90
+    },
+    {
+      "package": "@luweiyabo/dsh-whale-pet",
+      "version": "0.1.3",
+      "license": "SEE LICENSE IN LICENSE",
+      "repository": "https://github.com/luweiyabo/dsh-whale-pet.git",
+      "namespaces": [
+        "whale-pet"
+      ],
+      "strings": 186
+    },
+    {
+      "package": "@lynn123411/dsh-chat-translate",
+      "version": "3.5.9",
+      "license": "MIT",
+      "repository": "https://github.com/tttnny/my-dsh.git",
+      "namespaces": [
+        "settings.chatTranslate"
+      ],
+      "strings": 45
+    },
+    {
+      "package": "@mars-sea/dsh-commandcode-provider",
+      "version": "0.15.1",
+      "license": "MIT",
+      "repository": "https://github.com/Mars-Sea/dsh-commandcode-provider.git",
+      "namespaces": [
+        "settings.commandcode"
+      ],
+      "strings": 271
+    },
+    {
+      "package": "@michengai/dsh-agency-agents",
+      "version": "1.2.10",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/MichengAI/dsh-agency-agents.git",
+      "namespaces": [
+        "agency"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "@michengai/dsh-archive-manager",
+      "version": "1.1.7",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/MichengAI/dsh-archive-manager.git",
+      "namespaces": [
+        "archive-manager-workspace"
+      ],
+      "strings": 272
+    },
+    {
+      "package": "@michengai/dsh-codex-ui",
+      "version": "1.1.47",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/MichengAI/dsh-codex-ui.git",
+      "namespaces": [
+        "michengai.codexUi"
+      ],
+      "strings": 293
+    },
+    {
+      "package": "@michengai/dsh-skills-manager",
+      "version": "1.2.11",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/MichengAI/dsh-skills-manager.git",
+      "namespaces": [
+        "skills-manager"
+      ],
+      "strings": 121
+    },
+    {
+      "package": "@mlgbnb/dsh-archive-manager",
+      "version": "1.0.10",
+      "license": "MIT",
+      "repository": "https://github.com/z953218350/dsh-archive-manager.git",
+      "namespaces": [
+        "archive-manager"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "@mstar-harness/dsh",
+      "version": "4.0.5",
+      "license": "MIT",
+      "repository": "https://github.com/btspoony/mstar-harness.git",
+      "namespaces": [
+        "mstar-panel"
+      ],
+      "strings": 134
+    },
+    {
+      "package": "@nanmicoder/dsh-agent-teams",
+      "version": "0.1.26",
+      "license": "MIT",
+      "repository": "https://github.com/NanmiCoder/dsh-agent-teams.git",
+      "namespaces": [
+        "agentTeams"
+      ],
+      "strings": 217
+    },
+    {
+      "package": "@nanmicoder/dsh-plugin-market",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/NanmiCoder/dsh-plugin-market.git",
+      "namespaces": [
+        "settings.pluginHub"
+      ],
+      "strings": 110
+    },
+    {
+      "package": "@neptune810/dsh-model-router",
+      "version": "0.14.2",
+      "license": "MIT",
+      "repository": "https://github.com/Neptune810/dsh-model-router.git",
+      "namespaces": [
+        "dsh-model-router"
+      ],
+      "strings": 125
+    },
+    {
+      "package": "@nonamelego/dsh-catppuccin",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/NoNameLeGo/dsh-catppuccin-theme.git",
+      "namespaces": [
+        "catppuccin"
+      ],
+      "strings": 85
+    },
+    {
+      "package": "@noob-stupid/dsh-plugin-console",
+      "version": "0.5.92",
+      "license": "MIT",
+      "repository": "https://github.com/Noob-stupid/dsh-plugin-gating-hub.git",
+      "namespaces": [
+        "settings.pluginConsole"
+      ],
+      "strings": 627
+    },
+    {
+      "package": "@norman-else/dsh-claude",
+      "version": "0.1.66",
+      "license": "MIT",
+      "repository": "https://github.com/Norman-else/dsh-claude.git",
+      "namespaces": [
+        "settings.claude-code"
+      ],
+      "strings": 470
+    },
+    {
+      "package": "@objectivex666/dsh-settings-search",
+      "version": "1.14.0",
+      "license": "GPL-3.0",
+      "repository": "https://github.com/objectivex666/dsh-settings-search.git",
+      "namespaces": [
+        "settings-search-v5"
+      ],
+      "strings": 145
+    },
+    {
+      "package": "@opencode2dsh/dsh-plugin",
+      "version": "0.3.14",
+      "license": "MIT",
+      "repository": "https://github.com/FishBottle7/opencode2dsh.git",
+      "namespaces": [
+        "settings.ip-pool"
+      ],
+      "strings": 102
+    },
+    {
+      "package": "@perrylink/dsh-github",
+      "version": "0.7.26",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-github.git",
+      "namespaces": [
+        "dsh-github"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "@perrylink/dsh-ticktick",
+      "version": "0.1.20",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-ticktick.git",
+      "namespaces": [
+        "ticktick"
+      ],
+      "strings": 52
+    },
+    {
+      "package": "@pinkbanana/dsh-balance",
+      "version": "0.10.3",
+      "license": "MIT",
+      "repository": "https://github.com/crazywoola/dsh-balance.git",
+      "namespaces": [
+        "dsh-balance"
+      ],
+      "strings": 131
+    },
+    {
+      "package": "@rebornace/dsh-tracescope",
+      "version": "0.3.5",
+      "license": "MIT",
+      "repository": "https://github.com/rebornace/dsh-tracescope.git",
+      "namespaces": [
+        "tracescope"
+      ],
+      "strings": 611
+    },
+    {
+      "package": "@restregular/dsh-skill-center",
+      "version": "0.3.11",
+      "license": "MIT",
+      "repository": "https://github.com/RestRegular/dsh-skill-center.git",
+      "namespaces": [
+        "skill-center"
+      ],
+      "strings": 73
+    },
+    {
+      "package": "@sagmans/dsh-tui",
+      "version": "0.16.0",
+      "license": "MIT",
+      "repository": "https://github.com/sagmans/dsh-tui.git",
+      "namespaces": [
+        "ERR_UNSAFE_PROFILING_DIRECTORY"
+      ],
+      "strings": 15
+    },
+    {
+      "package": "@shatyuka/dsh-llm-codebuddy",
+      "version": "0.9.3",
+      "license": "MIT",
+      "repository": "https://github.com/shatyuka/dsh-llm-codebuddy.git",
+      "namespaces": [
+        "settings.codebuddy"
+      ],
+      "strings": 50
+    },
+    {
+      "package": "@shuind/dsh-codex-harness",
+      "version": "0.2.21",
+      "license": "MIT",
+      "repository": "https://github.com/shuind/dsh-codex-harness.git",
+      "namespaces": [
+        "codex"
+      ],
+      "strings": 88
+    },
+    {
+      "package": "@sidequest-007/dsh-atlas",
+      "version": "1.0.9",
+      "license": "MIT",
+      "repository": "https://github.com/jameswatt139240-crypto/dsh-ATLAS.git",
+      "namespaces": [
+        "atlas"
+      ],
+      "strings": 119
+    },
+    {
+      "package": "@sidleo3/dsh-plugins-plus",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/sidleo/dsh-plugins-plus.git",
+      "namespaces": [
+        "dshPluginsPlus"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "@sleep2agi/dsh-anet",
+      "version": "0.1.0-preview.34",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/sleep2agi/agent-network.git",
+      "namespaces": [
+        "anet"
+      ],
+      "strings": 49
+    },
+    {
+      "package": "@sleetdrop/dsh-plugin-topology",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/sleetdrop/dsh-plugin-topology.git",
+      "namespaces": [
+        "pluginTopology"
+      ],
+      "strings": 82
+    },
+    {
+      "package": "@starwish-ai/xingyuan-dsh",
+      "version": "0.6.7",
+      "license": "MIT",
+      "repository": "https://github.com/starwish-ai/xingyuan-dsh.git",
+      "namespaces": [
+        "xingyuan"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "@stolyarovmn/dsh-client-ui-schedule-tab",
+      "version": "0.8.0",
+      "license": "MIT",
+      "repository": "https://github.com/Stolyarovmn/dsh-schedule-tab.git",
+      "namespaces": [
+        "schedule-attention-enhancer"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "@sunjuntao/dsh-prompt-library",
+      "version": "0.17.2",
+      "license": "MIT",
+      "repository": "https://github.com/master1Sun/dsh-prompt-library.git",
+      "namespaces": [
+        "prompt-library"
+      ],
+      "strings": 66
+    },
+    {
+      "package": "@superfish058/dsh-llm-proxy",
+      "version": "1.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/superfish058/dsh-llm-proxy.git",
+      "namespaces": [
+        "settings.llm-proxy"
+      ],
+      "strings": 32
+    },
+    {
+      "package": "@telosmaylx/dsh-session-notify",
+      "version": "0.1.23",
+      "license": "MIT",
+      "repository": "https://github.com/TelosmaYLX/dsh-session-notify.git",
+      "namespaces": [
+        "session-complete-notify"
+      ],
+      "strings": 107
+    },
+    {
+      "package": "@tianbuyu-wwx/dsh-formatforge",
+      "version": "3.0.0",
+      "license": "MIT",
+      "repository": "https://github.com/Tianbuyu-wwx/DSH-FormatForge.git",
+      "namespaces": [
+        "formatforge"
+      ],
+      "strings": 22
+    },
+    {
+      "package": "@tr1v3r/dsh-proxy",
+      "version": "0.2.5",
+      "license": "MIT",
+      "repository": "https://github.com/tr1v3r/dsh-proxy.git",
+      "namespaces": [
+        "settings.dshProxy"
+      ],
+      "strings": 36
+    },
+    {
+      "package": "@twinsearth/w2m-dsh-plugin",
+      "version": "1.4.3",
+      "license": "MIT",
+      "repository": "https://github.com/TwinsEarth/dsh-windows2macos.git",
+      "namespaces": [
+        "w2m.target"
+      ],
+      "strings": 22
+    },
+    {
+      "package": "@vibedev-si/dsh-vibedev",
+      "version": "0.3.8",
+      "license": "MIT",
+      "repository": "https://github.com/VibeDev-Si/dsh-vibedev.git",
+      "namespaces": [
+        "dsh-vibedev"
+      ],
+      "strings": 136
+    },
+    {
+      "package": "@vlln/dsh-navbar",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/vlln/dsh-navbar.git",
+      "namespaces": [
+        "pin"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "@weibaohui/hermes-loop",
+      "version": "0.3.1",
+      "license": "MIT",
+      "repository": "https://github.com/weibaohui/hermes-loop.git",
+      "namespaces": [
+        "hermes-loop"
+      ],
+      "strings": 89
+    },
+    {
+      "package": "@wenaixi/dsh-superpower",
+      "version": "8.0.0",
+      "license": "MIT",
+      "repository": "https://github.com/Wenaixi/dsh-superpower.git",
+      "namespaces": [
+        "dsh-superpower"
+      ],
+      "strings": 19
+    },
+    {
+      "package": "@wenqi_bian/dsh-web-search-anysearch",
+      "version": "0.2.0-rc.2",
+      "license": "MIT",
+      "repository": "https://github.com/VinciBeans/dsh-web-search-anysearch.git",
+      "namespaces": [
+        "web-search-anysearch"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "@wingsky-1/dsh-lan-proxy",
+      "version": "0.2.10",
+      "license": "MIT",
+      "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
+      "namespaces": [
+        "settings.lanProxy"
+      ],
+      "strings": 69
+    },
+    {
+      "package": "@wingsky-1/dsh-notifier",
+      "version": "0.2.10",
+      "license": "MIT",
+      "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
+      "namespaces": [
+        "notifier"
+      ],
+      "strings": 260
+    },
+    {
+      "package": "@wingsky-1/dsh-provider-usage",
+      "version": "0.2.10",
+      "license": "MIT",
+      "repository": "https://github.com/wingsky-1/dsh-plugin-hub.git",
+      "namespaces": [
+        "providerUsage"
+      ],
+      "strings": 294
+    },
+    {
+      "package": "@wisdoverse/dsh-inline-media-viewer",
+      "version": "1.0.12",
+      "license": "MIT",
+      "repository": "https://github.com/Wisdoverse/dsh-inline-media-viewer-plugin.git",
+      "namespaces": [
+        "inlineMedia"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "@wisdoverse/dsh-skills-manager",
+      "version": "1.0.6",
+      "license": "MIT",
+      "repository": "https://github.com/Wisdoverse/dsh-skills-manager-plugin.git",
+      "namespaces": [
+        "skillManager"
+      ],
+      "strings": 67
+    },
+    {
+      "package": "@wszhoho/dsh-file-attachment",
+      "version": "0.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/wszhoho/dsh-file-attachment.git",
+      "namespaces": [
+        "dsh-file-attachment"
+      ],
+      "strings": 18
+    },
+    {
+      "package": "@xfqz86/dsh-usage-stats",
+      "version": "0.5.2",
+      "license": "MIT",
+      "repository": "https://github.com/xfqz86/dsh-usage-stats.git",
+      "namespaces": [
+        "dsh-usage-stats"
+      ],
+      "strings": 281
+    },
+    {
+      "package": "@xia-sc/dsh-cc-studio",
+      "version": "0.11.2",
+      "license": "MIT",
+      "repository": "https://github.com/xia-sc/dsh-cc-studio.git",
+      "namespaces": [
+        "dshCcStudio"
+      ],
+      "strings": 327
+    },
+    {
+      "package": "@xiaoso/dsh-run-config",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/xiaoso456/dsh-run-config.git",
+      "namespaces": [
+        "task-runner"
+      ],
+      "strings": 61
+    },
+    {
+      "package": "@xiaoso/dsh-tool-plus",
+      "version": "0.1.16",
+      "license": "MIT",
+      "repository": "https://github.com/xiaoso456/dsh-tool-plus.git",
+      "namespaces": [
+        "tool-plus-cards"
+      ],
+      "strings": 69
+    },
+    {
+      "package": "@xiaoyuy搠/dsh-backup",
+      "version": "0.13.4",
+      "license": "MIT",
+      "repository": "https://github.com/xiaoyuy搠/dsh-backup.git",
+      "namespaces": [
+        "settings.backupPanel"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "@xrn1997/dsh-novel",
+      "version": "0.8.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/xrn1997/dsh-novel.git",
+      "namespaces": [
+        "xrn1997-dsh-novel"
+      ],
+      "strings": 160
+    },
+    {
+      "package": "@y2zyyr/dsh-token-usage-sidebar",
+      "version": "1.1.11",
+      "license": "MIT",
+      "repository": "https://github.com/y2zyyr/dsh-token-usage-sidebar.git",
+      "namespaces": [
+        "dsh-token-usage-sidebar"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "@y9931666/dsh-plugin-roundtable",
+      "version": "1.0.0-rc.3",
+      "license": "MIT",
+      "repository": "https://github.com/9931666/dsh-plugin-roundtable.git",
+      "namespaces": [
+        "roundtable"
+      ],
+      "strings": 215
+    },
+    {
+      "package": "@yadsh/dsh-doc-impact",
+      "version": "0.5.2",
+      "license": "MIT",
+      "repository": "https://github.com/xarleyn/dsh-plugins.git",
+      "namespaces": [
+        "dsh-doc-impact"
+      ],
+      "strings": 32
+    },
+    {
+      "package": "@ychris12138/dsh-usage-stats",
+      "version": "0.3.6",
+      "license": "MIT",
+      "repository": "https://github.com/Ychris12138/dsh-usage-stats.git",
+      "namespaces": [
+        "usageStats"
+      ],
+      "strings": 134
+    },
+    {
+      "package": "@yolk_vat-y/dsh-project-memory",
+      "version": "0.6.3",
+      "license": "MIT",
+      "repository": "https://github.com/00080000/dsh-project-memory.git",
+      "namespaces": [
+        "dsh-project-memory"
+      ],
+      "strings": 83
+    },
+    {
+      "package": "@yugasun/dsh-web-search",
+      "version": "0.2.5",
+      "license": "MIT",
+      "repository": "https://github.com/yugasun/dsh-plugins.git",
+      "namespaces": [
+        "dsh-web-search"
+      ],
+      "strings": 96
+    },
+    {
+      "package": "@zaimokuza/dsh-acp-adapter",
+      "version": "0.1.0-rc.10",
+      "license": "MIT",
+      "repository": "https://github.com/zaimokuza-yoshiteru/dsh-acp-adapter.git",
+      "namespaces": [
+        "settings.acp"
+      ],
+      "strings": 95
+    },
+    {
+      "package": "@zhangfengshun/dsh-remote-ssh",
+      "version": "2.4.36",
+      "license": "MIT",
+      "repository": "https://github.com/ZhangFengshun/dsh-remote-ssh.git",
+      "namespaces": [
+        "dsh-remote-ssh"
+      ],
+      "strings": 122
+    },
+    {
+      "package": "@zhiqiangme/dsh-autostart-workbuddy",
+      "version": "26.10.22",
+      "license": "MIT",
+      "repository": "https://github.com/zhiqiangme/dsh-plugins.git",
+      "namespaces": [
+        "settings.dsh-autostart-workbuddy"
+      ],
+      "strings": 175
+    },
+    {
+      "package": "agentero-dsh-host",
+      "version": "0.1.6",
+      "license": null,
+      "repository": null,
+      "namespaces": [
+        "agentero.host"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "agentero-dsh-library",
+      "version": "0.1.6",
+      "license": null,
+      "repository": null,
+      "namespaces": [
+        "agentero.library"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "agentero-dsh-notes",
+      "version": "0.1.6",
+      "license": null,
+      "repository": null,
+      "namespaces": [
+        "agentero.notes"
+      ],
+      "strings": 34
+    },
+    {
+      "package": "agentero-dsh-pdf",
+      "version": "0.1.6",
+      "license": null,
+      "repository": null,
+      "namespaces": [
+        "agentero.pdf"
+      ],
+      "strings": 67
+    },
+    {
+      "package": "bgjobs",
+      "version": "0.2.6",
+      "license": "MIT",
+      "repository": "https://github.com/bitsmug/dsh-bgjobs.git",
+      "namespaces": [
+        "bgjobs"
+      ],
+      "strings": 71
+    },
+    {
+      "package": "billion-context",
+      "version": "0.1.202",
+      "license": "MIT",
+      "repository": "https://github.com/ranxianglei/billion-context.git",
+      "namespaces": [
+        "foldPositions"
+      ],
+      "strings": 481
+    },
+    {
+      "package": "clawock-dsh",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/KCNyu/clawock.git",
+      "namespaces": [
+        "clawock"
+      ],
+      "strings": 459
+    },
+    {
+      "package": "clearai-dsh",
+      "version": "0.5.6",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/Clearailhc/clearai-dsh.git",
+      "namespaces": [
+        "clearai"
+      ],
+      "strings": 297
+    },
+    {
+      "package": "deepseek-harness-background",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/HaoyueQin/deepseek-harness-background.git",
+      "namespaces": [
+        "ui-background"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "deepseek-harness-zh_pro",
+      "version": "0.10.3",
+      "license": "MIT",
+      "repository": "https://github.com/magian1127/deepseek-harness-zh_pro.git",
+      "namespaces": [
+        "dsh-zh-settings"
+      ],
+      "strings": 121
+    },
+    {
+      "package": "deepseek-harness-zhipu_plan_tools",
+      "version": "0.1.8",
+      "license": "MIT",
+      "repository": "https://github.com/magian1127/deepseek-harness-zhipu_plan_tools.git",
+      "namespaces": [
+        "settings.dsh-zhipu"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "ds-harness-remote",
+      "version": "0.5.17",
+      "license": "MIT",
+      "repository": "https://github.com/liguobao/ds-harness-remote.git",
+      "namespaces": [
+        "ds-harness-remote"
+      ],
+      "strings": 270
+    },
+    {
+      "package": "dsh-ab-chart",
+      "version": "0.1.19",
+      "license": "MIT",
+      "repository": "https://github.com/deepseek-ai/deepseek-harness.git",
+      "namespaces": [
+        "chart"
+      ],
+      "strings": 7
+    },
+    {
+      "package": "dsh-ab-market-research",
+      "version": "0.2.12",
+      "license": "MIT",
+      "repository": "https://github.com/deepseek-ai/deepseek-harness.git",
+      "namespaces": [
+        "tradeSearch"
+      ],
+      "strings": 15
+    },
+    {
+      "package": "dsh-ab-publish",
+      "version": "0.1.12",
+      "license": "MIT",
+      "repository": "https://github.com/deepseek-ai/deepseek-harness.git",
+      "namespaces": [
+        "publish"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-actions",
+      "version": "0.5.2",
+      "license": "MIT",
+      "repository": "https://github.com/pure-craft/dsh-actions.git",
+      "namespaces": [
+        "dsh-actions"
+      ],
+      "strings": 128
+    },
+    {
+      "package": "dsh-advisor",
+      "version": "0.6.2",
+      "license": "MIT",
+      "repository": "https://github.com/omdsh-dev/dsh-advisor.git",
+      "namespaces": [
+        "settings.advisor"
+      ],
+      "strings": 49
+    },
+    {
+      "package": "dsh-agent-lang",
+      "version": "0.12.0",
+      "license": "MIT",
+      "repository": "https://github.com/KannaKuron/dsh-agent-lang.git",
+      "namespaces": [
+        "agentLang"
+      ],
+      "strings": 21
+    },
+    {
+      "package": "dsh-agent-plugins-market",
+      "version": "0.11.1",
+      "license": "MIT",
+      "repository": "https://github.com/Sivan757/dsh-agent-plugins-market.git",
+      "namespaces": [
+        "dsh-agent-extension-preset"
+      ],
+      "strings": 464
+    },
+    {
+      "package": "dsh-agent-shell",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/Mrtime-gege/dsh-agent-shell.git",
+      "namespaces": [
+        "agent-shell-consent"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "dsh-agent-skills",
+      "version": "0.1.14",
+      "license": "MIT",
+      "repository": "https://github.com/minivv/dsh-agent-skills.git",
+      "namespaces": [
+        "agent-skills"
+      ],
+      "strings": 53
+    },
+    {
+      "package": "dsh-agent-studio",
+      "version": "0.1.8",
+      "license": "MIT",
+      "repository": "https://github.com/thissensen/dsh-agent-studio.git",
+      "namespaces": [
+        "agentStudio"
+      ],
+      "strings": 248
+    },
+    {
+      "package": "dsh-agent-toolkit",
+      "version": "0.4.13",
+      "license": "MIT",
+      "repository": "https://github.com/EsonXie/dsh-agent-toolkit.git",
+      "namespaces": [
+        "agent-schedule"
+      ],
+      "strings": 61
+    },
+    {
+      "package": "dsh-ai4scholar",
+      "version": "0.3.8",
+      "license": "MIT",
+      "repository": "https://github.com/literaf/dsh-ai4scholar.git",
+      "namespaces": [
+        "ai4scholar"
+      ],
+      "strings": 38
+    },
+    {
+      "package": "dsh-antigravity",
+      "version": "0.0.9",
+      "license": "MIT",
+      "repository": "https://github.com/LiZhenNet/dsh-antigravity.git",
+      "namespaces": [
+        "dsh-antigravity"
+      ],
+      "strings": 40
+    },
+    {
+      "package": "dsh-api-dashboard",
+      "version": "1.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/133563825as-ai/dsh-api-dashboard.git",
+      "namespaces": [
+        "apiDashboard"
+      ],
+      "strings": 166
+    },
+    {
+      "package": "dsh-approval-review",
+      "version": "0.6.4",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/LAwLi3tCoding/dsh-approval-review.git",
+      "namespaces": [
+        "approval-review"
+      ],
+      "strings": 43
+    },
+    {
+      "package": "dsh-approval-voice",
+      "version": "0.3.0",
+      "license": "MIT",
+      "repository": "https://github.com/ZIye1208/dsh-approval-voice.git",
+      "namespaces": [
+        "approvalVoice"
+      ],
+      "strings": 18
+    },
+    {
+      "package": "dsh-archived-chats",
+      "version": "1.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/Ultronen/dsh-archived-chats.git",
+      "namespaces": [
+        "settings.archived-chats"
+      ],
+      "strings": 353
+    },
+    {
+      "package": "dsh-argp",
+      "version": "1.10.1",
+      "license": "MIT",
+      "repository": "https://github.com/yoza10635/dsh-argp.git",
+      "namespaces": [
+        "dsh-argp"
+      ],
+      "strings": 29
+    },
+    {
+      "package": "dsh-artifact",
+      "version": "0.8.1",
+      "license": "MIT",
+      "repository": "https://github.com/Jannchie/dsh-artifact.git",
+      "namespaces": [
+        "artifact"
+      ],
+      "strings": 56
+    },
+    {
+      "package": "dsh-auto-memory",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/AskTheWay/dsh-auto-memory.git",
+      "namespaces": [
+        "autoMemory"
+      ],
+      "strings": 73
+    },
+    {
+      "package": "dsh-auto-review",
+      "version": "0.13.8",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-auto-review.git",
+      "namespaces": [
+        "autoReviewPanel"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "dsh-auto-title",
+      "version": "1.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/WhatCannotBeSaid/dsh-auto-title.git",
+      "namespaces": [
+        "dsh-auto-title"
+      ],
+      "strings": 209
+    },
+    {
+      "package": "dsh-autotier",
+      "version": "0.2.19",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-autotier.git",
+      "namespaces": [
+        "settings.autotier"
+      ],
+      "strings": 37
+    },
+    {
+      "package": "dsh-baize-rules",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/bvcvb/dsh-baize-rules.git",
+      "namespaces": [
+        "baize-rules"
+      ],
+      "strings": 61
+    },
+    {
+      "package": "dsh-ballast",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/xswt442-cmd/dsh-ballast.git",
+      "namespaces": [
+        "dsh-ballast"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "dsh-better-display",
+      "version": "0.3.8",
+      "license": "MIT",
+      "repository": "https://github.com/aa2246740/dsh-better-display.git",
+      "namespaces": [
+        "better-display"
+      ],
+      "strings": 18
+    },
+    {
+      "package": "dsh-better-input",
+      "version": "0.2.6",
+      "license": "MIT",
+      "repository": "https://github.com/DIAG5/dsh-better-input.git",
+      "namespaces": [
+        "better-input"
+      ],
+      "strings": 123
+    },
+    {
+      "package": "dsh-better-sidebar",
+      "version": "0.30.1",
+      "license": "MIT",
+      "repository": "https://github.com/omdsh-dev/DSH-better-sidebar",
+      "namespaces": [
+        "betterSidebar"
+      ],
+      "strings": 653
+    },
+    {
+      "package": "dsh-better-workspace",
+      "version": "0.35.1",
+      "license": "MIT",
+      "repository": "https://github.com/KannaKuron/dsh-better-workspace.git",
+      "namespaces": [
+        "betterWorkspace"
+      ],
+      "strings": 173
+    },
+    {
+      "package": "dsh-bigfish",
+      "version": "0.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/gosomea/dsh-bigfish.git",
+      "namespaces": [
+        "bigfish"
+      ],
+      "strings": 113
+    },
+    {
+      "package": "dsh-bill",
+      "version": "0.23.0",
+      "license": "MIT",
+      "repository": "https://github.com/Jannchie/dsh-bill.git",
+      "namespaces": [
+        "dsh-bill"
+      ],
+      "strings": 154
+    },
+    {
+      "package": "dsh-blue-whale",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/starslittle/dsh-blue-whale.git",
+      "namespaces": [
+        "settings.blue-whale"
+      ],
+      "strings": 5
+    },
+    {
+      "package": "dsh-bookmarks",
+      "version": "0.1.5",
+      "license": "MIT",
+      "repository": "https://github.com/penguin-oo/dsh-bookmarks.git",
+      "namespaces": [
+        "bookmarks"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "dsh-browser-cdp",
+      "version": "1.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-browser-cdp.git",
+      "namespaces": [
+        "dsh-browser-cdp"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "dsh-browser-harness",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/chaserchan/dsh-browser-harness.git",
+      "namespaces": [
+        "settings.browser-harness"
+      ],
+      "strings": 9
+    },
+    {
+      "package": "dsh-budget",
+      "version": "0.4.20",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-budget.git",
+      "namespaces": [
+        "settings.budget"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "dsh-call-session",
+      "version": "0.1.9",
+      "license": "MIT",
+      "repository": "https://github.com/popu2do/dsh-call-session.git",
+      "namespaces": [
+        "dsh-canvas"
+      ],
+      "strings": 73
+    },
+    {
+      "package": "dsh-canvas-tsx-sidebar",
+      "version": "0.7.3",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-canvas-tsx-sidebar.git",
+      "namespaces": [
+        "dsh-canvas-tsx-sidebar"
+      ],
+      "strings": 14
+    },
+    {
+      "package": "dsh-capability-panel",
+      "version": "1.4.2",
+      "license": "MIT",
+      "repository": "https://github.com/pure-craft/dsh-capability-panel.git",
+      "namespaces": [
+        "capability-panel"
+      ],
+      "strings": 72
+    },
+    {
+      "package": "dsh-catppuccin",
+      "version": "0.2.6",
+      "license": "MIT",
+      "repository": "https://github.com/zhijun-dai/Catppuccin-dsh-theme.git",
+      "namespaces": [
+        "settings.catppuccin"
+      ],
+      "strings": 34
+    },
+    {
+      "package": "dsh-chat-tidy",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/ChuanTianML/dsh-chat-tidy.git",
+      "namespaces": [
+        "dsh-chat-tidy"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-chat-timeline",
+      "version": "0.1.5",
+      "license": "MIT",
+      "repository": "https://github.com/jjxjjjjiik-bot/dsh-chat-timeline.git",
+      "namespaces": [
+        "chat-timeline"
+      ],
+      "strings": 7
+    },
+    {
+      "package": "dsh-checkpoint-rewind",
+      "version": "0.6.33",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-checkpoint-rewind.git",
+      "namespaces": [
+        "settings.checkpointRewind"
+      ],
+      "strings": 49
+    },
+    {
+      "package": "dsh-client-auto-continue",
+      "version": "0.15.0",
+      "license": "MIT",
+      "repository": "https://github.com/HsiangNianian/dsh-auto-continue.git",
+      "namespaces": [
+        "auto-continue"
+      ],
+      "strings": 137
+    },
+    {
+      "package": "dsh-client-liang-intensity-skin",
+      "version": "0.1.6",
+      "license": null,
+      "repository": "https://github.com/kingOfSoySauce/dsh-liang-skin.git",
+      "namespaces": [
+        "liang.skin"
+      ],
+      "strings": 5
+    },
+    {
+      "package": "dsh-client-ui-quote",
+      "version": "0.12.2",
+      "license": "MIT",
+      "repository": "https://github.com/BangBang-03/dsh-client-ui-quote.git",
+      "namespaces": [
+        "ui-quote"
+      ],
+      "strings": 80
+    },
+    {
+      "package": "dsh-code-index",
+      "version": "0.11.0",
+      "license": "MIT",
+      "repository": "https://github.com/lemonxiny55/dsh-code-index.git",
+      "namespaces": [
+        "settings.codeIndex"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-codebuddy-cli",
+      "version": "0.4.3",
+      "license": "MIT",
+      "repository": "https://github.com/f艷07013/dsh-codebuddy-cli.git",
+      "namespaces": [
+        "settings.codebuddy-cli"
+      ],
+      "strings": 162
+    },
+    {
+      "package": "dsh-codex-auth",
+      "version": "0.3.2",
+      "license": "MIT",
+      "repository": "https://github.com/suntianc/dsh-codex-auth.git",
+      "namespaces": [
+        "settings.codexAuth"
+      ],
+      "strings": 79
+    },
+    {
+      "package": "dsh-codex-connect",
+      "version": "0.2.0-alpha.1",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/franksong2702/dsh-codex-connect.git",
+      "namespaces": [
+        "settings.openai-codex"
+      ],
+      "strings": 340
+    },
+    {
+      "package": "dsh-codex-subscription",
+      "version": "3.1.4",
+      "license": "MIT",
+      "repository": "https://github.com/WSL043/dsh-codex-subscription.git",
+      "namespaces": [
+        "settings.codexSubscription"
+      ],
+      "strings": 842
+    },
+    {
+      "package": "dsh-codex-timeline",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/Wine-Red/dsh-codex-timeline.git",
+      "namespaces": [
+        "codex-navigation-enhancer"
+      ],
+      "strings": 58
+    },
+    {
+      "package": "dsh-coding-subscription-oauth",
+      "version": "0.8.5",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/lninghaha/dsh-coding-subscription-oauth.git",
+      "namespaces": [
+        "settings.grok-build"
+      ],
+      "strings": 337
+    },
+    {
+      "package": "dsh-comfyui",
+      "version": "0.5.5",
+      "license": "MIT",
+      "repository": "https://github.com/fandc520/dsh-comfyui.git",
+      "namespaces": [
+        "comfyui"
+      ],
+      "strings": 268
+    },
+    {
+      "package": "dsh-completion-alert",
+      "version": "1.8.4",
+      "license": "MIT",
+      "repository": "https://github.com/yimengqingfeng3-debug/dsh-completion-alert.git",
+      "namespaces": [
+        "completion-alert"
+      ],
+      "strings": 65
+    },
+    {
+      "package": "dsh-composer-layout",
+      "version": "0.1.24",
+      "license": "MIT",
+      "repository": "https://github.com/lavapapa/dsh-composer-layout.git",
+      "namespaces": [
+        "settings.composerLayout"
+      ],
+      "strings": 20
+    },
+    {
+      "package": "dsh-computer-use-win",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/Yu-tao-Li/dsh-computer-use-win.git",
+      "namespaces": [
+        "windowsComputerUse.settings"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "dsh-concise",
+      "version": "0.11.3",
+      "license": "MIT",
+      "repository": "https://github.com/hoyyang/dsh-concise.git",
+      "namespaces": [
+        "dsh-concise"
+      ],
+      "strings": 3
+    },
+    {
+      "package": "dsh-config-manager",
+      "version": "0.1.79",
+      "license": "MIT",
+      "repository": "https://github.com/xiajiajun516/dsh-config-manager.git",
+      "namespaces": [
+        "config-manager"
+      ],
+      "strings": 36
+    },
+    {
+      "package": "dsh-connect-trae",
+      "version": "4.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/dingminhua/dsh-connect-trae.git",
+      "namespaces": [
+        "settings.trae"
+      ],
+      "strings": 347
+    },
+    {
+      "package": "dsh-connect-workbuddy",
+      "version": "5.10.0",
+      "license": "MIT",
+      "repository": "https://github.com/dingminhua/dsh-connect-workbuddy.git",
+      "namespaces": [
+        "settings.workbuddy"
+      ],
+      "strings": 423
+    },
+    {
+      "package": "dsh-console-plugin",
+      "version": "0.5.29",
+      "license": "MIT",
+      "repository": "https://github.com/ChenJun25/dsh-console-plugin.git",
+      "namespaces": [
+        "dsh-console"
+      ],
+      "strings": 105
+    },
+    {
+      "package": "dsh-context",
+      "version": "0.82.2",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/bowenliang123/dsh-context.git",
+      "namespaces": [
+        "dsh-context"
+      ],
+      "strings": 738
+    },
+    {
+      "package": "dsh-context-imports",
+      "version": "0.2.3",
+      "license": "MIT",
+      "repository": "https://github.com/ciskonc/dsh-context-imports.git",
+      "namespaces": [
+        "dsh-context-imports"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "dsh-context-memory",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "contextMemory"
+      ],
+      "strings": 48
+    },
+    {
+      "package": "dsh-context-zip",
+      "version": "0.1.10",
+      "license": "MIT",
+      "repository": "https://github.com/brunhildzhou/dsh-context-zip.git",
+      "namespaces": [
+        "context-zip"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-cost-track",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "costTrack"
+      ],
+      "strings": 34
+    },
+    {
+      "package": "dsh-cpa-switch",
+      "version": "0.18.1",
+      "license": "MIT",
+      "repository": "https://github.com/cslkkl/dsh-cpa-switch.git",
+      "namespaces": [
+        "cpa-panel"
+      ],
+      "strings": 126
+    },
+    {
+      "package": "dsh-cursor-subscription",
+      "version": "0.6.12",
+      "license": "MIT",
+      "repository": "https://github.com/orrinzeng/dsh-cursor-subscription.git",
+      "namespaces": [
+        "settings.cursorSubscription"
+      ],
+      "strings": 59
+    },
+    {
+      "package": "dsh-custom-headers",
+      "version": "0.3.0",
+      "license": "MIT",
+      "repository": "https://github.com/EPCN-fla/dsh-custom-headers.git",
+      "namespaces": [
+        "custom-headers"
+      ],
+      "strings": 31
+    },
+    {
+      "package": "dsh-damage-pulse",
+      "version": "4.2.9",
+      "license": "MIT",
+      "repository": "https://github.com/wssfk12138/dsh-damage-pulse.git",
+      "namespaces": [
+        "conversation.session.header.actions"
+      ],
+      "strings": 303
+    },
+    {
+      "package": "dsh-daruma",
+      "version": "0.1.10",
+      "license": "MIT",
+      "repository": "https://github.com/SISCHOI/daruma.git",
+      "namespaces": [
+        "daruma"
+      ],
+      "strings": 28
+    },
+    {
+      "package": "dsh-database-explorer",
+      "version": "0.9.25",
+      "license": "MIT",
+      "repository": "https://github.com/xing-he888/dsh-database-explorer.git",
+      "namespaces": [
+        "dsh-database"
+      ],
+      "strings": 218
+    },
+    {
+      "package": "dsh-decision-layer",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/xbzbing/dsh-decision-layer.git",
+      "namespaces": [
+        "dsh-decision-layer"
+      ],
+      "strings": 152
+    },
+    {
+      "package": "dsh-deeppilot",
+      "version": "0.9.9",
+      "license": "MIT",
+      "repository": "https://github.com/Mars-Sea/dsh-deeppilot.git",
+      "namespaces": [
+        "settings.deeppilot"
+      ],
+      "strings": 241
+    },
+    {
+      "package": "dsh-delegate-router",
+      "version": "0.4.5",
+      "license": "MIT",
+      "repository": "https://github.com/penguin-oo/dsh-delegate-router.git",
+      "namespaces": [
+        "delegateRouter"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-delete-session",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/DDDMUC/dsh-delete-session.git",
+      "namespaces": [
+        "dsh-delete-session"
+      ],
+      "strings": 88
+    },
+    {
+      "package": "dsh-delete-turn",
+      "version": "0.1.14",
+      "license": "MIT",
+      "repository": "https://github.com/DDDMUC/dsh-delete-turn.git",
+      "namespaces": [
+        "dsh-delete-turn"
+      ],
+      "strings": 37
+    },
+    {
+      "package": "dsh-desktop-shell",
+      "version": "1.1.3",
+      "license": "MIT",
+      "repository": "https://github.com/RINGOLINK/dsh-desktop-shell.git",
+      "namespaces": [
+        "dsh-desktop"
+      ],
+      "strings": 34
+    },
+    {
+      "package": "dsh-diff-stat",
+      "version": "0.1.9",
+      "license": "MIT",
+      "repository": "https://github.com/HaoyueQin/dsh-diff-stat.git",
+      "namespaces": [
+        "diff-stat"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "dsh-ding",
+      "version": "1.0.6",
+      "license": "MIT",
+      "repository": "https://github.com/CAOGGL/dsh-ding.git",
+      "namespaces": [
+        "dsh-ding"
+      ],
+      "strings": 75
+    },
+    {
+      "package": "dsh-dracula-theme",
+      "version": "1.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/ossFrankFrank/dsh-dracula-theme.git",
+      "namespaces": [
+        "settings.dracula"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-draw",
+      "version": "0.2.24",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-draw.git",
+      "namespaces": [
+        "draw"
+      ],
+      "strings": 24
+    },
+    {
+      "package": "dsh-drawio",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/jean3690/dsh-drawio.git",
+      "namespaces": [
+        "drawio"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-dream-skin",
+      "version": "10.22.0",
+      "license": "MIT",
+      "repository": "https://github.com/RevolutionLA/dsh-dream-skin.git",
+      "namespaces": [
+        "settings.dreamSkin"
+      ],
+      "strings": 83
+    },
+    {
+      "package": "dsh-ds-balance",
+      "version": "3.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/dsh-plugin-lab/dsh-ds-balance.git",
+      "namespaces": [
+        "ds-balance"
+      ],
+      "strings": 71
+    },
+    {
+      "package": "dsh-dupguard",
+      "version": "1.11.0",
+      "license": "MIT",
+      "repository": "https://github.com/zqh260619/dsh-dupguard.git",
+      "namespaces": [
+        "dsh-dupguard"
+      ],
+      "strings": 112
+    },
+    {
+      "package": "dsh-ears",
+      "version": "0.4.3",
+      "license": "MIT",
+      "repository": "https://github.com/WizisCool/dsh-ears.git",
+      "namespaces": [
+        "settings.dshEars"
+      ],
+      "strings": 235
+    },
+    {
+      "package": "dsh-ego-browser",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/Fisfzy/dsh-ego-browser.git",
+      "namespaces": [
+        "ego-browser"
+      ],
+      "strings": 81
+    },
+    {
+      "package": "dsh-electro-lab",
+      "version": "0.13.0",
+      "license": "MIT",
+      "repository": "https://github.com/curtainsmall/dsh-electro-lab.git",
+      "namespaces": [
+        "dsh-electro-lab"
+      ],
+      "strings": 112
+    },
+    {
+      "package": "dsh-emoji",
+      "version": "0.3.6",
+      "license": "MIT",
+      "repository": "https://github.com/hellodigua/dsh-emoji.git",
+      "namespaces": [
+        "dsh-emoji"
+      ],
+      "strings": 64
+    },
+    {
+      "package": "dsh-engram",
+      "version": "0.7.4",
+      "license": "MIT",
+      "repository": "https://github.com/skepsun/dsh-engram.git",
+      "namespaces": [
+        "dsh-engram"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "dsh-eteams",
+      "version": "0.2.22",
+      "license": "MIT",
+      "repository": "https://github.com/2507483326/dsh-eteams.git",
+      "namespaces": [
+        "remix-router-transitions"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-eval-control",
+      "version": "0.4.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/xyrrrrr-r/dsh-eval-control.git",
+      "namespaces": [
+        "dsh.eval-control"
+      ],
+      "strings": 25
+    },
+    {
+      "package": "dsh-expert-orchestrator",
+      "version": "2.9.9",
+      "license": "MIT",
+      "repository": "https://github.com/mario841859784/dsh-expert-orchestrator.git",
+      "namespaces": [
+        "expertSources"
+      ],
+      "strings": 127
+    },
+    {
+      "package": "dsh-feishu-assistant",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/wanjiaju3108/dsh-feishu-assistant.git",
+      "namespaces": [
+        "feishu-assistant"
+      ],
+      "strings": 52
+    },
+    {
+      "package": "dsh-file-review",
+      "version": "0.8.10",
+      "license": "MIT",
+      "repository": "https://github.com/left0ver/dsh-file-review.git",
+      "namespaces": [
+        "file-review"
+      ],
+      "strings": 71
+    },
+    {
+      "package": "dsh-film",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/VibeDev-Si/dsh-film.git",
+      "namespaces": [
+        "dsh-film-studio"
+      ],
+      "strings": 7
+    },
+    {
+      "package": "dsh-fonttune",
+      "version": "0.7.1",
+      "license": "MIT",
+      "repository": "https://github.com/LyaxZ/dsh-fonttune.git",
+      "namespaces": [
+        "dsh-fonttune"
+      ],
+      "strings": 158
+    },
+    {
+      "package": "dsh-free-search",
+      "version": "0.9.15",
+      "license": "MIT",
+      "repository": "https://github.com/DDDMUC/dsh-free-search.git",
+      "namespaces": [
+        "web-search-free"
+      ],
+      "strings": 126
+    },
+    {
+      "package": "dsh-freeroute",
+      "version": "0.10.3",
+      "license": "MIT",
+      "repository": "https://github.com/dushaobindoudou/dsh-freeroute.git",
+      "namespaces": [
+        "free-proxy"
+      ],
+      "strings": 88
+    },
+    {
+      "package": "dsh-full-remote",
+      "version": "0.3.7",
+      "license": "MIT",
+      "repository": "https://github.com/JUANWANG-BUAA/dsh-full-remote.git",
+      "namespaces": [
+        "reverse-proxy"
+      ],
+      "strings": 175
+    },
+    {
+      "package": "dsh-git-badge",
+      "version": "0.20.1",
+      "license": "MIT",
+      "repository": "https://github.com/Kevin-McIsaac/dsh-workspace-git-badge.git",
+      "namespaces": [
+        "dsh-git-badge"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-git-credentials",
+      "version": "0.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/revive/dsh-git-credentials.git",
+      "namespaces": [
+        "git-credentials"
+      ],
+      "strings": 42
+    },
+    {
+      "package": "dsh-git-review",
+      "version": "0.1.8",
+      "license": "MIT",
+      "repository": "https://github.com/HaoyueQin/dsh-git-review.git",
+      "namespaces": [
+        "git-review"
+      ],
+      "strings": 322
+    },
+    {
+      "package": "dsh-gitbash-shell",
+      "version": "0.42.2",
+      "license": "MIT",
+      "repository": "https://github.com/KannaKuron/dsh-gitbash-shell.git",
+      "namespaces": [
+        "gitbashShell"
+      ],
+      "strings": 77
+    },
+    {
+      "package": "dsh-github-copilot",
+      "version": "0.4.1",
+      "license": "MIT",
+      "repository": "https://github.com/cloga/dsh-github-copilot.git",
+      "namespaces": [
+        "web_search_2025_08_26"
+      ],
+      "strings": 59
+    },
+    {
+      "package": "dsh-github-router",
+      "version": "0.4.1",
+      "license": "MIT",
+      "repository": "https://github.com/AngelosZou/dsh-github-router.git",
+      "namespaces": [
+        "dsh-github-router"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-global-rules",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/badai147/dsh-global-rules.git",
+      "namespaces": [
+        "global-rules"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-graph",
+      "version": "0.22.0",
+      "license": "MIT",
+      "repository": "https://github.com/miuzel/dsh-graph.git",
+      "namespaces": [
+        "dsh-graph"
+      ],
+      "strings": 1206
+    },
+    {
+      "package": "dsh-grok-subscription",
+      "version": "2.0.9",
+      "license": "MIT",
+      "repository": "https://github.com/BaronCyrus/dsh-grok-subscription.git",
+      "namespaces": [
+        "settings.grokSubscription"
+      ],
+      "strings": 82
+    },
+    {
+      "package": "dsh-harbor-evolution",
+      "version": "0.10.4",
+      "license": "MIT",
+      "repository": "https://github.com/istarwyh/harbor-self-evolving.git",
+      "namespaces": [
+        "harbor-evolution"
+      ],
+      "strings": 62
+    },
+    {
+      "package": "dsh-harden",
+      "version": "0.0.2",
+      "license": "MIT",
+      "repository": "https://github.com/thissensen/dsh-harden.git",
+      "namespaces": [
+        "harden"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "dsh-harmony",
+      "version": "0.8.18",
+      "license": "MIT",
+      "repository": "https://github.com/memorax-ai/dsh-harmony.git",
+      "namespaces": [
+        "dsh-harmony-bootstrap"
+      ],
+      "strings": 5
+    },
+    {
+      "package": "dsh-hypatia-auto-memory",
+      "version": "2.4.3",
+      "license": "MIT",
+      "repository": "https://github.com/tkliuxing/dsh-hypatia-auto-memory.git",
+      "namespaces": [
+        "hypatia-auto-memory"
+      ],
+      "strings": 109
+    },
+    {
+      "package": "dsh-im-companion",
+      "version": "0.2.19",
+      "license": "MIT",
+      "repository": "https://github.com/FeatherHunter/dsh-im-companion.git",
+      "namespaces": [
+        "update.install.exec"
+      ],
+      "strings": 10
+    },
+    {
+      "package": "dsh-image-pathify",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/dami9527/dsh-image-pathify.git",
+      "namespaces": [
+        "image-pathify"
+      ],
+      "strings": 31
+    },
+    {
+      "package": "dsh-image-plugins",
+      "version": "0.3.5",
+      "license": "MIT",
+      "repository": "https://github.com/alanzhao0128/dsh-image-plugins.git",
+      "namespaces": [
+        "image-plugin"
+      ],
+      "strings": 51
+    },
+    {
+      "package": "dsh-image-viewer",
+      "version": "0.1.15",
+      "license": "MIT",
+      "repository": "https://github.com/WSL043/dsh-image-viewer.git",
+      "namespaces": [
+        "dsh-image-viewer"
+      ],
+      "strings": 28
+    },
+    {
+      "package": "dsh-improve-prompt",
+      "version": "0.7.2",
+      "license": "MIT",
+      "repository": "https://github.com/hoyyang/dsh-improve-prompt.git",
+      "namespaces": [
+        "dsh-improve-prompt"
+      ],
+      "strings": 29
+    },
+    {
+      "package": "dsh-inline-comments",
+      "version": "0.1.2",
+      "license": "MIT",
+      "repository": "https://github.com/zenvertao/dsh-inline-comments.git",
+      "namespaces": [
+        "inline-comments"
+      ],
+      "strings": 15
+    },
+    {
+      "package": "dsh-instance-manager",
+      "version": "0.12.0",
+      "license": "MIT",
+      "repository": "https://github.com/xswt442-cmd/dsh-instance-manager.git",
+      "namespaces": [
+        "dsh-instance-manager"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "dsh-instruction-memory",
+      "version": "1.4.1",
+      "license": "MIT",
+      "repository": "https://github.com/HERO476/dsh-instruction-memory.git",
+      "namespaces": [
+        "instruction-memory"
+      ],
+      "strings": 274
+    },
+    {
+      "package": "dsh-intellij-mcp",
+      "version": "1.0.5",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "plugin.intellijMcp"
+      ],
+      "strings": 36
+    },
+    {
+      "package": "dsh-jev-advisor",
+      "version": "0.1.6",
+      "license": "MIT",
+      "repository": "https://github.com/gordan-code/dsh-jev-advisor.git",
+      "namespaces": [
+        "dsh-jev-advisor"
+      ],
+      "strings": 85
+    },
+    {
+      "package": "dsh-jev-tools",
+      "version": "0.1.13",
+      "license": "MIT",
+      "repository": "https://github.com/HorusJiang/dsh-jev-tools.git",
+      "namespaces": [
+        "dsh-jev-tools"
+      ],
+      "strings": 33
+    },
+    {
+      "package": "dsh-job-progress",
+      "version": "1.0.5",
+      "license": "MIT",
+      "repository": "https://github.com/Rice00/dsh-job-progress.git",
+      "namespaces": [
+        "jobProgress"
+      ],
+      "strings": 20
+    },
+    {
+      "package": "dsh-kimi-subscription",
+      "version": "1.3.10",
+      "license": "MIT",
+      "repository": "https://github.com/BaronCyrus/dsh-kimi-subscription.git",
+      "namespaces": [
+        "settings.kimiSubscription"
+      ],
+      "strings": 78
+    },
+    {
+      "package": "dsh-kinich-theme",
+      "version": "2.0.2",
+      "license": "SEE LICENSE IN LICENSE",
+      "repository": "https://github.com/Xian-JL/dsh-Kinich-theme.git",
+      "namespaces": [
+        "settings.kinich-theme"
+      ],
+      "strings": 200
+    },
+    {
+      "package": "dsh-knowledge",
+      "version": "0.5.2",
+      "license": "AGPL-3.0",
+      "repository": "https://github.com/Soren-ABT/dsh-knowledge.git",
+      "namespaces": [
+        "settings.knowledge"
+      ],
+      "strings": 449
+    },
+    {
+      "package": "dsh-labnana",
+      "version": "0.3.5",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/exoticknight/dsh-labnana.git",
+      "namespaces": [
+        "labnana"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "dsh-lcx-codex",
+      "version": "0.5.2",
+      "license": "MIT",
+      "repository": "https://github.com/kk3ya03-star/dsh-lcx-codex.git",
+      "namespaces": [
+        "lcx-codex"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "dsh-legal-suite",
+      "version": "0.2.26",
+      "license": "GPL-3.0",
+      "repository": null,
+      "namespaces": [
+        "agentlex-moot-court"
+      ],
+      "strings": 202
+    },
+    {
+      "package": "dsh-liao-sidebar",
+      "version": "0.2.6",
+      "license": "MIT",
+      "repository": "https://github.com/oliblue-evan/dsh-liao-sidebar.git",
+      "namespaces": [
+        "liao-sidebar-organizer"
+      ],
+      "strings": 43
+    },
+    {
+      "package": "dsh-live-voice",
+      "version": "0.6.2",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/wads-dev/dsh-live-voice.git",
+      "namespaces": [
+        "dsh-live-voice"
+      ],
+      "strings": 395
+    },
+    {
+      "package": "dsh-llm-fallbacks",
+      "version": "0.6.8",
+      "license": null,
+      "repository": "https://github.com/omdsh-dev/dsh-llm-fallbacks.git",
+      "namespaces": [
+        "fallbacks"
+      ],
+      "strings": 47
+    },
+    {
+      "package": "dsh-llm-trace",
+      "version": "0.2.2",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/wpeng77/dsh-llm-trace.git",
+      "namespaces": [
+        "dsh-llm-trace"
+      ],
+      "strings": 33
+    },
+    {
+      "package": "dsh-llm-verifier",
+      "version": "0.10.1",
+      "license": "MIT",
+      "repository": "https://github.com/Aa728848/dsh-llm-verifier.git",
+      "namespaces": [
+        "llm-verifier"
+      ],
+      "strings": 344
+    },
+    {
+      "package": "dsh-local-link",
+      "version": "1.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/donoteatme/dsh-local-link.git",
+      "namespaces": [
+        "dsh.localLink"
+      ],
+      "strings": 102
+    },
+    {
+      "package": "dsh-local-usage",
+      "version": "0.9.1",
+      "license": "MIT",
+      "repository": "https://github.com/webxiaobaiyu-droid/dsh-local-usage.git",
+      "namespaces": [
+        "usage"
+      ],
+      "strings": 250
+    },
+    {
+      "package": "dsh-lowtide",
+      "version": "0.2.8",
+      "license": "MIT",
+      "repository": "https://github.com/KelaoHu/dsh-lowtide.git",
+      "namespaces": [
+        "dsh-lowtide"
+      ],
+      "strings": 332
+    },
+    {
+      "package": "dsh-m",
+      "version": "0.10.8",
+      "license": "MIT",
+      "repository": "https://github.com/iasiv5/dsh-m.git",
+      "namespaces": [
+        "dshm"
+      ],
+      "strings": 302
+    },
+    {
+      "package": "dsh-magpie-connect",
+      "version": "0.4.1",
+      "license": "MIT",
+      "repository": "https://github.com/bitxeno/dsh-magpie-connect.git",
+      "namespaces": [
+        "magpie-connect"
+      ],
+      "strings": 51
+    },
+    {
+      "package": "dsh-markdown-input",
+      "version": "0.2.0-alpha.20",
+      "license": "MIT",
+      "repository": "https://github.com/long6177/dsh-markdown-input.git",
+      "namespaces": [
+        "markdown-input"
+      ],
+      "strings": 23
+    },
+    {
+      "package": "dsh-markdown-preview",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/GitHubJiKe/dsh-markdown-preview.git",
+      "namespaces": [
+        "markdown-preview"
+      ],
+      "strings": 14
+    },
+    {
+      "package": "dsh-maze",
+      "version": "2.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/lamost423/dsh-maze.git",
+      "namespaces": [
+        "traceCompare"
+      ],
+      "strings": 10
+    },
+    {
+      "package": "dsh-mcp-manager-plus",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/appthin/dsh-mcp-manager-plus.git",
+      "namespaces": [
+        "dsh-mcp-manager-plus"
+      ],
+      "strings": 64
+    },
+    {
+      "package": "dsh-mcp-market",
+      "version": "0.1.2",
+      "license": "MIT",
+      "repository": "https://github.com/LKMeng2001/dsh-mcp-market.git",
+      "namespaces": [
+        "dsh-mcp-market"
+      ],
+      "strings": 49
+    },
+    {
+      "package": "dsh-mcp-panel",
+      "version": "0.6.29",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-mcp-panel.git",
+      "namespaces": [
+        "settings.mcpPanel"
+      ],
+      "strings": 129
+    },
+    {
+      "package": "dsh-mcp-studio",
+      "version": "1.0.6",
+      "license": "MIT",
+      "repository": "https://github.com/functy23/dsh-mcp-studio.git",
+      "namespaces": [
+        "dsh-mcp-studio"
+      ],
+      "strings": 111
+    },
+    {
+      "package": "dsh-memory-porter",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/Shiye-10Pages/dsh-memory-porter.git",
+      "namespaces": [
+        "memory-porter"
+      ],
+      "strings": 83
+    },
+    {
+      "package": "dsh-mimir",
+      "version": "0.21.1",
+      "license": "MIT",
+      "repository": "https://github.com/1692775560/dsh-Mimir-Academic-research.git",
+      "namespaces": [
+        "research"
+      ],
+      "strings": 831
+    },
+    {
+      "package": "dsh-mimo-connect",
+      "version": "0.3.5",
+      "license": "MIT",
+      "repository": "https://github.com/anze225-max/dsh-mimo-connect.git",
+      "namespaces": [
+        "mimo"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-mnemon",
+      "version": "0.5.34",
+      "license": "MIT",
+      "repository": "https://github.com/omdsh-dev/dsh-mnemon.git",
+      "namespaces": [
+        "mnemon"
+      ],
+      "strings": 782
+    },
+    {
+      "package": "dsh-mnemosyne",
+      "version": "0.7.0",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "dsh-mnemosyne"
+      ],
+      "strings": 163
+    },
+    {
+      "package": "dsh-model-arena",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "modelArena"
+      ],
+      "strings": 25
+    },
+    {
+      "package": "dsh-model-capability",
+      "version": "1.0.1",
+      "license": "MIT",
+      "repository": "https://github.com/WJZ-P/dsh-model-capabilities.git",
+      "namespaces": [
+        "dsh-model-capability"
+      ],
+      "strings": 6
+    },
+    {
+      "package": "dsh-model-context-catalog",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/HOWILLMAKEIT/dsh-model-context-catalog.git",
+      "namespaces": [
+        "settings.modelContextCatalog"
+      ],
+      "strings": 88
+    },
+    {
+      "package": "dsh-model-pricing",
+      "version": "0.6.1",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/vitas/dsh-model-pricing.git",
+      "namespaces": [
+        "model-pricing"
+      ],
+      "strings": 97
+    },
+    {
+      "package": "dsh-model-visibility",
+      "version": "0.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/Lzh3070/dsh-model-visibility.git",
+      "namespaces": [
+        "settings.modelVisibility"
+      ],
+      "strings": 16
+    },
+    {
+      "package": "dsh-modeltester",
+      "version": "0.0.7-alpha.6",
+      "license": "MIT",
+      "repository": "https://github.com/Yuer6327/ModelTester.git",
+      "namespaces": [
+        "modeltester"
+      ],
+      "strings": 212
+    },
+    {
+      "package": "dsh-movein",
+      "version": "0.13.8",
+      "license": "MIT",
+      "repository": "https://github.com/sjh9714/dsh-movein.git",
+      "namespaces": [
+        "dsh-movein"
+      ],
+      "strings": 33
+    },
+    {
+      "package": "dsh-mpkg-wallpaper",
+      "version": "3.16.6",
+      "license": "MIT",
+      "repository": "https://github.com/XHR666/dsh-mpkg-wallpaper.git",
+      "namespaces": [
+        "ui-mpkg-wallpaper"
+      ],
+      "strings": 546
+    },
+    {
+      "package": "dsh-multi-folder",
+      "version": "0.3.3",
+      "license": "MIT",
+      "repository": "https://github.com/AngelosZou/dsh-multi-folder.git",
+      "namespaces": [
+        "multi-folder"
+      ],
+      "strings": 38
+    },
+    {
+      "package": "dsh-multi2api",
+      "version": "0.1.9",
+      "license": "MIT",
+      "repository": "https://github.com/moze30/dsh-multi2api.git",
+      "namespaces": [
+        "settings.multi2api"
+      ],
+      "strings": 78
+    },
+    {
+      "package": "dsh-nested-followups",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/sluminositys/dsh-nested-followups.git",
+      "namespaces": [
+        "nested-followups"
+      ],
+      "strings": 63
+    },
+    {
+      "package": "dsh-net-proxy",
+      "version": "0.8.0",
+      "license": "MIT",
+      "repository": "https://github.com/mafeis/dsh-net-proxy.git",
+      "namespaces": [
+        "net-proxy"
+      ],
+      "strings": 95
+    },
+    {
+      "package": "dsh-neu-theme",
+      "version": "0.1.2",
+      "license": "MIT",
+      "repository": "https://github.com/Lhy723/dsh-neu-theme.git",
+      "namespaces": [
+        "settings.neu"
+      ],
+      "strings": 5
+    },
+    {
+      "package": "dsh-nico-theme",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/more-nico/dsh-nico-theme.git",
+      "namespaces": [
+        "settings.nico"
+      ],
+      "strings": 44
+    },
+    {
+      "package": "dsh-noletme",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/Yuer6327/NoLetMe.git",
+      "namespaces": [
+        "noletme"
+      ],
+      "strings": 79
+    },
+    {
+      "package": "dsh-notify-me",
+      "version": "1.12.0",
+      "license": "MIT",
+      "repository": "https://github.com/chromoany/dsh-notify-me.git",
+      "namespaces": [
+        "dsh-notify-me"
+      ],
+      "strings": 124
+    },
+    {
+      "package": "dsh-notify-yimit",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/YiMlT/dsh-notify-yimit.git",
+      "namespaces": [
+        "dsh-notify-yimit"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "dsh-novel-solo",
+      "version": "0.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/Tkingxiao/dsh-novel-solo.git",
+      "namespaces": [
+        "dsh-novel-solo"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "dsh-oomol",
+      "version": "1.0.0",
+      "license": "MIT",
+      "repository": "https://github.com/oomol-lab/dsh-oomol.git",
+      "namespaces": [
+        "oomol.settings"
+      ],
+      "strings": 71
+    },
+    {
+      "package": "dsh-openai-codex-auth",
+      "version": "0.6.3",
+      "license": "MIT",
+      "repository": "https://github.com/gooosie/dsh-openai-codex-auth.git",
+      "namespaces": [
+        "settings.openai-codex-auth"
+      ],
+      "strings": 77
+    },
+    {
+      "package": "dsh-opencode-free",
+      "version": "0.3.7",
+      "license": "MIT",
+      "repository": "https://github.com/x5427876/dsh-opencode-free.git",
+      "namespaces": [
+        "opencodeFree"
+      ],
+      "strings": 53
+    },
+    {
+      "package": "dsh-opencode-go",
+      "version": "0.1.24",
+      "license": "MIT",
+      "repository": "https://github.com/Duskriver/dsh-opencode-go.git",
+      "namespaces": [
+        "settings.opencode-go"
+      ],
+      "strings": 177
+    },
+    {
+      "package": "dsh-openrouter-live",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/Boomerangz/dsh-openrouter-live.git",
+      "namespaces": [
+        "dsh-openrouter-live"
+      ],
+      "strings": 3
+    },
+    {
+      "package": "dsh-openrouter-providers",
+      "version": "1.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/MoRanYue/dsh-openrouter-providers.git",
+      "namespaces": [
+        "openrouter-providers"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "dsh-ops",
+      "version": "0.4.1",
+      "license": "MIT AND Apache-2.0",
+      "repository": "https://github.com/T-Auto/dsh-ops.git",
+      "namespaces": [
+        "dshOps"
+      ],
+      "strings": 48
+    },
+    {
+      "package": "dsh-output-styles",
+      "version": "0.8.1",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-output-styles.git",
+      "namespaces": [
+        "style"
+      ],
+      "strings": 3
+    },
+    {
+      "package": "dsh-packycode-api",
+      "version": "1.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/BaronCyrus/dsh-packycode-api.git",
+      "namespaces": [
+        "settings.packyCodeApi"
+      ],
+      "strings": 230
+    },
+    {
+      "package": "dsh-pdf-mineru",
+      "version": "0.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/Yurzi/dsh-pdf-mineru.git",
+      "namespaces": [
+        "dsh-pdf-mineru"
+      ],
+      "strings": 141
+    },
+    {
+      "package": "dsh-peak-indicator",
+      "version": "0.1.32",
+      "license": "MIT",
+      "repository": "https://github.com/future007s/dsh-peak-indicator.git",
+      "namespaces": [
+        "peakIndicator"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-peakrate",
+      "version": "0.3.1",
+      "license": "MIT",
+      "repository": "https://github.com/log-li/dsh-peakrate.git",
+      "namespaces": [
+        "peakrate-model"
+      ],
+      "strings": 48
+    },
+    {
+      "package": "dsh-pentester",
+      "version": "6.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/fb0sh/dsh-pentester.git",
+      "namespaces": [
+        "dsh-pentester-view"
+      ],
+      "strings": 152
+    },
+    {
+      "package": "dsh-perm-gate",
+      "version": "5.3.2",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-perm-gate.git",
+      "namespaces": [
+        "dsh-perm-gate"
+      ],
+      "strings": 184
+    },
+    {
+      "package": "dsh-permission-rules",
+      "version": "0.7.20",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-permission-rules.git",
+      "namespaces": [
+        "settings.permissionRules"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-persona-dafeiyu",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/huaizhuanghub/dsh-persona-dafeiyu.git",
+      "namespaces": [
+        "personaDafeiyu"
+      ],
+      "strings": 81
+    },
+    {
+      "package": "dsh-personal-directive",
+      "version": "0.2.11",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-personal-directive.git",
+      "namespaces": [
+        "personalDirective"
+      ],
+      "strings": 5
+    },
+    {
+      "package": "dsh-pet",
+      "version": "0.3.8",
+      "license": "MIT",
+      "repository": "https://github.com/PC2005-cloud/dsh-pet.git",
+      "namespaces": [
+        "pet.config"
+      ],
+      "strings": 150
+    },
+    {
+      "package": "dsh-plugin",
+      "version": "2.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/dshplugin/dsh-plugin-hub.git",
+      "namespaces": [
+        "dsh-plugin"
+      ],
+      "strings": 412
+    },
+    {
+      "package": "dsh-plugin-admin",
+      "version": "1.27.23",
+      "license": "MIT",
+      "repository": "https://github.com/zerosloney/dsh-plugin-admin.git",
+      "namespaces": [
+        "dshAdmin"
+      ],
+      "strings": 898
+    },
+    {
+      "package": "dsh-plugin-capabilities",
+      "version": "0.4.1",
+      "license": "MIT",
+      "repository": "https://github.com/qinyre/dsh-plugin-capabilities.git",
+      "namespaces": [
+        "settings.pluginCapabilities"
+      ],
+      "strings": 169
+    },
+    {
+      "package": "dsh-plugin-cards",
+      "version": "0.9.29",
+      "license": "MIT",
+      "repository": "https://github.com/yuanzukun/dsh-plugin-cards.git",
+      "namespaces": [
+        "dsh-plugin-cards"
+      ],
+      "strings": 276
+    },
+    {
+      "package": "dsh-plugin-control-your-development",
+      "version": "0.6.2",
+      "license": "MIT",
+      "repository": "https://github.com/HaoyanZhang123/dsh-plugin-control-your-development.git",
+      "namespaces": [
+        "devDashboard"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-plugin-genui",
+      "version": "0.15.1",
+      "license": "MIT",
+      "repository": "https://github.com/pengyue-polaron/deepseek-harness-genui.git",
+      "namespaces": [
+        "genui"
+      ],
+      "strings": 77
+    },
+    {
+      "package": "dsh-plugin-ideas-manager",
+      "version": "0.10.3",
+      "license": "MIT",
+      "repository": "https://github.com/EiffelBS/dsh-plugin-ideas-manager.git",
+      "namespaces": [
+        "sessions"
+      ],
+      "strings": 399
+    },
+    {
+      "package": "dsh-plugin-install",
+      "version": "0.4.12",
+      "license": "MIT",
+      "repository": "https://github.com/qinyre/dsh-plugin-install.git",
+      "namespaces": [
+        "settings.pluginInstall"
+      ],
+      "strings": 21
+    },
+    {
+      "package": "dsh-plugin-manager-pro",
+      "version": "0.9.1",
+      "license": "MIT",
+      "repository": "https://github.com/nonentity303/dsh-plugin-manager.git",
+      "namespaces": [
+        "settings.pluginManagerPro"
+      ],
+      "strings": 209
+    },
+    {
+      "package": "dsh-plugin-message-edit",
+      "version": "1.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/SpookySandwich/dsh-plugin-message-edit.git",
+      "namespaces": [
+        "dsh-plugin-message-tree"
+      ],
+      "strings": 32
+    },
+    {
+      "package": "dsh-plugin-model-capability",
+      "version": "1.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/yuioi666/dsh-plugin-model-capability.git",
+      "namespaces": [
+        "settings.model-capability"
+      ],
+      "strings": 170
+    },
+    {
+      "package": "dsh-plugin-model-proxy",
+      "version": "0.1.6",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "settings.modelProxy"
+      ],
+      "strings": 77
+    },
+    {
+      "package": "dsh-plugin-notify-sounds",
+      "version": "1.8.4",
+      "license": "MIT",
+      "repository": "https://github.com/BillCx330/dsh-plugin-notify-sounds.git",
+      "namespaces": [
+        "notify-sounds"
+      ],
+      "strings": 87
+    },
+    {
+      "package": "dsh-plugin-om",
+      "version": "0.0.61",
+      "license": "MIT",
+      "repository": "https://github.com/FanetheDivine/dsh-plugin-om.git",
+      "namespaces": [
+        "om-compaction"
+      ],
+      "strings": 84
+    },
+    {
+      "package": "dsh-plugin-rollout-scout",
+      "version": "1.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/SpookySandwich/dsh-plugin-rollout-scout.git",
+      "namespaces": [
+        "dsh-plugin-rollout-scout"
+      ],
+      "strings": 124
+    },
+    {
+      "package": "dsh-plugin-security",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/dushaobindoudou/dsh-plugin-security.git",
+      "namespaces": [
+        "settings.security"
+      ],
+      "strings": 138
+    },
+    {
+      "package": "dsh-plugin-shop",
+      "version": "0.9.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/LivXue/dsh-plugin-shop.git",
+      "namespaces": [
+        "settings.shop"
+      ],
+      "strings": 131
+    },
+    {
+      "package": "dsh-plugin-smooth-stream",
+      "version": "1.3.0",
+      "license": "MIT",
+      "repository": "https://github.com/SpookySandwich/dsh-plugin-smooth-stream.git",
+      "namespaces": [
+        "dsh-plugin-smooth-stream"
+      ],
+      "strings": 19
+    },
+    {
+      "package": "dsh-plugin-usage-meter",
+      "version": "1.10.0",
+      "license": "MIT",
+      "repository": "https://github.com/fancr-code/dsh-plugin-usage-meter.git",
+      "namespaces": [
+        "usage-meter"
+      ],
+      "strings": 72
+    },
+    {
+      "package": "dsh-plugin-wallpaper-engine",
+      "version": "1.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/elysia395/dsh-wallpaper-engine.git",
+      "namespaces": [
+        "wallpaper-engine"
+      ],
+      "strings": 987
+    },
+    {
+      "package": "dsh-plugins-store",
+      "version": "0.1.4",
+      "license": "MIT",
+      "repository": "https://github.com/ZASENJC/dsh-plugins-store.git",
+      "namespaces": [
+        "plugin-store"
+      ],
+      "strings": 77
+    },
+    {
+      "package": "dsh-pocket",
+      "version": "2.12.0",
+      "license": "GPL-2.0",
+      "repository": "https://github.com/shaobeichen/dsh-pocket.git",
+      "namespaces": [
+        "pocketMobileNav"
+      ],
+      "strings": 96
+    },
+    {
+      "package": "dsh-pomodoro",
+      "version": "0.5.5",
+      "license": "MIT",
+      "repository": "https://github.com/causebefore/dsh-pomodoro.git",
+      "namespaces": [
+        "dsh-pomodoro"
+      ],
+      "strings": 83
+    },
+    {
+      "package": "dsh-power-xc",
+      "version": "0.1.6",
+      "license": "MIT",
+      "repository": "https://github.com/xchannel1987/dsh-power-xc.git",
+      "namespaces": [
+        "power.button"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-proactive",
+      "version": "0.3.1",
+      "license": "MIT",
+      "repository": "https://github.com/john-walks-slow/dsh-proactive.git",
+      "namespaces": [
+        "dsh-proactive"
+      ],
+      "strings": 129
+    },
+    {
+      "package": "dsh-prompt-enhance",
+      "version": "0.3.2",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/rongxingda/dsh-prompt-enhance.git",
+      "namespaces": [
+        "prompt-enhance"
+      ],
+      "strings": 44
+    },
+    {
+      "package": "dsh-prompt-history",
+      "version": "1.4.2",
+      "license": "MIT",
+      "repository": "https://github.com/Xiaofei-fei/dsh-prompt-history.git",
+      "namespaces": [
+        "dsh-prompt-history"
+      ],
+      "strings": 61
+    },
+    {
+      "package": "dsh-prompt-manager",
+      "version": "1.5.2",
+      "license": "MIT",
+      "repository": "https://github.com/SaiSenBox/dsh-prompt-manager.git",
+      "namespaces": [
+        "dsh-prompt-manager"
+      ],
+      "strings": 93
+    },
+    {
+      "package": "dsh-prompt-optimizer",
+      "version": "2.0.3",
+      "license": "MIT",
+      "repository": "https://github.com/winditer/dsh-prompt-optimizer.git",
+      "namespaces": [
+        "prompt_optimizer"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-prompt-setting",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/zangxx66/dsh-prompt-setting.git",
+      "namespaces": [
+        "settings.promptSetting"
+      ],
+      "strings": 586
+    },
+    {
+      "package": "dsh-prompt-vcs",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "promptVcs"
+      ],
+      "strings": 27
+    },
+    {
+      "package": "dsh-provider-qoder",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/mo-n/dsh-provider-qoder.git",
+      "namespaces": [
+        "settings.qoderCredential"
+      ],
+      "strings": 125
+    },
+    {
+      "package": "dsh-provider-usage",
+      "version": "0.3.17",
+      "license": "MIT",
+      "repository": "https://github.com/lizhouai/dsh-provider-usage.git",
+      "namespaces": [
+        "provider-usage"
+      ],
+      "strings": 44
+    },
+    {
+      "package": "dsh-ptc-cordis-preset",
+      "version": "0.21.3",
+      "license": "MIT",
+      "repository": "https://github.com/KannaKuron/dsh-ptc-cordis-preset.git",
+      "namespaces": [
+        "ptcCordis"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-quota",
+      "version": "0.14.5",
+      "license": "MIT",
+      "repository": "https://github.com/Minokun/dsh-quota.git",
+      "namespaces": [
+        "quota"
+      ],
+      "strings": 99
+    },
+    {
+      "package": "dsh-quota-panel",
+      "version": "0.1.7-rc.1-v0.1",
+      "license": "MIT",
+      "repository": "https://github.com/wenzetan/dsh-quota-panel.git",
+      "namespaces": [
+        "quota-panel"
+      ],
+      "strings": 68
+    },
+    {
+      "package": "dsh-quote-followup",
+      "version": "0.2.10",
+      "license": "MIT",
+      "repository": "https://github.com/tr1v3r/dsh-quote-followup.git",
+      "namespaces": [
+        "quote-followup"
+      ],
+      "strings": 11
+    },
+    {
+      "package": "dsh-reach",
+      "version": "0.1.22",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-reach.git",
+      "namespaces": [
+        "settings.reach"
+      ],
+      "strings": 17
+    },
+    {
+      "package": "dsh-reasoning-effort",
+      "version": "0.2.8",
+      "license": "MIT",
+      "repository": "https://github.com/Mu-scorpio/dsh-reasoning-effort.git",
+      "namespaces": [
+        "reasoning-effort"
+      ],
+      "strings": 14
+    },
+    {
+      "package": "dsh-remote",
+      "version": "0.8.50",
+      "license": "MIT",
+      "repository": "https://github.com/flymysql/dsh-remote.git",
+      "namespaces": [
+        "dsh-remote"
+      ],
+      "strings": 279
+    },
+    {
+      "package": "dsh-remote-explorer",
+      "version": "0.8.6",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/btsd321/dsh-remote-explorer.git",
+      "namespaces": [
+        "dshRemoteExplorer"
+      ],
+      "strings": 114
+    },
+    {
+      "package": "dsh-remote-sessions",
+      "version": "0.8.11",
+      "license": "MIT",
+      "repository": "https://github.com/atlas5301/dsh-remote-sessions.git",
+      "namespaces": [
+        "remote-sessions"
+      ],
+      "strings": 61
+    },
+    {
+      "package": "dsh-repeat-tool-breaker",
+      "version": "0.11.6",
+      "license": "MIT",
+      "repository": "https://github.com/snailium/dsh-repeat-tool-breaker.git",
+      "namespaces": [
+        "repeat-tool-breaker.card"
+      ],
+      "strings": 49
+    },
+    {
+      "package": "dsh-rerun-turn",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/DDDMUC/dsh-rerun-turn.git",
+      "namespaces": [
+        "dsh-rerun-turn"
+      ],
+      "strings": 29
+    },
+    {
+      "package": "dsh-research",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/dsh-research/dsh-research.git",
+      "namespaces": [
+        "settings.researchMarket"
+      ],
+      "strings": 68
+    },
+    {
+      "package": "dsh-retrace",
+      "version": "0.4.134",
+      "license": "MIT",
+      "repository": "https://github.com/yamingmou/dsh-retrace.git",
+      "namespaces": [
+        "retrace"
+      ],
+      "strings": 172
+    },
+    {
+      "package": "dsh-rigorquant",
+      "version": "0.7.0",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "rq-model-router"
+      ],
+      "strings": 40
+    },
+    {
+      "package": "dsh-round-rightclick",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/hmr-BH/dsh-round-rightclick.git",
+      "namespaces": [
+        "dsh-round-rightclick"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-runninghub-api",
+      "version": "0.1.6",
+      "license": "MIT",
+      "repository": "https://github.com/lucyTrump/dsh-runninghub-api.git",
+      "namespaces": [
+        "settings.runninghub"
+      ],
+      "strings": 98
+    },
+    {
+      "package": "dsh-scheduler",
+      "version": "2026.9.192",
+      "license": "MIT",
+      "repository": "https://github.com/yangdongzhen590/dsh-knj-scheduler.git",
+      "namespaces": [
+        "dsh-scheduler"
+      ],
+      "strings": 96
+    },
+    {
+      "package": "dsh-search-failover",
+      "version": "0.3.23",
+      "license": "MIT",
+      "repository": "https://github.com/Walvez/dsh-search-failover.git",
+      "namespaces": [
+        "searchPool"
+      ],
+      "strings": 56
+    },
+    {
+      "package": "dsh-select-quote",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/latte03/dsh-select-quote.git",
+      "namespaces": [
+        "select-quote"
+      ],
+      "strings": 30
+    },
+    {
+      "package": "dsh-serper-search",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/Minokun/dsh-serper-search.git",
+      "namespaces": [
+        "settings.serperSearch"
+      ],
+      "strings": 42
+    },
+    {
+      "package": "dsh-session-colorful-unread-pin-jobs",
+      "version": "2.0.0",
+      "license": "MIT",
+      "repository": "https://github.com/enterhalf/dsh-session-colorful-unread-pin-jobs.git",
+      "namespaces": [
+        "session-colorful-unread-pin-jobs"
+      ],
+      "strings": 12
+    },
+    {
+      "package": "dsh-session-kit",
+      "version": "6.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/ltxlong/dsh-session-kit.git",
+      "namespaces": [
+        "dsh-session-kit"
+      ],
+      "strings": 770
+    },
+    {
+      "package": "dsh-session-manager",
+      "version": "0.7.5",
+      "license": "MIT",
+      "repository": "https://github.com/hkkz9522/dsh-session-manager.git",
+      "namespaces": [
+        "session-manager"
+      ],
+      "strings": 283
+    },
+    {
+      "package": "dsh-session-steward",
+      "version": "0.5.6",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-session-steward.git",
+      "namespaces": [
+        "dsh-session-steward"
+      ],
+      "strings": 89
+    },
+    {
+      "package": "dsh-session-title-pattern",
+      "version": "0.8.9",
+      "license": "MIT",
+      "repository": "https://github.com/cq-guojia/dsh-session-title-pattern.git",
+      "namespaces": [
+        "session-title-pattern"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-session-toolbox",
+      "version": "0.1.45",
+      "license": "MIT",
+      "repository": "https://github.com/AndroidSix/dsh-session-toolbox.git",
+      "namespaces": [
+        "dsh-session-toolbox"
+      ],
+      "strings": 83
+    },
+    {
+      "package": "dsh-shorts-wall",
+      "version": "1.4.2",
+      "license": "MIT",
+      "repository": "https://github.com/imkingjh999/dsh-shorts-wall.git",
+      "namespaces": [
+        "shorts.sidebar"
+      ],
+      "strings": 58
+    },
+    {
+      "package": "dsh-sidebar-plus",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/sailoumili/dsh-sidebar-plus.git",
+      "namespaces": [
+        "dshSidebarPlus"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-sidenote",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/g-yixuan/dsh-sidenote.git",
+      "namespaces": [
+        "EMPTY_RESPONSE"
+      ],
+      "strings": 194
+    },
+    {
+      "package": "dsh-skill-hub",
+      "version": "0.3.26",
+      "license": "MIT",
+      "repository": "https://github.com/cheshireez/dsh-skill-hub.git",
+      "namespaces": [
+        "dsh-skill-hub"
+      ],
+      "strings": 262
+    },
+    {
+      "package": "dsh-skill-mcp-panel",
+      "version": "2.3.5",
+      "license": "MIT",
+      "repository": "https://github.com/Fishquito7/dsh-skill-mcp-panel.git",
+      "namespaces": [
+        "settings.skills"
+      ],
+      "strings": 112
+    },
+    {
+      "package": "dsh-skillbox",
+      "version": "0.5.3",
+      "license": "MIT",
+      "repository": "https://github.com/BB0027/dsh-skillbox.git",
+      "namespaces": [
+        "dsh-skillbox"
+      ],
+      "strings": 173
+    },
+    {
+      "package": "dsh-skills-anywhere",
+      "version": "0.19.0",
+      "license": "MIT",
+      "repository": "https://github.com/noteflowai/dsh-skills-anywhere.git",
+      "namespaces": [
+        "skills-anywhere"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-skills-manager-plus",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/appthin/dsh-skills-manager-plus.git",
+      "namespaces": [
+        "dsh-skills-manager-plus"
+      ],
+      "strings": 102
+    },
+    {
+      "package": "dsh-skills-mcp-group-manager",
+      "version": "0.3.9",
+      "license": "MIT",
+      "repository": "https://github.com/SeverusZh/dsh-skills-mcp-group-manager.git",
+      "namespaces": [
+        "mcp-skill-manager"
+      ],
+      "strings": 55
+    },
+    {
+      "package": "dsh-smooth-cursor-patched",
+      "version": "0.1.9-patched.6",
+      "license": "MIT",
+      "repository": "https://github.com/ThinkofRain1213/dsh-smooth-cursor-patched.git",
+      "namespaces": [
+        "cursor-effect"
+      ],
+      "strings": 13
+    },
+    {
+      "package": "dsh-smooth-stream",
+      "version": "0.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/Laplace-bit/dsh-smooth-stream.git",
+      "namespaces": [
+        "smoothStream.chat"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "dsh-solution-explorer",
+      "version": "1.0.2",
+      "license": "MIT",
+      "repository": "https://github.com/xiaoksio/dsh-solution-explorer.git",
+      "namespaces": [
+        "solution-explorer"
+      ],
+      "strings": 194
+    },
+    {
+      "package": "dsh-speak",
+      "version": "1.8.2",
+      "license": "MIT",
+      "repository": "https://github.com/Alan2Z/dsh-speak.git",
+      "namespaces": [
+        "dsh-speak"
+      ],
+      "strings": 65
+    },
+    {
+      "package": "dsh-status-rotator",
+      "version": "0.37.0",
+      "license": "MIT",
+      "repository": "https://github.com/01Virex/dsh-status-rotator.git",
+      "namespaces": [
+        "status-rotator"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-step-trace",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "stepTrace"
+      ],
+      "strings": 31
+    },
+    {
+      "package": "dsh-subagent-default-model",
+      "version": "2.1.7",
+      "license": "MIT",
+      "repository": "https://github.com/dingminhua/dsh-subagent-default-model.git",
+      "namespaces": [
+        "settings.subagentModel"
+      ],
+      "strings": 36
+    },
+    {
+      "package": "dsh-subusage",
+      "version": "0.14.5",
+      "license": "MIT",
+      "repository": "https://github.com/KouzakiUmi/dsh-subusage.git",
+      "namespaces": [
+        "settings.subusage"
+      ],
+      "strings": 168
+    },
+    {
+      "package": "dsh-swarm-orchestrator",
+      "version": "0.6.32",
+      "license": "MIT",
+      "repository": "https://github.com/linkbag/dsh-swarm-orchestrator.git",
+      "namespaces": [
+        "swarm"
+      ],
+      "strings": 246
+    },
+    {
+      "package": "dsh-talk",
+      "version": "0.3.25",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/PerryLink/dsh-talk.git",
+      "namespaces": [
+        "settings.talk"
+      ],
+      "strings": 16
+    },
+    {
+      "package": "dsh-task-ledger",
+      "version": "0.0.74",
+      "license": "MIT",
+      "repository": "https://github.com/cq-guojia/dsh-task-ledger.git",
+      "namespaces": [
+        "dsh-task-ledger"
+      ],
+      "strings": 122
+    },
+    {
+      "package": "dsh-task-supervisor",
+      "version": "0.1.8",
+      "license": "UNLICENSED",
+      "repository": "https://github.com/gosomea/dsh-task-supervisor.git",
+      "namespaces": [
+        "task-supervisor"
+      ],
+      "strings": 143
+    },
+    {
+      "package": "dsh-task-worktree",
+      "version": "0.4.5",
+      "license": "MIT",
+      "repository": "https://github.com/Letter2025/dsh-task-worktree.git",
+      "namespaces": [
+        "dsh-task-worktree"
+      ],
+      "strings": 9
+    },
+    {
+      "package": "dsh-tavern",
+      "version": "2.7.20",
+      "license": "PolyForm-Noncommercial-Copyleft-1.0.0",
+      "repository": "https://github.com/chen731215-dev/dsh-tavern-v2.git",
+      "namespaces": [
+        "tavernManager"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "dsh-tavily-pool",
+      "version": "0.3.1",
+      "license": "MIT",
+      "repository": "https://github.com/stormbuf/dsh-tavily-pool.git",
+      "namespaces": [
+        "dsh-tavily-pool"
+      ],
+      "strings": 126
+    },
+    {
+      "package": "dsh-theme-gallery",
+      "version": "0.8.3",
+      "license": "MIT",
+      "repository": "https://github.com/renjie2026/dsh-theme-gallery.git",
+      "namespaces": [
+        "theme-gallery"
+      ],
+      "strings": 18
+    },
+    {
+      "package": "dsh-theme-manager",
+      "version": "1.3.1",
+      "license": "MIT",
+      "repository": "https://github.com/runcat-tommy/dsh-theme-manager.git",
+      "namespaces": [
+        "themeManager"
+      ],
+      "strings": 178
+    },
+    {
+      "package": "dsh-theme-studio",
+      "version": "0.10.0",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "theme-studio"
+      ],
+      "strings": 51
+    },
+    {
+      "package": "dsh-theone",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/YunongDai2005/dsh-theone.git",
+      "namespaces": [
+        "theone"
+      ],
+      "strings": 360
+    },
+    {
+      "package": "dsh-thinking-levels",
+      "version": "4.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-thinking-levels.git",
+      "namespaces": [
+        "thinking-levels"
+      ],
+      "strings": 98
+    },
+    {
+      "package": "dsh-thoughtdag",
+      "version": "0.5.23",
+      "license": "MIT",
+      "repository": "https://github.com/chenxiachan/thoughtdag.git",
+      "namespaces": [
+        "dsh-thoughtdag"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "dsh-ths-holdings",
+      "version": "0.3.2",
+      "license": "MIT",
+      "repository": "https://github.com/PM25000/dsh-ths-holdings.git",
+      "namespaces": [
+        "settings.ths-holdings"
+      ],
+      "strings": 17
+    },
+    {
+      "package": "dsh-tidy-display",
+      "version": "0.4.4",
+      "license": "MIT",
+      "repository": "https://github.com/drscrewdriver/dsh-tidy-display.git",
+      "namespaces": [
+        "tidy-display"
+      ],
+      "strings": 39
+    },
+    {
+      "package": "dsh-timeline",
+      "version": "0.1.5",
+      "license": "GPL-3.0-or-later",
+      "repository": "https://github.com/houyanchao/dsh-timeline.git",
+      "namespaces": [
+        "dshTimeline"
+      ],
+      "strings": 272
+    },
+    {
+      "package": "dsh-token-meter-panel",
+      "version": "0.6.4",
+      "license": "MIT",
+      "repository": "https://github.com/olimc2016/dsh-token-meter-panel.git",
+      "namespaces": [
+        "token-meter-panel"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "dsh-token-monitor",
+      "version": "1.0.12",
+      "license": "MIT",
+      "repository": "https://github.com/licyer/dsh-token-monitor.git",
+      "namespaces": [
+        "token-monitor"
+      ],
+      "strings": 231
+    },
+    {
+      "package": "dsh-token-use",
+      "version": "0.3.4",
+      "license": "MIT",
+      "repository": "https://github.com/huangyuheng/dsh-token-use.git",
+      "namespaces": [
+        "settings.tokenUsage"
+      ],
+      "strings": 177
+    },
+    {
+      "package": "dsh-tokenledger",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/zh667/TokenLedger.git",
+      "namespaces": [
+        "tokenLedger"
+      ],
+      "strings": 75
+    },
+    {
+      "package": "dsh-tool-stats",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "toolStats"
+      ],
+      "strings": 25
+    },
+    {
+      "package": "dsh-tree-view",
+      "version": "1.2.3",
+      "license": "MIT",
+      "repository": "https://github.com/Rice00/dsh-tree-view.git",
+      "namespaces": [
+        "dsh-tree-view"
+      ],
+      "strings": 67
+    },
+    {
+      "package": "dsh-treekeeper",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/xswt442-cmd/dsh-treekeeper.git",
+      "namespaces": [
+        "dsh-treekeeper"
+      ],
+      "strings": 65
+    },
+    {
+      "package": "dsh-trust-check",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/liuwenji007/dsh-trust-check.git",
+      "namespaces": [
+        "trust"
+      ],
+      "strings": 246
+    },
+    {
+      "package": "dsh-ui-enhancer",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/AlexYin-Tongji/dsh-ui-enhancer.git",
+      "namespaces": [
+        "ui-enhancer"
+      ],
+      "strings": 120
+    },
+    {
+      "package": "dsh-undo-savepoint",
+      "version": "0.5.0",
+      "license": "MIT",
+      "repository": "https://github.com/lire1131/dsh-undo-savepoint.git",
+      "namespaces": [
+        "undo"
+      ],
+      "strings": 108
+    },
+    {
+      "package": "dsh-univer-office",
+      "version": "0.3.7",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/dream-num/dsh-univer-office.git",
+      "namespaces": [
+        "univer"
+      ],
+      "strings": 53
+    },
+    {
+      "package": "dsh-update-copilot",
+      "version": "0.13.0",
+      "license": "MIT",
+      "repository": "https://github.com/hezhongtang/dsh-update-copilot.git",
+      "namespaces": [
+        "dsh-update-copilot"
+      ],
+      "strings": 146
+    },
+    {
+      "package": "dsh-updater-npm",
+      "version": "1.13.4",
+      "license": "MIT",
+      "repository": "https://github.com/SiriusWJ/dsh-updater-npm.git",
+      "namespaces": [
+        "dsh-updater-npm"
+      ],
+      "strings": 124
+    },
+    {
+      "package": "dsh-usage-state",
+      "version": "0.4.8",
+      "license": "MIT",
+      "repository": "https://github.com/takboo/dsh-usage-state.git",
+      "namespaces": [
+        "usage-state"
+      ],
+      "strings": 75
+    },
+    {
+      "package": "dsh-verdict",
+      "version": "0.6.1",
+      "license": "MIT",
+      "repository": "https://github.com/hj01857655/dsh-plugins.git",
+      "namespaces": [
+        "verdict"
+      ],
+      "strings": 29
+    },
+    {
+      "package": "dsh-version-update",
+      "version": "1.4.4",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/SuCriss/dsh-version-update.git",
+      "namespaces": [
+        "version-update"
+      ],
+      "strings": 164
+    },
+    {
+      "package": "dsh-view-manager",
+      "version": "0.2.2",
+      "license": "MIT",
+      "repository": "https://github.com/runcat-tommy/dsh-view-manager.git",
+      "namespaces": [
+        "viewManager"
+      ],
+      "strings": 41
+    },
+    {
+      "package": "dsh-villager-hmm",
+      "version": "1.0.9",
+      "license": "MIT",
+      "repository": "https://github.com/nagatoquin33/dsh-villager-hmm.git",
+      "namespaces": [
+        "dsh-villager-hmm"
+      ],
+      "strings": 38
+    },
+    {
+      "package": "dsh-vision-recognizer",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/kaixinbaba/dsh-vision-recognizer.git",
+      "namespaces": [
+        "vision-recognizer"
+      ],
+      "strings": 33
+    },
+    {
+      "package": "dsh-vision-web",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/54xkeee/dsh-vision.git",
+      "namespaces": [
+        "vision"
+      ],
+      "strings": 35
+    },
+    {
+      "package": "dsh-vitals",
+      "version": "0.1.15",
+      "license": "MIT",
+      "repository": "https://github.com/JoblessJoe/dsh-vitals.git",
+      "namespaces": [
+        "hardwareMonitor"
+      ],
+      "strings": 18
+    },
+    {
+      "package": "dsh-voice-mode",
+      "version": "0.7.28",
+      "license": "MIT",
+      "repository": "https://github.com/qishuilalala/dsh-voice-mode.git",
+      "namespaces": [
+        "voice-mode"
+      ],
+      "strings": 250
+    },
+    {
+      "package": "dsh-vsceditor",
+      "version": "0.5.6",
+      "license": "MIT",
+      "repository": "https://github.com/k-ying/dsh-vsceditor.git",
+      "namespaces": [
+        "dsh-vsceditor"
+      ],
+      "strings": 158
+    },
+    {
+      "package": "dsh-vscode-mode",
+      "version": "0.19.0",
+      "license": "MIT",
+      "repository": "https://github.com/Lenonss/DSH_VsCodeMode.git",
+      "namespaces": [
+        "dsh-vscode-mode"
+      ],
+      "strings": 6
+    },
+    {
+      "package": "dsh-web-fetch-playwright",
+      "version": "0.2.12",
+      "license": "MIT",
+      "repository": "https://github.com/chendefine/dsh-web-fetch-playwright.git",
+      "namespaces": [
+        "web-fetch-playwright"
+      ],
+      "strings": 29
+    },
+    {
+      "package": "dsh-web-icon-indicator",
+      "version": "0.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/waknow/dsh-web-icon-indicator.git",
+      "namespaces": [
+        "dsh-web-icon-indicator"
+      ],
+      "strings": 45
+    },
+    {
+      "package": "dsh-web-search-aggregation",
+      "version": "0.1.11",
+      "license": "MIT",
+      "repository": "https://github.com/chendefine/dsh-web-search-aggregation.git",
+      "namespaces": [
+        "web-search-aggregation"
+      ],
+      "strings": 38
+    },
+    {
+      "package": "dsh-web-search-enhanced",
+      "version": "0.1.10",
+      "license": "MIT",
+      "repository": "https://github.com/Yurzi/dsh-web-search-enhanced.git",
+      "namespaces": [
+        "webSearchEnhanced"
+      ],
+      "strings": 207
+    },
+    {
+      "package": "dsh-web-search-zai",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/kenny2077/dsh-web-search-zai.git",
+      "namespaces": [
+        "settings.plugins.zai"
+      ],
+      "strings": 43
+    },
+    {
+      "package": "dsh-whale-meter",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/Shiye-10Pages/dsh-whale-meter.git",
+      "namespaces": [
+        "whale-meter"
+      ],
+      "strings": 59
+    },
+    {
+      "package": "dsh-whale-particles",
+      "version": "0.6.0",
+      "license": "MIT",
+      "repository": "https://github.com/fewoot/dsh-whale-particles.git",
+      "namespaces": [
+        "dsh-whale-particles"
+      ],
+      "strings": 4
+    },
+    {
+      "package": "dsh-winrm",
+      "version": "0.3.1",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/MoRanYue/dsh-winrm.git",
+      "namespaces": [
+        "dsh-winrm"
+      ],
+      "strings": 110
+    },
+    {
+      "package": "dsh-workbuddy-console",
+      "version": "2.0.53",
+      "license": "MIT",
+      "repository": "https://github.com/dhdbvcg/dsh-workbuddy-console.git",
+      "namespaces": [
+        "workbuddy-console"
+      ],
+      "strings": 28
+    },
+    {
+      "package": "dsh-workbuddy-ppt",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/SuperstructureJH/dsh-workbuddy-ppt.git",
+      "namespaces": [
+        "office-ppt"
+      ],
+      "strings": 63
+    },
+    {
+      "package": "dsh-workbuddy-xdpool",
+      "version": "2.0.1",
+      "license": "MIT",
+      "repository": "https://github.com/XDTrees/dsh-xdpool.git",
+      "namespaces": [
+        "settings.workbuddy-xdpool"
+      ],
+      "strings": 427
+    },
+    {
+      "package": "dsh-workbuddy2api",
+      "version": "0.6.11",
+      "license": "MIT",
+      "repository": "https://github.com/FireOpalus/dsh-workbuddy2api.git",
+      "namespaces": [
+        "settings.workbuddy2api"
+      ],
+      "strings": 126
+    },
+    {
+      "package": "dsh-workload-report",
+      "version": "1.0.1",
+      "license": "MIT",
+      "repository": "https://github.com/tableau-China/dsh-workload-report.git",
+      "namespaces": [
+        "workload-report"
+      ],
+      "strings": 171
+    },
+    {
+      "package": "dsh-workspace-combiner",
+      "version": "0.8.7",
+      "license": "MIT",
+      "repository": "https://github.com/ninglovegithub/dsh-workspace-combiner.git",
+      "namespaces": [
+        "dsh-workspace-combiner"
+      ],
+      "strings": 527
+    },
+    {
+      "package": "dsh-workspace-enhancement",
+      "version": "0.2.5",
+      "license": "MIT",
+      "repository": "https://github.com/DobyChao/dsh-workspace-enhancement.git",
+      "namespaces": [
+        "dsw"
+      ],
+      "strings": 377
+    },
+    {
+      "package": "dsh-wsl-tray",
+      "version": "0.1.7",
+      "license": "MIT",
+      "repository": null,
+      "namespaces": [
+        "dsh-wsl-tray"
+      ],
+      "strings": 43
+    },
+    {
+      "package": "dsh-xiaomi-tts",
+      "version": "4.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/ppy-web/dsh-plugin-xiaomi-mimo-tts.git",
+      "namespaces": [
+        "xiaomi-mimo-tts"
+      ],
+      "strings": 341
+    },
+    {
+      "package": "dsh-zhihu-search",
+      "version": "2.2.1",
+      "license": "MIT",
+      "repository": "https://github.com/dsh-plugin-lab/dsh-zhihu-search.git",
+      "namespaces": [
+        "zhihu-search"
+      ],
+      "strings": 19
+    },
+    {
+      "package": "dshhub-market",
+      "version": "0.8.60",
+      "license": "MIT",
+      "repository": "https://github.com/dshhub-co/dshhub-market.git",
+      "namespaces": [
+        "dshhub-market"
+      ],
+      "strings": 393
+    },
+    {
+      "package": "dshmarket",
+      "version": "1.67.0",
+      "license": "MIT",
+      "repository": "https://github.com/dsh-market/dsh-market.git",
+      "namespaces": [
+        "dsh-market"
+      ],
+      "strings": 741
+    },
+    {
+      "package": "dshmarketplace-plugin",
+      "version": "0.2.0",
+      "license": "MIT",
+      "repository": "https://github.com/DshMarketPlace/dsh-plugins-store.git",
+      "namespaces": [
+        "dshmarketplace"
+      ],
+      "strings": 22
+    },
+    {
+      "package": "kczx-user-management",
+      "version": "1.7.0",
+      "license": "MIT",
+      "repository": "https://github.com/weibaohui/user-management.git",
+      "namespaces": [
+        "user-management"
+      ],
+      "strings": 38
+    },
+    {
+      "package": "lume-dsh-plugin",
+      "version": "0.9.0",
+      "license": "MIT",
+      "repository": "https://github.com/cayan0x/Lume.git",
+      "namespaces": [
+        "lume"
+      ],
+      "strings": 82
+    },
+    {
+      "package": "meow-cachebilling",
+      "version": "0.8.0",
+      "license": "MIT",
+      "repository": "https://github.com/Phant0Meow/dsh-meow-cachebilling.git",
+      "namespaces": [
+        "meow-cachebilling"
+      ],
+      "strings": 2
+    },
+    {
+      "package": "meow-memory",
+      "version": "0.31.1",
+      "license": "MIT",
+      "repository": "https://github.com/Phant0Meow/dsh-meow-memory.git",
+      "namespaces": [
+        "meow-memory"
+      ],
+      "strings": 92
+    },
+    {
+      "package": "misakanet",
+      "version": "2.48.0",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/Ikalus1988/MisakaNet.git",
+      "namespaces": [
+        "misakanet.panel.density.v1"
+      ],
+      "strings": 148
+    },
+    {
+      "package": "obsidian-dsh-acp",
+      "version": "0.3.7",
+      "license": "MIT",
+      "repository": "https://github.com/SilenZerOrz/obsidian-dsh-acp.git",
+      "namespaces": [
+        "dsh-acp"
+      ],
+      "strings": 73
+    },
+    {
+      "package": "picturereader",
+      "version": "3.3.3",
+      "license": "MIT",
+      "repository": "https://github.com/jing-hy/picturereader.git",
+      "namespaces": [
+        "picturereader"
+      ],
+      "strings": 3
+    },
+    {
+      "package": "relay-dsh-plugin-codex",
+      "version": "0.2.4",
+      "license": "MIT",
+      "repository": "https://github.com/yangbobo2021/relay-dsh-plugin-codex.git",
+      "namespaces": [
+        "relay.codex"
+      ],
+      "strings": 63
+    },
+    {
+      "package": "relay-dsh-plugin-session-import",
+      "version": "0.2.3",
+      "license": "MIT",
+      "repository": "https://github.com/yangbobo2021/relay-dsh-plugin-session-import.git",
+      "namespaces": [
+        "relay.session-import"
+      ],
+      "strings": 1
+    },
+    {
+      "package": "win-pilot",
+      "version": "0.4.0",
+      "license": "MIT",
+      "repository": "https://github.com/JeremyWangCY/win-pilot.git",
+      "namespaces": [
+        "win-pilot"
+      ],
+      "strings": 34
+    }
+  ]
+}
