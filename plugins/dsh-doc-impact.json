@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-doc-impact",
-  "package": "@yadsh/dsh-doc-impact@0.5.2",
+  "package": "@yadsh/dsh-doc-impact",
   "version": "0.5.2",
   "license": "MIT",
   "repository": "git+https://github.com/xarleyn/dsh-plugins.git",

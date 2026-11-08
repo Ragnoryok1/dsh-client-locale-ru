@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-graph",
-  "package": "dsh-graph@0.22.0",
+  "package": "dsh-graph",
   "version": "0.22.0",
   "license": "MIT",
   "repository": "git+https://github.com/miuzel/dsh-graph.git",

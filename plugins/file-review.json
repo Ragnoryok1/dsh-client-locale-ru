@@ -1,6 +1,6 @@
 {
   "namespace": "file-review",
-  "package": "dsh-file-review@0.8.10",
+  "package": "dsh-file-review",
   "version": "0.8.10",
   "license": "MIT",
   "repository": "git+https://github.com/left0ver/dsh-file-review.git",

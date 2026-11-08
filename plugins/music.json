@@ -1,6 +1,6 @@
 {
   "namespace": "music",
-  "package": "@doitian/dsh-music@1.2.0",
+  "package": "@doitian/dsh-music",
   "version": "1.2.0",
   "license": "MIT",
   "repository": "git+https://github.com/doitian/dsh-music.git",

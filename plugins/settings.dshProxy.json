@@ -1,6 +1,6 @@
 {
   "namespace": "settings.dshProxy",
-  "package": "@tr1v3r/dsh-proxy@0.2.5",
+  "package": "@tr1v3r/dsh-proxy",
   "version": "0.2.5",
   "license": "MIT",
   "repository": "git+https://github.com/tr1v3r/dsh-proxy.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "solution-explorer",
-  "package": "dsh-solution-explorer@1.0.2",
+  "package": "dsh-solution-explorer",
   "version": "1.0.2",
   "license": "MIT",
   "repository": "git+https://github.com/xiaoksio/dsh-solution-explorer.git",

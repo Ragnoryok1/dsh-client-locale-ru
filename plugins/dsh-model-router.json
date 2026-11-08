@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-model-router",
-  "package": "@neptune810/dsh-model-router@0.14.2",
+  "package": "@neptune810/dsh-model-router",
   "version": "0.14.2",
   "license": "MIT",
   "repository": "git+https://github.com/Neptune810/dsh-model-router.git",

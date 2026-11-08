@@ -1,6 +1,6 @@
 {
   "namespace": "reasoning-effort",
-  "package": "dsh-reasoning-effort@0.2.8",
+  "package": "dsh-reasoning-effort",
   "version": "0.2.8",
   "license": "MIT",
   "repository": "git+https://github.com/Mu-scorpio/dsh-reasoning-effort.git",

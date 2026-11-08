@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-theme",
-  "package": "@eternalnight/dsh-theme@0.5.1",
+  "package": "@eternalnight/dsh-theme",
   "version": "0.5.1",
   "license": "MIT",
   "repository": "git+https://github.com/EternalNight996/dsh-theme.git",

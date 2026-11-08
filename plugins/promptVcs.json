@@ -1,6 +1,6 @@
 {
   "namespace": "promptVcs",
-  "package": "dsh-prompt-vcs@0.6.1",
+  "package": "dsh-prompt-vcs",
   "version": "0.6.1",
   "license": "MIT",
   "repository": "git+https://github.com/hj01857655/dsh-plugins.git",

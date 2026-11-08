@@ -1,6 +1,6 @@
 {
   "namespace": "themeManager",
-  "package": "dsh-theme-manager@1.3.1",
+  "package": "dsh-theme-manager",
   "version": "1.3.1",
   "license": "MIT",
   "repository": "git+https://github.com/runcat-tommy/dsh-theme-manager.git",

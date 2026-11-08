@@ -1,6 +1,6 @@
 {
   "namespace": "git-panel",
-  "package": "@fengbinmov/dsh-git-panel@0.1.1",
+  "package": "@fengbinmov/dsh-git-panel",
   "version": "0.1.1",
   "license": "MIT",
   "repository": "git+https://github.com/fengbinmov/dsh-git-panel.git",

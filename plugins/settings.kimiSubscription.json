@@ -1,6 +1,6 @@
 {
   "namespace": "settings.kimiSubscription",
-  "package": "dsh-kimi-subscription@1.3.10",
+  "package": "dsh-kimi-subscription",
   "version": "1.3.10",
   "license": "MIT",
   "repository": "git+https://github.com/BaronCyrus/dsh-kimi-subscription.git",

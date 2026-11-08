@@ -1,6 +1,6 @@
 {
   "namespace": "balance",
-  "package": "@alanzhao/dsh-balance-monitor@0.8.2",
+  "package": "@alanzhao/dsh-balance-monitor",
   "version": "0.8.2",
   "license": "MIT",
   "repository": null,

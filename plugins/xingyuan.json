@@ -1,6 +1,6 @@
 {
   "namespace": "xingyuan",
-  "package": "@starwish-ai/xingyuan-dsh@0.6.7",
+  "package": "@starwish-ai/xingyuan-dsh",
   "version": "0.6.7",
   "license": "MIT",
   "repository": "git+https://github.com/starwish-ai/xingyuan-dsh.git",

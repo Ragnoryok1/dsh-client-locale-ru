@@ -1,6 +1,6 @@
 {
   "namespace": "contextMemory",
-  "package": "dsh-context-memory@0.9.0",
+  "package": "dsh-context-memory",
   "version": "0.9.0",
   "license": "MIT",
   "repository": "git+https://github.com/hj01857655/dsh-plugins.git",

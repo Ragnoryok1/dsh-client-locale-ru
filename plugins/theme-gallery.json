@@ -1,6 +1,6 @@
 {
   "namespace": "theme-gallery",
-  "package": "dsh-theme-gallery@0.8.3",
+  "package": "dsh-theme-gallery",
   "version": "0.8.3",
   "license": "MIT",
   "repository": "git+https://github.com/renjie2026/dsh-theme-gallery.git",

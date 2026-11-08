@@ -1,6 +1,6 @@
 {
   "namespace": "settings.plugins.zai",
-  "package": "dsh-web-search-zai@0.2.0",
+  "package": "dsh-web-search-zai",
   "version": "0.2.0",
   "license": "MIT",
   "repository": "git+https://github.com/kenny2077/dsh-web-search-zai.git",

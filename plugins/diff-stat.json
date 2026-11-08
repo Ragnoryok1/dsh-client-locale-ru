@@ -1,6 +1,6 @@
 {
   "namespace": "diff-stat",
-  "package": "dsh-diff-stat@0.1.9",
+  "package": "dsh-diff-stat",
   "version": "0.1.9",
   "license": "MIT",
   "repository": "git+https://github.com/HaoyueQin/dsh-diff-stat.git",

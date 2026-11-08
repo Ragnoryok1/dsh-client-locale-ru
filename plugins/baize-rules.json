@@ -1,6 +1,6 @@
 {
   "namespace": "baize-rules",
-  "package": "dsh-baize-rules@0.2.4",
+  "package": "dsh-baize-rules",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/bvcvb/dsh-baize-rules.git",

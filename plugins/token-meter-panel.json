@@ -1,6 +1,6 @@
 {
   "namespace": "token-meter-panel",
-  "package": "dsh-token-meter-panel@0.6.4",
+  "package": "dsh-token-meter-panel",
   "version": "0.6.4",
   "license": "MIT",
   "repository": "git+https://github.com/olimc2016/dsh-token-meter-panel.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-prompt-manager",
-  "package": "dsh-prompt-manager@1.5.2",
+  "package": "dsh-prompt-manager",
   "version": "1.5.2",
   "license": "MIT",
   "repository": "git+https://github.com/SaiSenBox/dsh-prompt-manager.git",

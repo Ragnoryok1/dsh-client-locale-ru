@@ -1,6 +1,6 @@
 {
   "namespace": "cost-meter",
-  "package": "@gamegeek-saikel/dsh-cost-meter@0.5.1",
+  "package": "@gamegeek-saikel/dsh-cost-meter",
   "version": "0.5.1",
   "license": "MIT",
   "repository": "git+https://github.com/Saikel-Orado-Liu/dsh-cost-meter.git",

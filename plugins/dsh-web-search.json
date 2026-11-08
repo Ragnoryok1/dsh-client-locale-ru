@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-web-search",
-  "package": "@yugasun/dsh-web-search@0.2.5",
+  "package": "@yugasun/dsh-web-search",
   "version": "0.2.5",
   "license": "MIT",
   "repository": "git+https://github.com/yugasun/dsh-plugins.git",

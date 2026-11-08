@@ -1,6 +1,6 @@
 {
   "namespace": "web-fetch-playwright",
-  "package": "dsh-web-fetch-playwright@0.2.12",
+  "package": "dsh-web-fetch-playwright",
   "version": "0.2.12",
   "license": "MIT",
   "repository": "git+https://github.com/chendefine/dsh-web-fetch-playwright.git",

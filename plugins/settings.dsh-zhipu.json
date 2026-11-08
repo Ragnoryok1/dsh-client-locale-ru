@@ -1,6 +1,6 @@
 {
   "namespace": "settings.dsh-zhipu",
-  "package": "deepseek-harness-zhipu_plan_tools@0.1.8",
+  "package": "deepseek-harness-zhipu_plan_tools",
   "version": "0.1.8",
   "license": "MIT",
   "repository": "git+https://github.com/magian1127/deepseek-harness-zhipu_plan_tools.git",

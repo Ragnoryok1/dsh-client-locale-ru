@@ -1,6 +1,6 @@
 {
   "namespace": "settings.pluginCapabilities",
-  "package": "dsh-plugin-capabilities@0.4.1",
+  "package": "dsh-plugin-capabilities",
   "version": "0.4.1",
   "license": "MIT",
   "repository": "git+https://github.com/qinyre/dsh-plugin-capabilities.git",

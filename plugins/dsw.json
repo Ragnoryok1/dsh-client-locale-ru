@@ -1,6 +1,6 @@
 {
   "namespace": "dsw",
-  "package": "dsh-workspace-enhancement@0.2.5",
+  "package": "dsh-workspace-enhancement",
   "version": "0.2.5",
   "license": "MIT",
   "repository": "git+https://github.com/DobyChao/dsh-workspace-enhancement.git",

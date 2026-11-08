@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-llm-hub",
-  "package": "@dsh-plugins/dsh-llm-hub@1.9.6",
+  "package": "@dsh-plugins/dsh-llm-hub",
   "version": "1.9.6",
   "license": "MIT",
   "repository": "git+https://github.com/webkubor/dsh-llm-hub.git",

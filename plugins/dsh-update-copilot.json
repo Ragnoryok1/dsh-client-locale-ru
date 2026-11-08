@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-update-copilot",
-  "package": "dsh-update-copilot@0.13.0",
+  "package": "dsh-update-copilot",
   "version": "0.13.0",
   "license": "MIT",
   "repository": "git+https://github.com/hezhongtang/dsh-update-copilot.git",

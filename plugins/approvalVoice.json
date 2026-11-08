@@ -1,6 +1,6 @@
 {
   "namespace": "approvalVoice",
-  "package": "dsh-approval-voice@0.3.0",
+  "package": "dsh-approval-voice",
   "version": "0.3.0",
   "license": "MIT",
   "repository": "git+https://github.com/ZIye1208/dsh-approval-voice.git",

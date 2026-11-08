@@ -1,6 +1,6 @@
 {
   "namespace": "webSearchEnhanced",
-  "package": "dsh-web-search-enhanced@0.1.10",
+  "package": "dsh-web-search-enhanced",
   "version": "0.1.10",
   "license": "MIT",
   "repository": "git+https://github.com/Yurzi/dsh-web-search-enhanced.git",

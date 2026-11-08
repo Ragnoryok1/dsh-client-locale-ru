@@ -1,6 +1,6 @@
 {
   "namespace": "tracescope",
-  "package": "@rebornace/dsh-tracescope@0.3.5",
+  "package": "@rebornace/dsh-tracescope",
   "version": "0.3.5",
   "license": "MIT",
   "repository": "git+https://github.com/rebornace/dsh-tracescope.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-project-memory",
-  "package": "@yolk_vat-y/dsh-project-memory@0.6.3",
+  "package": "@yolk_vat-y/dsh-project-memory",
   "version": "0.6.3",
   "license": "MIT",
   "repository": "git+https://github.com/00080000/dsh-project-memory.git",

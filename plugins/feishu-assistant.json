@@ -1,6 +1,6 @@
 {
   "namespace": "feishu-assistant",
-  "package": "dsh-feishu-assistant@0.2.0",
+  "package": "dsh-feishu-assistant",
   "version": "0.2.0",
   "license": "MIT",
   "repository": "git+https://github.com/wanjiaju3108/dsh-feishu-assistant.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "web-search-aggregation",
-  "package": "dsh-web-search-aggregation@0.1.11",
+  "package": "dsh-web-search-aggregation",
   "version": "0.1.11",
   "license": "MIT",
   "repository": "git+https://github.com/chendefine/dsh-web-search-aggregation.git",

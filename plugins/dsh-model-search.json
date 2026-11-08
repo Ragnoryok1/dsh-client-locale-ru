@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-model-search",
-  "package": "@goodandready/dsh-model-search@0.1.12",
+  "package": "@goodandready/dsh-model-search",
   "version": "0.1.12",
   "license": "MIT",
   "repository": "git+https://github.com/GooDAnDReaDY/dsh-model-search.git",

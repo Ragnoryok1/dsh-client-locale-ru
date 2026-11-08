@@ -1,6 +1,6 @@
 {
   "namespace": "prompt_optimizer",
-  "package": "dsh-prompt-optimizer@2.0.3",
+  "package": "dsh-prompt-optimizer",
   "version": "2.0.3",
   "license": "MIT",
   "repository": "git+https://github.com/winditer/dsh-prompt-optimizer.git",

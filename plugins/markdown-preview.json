@@ -1,6 +1,6 @@
 {
   "namespace": "markdown-preview",
-  "package": "dsh-markdown-preview@0.4.0",
+  "package": "dsh-markdown-preview",
   "version": "0.4.0",
   "license": "MIT",
   "repository": "git+https://github.com/GitHubJiKe/dsh-markdown-preview.git",

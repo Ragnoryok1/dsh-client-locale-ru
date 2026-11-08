@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-image-viewer",
-  "package": "dsh-image-viewer@0.1.15",
+  "package": "dsh-image-viewer",
   "version": "0.1.15",
   "license": "MIT",
   "repository": "git+https://github.com/WSL043/dsh-image-viewer.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-shortcuts",
-  "package": "@hytime/dsh-client-ui-shortcuts@0.2.1",
+  "package": "@hytime/dsh-client-ui-shortcuts",
   "version": "0.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/hytime/dsh-client-ui-shortcuts.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-movein",
-  "package": "dsh-movein@0.13.8",
+  "package": "dsh-movein",
   "version": "0.13.8",
   "license": "MIT",
   "repository": "git+https://github.com/sjh9714/dsh-movein.git",

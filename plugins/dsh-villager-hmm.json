@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-villager-hmm",
-  "package": "dsh-villager-hmm@1.0.9",
+  "package": "dsh-villager-hmm",
   "version": "1.0.9",
   "license": "MIT",
   "repository": "git+https://github.com/nagatoquin33/dsh-villager-hmm.git",

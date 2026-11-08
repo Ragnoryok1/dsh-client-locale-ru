@@ -1,6 +1,6 @@
 {
   "namespace": "settings.subagentModel",
-  "package": "dsh-subagent-default-model@2.1.7",
+  "package": "dsh-subagent-default-model",
   "version": "2.1.7",
   "license": "MIT",
   "repository": "git+https://github.com/dingminhua/dsh-subagent-default-model.git",

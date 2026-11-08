@@ -1,6 +1,6 @@
 {
   "namespace": "schedule-attention-enhancer",
-  "package": "@stolyarovmn/dsh-client-ui-schedule-tab@0.8.0",
+  "package": "@stolyarovmn/dsh-client-ui-schedule-tab",
   "version": "0.8.0",
   "license": "MIT",
   "repository": "git+https://github.com/Stolyarovmn/dsh-schedule-tab.git",

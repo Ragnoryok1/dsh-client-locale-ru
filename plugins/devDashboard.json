@@ -1,6 +1,6 @@
 {
   "namespace": "devDashboard",
-  "package": "dsh-plugin-control-your-development@0.6.2",
+  "package": "dsh-plugin-control-your-development",
   "version": "0.6.2",
   "license": "MIT",
   "repository": "git+https://github.com/HaoyanZhang123/dsh-plugin-control-your-development.git",

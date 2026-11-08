@@ -1,6 +1,6 @@
 {
   "namespace": "task-runner",
-  "package": "@xiaoso/dsh-run-config@0.2.4",
+  "package": "@xiaoso/dsh-run-config",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/xiaoso456/dsh-run-config.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "trust",
-  "package": "dsh-trust-check@0.2.4",
+  "package": "dsh-trust-check",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/liuwenji007/dsh-trust-check.git",

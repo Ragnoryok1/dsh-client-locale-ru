@@ -1,6 +1,6 @@
 {
   "namespace": "formatforge",
-  "package": "@tianbuyu-wwx/dsh-formatforge@3.0.0",
+  "package": "@tianbuyu-wwx/dsh-formatforge",
   "version": "3.0.0",
   "license": "MIT",
   "repository": "git+https://github.com/Tianbuyu-wwx/DSH-FormatForge.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-jev-tools",
-  "package": "dsh-jev-tools@0.1.13",
+  "package": "dsh-jev-tools",
   "version": "0.1.13",
   "license": "MIT",
   "repository": "git+https://github.com/HorusJiang/dsh-jev-tools.git",

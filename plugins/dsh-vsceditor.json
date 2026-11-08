@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-vsceditor",
-  "package": "dsh-vsceditor@0.5.6",
+  "package": "dsh-vsceditor",
   "version": "0.5.6",
   "license": "MIT",
   "repository": "git+https://github.com/k-ying/dsh-vsceditor.git",

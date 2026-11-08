@@ -1,6 +1,6 @@
 {
   "namespace": "settings.model-capability",
-  "package": "dsh-plugin-model-capability@1.4.0",
+  "package": "dsh-plugin-model-capability",
   "version": "1.4.0",
   "license": "MIT",
   "repository": "git+https://github.com/yuioi666/dsh-plugin-model-capability.git",

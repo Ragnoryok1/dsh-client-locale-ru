@@ -1,6 +1,6 @@
 {
   "namespace": "inlineMedia",
-  "package": "@wisdoverse/dsh-inline-media-viewer@1.0.12",
+  "package": "@wisdoverse/dsh-inline-media-viewer",
   "version": "1.0.12",
   "license": "MIT",
   "repository": "git+https://github.com/Wisdoverse/dsh-inline-media-viewer-plugin.git",

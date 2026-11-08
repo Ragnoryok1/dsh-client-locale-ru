@@ -1,6 +1,6 @@
 {
   "namespace": "custom-headers",
-  "package": "dsh-custom-headers@0.3.0",
+  "package": "dsh-custom-headers",
   "version": "0.3.0",
   "license": "MIT",
   "repository": "git+https://github.com/EPCN-fla/dsh-custom-headers.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "peakrate-model",
-  "package": "dsh-peakrate@0.3.1",
+  "package": "dsh-peakrate",
   "version": "0.3.1",
   "license": "MIT",
   "repository": "git+https://github.com/log-li/dsh-peakrate.git",

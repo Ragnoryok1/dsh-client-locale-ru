@@ -1,6 +1,6 @@
 {
   "namespace": "conversation-anchors",
-  "package": "@biggerboy123/dsh-conversation-anchors@0.1.21",
+  "package": "@biggerboy123/dsh-conversation-anchors",
   "version": "0.1.21",
   "license": "MIT",
   "repository": "git+https://github.com/biggerboy/dsh-conversation-anchors.git",

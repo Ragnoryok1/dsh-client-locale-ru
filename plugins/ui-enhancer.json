@@ -1,6 +1,6 @@
 {
   "namespace": "ui-enhancer",
-  "package": "dsh-ui-enhancer@0.2.0",
+  "package": "dsh-ui-enhancer",
   "version": "0.2.0",
   "license": "MIT",
   "repository": "git+https://github.com/AlexYin-Tongji/dsh-ui-enhancer.git",

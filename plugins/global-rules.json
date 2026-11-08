@@ -1,6 +1,6 @@
 {
   "namespace": "global-rules",
-  "package": "dsh-global-rules@0.2.2",
+  "package": "dsh-global-rules",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/badai147/dsh-global-rules.git",

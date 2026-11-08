@@ -1,6 +1,6 @@
 {
   "namespace": "dsh.eval-control",
-  "package": "dsh-eval-control@0.4.0",
+  "package": "dsh-eval-control",
   "version": "0.4.0",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/xyrrrrr-r/dsh-eval-control.git",

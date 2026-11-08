@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-plugin-smooth-stream",
-  "package": "dsh-plugin-smooth-stream@1.3.0",
+  "package": "dsh-plugin-smooth-stream",
   "version": "1.3.0",
   "license": "MIT",
   "repository": "git+https://github.com/SpookySandwich/dsh-plugin-smooth-stream.git",

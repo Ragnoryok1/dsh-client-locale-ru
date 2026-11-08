@@ -1,6 +1,6 @@
 {
   "namespace": "settings.xdpool",
-  "package": "@anyaer/dsh-workbuddy-xdpool@2.3.2",
+  "package": "@anyaer/dsh-workbuddy-xdpool",
   "version": "2.3.2",
   "license": "MIT",
   "repository": "git+https://github.com/sucooer/dsh-workbuddy-xdpool.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-llm-trace",
-  "package": "dsh-llm-trace@0.2.2",
+  "package": "dsh-llm-trace",
   "version": "0.2.2",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/wpeng77/dsh-llm-trace.git",

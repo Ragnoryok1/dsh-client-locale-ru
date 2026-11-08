@@ -1,6 +1,6 @@
 {
   "namespace": "harness-channel-config",
-  "package": "@anarkhgatsby/deepseek-harness-channel-config@0.1.13",
+  "package": "@anarkhgatsby/deepseek-harness-channel-config",
   "version": "0.1.13",
   "license": "MIT",
   "repository": "https://github.com/mapan0424/deepseek-harness-plugins.git",

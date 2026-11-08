@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-discord",
-  "package": "@addozhang/dsh-discord@0.5.0",
+  "package": "@addozhang/dsh-discord",
   "version": "0.5.0",
   "license": "MIT",
   "repository": "git+https://github.com/addozhang/dsh-discord.git",

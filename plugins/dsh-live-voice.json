@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-live-voice",
-  "package": "dsh-live-voice@0.6.2",
+  "package": "dsh-live-voice",
   "version": "0.6.2",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/wads-dev/dsh-live-voice.git",

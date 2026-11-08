@@ -1,6 +1,6 @@
 {
   "namespace": "session-title-pattern",
-  "package": "dsh-session-title-pattern@0.8.9",
+  "package": "dsh-session-title-pattern",
   "version": "0.8.9",
   "license": "MIT",
   "repository": "git+https://github.com/cq-guojia/dsh-session-title-pattern.git",

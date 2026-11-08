@@ -1,6 +1,6 @@
 {
   "namespace": "theme-studio",
-  "package": "dsh-theme-studio@0.10.0",
+  "package": "dsh-theme-studio",
   "version": "0.10.0",
   "license": "MIT",
   "repository": "git+https://github.com/hj01857655/dsh-plugins.git",

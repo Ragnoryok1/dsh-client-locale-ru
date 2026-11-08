@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-emoji",
-  "package": "dsh-emoji@0.3.6",
+  "package": "dsh-emoji",
   "version": "0.3.6",
   "license": "MIT",
   "repository": "git+https://github.com/hellodigua/dsh-emoji.git",

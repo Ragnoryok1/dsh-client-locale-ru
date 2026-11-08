@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-llm-provider",
-  "package": "@dsh-one/dsh-llm-provider@0.2.2",
+  "package": "@dsh-one/dsh-llm-provider",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/imchangchang/dsh-llm-provider.git",

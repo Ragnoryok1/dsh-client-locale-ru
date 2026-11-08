@@ -1,6 +1,6 @@
 {
   "namespace": "ui-mpkg-wallpaper",
-  "package": "dsh-mpkg-wallpaper@3.16.6",
+  "package": "dsh-mpkg-wallpaper",
   "version": "3.16.6",
   "license": "MIT",
   "repository": "git+https://github.com/XHR666/dsh-mpkg-wallpaper.git",

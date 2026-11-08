@@ -1,6 +1,6 @@
 {
   "namespace": "mcp-ui",
-  "package": "@gxx-labs/mcp-ui-dsh@0.2.6",
+  "package": "@gxx-labs/mcp-ui-dsh",
   "version": "0.2.6",
   "license": "MIT",
   "repository": "git+https://github.com/gxx950224/mcp-ui-dsh.git",

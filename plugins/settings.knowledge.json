@@ -1,6 +1,6 @@
 {
   "namespace": "settings.knowledge",
-  "package": "dsh-knowledge@0.5.2",
+  "package": "dsh-knowledge",
   "version": "0.5.2",
   "license": "AGPL-3.0",
   "repository": "git+https://github.com/Soren-ABT/dsh-knowledge.git",

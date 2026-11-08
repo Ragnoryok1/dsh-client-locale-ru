@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-jev-advisor",
-  "package": "dsh-jev-advisor@0.1.6",
+  "package": "dsh-jev-advisor",
   "version": "0.1.6",
   "license": "MIT",
   "repository": "git+https://github.com/gordan-code/dsh-jev-advisor.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "usage-meter",
-  "package": "dsh-plugin-usage-meter@1.10.0",
+  "package": "dsh-plugin-usage-meter",
   "version": "1.10.0",
   "license": "MIT",
   "repository": "git+https://github.com/fancr-code/dsh-plugin-usage-meter.git",

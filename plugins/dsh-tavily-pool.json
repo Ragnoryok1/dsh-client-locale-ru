@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-tavily-pool",
-  "package": "dsh-tavily-pool@0.3.1",
+  "package": "dsh-tavily-pool",
   "version": "0.3.1",
   "license": "MIT",
   "repository": "git+https://github.com/stormbuf/dsh-tavily-pool.git",

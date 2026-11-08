@@ -1,6 +1,6 @@
 {
   "namespace": "misakanet.panel.density.v1",
-  "package": "misakanet@2.48.0",
+  "package": "misakanet",
   "version": "2.48.0",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/Ikalus1988/MisakaNet.git",

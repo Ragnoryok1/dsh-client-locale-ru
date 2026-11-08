@@ -1,6 +1,6 @@
 {
   "namespace": "drawio",
-  "package": "dsh-drawio@0.1.0",
+  "package": "dsh-drawio",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/jean3690/dsh-drawio.git",

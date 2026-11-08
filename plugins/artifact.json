@@ -1,6 +1,6 @@
 {
   "namespace": "artifact",
-  "package": "dsh-artifact@0.8.1",
+  "package": "dsh-artifact",
   "version": "0.8.1",
   "license": "MIT",
   "repository": "git+https://github.com/Jannchie/dsh-artifact.git",

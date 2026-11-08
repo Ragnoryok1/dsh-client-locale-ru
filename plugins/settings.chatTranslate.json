@@ -1,6 +1,6 @@
 {
   "namespace": "settings.chatTranslate",
-  "package": "@lynn123411/dsh-chat-translate@3.5.9",
+  "package": "@lynn123411/dsh-chat-translate",
   "version": "3.5.9",
   "license": "MIT",
   "repository": "git+https://github.com/tttnny/my-dsh.git",

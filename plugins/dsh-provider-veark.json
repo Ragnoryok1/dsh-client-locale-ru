@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-provider-veark",
-  "package": "@icedcola/dsh-provider-veark@0.2.2",
+  "package": "@icedcola/dsh-provider-veark",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/IcedWatermelonJuice/dsh-provider-veark.git",

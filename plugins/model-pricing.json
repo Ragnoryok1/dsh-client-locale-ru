@@ -1,6 +1,6 @@
 {
   "namespace": "model-pricing",
-  "package": "dsh-model-pricing@0.6.1",
+  "package": "dsh-model-pricing",
   "version": "0.6.1",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/vitas/dsh-model-pricing.git",

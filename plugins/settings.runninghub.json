@@ -1,6 +1,6 @@
 {
   "namespace": "settings.runninghub",
-  "package": "dsh-runninghub-api@0.1.6",
+  "package": "dsh-runninghub-api",
   "version": "0.1.6",
   "license": "MIT",
   "repository": "git+https://github.com/lucyTrump/dsh-runninghub-api.git",

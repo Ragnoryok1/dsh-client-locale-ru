@@ -1,6 +1,6 @@
 {
   "namespace": "sessionColor",
-  "package": "@idoall/dsh-session-colors@0.1.11",
+  "package": "@idoall/dsh-session-colors",
   "version": "0.1.11",
   "license": "MIT",
   "repository": "git+https://github.com/idoall/dsh-session-colors.git",

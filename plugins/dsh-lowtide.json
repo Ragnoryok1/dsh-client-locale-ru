@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-lowtide",
-  "package": "dsh-lowtide@0.2.8",
+  "package": "dsh-lowtide",
   "version": "0.2.8",
   "license": "MIT",
   "repository": "git+https://github.com/KelaoHu/dsh-lowtide.git",

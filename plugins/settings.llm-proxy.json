@@ -1,6 +1,6 @@
 {
   "namespace": "settings.llm-proxy",
-  "package": "@superfish058/dsh-llm-proxy@1.5.0",
+  "package": "@superfish058/dsh-llm-proxy",
   "version": "1.5.0",
   "license": "MIT",
   "repository": "git+https://github.com/superfish058/dsh-llm-proxy.git",

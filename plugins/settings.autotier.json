@@ -1,6 +1,6 @@
 {
   "namespace": "settings.autotier",
-  "package": "dsh-autotier@0.2.19",
+  "package": "dsh-autotier",
   "version": "0.2.19",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-autotier.git",

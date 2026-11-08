@@ -1,6 +1,6 @@
 {
   "namespace": "labnana",
-  "package": "dsh-labnana@0.3.5",
+  "package": "dsh-labnana",
   "version": "0.3.5",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/exoticknight/dsh-labnana.git",

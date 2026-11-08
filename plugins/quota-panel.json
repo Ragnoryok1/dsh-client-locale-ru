@@ -1,6 +1,6 @@
 {
   "namespace": "quota-panel",
-  "package": "dsh-quota-panel@0.1.7-rc.1-v0.1",
+  "package": "dsh-quota-panel",
   "version": "0.1.7-rc.1-v0.1",
   "license": "MIT",
   "repository": "git+https://github.com/wenzetan/dsh-quota-panel.git",

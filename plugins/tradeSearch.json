@@ -1,6 +1,6 @@
 {
   "namespace": "tradeSearch",
-  "package": "dsh-ab-market-research@0.2.12",
+  "package": "dsh-ab-market-research",
   "version": "0.2.12",
   "license": "MIT",
   "repository": "git+https://github.com/deepseek-ai/deepseek-harness.git",

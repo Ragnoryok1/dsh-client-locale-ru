@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-conversation-outline",
-  "package": "@chestnut23/dsh-conversation-outline@0.2.2",
+  "package": "@chestnut23/dsh-conversation-outline",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/lzbaclz/dsh-conversation-outline.git",

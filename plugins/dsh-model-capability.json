@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-model-capability",
-  "package": "dsh-model-capability@1.0.1",
+  "package": "dsh-model-capability",
   "version": "1.0.1",
   "license": "MIT",
   "repository": "git+https://github.com/WJZ-P/dsh-model-capabilities.git",

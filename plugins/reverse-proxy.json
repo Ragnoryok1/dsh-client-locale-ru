@@ -1,6 +1,6 @@
 {
   "namespace": "reverse-proxy",
-  "package": "dsh-full-remote@0.3.7",
+  "package": "dsh-full-remote",
   "version": "0.3.7",
   "license": "MIT",
   "repository": "git+https://github.com/JUANWANG-BUAA/dsh-full-remote.git",

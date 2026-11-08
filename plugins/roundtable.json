@@ -1,6 +1,6 @@
 {
   "namespace": "roundtable",
-  "package": "@y9931666/dsh-plugin-roundtable@1.0.0-rc.3",
+  "package": "@y9931666/dsh-plugin-roundtable",
   "version": "1.0.0-rc.3",
   "license": "MIT",
   "repository": "git+https://github.com/9931666/dsh-plugin-roundtable.git",

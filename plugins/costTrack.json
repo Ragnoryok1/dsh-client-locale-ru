@@ -1,6 +1,6 @@
 {
   "namespace": "costTrack",
-  "package": "dsh-cost-track@0.6.1",
+  "package": "dsh-cost-track",
   "version": "0.6.1",
   "license": "MIT",
   "repository": "git+https://github.com/hj01857655/dsh-plugins.git",

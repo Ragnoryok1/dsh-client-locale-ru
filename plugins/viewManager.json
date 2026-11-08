@@ -1,6 +1,6 @@
 {
   "namespace": "viewManager",
-  "package": "dsh-view-manager@0.2.2",
+  "package": "dsh-view-manager",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/runcat-tommy/dsh-view-manager.git",

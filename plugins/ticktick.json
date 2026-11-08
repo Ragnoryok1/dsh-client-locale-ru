@@ -1,6 +1,6 @@
 {
   "namespace": "ticktick",
-  "package": "@perrylink/dsh-ticktick@0.1.20",
+  "package": "@perrylink/dsh-ticktick",
   "version": "0.1.20",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-ticktick.git",

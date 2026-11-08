@@ -1,6 +1,6 @@
 {
   "namespace": "workbuddy-console",
-  "package": "dsh-workbuddy-console@2.0.53",
+  "package": "dsh-workbuddy-console",
   "version": "2.0.53",
   "license": "MIT",
   "repository": "git+https://github.com/dhdbvcg/dsh-workbuddy-console.git",

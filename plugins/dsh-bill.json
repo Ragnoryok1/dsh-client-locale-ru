@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-bill",
-  "package": "dsh-bill@0.23.0",
+  "package": "dsh-bill",
   "version": "0.23.0",
   "license": "MIT",
   "repository": "git+https://github.com/Jannchie/dsh-bill.git",

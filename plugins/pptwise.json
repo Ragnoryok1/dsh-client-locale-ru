@@ -1,6 +1,6 @@
 {
   "namespace": "pptwise",
-  "package": "@liustack/pptwise@0.48.0",
+  "package": "@liustack/pptwise",
   "version": "0.48.0",
   "license": "MIT",
   "repository": "git+https://github.com/liustack/pptwise.git",

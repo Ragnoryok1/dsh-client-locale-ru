@@ -1,6 +1,6 @@
 {
   "namespace": "smoothStream.chat",
-  "package": "dsh-smooth-stream@0.7.0",
+  "package": "dsh-smooth-stream",
   "version": "0.7.0",
   "license": "MIT",
   "repository": "git+https://github.com/Laplace-bit/dsh-smooth-stream.git",

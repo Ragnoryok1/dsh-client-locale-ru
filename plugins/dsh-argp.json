@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-argp",
-  "package": "dsh-argp@1.10.1",
+  "package": "dsh-argp",
   "version": "1.10.1",
   "license": "MIT",
   "repository": "git+https://github.com/yoza10635/dsh-argp.git",

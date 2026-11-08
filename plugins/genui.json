@@ -1,6 +1,6 @@
 {
   "namespace": "genui",
-  "package": "dsh-plugin-genui@0.15.1",
+  "package": "dsh-plugin-genui",
   "version": "0.15.1",
   "license": "MIT",
   "repository": "git+https://github.com/pengyue-polaron/deepseek-harness-genui.git",

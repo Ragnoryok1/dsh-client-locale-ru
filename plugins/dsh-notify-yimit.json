@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-notify-yimit",
-  "package": "dsh-notify-yimit@0.2.4",
+  "package": "dsh-notify-yimit",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/YiMlT/dsh-notify-yimit.git",

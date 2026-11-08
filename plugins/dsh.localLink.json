@@ -1,6 +1,6 @@
 {
   "namespace": "dsh.localLink",
-  "package": "dsh-local-link@1.2.4",
+  "package": "dsh-local-link",
   "version": "1.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/donoteatme/dsh-local-link.git",

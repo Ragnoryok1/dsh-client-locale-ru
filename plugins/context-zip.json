@@ -1,6 +1,6 @@
 {
   "namespace": "context-zip",
-  "package": "dsh-context-zip@0.1.10",
+  "package": "dsh-context-zip",
   "version": "0.1.10",
   "license": "MIT",
   "repository": "git+https://github.com/brunhildzhou/dsh-context-zip.git",

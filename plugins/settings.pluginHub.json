@@ -1,6 +1,6 @@
 {
   "namespace": "settings.pluginHub",
-  "package": "@nanmicoder/dsh-plugin-market@0.2.0",
+  "package": "@nanmicoder/dsh-plugin-market",
   "version": "0.2.0",
   "license": "MIT",
   "repository": "git+https://github.com/NanmiCoder/dsh-plugin-market.git",

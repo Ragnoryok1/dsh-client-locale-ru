@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-openrouter-live",
-  "package": "dsh-openrouter-live@0.2.2",
+  "package": "dsh-openrouter-live",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/Boomerangz/dsh-openrouter-live.git",

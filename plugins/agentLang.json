@@ -1,6 +1,6 @@
 {
   "namespace": "agentLang",
-  "package": "dsh-agent-lang@0.12.0",
+  "package": "dsh-agent-lang",
   "version": "0.12.0",
   "license": "MIT",
   "repository": "git+https://github.com/KannaKuron/dsh-agent-lang.git",

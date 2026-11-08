@@ -1,6 +1,6 @@
 {
   "namespace": "fileExplorer",
-  "package": "@jaxzhou/dsh-file-explorer@0.1.11",
+  "package": "@jaxzhou/dsh-file-explorer",
   "version": "0.1.11",
   "license": "MIT",
   "repository": "git+https://github.com/jaxzhou/dsh-file-explorer.git",

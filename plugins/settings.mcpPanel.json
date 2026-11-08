@@ -1,6 +1,6 @@
 {
   "namespace": "settings.mcpPanel",
-  "package": "dsh-mcp-panel@0.6.29",
+  "package": "dsh-mcp-panel",
   "version": "0.6.29",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-mcp-panel.git",

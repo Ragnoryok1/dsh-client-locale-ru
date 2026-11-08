@@ -1,6 +1,6 @@
 {
   "namespace": "power.button",
-  "package": "dsh-power-xc@0.1.6",
+  "package": "dsh-power-xc",
   "version": "0.1.6",
   "license": "MIT",
   "repository": "git+https://github.com/xchannel1987/dsh-power-xc.git",

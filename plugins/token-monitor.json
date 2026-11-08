@@ -1,6 +1,6 @@
 {
   "namespace": "token-monitor",
-  "package": "dsh-token-monitor@1.0.12",
+  "package": "dsh-token-monitor",
   "version": "1.0.12",
   "license": "MIT",
   "repository": "git+https://github.com/licyer/dsh-token-monitor.git",

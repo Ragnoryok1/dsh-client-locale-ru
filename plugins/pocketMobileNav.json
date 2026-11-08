@@ -1,6 +1,6 @@
 {
   "namespace": "pocketMobileNav",
-  "package": "dsh-pocket@2.12.0",
+  "package": "dsh-pocket",
   "version": "2.12.0",
   "license": "GPL-2.0",
   "repository": "git+https://github.com/shaobeichen/dsh-pocket.git",

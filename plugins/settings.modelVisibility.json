@@ -1,6 +1,6 @@
 {
   "namespace": "settings.modelVisibility",
-  "package": "dsh-model-visibility@0.2.1",
+  "package": "dsh-model-visibility",
   "version": "0.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/Lzh3070/dsh-model-visibility.git",

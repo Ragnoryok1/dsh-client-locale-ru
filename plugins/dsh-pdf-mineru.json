@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-pdf-mineru",
-  "package": "dsh-pdf-mineru@0.2.1",
+  "package": "dsh-pdf-mineru",
   "version": "0.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/Yurzi/dsh-pdf-mineru.git",

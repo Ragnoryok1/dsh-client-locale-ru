@@ -1,6 +1,6 @@
 {
   "namespace": "settings.permissionRules",
-  "package": "dsh-permission-rules@0.7.20",
+  "package": "dsh-permission-rules",
   "version": "0.7.20",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-permission-rules.git",

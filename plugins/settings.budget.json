@@ -1,6 +1,6 @@
 {
   "namespace": "settings.budget",
-  "package": "dsh-budget@0.4.20",
+  "package": "dsh-budget",
   "version": "0.4.20",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-budget.git",

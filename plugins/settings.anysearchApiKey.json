@@ -1,6 +1,6 @@
 {
   "namespace": "settings.anysearchApiKey",
-  "package": "@aiwayds/dsh-web-search-anysearch@0.8.0",
+  "package": "@aiwayds/dsh-web-search-anysearch",
   "version": "0.8.0",
   "license": "MIT",
   "repository": "git+https://github.com/fan56/dsh-web-search-anysearch.git",

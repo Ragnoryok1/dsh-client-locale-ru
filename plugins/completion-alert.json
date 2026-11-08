@@ -1,6 +1,6 @@
 {
   "namespace": "completion-alert",
-  "package": "dsh-completion-alert@1.8.4",
+  "package": "dsh-completion-alert",
   "version": "1.8.4",
   "license": "MIT",
   "repository": "git+https://github.com/yimengqingfeng3-debug/dsh-completion-alert.git",

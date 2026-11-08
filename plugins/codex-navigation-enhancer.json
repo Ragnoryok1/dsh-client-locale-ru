@@ -1,6 +1,6 @@
 {
   "namespace": "codex-navigation-enhancer",
-  "package": "dsh-codex-timeline@0.6.4",
+  "package": "dsh-codex-timeline",
   "version": "0.6.4",
   "license": "MIT",
   "repository": "git+https://github.com/Wine-Red/dsh-codex-timeline.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-workspace-combiner",
-  "package": "dsh-workspace-combiner@0.8.7",
+  "package": "dsh-workspace-combiner",
   "version": "0.8.7",
   "license": "MIT",
   "repository": "git+https://github.com/ninglovegithub/dsh-workspace-combiner.git",

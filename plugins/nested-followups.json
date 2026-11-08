@@ -1,6 +1,6 @@
 {
   "namespace": "nested-followups",
-  "package": "dsh-nested-followups@0.2.2",
+  "package": "dsh-nested-followups",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/sluminositys/dsh-nested-followups.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "prompt-library",
-  "package": "@sunjuntao/dsh-prompt-library@0.17.2",
+  "package": "@sunjuntao/dsh-prompt-library",
   "version": "0.17.2",
   "license": "MIT",
   "repository": "git+https://github.com/master1Sun/dsh-prompt-library.git",

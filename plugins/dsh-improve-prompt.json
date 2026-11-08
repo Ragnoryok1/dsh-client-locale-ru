@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-improve-prompt",
-  "package": "dsh-improve-prompt@0.7.2",
+  "package": "dsh-improve-prompt",
   "version": "0.7.2",
   "license": "MIT",
   "repository": "git+https://github.com/hoyyang/dsh-improve-prompt.git",

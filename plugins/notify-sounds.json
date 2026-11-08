@@ -1,6 +1,6 @@
 {
   "namespace": "notify-sounds",
-  "package": "dsh-plugin-notify-sounds@1.8.4",
+  "package": "dsh-plugin-notify-sounds",
   "version": "1.8.4",
   "license": "MIT",
   "repository": "git+https://github.com/BillCx330/dsh-plugin-notify-sounds.git",

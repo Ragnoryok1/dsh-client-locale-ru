@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-updater-npm",
-  "package": "dsh-updater-npm@1.13.4",
+  "package": "dsh-updater-npm",
   "version": "1.13.4",
   "license": "MIT",
   "repository": "git+https://github.com/SiriusWJ/dsh-updater-npm.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "atlas",
-  "package": "@sidequest-007/dsh-atlas@1.0.9",
+  "package": "@sidequest-007/dsh-atlas",
   "version": "1.0.9",
   "license": "MIT",
   "repository": "git+https://github.com/jameswatt139240-crypto/dsh-ATLAS.git",

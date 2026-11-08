@@ -1,6 +1,6 @@
 {
   "namespace": "settings.ths-holdings",
-  "package": "dsh-ths-holdings@0.3.2",
+  "package": "dsh-ths-holdings",
   "version": "0.3.2",
   "license": "MIT",
   "repository": "git+https://github.com/PM25000/dsh-ths-holdings.git",

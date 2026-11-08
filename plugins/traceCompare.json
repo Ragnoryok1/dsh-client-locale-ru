@@ -1,6 +1,6 @@
 {
   "namespace": "traceCompare",
-  "package": "dsh-maze@2.4.0",
+  "package": "dsh-maze",
   "version": "2.4.0",
   "license": "MIT",
   "repository": "git+https://github.com/lamost423/dsh-maze.git",

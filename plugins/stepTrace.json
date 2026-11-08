@@ -1,6 +1,6 @@
 {
   "namespace": "stepTrace",
-  "package": "dsh-step-trace@0.6.1",
+  "package": "dsh-step-trace",
   "version": "0.6.1",
   "license": "MIT",
   "repository": "git+https://github.com/hj01857655/dsh-plugins.git",

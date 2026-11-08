@@ -1,6 +1,6 @@
 {
   "namespace": "settings.blue-whale",
-  "package": "dsh-blue-whale@0.1.0",
+  "package": "dsh-blue-whale",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "git+https://github.com/starslittle/dsh-blue-whale.git",

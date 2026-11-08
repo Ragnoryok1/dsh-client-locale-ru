@@ -1,6 +1,6 @@
 {
   "namespace": "net-proxy",
-  "package": "dsh-net-proxy@0.8.0",
+  "package": "dsh-net-proxy",
   "version": "0.8.0",
   "license": "MIT",
   "repository": "git+https://github.com/mafeis/dsh-net-proxy.git",

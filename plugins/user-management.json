@@ -1,6 +1,6 @@
 {
   "namespace": "user-management",
-  "package": "kczx-user-management@1.7.0",
+  "package": "kczx-user-management",
   "version": "1.7.0",
   "license": "MIT",
   "repository": "git+https://github.com/weibaohui/user-management.git",

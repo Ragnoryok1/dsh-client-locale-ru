@@ -1,6 +1,6 @@
 {
   "namespace": "swarm",
-  "package": "dsh-swarm-orchestrator@0.6.32",
+  "package": "dsh-swarm-orchestrator",
   "version": "0.6.32",
   "license": "MIT",
   "repository": "git+https://github.com/linkbag/dsh-swarm-orchestrator.git",

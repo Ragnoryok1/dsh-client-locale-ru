@@ -1,6 +1,6 @@
 {
   "namespace": "settings.checkpointRewind",
-  "package": "dsh-checkpoint-rewind@0.6.33",
+  "package": "dsh-checkpoint-rewind",
   "version": "0.6.33",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-checkpoint-rewind.git",

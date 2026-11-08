@@ -1,6 +1,6 @@
 {
   "namespace": "multi-folder",
-  "package": "dsh-multi-folder@0.3.3",
+  "package": "dsh-multi-folder",
   "version": "0.3.3",
   "license": "MIT",
   "repository": "git+https://github.com/AngelosZou/dsh-multi-folder.git",

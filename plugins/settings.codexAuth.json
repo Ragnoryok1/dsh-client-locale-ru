@@ -1,6 +1,6 @@
 {
   "namespace": "settings.codexAuth",
-  "package": "dsh-codex-auth@0.3.2",
+  "package": "dsh-codex-auth",
   "version": "0.3.2",
   "license": "MIT",
   "repository": "git+https://github.com/suntianc/dsh-codex-auth.git",

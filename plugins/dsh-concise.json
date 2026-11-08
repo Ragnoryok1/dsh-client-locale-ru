@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-concise",
-  "package": "dsh-concise@0.11.3",
+  "package": "dsh-concise",
   "version": "0.11.3",
   "license": "MIT",
   "repository": "git+https://github.com/hoyyang/dsh-concise.git",

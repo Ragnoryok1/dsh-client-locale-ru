@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-zh-settings",
-  "package": "deepseek-harness-zh_pro@0.10.3",
+  "package": "deepseek-harness-zh_pro",
   "version": "0.10.3",
   "license": "MIT",
   "repository": "git+https://github.com/magian1127/deepseek-harness-zh_pro.git",

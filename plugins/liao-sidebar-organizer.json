@@ -1,6 +1,6 @@
 {
   "namespace": "liao-sidebar-organizer",
-  "package": "dsh-liao-sidebar@0.2.6",
+  "package": "dsh-liao-sidebar",
   "version": "0.2.6",
   "license": "MIT",
   "repository": "git+https://github.com/oliblue-evan/dsh-liao-sidebar.git",

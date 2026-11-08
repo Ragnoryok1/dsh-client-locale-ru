@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-antigravity",
-  "package": "dsh-antigravity@0.0.9",
+  "package": "dsh-antigravity",
   "version": "0.0.9",
   "license": "MIT",
   "repository": "git+https://github.com/LiZhenNet/dsh-antigravity.git",

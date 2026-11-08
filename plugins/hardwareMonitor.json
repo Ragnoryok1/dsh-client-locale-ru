@@ -1,6 +1,6 @@
 {
   "namespace": "hardwareMonitor",
-  "package": "dsh-vitals@0.1.15",
+  "package": "dsh-vitals",
   "version": "0.1.15",
   "license": "MIT",
   "repository": "git+https://github.com/JoblessJoe/dsh-vitals.git",

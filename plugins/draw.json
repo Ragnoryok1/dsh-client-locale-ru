@@ -1,6 +1,6 @@
 {
   "namespace": "draw",
-  "package": "dsh-draw@0.2.24",
+  "package": "dsh-draw",
   "version": "0.2.24",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-draw.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "retrace",
-  "package": "dsh-retrace@0.4.134",
+  "package": "dsh-retrace",
   "version": "0.4.134",
   "license": "MIT",
   "repository": "git+https://github.com/yamingmou/dsh-retrace.git",

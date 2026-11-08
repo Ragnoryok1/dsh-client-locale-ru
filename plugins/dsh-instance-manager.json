@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-instance-manager",
-  "package": "dsh-instance-manager@0.12.0",
+  "package": "dsh-instance-manager",
   "version": "0.12.0",
   "license": "MIT",
   "repository": "git+https://github.com/xswt442-cmd/dsh-instance-manager.git",

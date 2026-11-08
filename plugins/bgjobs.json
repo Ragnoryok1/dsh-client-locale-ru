@@ -1,6 +1,6 @@
 {
   "namespace": "bgjobs",
-  "package": "bgjobs@0.2.6",
+  "package": "bgjobs",
   "version": "0.2.6",
   "license": "MIT",
   "repository": "https://github.com/bitsmug/dsh-bgjobs.git",

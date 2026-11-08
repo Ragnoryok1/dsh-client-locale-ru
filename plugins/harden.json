@@ -1,6 +1,6 @@
 {
   "namespace": "harden",
-  "package": "dsh-harden@0.0.2",
+  "package": "dsh-harden",
   "version": "0.0.2",
   "license": "MIT",
   "repository": "git+https://github.com/thissensen/dsh-harden.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-decision-layer",
-  "package": "dsh-decision-layer@0.6.4",
+  "package": "dsh-decision-layer",
   "version": "0.6.4",
   "license": "MIT",
   "repository": "git+https://github.com/xbzbing/dsh-decision-layer.git",

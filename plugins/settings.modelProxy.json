@@ -1,6 +1,6 @@
 {
   "namespace": "settings.modelProxy",
-  "package": "dsh-plugin-model-proxy@0.1.6",
+  "package": "dsh-plugin-model-proxy",
   "version": "0.1.6",
   "license": "MIT",
   "repository": null,

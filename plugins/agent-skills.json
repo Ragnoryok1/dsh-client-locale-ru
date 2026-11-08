@@ -1,6 +1,6 @@
 {
   "namespace": "agent-skills",
-  "package": "dsh-agent-skills@0.1.14",
+  "package": "dsh-agent-skills",
   "version": "0.1.14",
   "license": "MIT",
   "repository": "git+https://github.com/minivv/dsh-agent-skills.git",

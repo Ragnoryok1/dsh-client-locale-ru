@@ -1,6 +1,6 @@
 {
   "namespace": "settings.openai-codex-auth",
-  "package": "dsh-openai-codex-auth@0.6.3",
+  "package": "dsh-openai-codex-auth",
   "version": "0.6.3",
   "license": "MIT",
   "repository": "git+https://github.com/gooosie/dsh-openai-codex-auth.git",

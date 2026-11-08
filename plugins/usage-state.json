@@ -1,6 +1,6 @@
 {
   "namespace": "usage-state",
-  "package": "dsh-usage-state@0.4.8",
+  "package": "dsh-usage-state",
   "version": "0.4.8",
   "license": "MIT",
   "repository": "git+https://github.com/takboo/dsh-usage-state.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "capability-panel",
-  "package": "dsh-capability-panel@1.4.2",
+  "package": "dsh-capability-panel",
   "version": "1.4.2",
   "license": "MIT",
   "repository": "git+https://github.com/pure-craft/dsh-capability-panel.git",

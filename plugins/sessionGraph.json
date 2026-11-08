@@ -1,6 +1,6 @@
 {
   "namespace": "sessionGraph",
-  "package": "@benz-ai-x/dsh-research-graph@0.1.5-rc.1",
+  "package": "@benz-ai-x/dsh-research-graph",
   "version": "0.1.5-rc.1",
   "license": "MIT",
   "repository": "git+https://github.com/benz-ai-x/dsh-research-graph.git",

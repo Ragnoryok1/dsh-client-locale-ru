@@ -1,6 +1,6 @@
 {
   "namespace": "status-rotator",
-  "package": "dsh-status-rotator@0.37.0",
+  "package": "dsh-status-rotator",
   "version": "0.37.0",
   "license": "MIT",
   "repository": "git+https://github.com/01Virex/dsh-status-rotator.git",

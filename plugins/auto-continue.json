@@ -1,6 +1,6 @@
 {
   "namespace": "auto-continue",
-  "package": "dsh-client-auto-continue@0.15.0",
+  "package": "dsh-client-auto-continue",
   "version": "0.15.0",
   "license": "MIT",
   "repository": "git+https://github.com/HsiangNianian/dsh-auto-continue.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "relay.codex",
-  "package": "relay-dsh-plugin-codex@0.2.4",
+  "package": "relay-dsh-plugin-codex",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/yangbobo2021/relay-dsh-plugin-codex.git",

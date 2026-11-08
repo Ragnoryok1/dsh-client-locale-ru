@@ -1,6 +1,6 @@
 {
   "namespace": "settings.codebuddy-cli",
-  "package": "dsh-codebuddy-cli@0.4.3",
+  "package": "dsh-codebuddy-cli",
   "version": "0.4.3",
   "license": "MIT",
   "repository": "git+https://github.com/f艷07013/dsh-codebuddy-cli.git",

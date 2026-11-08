@@ -1,6 +1,6 @@
 {
   "namespace": "peakIndicator",
-  "package": "dsh-peak-indicator@0.1.32",
+  "package": "dsh-peak-indicator",
   "version": "0.1.32",
   "license": "MIT",
   "repository": "git+https://github.com/future007s/dsh-peak-indicator.git",

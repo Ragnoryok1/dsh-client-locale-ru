@@ -1,6 +1,6 @@
 {
   "namespace": "comfyui",
-  "package": "dsh-comfyui@0.5.5",
+  "package": "dsh-comfyui",
   "version": "0.5.5",
   "license": "MIT",
   "repository": "git+https://github.com/fandc520/dsh-comfyui.git",

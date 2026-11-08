@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-skills-manager-plus",
-  "package": "dsh-skills-manager-plus@0.2.2",
+  "package": "dsh-skills-manager-plus",
   "version": "0.2.2",
   "license": "MIT",
   "repository": "git+https://github.com/appthin/dsh-skills-manager-plus.git",

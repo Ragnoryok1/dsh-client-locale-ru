@@ -1,6 +1,6 @@
 {
   "namespace": "skill-center",
-  "package": "@restregular/dsh-skill-center@0.3.11",
+  "package": "@restregular/dsh-skill-center",
   "version": "0.3.11",
   "license": "MIT",
   "repository": "git+https://github.com/RestRegular/dsh-skill-center.git",

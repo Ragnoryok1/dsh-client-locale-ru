@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-ballast",
-  "package": "dsh-ballast@0.5.0",
+  "package": "dsh-ballast",
   "version": "0.5.0",
   "license": "MIT",
   "repository": "git+https://github.com/xswt442-cmd/dsh-ballast.git",

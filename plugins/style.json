@@ -1,6 +1,6 @@
 {
   "namespace": "style",
-  "package": "dsh-output-styles@0.8.1",
+  "package": "dsh-output-styles",
   "version": "0.8.1",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-output-styles.git",

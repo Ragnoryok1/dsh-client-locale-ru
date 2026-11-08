@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-pomodoro",
-  "package": "dsh-pomodoro@0.5.5",
+  "package": "dsh-pomodoro",
   "version": "0.5.5",
   "license": "MIT",
   "repository": "git+https://github.com/causebefore/dsh-pomodoro.git",

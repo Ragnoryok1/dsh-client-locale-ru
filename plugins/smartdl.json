@@ -1,6 +1,6 @@
 {
   "namespace": "smartdl",
-  "package": "@leisureyu/dsh-smart-dl@1.4.6",
+  "package": "@leisureyu/dsh-smart-dl",
   "version": "1.4.6",
   "license": "MIT",
   "repository": "git+https://github.com/LeiSureYu/dsh-smart-download.git",

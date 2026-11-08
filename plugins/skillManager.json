@@ -1,6 +1,6 @@
 {
   "namespace": "skillManager",
-  "package": "@wisdoverse/dsh-skills-manager@1.0.6",
+  "package": "@wisdoverse/dsh-skills-manager",
   "version": "1.0.6",
   "license": "MIT",
   "repository": "git+https://github.com/Wisdoverse/dsh-skills-manager-plugin.git",

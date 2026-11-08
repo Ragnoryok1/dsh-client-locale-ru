@@ -1,6 +1,6 @@
 {
   "namespace": "session-complete-notify",
-  "package": "@telosmaylx/dsh-session-notify@0.1.23",
+  "package": "@telosmaylx/dsh-session-notify",
   "version": "0.1.23",
   "license": "MIT",
   "repository": "git+https://github.com/TelosmaYLX/dsh-session-notify.git",

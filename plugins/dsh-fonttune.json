@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-fonttune",
-  "package": "dsh-fonttune@0.7.1",
+  "package": "dsh-fonttune",
   "version": "0.7.1",
   "license": "MIT",
   "repository": "git+https://github.com/LyaxZ/dsh-fonttune.git",

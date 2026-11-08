@@ -1,6 +1,6 @@
 {
   "namespace": "workspace-prompt",
-  "package": "@linbin-mk/dsh-workspace-prompt@0.9.0",
+  "package": "@linbin-mk/dsh-workspace-prompt",
   "version": "0.9.0",
   "license": "MIT",
   "repository": "git+https://github.com/linbin-mk/dsh-workspace-prompt.git",

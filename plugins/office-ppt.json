@@ -1,6 +1,6 @@
 {
   "namespace": "office-ppt",
-  "package": "dsh-workbuddy-ppt@0.1.0",
+  "package": "dsh-workbuddy-ppt",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "git+https://github.com/SuperstructureJH/dsh-workbuddy-ppt.git",

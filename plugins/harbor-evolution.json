@@ -1,6 +1,6 @@
 {
   "namespace": "harbor-evolution",
-  "package": "dsh-harbor-evolution@0.10.4",
+  "package": "dsh-harbor-evolution",
   "version": "0.10.4",
   "license": "MIT",
   "repository": "git+https://github.com/istarwyh/harbor-self-evolving.git",

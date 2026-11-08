@@ -1,6 +1,6 @@
 {
   "namespace": "oomol.settings",
-  "package": "dsh-oomol@1.0.0",
+  "package": "dsh-oomol",
   "version": "1.0.0",
   "license": "MIT",
   "repository": "git+https://github.com/oomol-lab/dsh-oomol.git",

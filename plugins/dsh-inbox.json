@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-inbox",
-  "package": "@chance722/dsh-inbox@0.2.15",
+  "package": "@chance722/dsh-inbox",
   "version": "0.2.15",
   "license": "MIT",
   "repository": "git+https://github.com/Chance722/dsh-inbox.git",

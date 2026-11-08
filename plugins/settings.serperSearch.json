@@ -1,6 +1,6 @@
 {
   "namespace": "settings.serperSearch",
-  "package": "dsh-serper-search@0.4.0",
+  "package": "dsh-serper-search",
   "version": "0.4.0",
   "license": "MIT",
   "repository": "git+https://github.com/Minokun/dsh-serper-search.git",

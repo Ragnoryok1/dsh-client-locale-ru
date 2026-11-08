@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-mineru",
-  "package": "@huanlin/dsh-plugin-mineru@0.4.2",
+  "package": "@huanlin/dsh-plugin-mineru",
   "version": "0.4.2",
   "license": "AGPL-3.0",
   "repository": null,

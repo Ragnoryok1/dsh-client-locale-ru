@@ -1,6 +1,6 @@
 {
   "namespace": "settings.security",
-  "package": "dsh-plugin-security@0.5.0",
+  "package": "dsh-plugin-security",
   "version": "0.5.0",
   "license": "MIT",
   "repository": "git+https://github.com/dushaobindoudou/dsh-plugin-security.git",

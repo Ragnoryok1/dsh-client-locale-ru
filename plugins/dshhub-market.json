@@ -1,6 +1,6 @@
 {
   "namespace": "dshhub-market",
-  "package": "dshhub-market@0.8.60",
+  "package": "dshhub-market",
   "version": "0.8.60",
   "license": "MIT",
   "repository": "git+https://github.com/dshhub-co/dshhub-market.git",

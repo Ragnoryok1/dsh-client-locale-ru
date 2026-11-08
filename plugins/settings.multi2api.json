@@ -1,6 +1,6 @@
 {
   "namespace": "settings.multi2api",
-  "package": "dsh-multi2api@0.1.9",
+  "package": "dsh-multi2api",
   "version": "0.1.9",
   "license": "MIT",
   "repository": "git+https://github.com/moze30/dsh-multi2api.git",

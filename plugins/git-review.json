@@ -1,6 +1,6 @@
 {
   "namespace": "git-review",
-  "package": "dsh-git-review@0.1.8",
+  "package": "dsh-git-review",
   "version": "0.1.8",
   "license": "MIT",
   "repository": "git+https://github.com/HaoyueQin/dsh-git-review.git",

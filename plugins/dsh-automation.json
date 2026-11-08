@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-automation",
-  "package": "@alpacachen/dsh-automation@0.3.32",
+  "package": "@alpacachen/dsh-automation",
   "version": "0.3.32",
   "license": "MIT",
   "repository": "git+https://github.com/alpacachen/dsh-automation.git",

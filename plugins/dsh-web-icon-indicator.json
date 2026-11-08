@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-web-icon-indicator",
-  "package": "dsh-web-icon-indicator@0.6.0",
+  "package": "dsh-web-icon-indicator",
   "version": "0.6.0",
   "license": "MIT",
   "repository": "git+https://github.com/waknow/dsh-web-icon-indicator.git",

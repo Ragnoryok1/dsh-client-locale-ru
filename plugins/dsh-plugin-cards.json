@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-plugin-cards",
-  "package": "dsh-plugin-cards@0.9.29",
+  "package": "dsh-plugin-cards",
   "version": "0.9.29",
   "license": "MIT",
   "repository": "git+https://github.com/yuanzukun/dsh-plugin-cards.git",

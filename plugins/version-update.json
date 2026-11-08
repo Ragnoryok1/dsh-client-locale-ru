@@ -1,6 +1,6 @@
 {
   "namespace": "version-update",
-  "package": "dsh-version-update@1.4.4",
+  "package": "dsh-version-update",
   "version": "1.4.4",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/SuCriss/dsh-version-update.git",

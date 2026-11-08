@@ -1,6 +1,6 @@
 {
   "namespace": "tokenLedger",
-  "package": "dsh-tokenledger@0.1.0",
+  "package": "dsh-tokenledger",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "git+https://github.com/zh667/TokenLedger.git",

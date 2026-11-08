@@ -1,6 +1,6 @@
 {
   "namespace": "settings.talk",
-  "package": "dsh-talk@0.3.25",
+  "package": "dsh-talk",
   "version": "0.3.25",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/PerryLink/dsh-talk.git",

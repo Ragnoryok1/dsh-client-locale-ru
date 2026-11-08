@@ -1,6 +1,6 @@
 {
   "namespace": "sse",
-  "package": "@jcy2387/dsh-codex-provider@0.1.7-rc.2.1",
+  "package": "@jcy2387/dsh-codex-provider",
   "version": "0.1.7-rc.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/DamonBao/dsh-codex-suite.git",

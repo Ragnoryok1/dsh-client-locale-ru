@@ -1,6 +1,6 @@
 {
   "namespace": "settings.pluginManagerPro",
-  "package": "dsh-plugin-manager-pro@0.9.1",
+  "package": "dsh-plugin-manager-pro",
   "version": "0.9.1",
   "license": "MIT",
   "repository": "git+https://github.com/nonentity303/dsh-plugin-manager.git",

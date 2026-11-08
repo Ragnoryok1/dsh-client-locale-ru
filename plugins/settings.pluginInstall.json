@@ -1,6 +1,6 @@
 {
   "namespace": "settings.pluginInstall",
-  "package": "dsh-plugin-install@0.4.12",
+  "package": "dsh-plugin-install",
   "version": "0.4.12",
   "license": "MIT",
   "repository": "git+https://github.com/qinyre/dsh-plugin-install.git",

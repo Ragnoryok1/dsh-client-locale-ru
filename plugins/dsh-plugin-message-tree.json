@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-plugin-message-tree",
-  "package": "dsh-plugin-message-edit@1.2.1",
+  "package": "dsh-plugin-message-edit",
   "version": "1.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/SpookySandwich/dsh-plugin-message-edit.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "modeltester",
-  "package": "dsh-modeltester@0.0.7-alpha.6",
+  "package": "dsh-modeltester",
   "version": "0.0.7-alpha.6",
   "license": "MIT",
   "repository": "git+https://github.com/Yuer6327/ModelTester.git",

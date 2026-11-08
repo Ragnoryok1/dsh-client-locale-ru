@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-prompt-history",
-  "package": "dsh-prompt-history@1.4.2",
+  "package": "dsh-prompt-history",
   "version": "1.4.2",
   "license": "MIT",
   "repository": "git+https://github.com/Xiaofei-fei/dsh-prompt-history.git",

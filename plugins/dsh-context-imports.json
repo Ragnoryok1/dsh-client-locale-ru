@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-context-imports",
-  "package": "dsh-context-imports@0.2.3",
+  "package": "dsh-context-imports",
   "version": "0.2.3",
   "license": "MIT",
   "repository": "git+https://github.com/ciskonc/dsh-context-imports.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "inline-comments",
-  "package": "dsh-inline-comments@0.1.2",
+  "package": "dsh-inline-comments",
   "version": "0.1.2",
   "license": "MIT",
   "repository": "git+https://github.com/zenvertao/dsh-inline-comments.git",

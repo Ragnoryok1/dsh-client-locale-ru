@@ -1,6 +1,6 @@
 {
   "namespace": "settings.grokSubscription",
-  "package": "dsh-grok-subscription@2.0.9",
+  "package": "dsh-grok-subscription",
   "version": "2.0.9",
   "license": "MIT",
   "repository": "git+https://github.com/BaronCyrus/dsh-grok-subscription.git",

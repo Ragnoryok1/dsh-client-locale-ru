@@ -1,6 +1,6 @@
 {
   "namespace": "approval-review",
-  "package": "dsh-approval-review@0.6.4",
+  "package": "dsh-approval-review",
   "version": "0.6.4",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/LAwLi3tCoding/dsh-approval-review.git",

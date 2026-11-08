@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-scheduler",
-  "package": "dsh-scheduler@2026.9.192",
+  "package": "dsh-scheduler",
   "version": "2026.9.192",
   "license": "MIT",
   "repository": "git+https://github.com/yangdongzhen590/dsh-knj-scheduler.git",

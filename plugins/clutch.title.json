@@ -1,6 +1,6 @@
 {
   "namespace": "clutch.title",
-  "package": "@cerbur/clutch-dsh-title@0.1.7",
+  "package": "@cerbur/clutch-dsh-title",
   "version": "0.1.7",
   "license": "MIT",
   "repository": "git+https://github.com/Cerbur/clutch-dsh.git",

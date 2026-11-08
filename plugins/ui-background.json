@@ -1,6 +1,6 @@
 {
   "namespace": "ui-background",
-  "package": "deepseek-harness-background@0.6.1",
+  "package": "deepseek-harness-background",
   "version": "0.6.1",
   "license": "MIT",
   "repository": "git+https://github.com/HaoyueQin/deepseek-harness-background.git",

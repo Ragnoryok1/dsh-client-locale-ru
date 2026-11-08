@@ -1,6 +1,6 @@
 {
   "namespace": "settings.grok-build",
-  "package": "dsh-coding-subscription-oauth@0.8.5",
+  "package": "dsh-coding-subscription-oauth",
   "version": "0.8.5",
   "license": "Apache-2.0",
   "repository": "git+https://github.com/lninghaha/dsh-coding-subscription-oauth.git",

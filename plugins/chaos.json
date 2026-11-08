@@ -1,6 +1,6 @@
 {
   "namespace": "chaos",
-  "package": "@hanxuanliang/dsh-chaos@0.1.2",
+  "package": "@hanxuanliang/dsh-chaos",
   "version": "0.1.2",
   "license": "MIT",
   "repository": "git+https://github.com/hanxuanliang/dsh-chaos.git",

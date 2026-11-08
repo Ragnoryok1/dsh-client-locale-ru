@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-mcp-market",
-  "package": "dsh-mcp-market@0.1.2",
+  "package": "dsh-mcp-market",
   "version": "0.1.2",
   "license": "MIT",
   "repository": "git+https://github.com/LKMeng2001/dsh-mcp-market.git",

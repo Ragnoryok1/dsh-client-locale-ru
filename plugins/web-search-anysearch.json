@@ -1,6 +1,6 @@
 {
   "namespace": "web-search-anysearch",
-  "package": "@wenqi_bian/dsh-web-search-anysearch@0.2.0-rc.2",
+  "package": "@wenqi_bian/dsh-web-search-anysearch",
   "version": "0.2.0-rc.2",
   "license": "MIT",
   "repository": "git+https://github.com/VinciBeans/dsh-web-search-anysearch.git",

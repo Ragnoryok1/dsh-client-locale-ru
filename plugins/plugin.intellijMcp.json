@@ -1,6 +1,6 @@
 {
   "namespace": "plugin.intellijMcp",
-  "package": "dsh-intellij-mcp@1.0.5",
+  "package": "dsh-intellij-mcp",
   "version": "1.0.5",
   "license": "MIT",
   "repository": null,

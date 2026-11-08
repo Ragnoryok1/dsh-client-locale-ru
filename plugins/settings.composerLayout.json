@@ -1,6 +1,6 @@
 {
   "namespace": "settings.composerLayout",
-  "package": "dsh-composer-layout@0.1.24",
+  "package": "dsh-composer-layout",
   "version": "0.1.24",
   "license": "MIT",
   "repository": "git+https://github.com/lavapapa/dsh-composer-layout.git",

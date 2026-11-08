@@ -1,6 +1,6 @@
 {
   "namespace": "vision",
-  "package": "dsh-vision-web@0.1.0",
+  "package": "dsh-vision-web",
   "version": "0.1.0",
   "license": "MIT",
   "repository": "git+https://github.com/54xkeee/dsh-vision.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "settings.opencode-go",
-  "package": "dsh-opencode-go@0.1.24",
+  "package": "dsh-opencode-go",
   "version": "0.1.24",
   "license": "MIT",
   "repository": "git+https://github.com/Duskriver/dsh-opencode-go.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "dshTimeline",
-  "package": "dsh-timeline@0.1.5",
+  "package": "dsh-timeline",
   "version": "0.1.5",
   "license": "GPL-3.0-or-later",
   "repository": "git+https://github.com/houyanchao/dsh-timeline.git",

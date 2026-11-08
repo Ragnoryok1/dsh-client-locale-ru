@@ -1,6 +1,6 @@
 {
   "namespace": "noletme",
-  "package": "dsh-noletme@0.3.9",
+  "package": "dsh-noletme",
   "version": "0.3.9",
   "license": "MIT",
   "repository": "git+https://github.com/Yuer6327/NoLetMe.git",

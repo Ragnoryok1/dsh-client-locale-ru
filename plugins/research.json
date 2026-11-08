@@ -1,6 +1,6 @@
 {
   "namespace": "research",
-  "package": "dsh-mimir@0.21.1",
+  "package": "dsh-mimir",
   "version": "0.21.1",
   "license": "MIT",
   "repository": "git+https://github.com/1692775560/dsh-Mimir-Academic-research.git",

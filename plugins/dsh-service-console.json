@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-service-console",
-  "package": "@jiyr0119/dsh-service-console@0.7.0",
+  "package": "@jiyr0119/dsh-service-console",
   "version": "0.7.0",
   "license": "MIT",
   "repository": "git+https://github.com/Jiyr0119/dsh-service-console.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "quota",
-  "package": "dsh-quota@0.14.5",
+  "package": "dsh-quota",
   "version": "0.14.5",
   "license": "MIT",
   "repository": "git+https://github.com/Minokun/dsh-quota.git",

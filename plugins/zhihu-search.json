@@ -1,6 +1,6 @@
 {
   "namespace": "zhihu-search",
-  "package": "dsh-zhihu-search@2.2.1",
+  "package": "dsh-zhihu-search",
   "version": "2.2.1",
   "license": "MIT",
   "repository": "git+https://github.com/dsh-plugin-lab/dsh-zhihu-search.git",

@@ -1,6 +1,6 @@
 {
   "namespace": "session-colorful-unread-pin-jobs",
-  "package": "dsh-session-colorful-unread-pin-jobs@2.0.0",
+  "package": "dsh-session-colorful-unread-pin-jobs",
   "version": "2.0.0",
   "license": "MIT",
   "repository": "git+https://github.com/enterhalf/dsh-session-colorful-unread-pin-jobs.git",

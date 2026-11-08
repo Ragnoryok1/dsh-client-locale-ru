@@ -1,6 +1,6 @@
 {
   "namespace": "dsh-database",
-  "package": "dsh-database-explorer@0.9.25",
+  "package": "dsh-database-explorer",
   "version": "0.9.25",
   "license": "MIT",
   "repository": "git+https://github.com/xing-he888/dsh-database-explorer.git",

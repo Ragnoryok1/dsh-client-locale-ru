@@ -1,6 +1,6 @@
 {
   "namespace": "settings.promptSetting",
-  "package": "dsh-prompt-setting@0.2.4",
+  "package": "dsh-prompt-setting",
   "version": "0.2.4",
   "license": "MIT",
   "repository": "git+https://github.com/zangxx66/dsh-prompt-setting.git",

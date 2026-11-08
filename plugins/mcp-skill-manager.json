@@ -1,6 +1,6 @@
 {
   "namespace": "mcp-skill-manager",
-  "package": "dsh-skills-mcp-group-manager@0.3.9",
+  "package": "dsh-skills-mcp-group-manager",
   "version": "0.3.9",
   "license": "MIT",
   "repository": "git+https://github.com/SeverusZh/dsh-skills-mcp-group-manager.git",
