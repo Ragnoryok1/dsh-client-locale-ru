@@ -1,6 +1,6 @@
 {
   "schema": "dsh-locale-coverage/1",
-  "generated": "2026-11-08",
+  "generated": "2026-11-14",
   "pack": {
     "name": "@ragnoryok1/dsh-client-locale-ru",
     "version": "0.2.27",
@@ -30,8 +30,8 @@
     ]
   },
   "totals": {
-    "namespaces": 600,
-    "strings": 69538,
+    "namespaces": 602,
+    "strings": 69923,
     "plugins": 526,
     "plugin_strings": 65601
   },

@@ -1092,5 +1092,6 @@
   "agentero.library · importPlaceholder": "подсказка из идентификаторов источников, переводить нечего",
   "agentero.pdf · title": "название формата",
   "dsh-context · cmds.hasStderr": "имя потока stderr",
-  "dsh-context · cmds.heredoc": "название конструкции heredoc"
+  "dsh-context · cmds.heredoc": "название конструкции heredoc",
+  "settings.models · customGeminiBaseUrlPlaceholder": "URL-пример из подсказки поля, переводить нечего"
 }
