@@ -22,30 +22,6 @@ index 0000000000..e7f4ebb095
 +    "description": "Сообщает модели текущее время, часовой пояс браузера и время с предыдущего сообщения на каждом шаге."
 +  }
 +}
-diff --git a/packages/experimental/agent-team-profile/locale/ru.json b/packages/experimental/agent-team-profile/locale/ru.json
-new file mode 100644
-index 0000000000..12a76b2e65
---- /dev/null
-+++ b/packages/experimental/agent-team-profile/locale/ru.json
-@@ -0,0 +1,6 @@
-+{
-+  "meta": {
-+    "title": "Команды агентов",
-+    "description": "Позволяет агенту распределить работу между названными участниками, вести её на общей доске задач и вернуться с их результатами."
-+  }
-+}
-diff --git a/packages/experimental/agent-team/locale/ru.json b/packages/experimental/agent-team/locale/ru.json
-new file mode 100644
-index 0000000000..344213a799
---- /dev/null
-+++ b/packages/experimental/agent-team/locale/ru.json
-@@ -0,0 +1,6 @@
-+{
-+  "meta": {
-+    "title": "Командная работа",
-+    "description": "Управление участниками команды, сообщениями участников и общими задачами."
-+  }
-+}
 diff --git a/packages/experimental/api-speech-to-text/locale/ru.json b/packages/experimental/api-speech-to-text/locale/ru.json
 new file mode 100644
 index 0000000000..1fbcd509fd
@@ -104,18 +80,6 @@ index 0000000000..15785bd1ca
 +  "meta": {
 +    "title": "Работа в браузере (Playwright)",
 +    "description": "Позволяет модели просматривать веб-страницы и управлять ими через Playwright MCP в запущенном Chromium."
-+  }
-+}
-diff --git a/packages/experimental/client-ui-agent-team/locale/ru.json b/packages/experimental/client-ui-agent-team/locale/ru.json
-new file mode 100644
-index 0000000000..cbc912174f
---- /dev/null
-+++ b/packages/experimental/client-ui-agent-team/locale/ru.json
-@@ -0,0 +1,6 @@
-+{
-+  "meta": {
-+    "title": "Панель команды",
-+    "description": "Показывает участников команды и общие задачи, позволяет переходить в разговоры участников."
 +  }
 +}
 diff --git a/packages/experimental/client-ui-cot-translation/locale/ru.json b/packages/experimental/client-ui-cot-translation/locale/ru.json
@@ -300,26 +264,14 @@ index 0000000000..64210c364d
 +}
 diff --git a/packages/experimental/terminal-bundle/locale/ru.json b/packages/experimental/terminal-bundle/locale/ru.json
 new file mode 100644
-index 0000000000..130014693f
+index 0000000000..2e8eecbd99
 --- /dev/null
 +++ b/packages/experimental/terminal-bundle/locale/ru.json
 @@ -0,0 +1,6 @@
 +{
 +  "meta": {
 +    "title": "Постоянные терминалы",
-+    "description": "Даёт агенту терминалы, процессы которых продолжают работать в фоне между вызовами инструментов: можно запустить сервер разработки или REPL и позже вернуться, чтобы прочитать вывод или ввести команды."
-+  }
-+}
-diff --git a/packages/experimental/tool-agent-team/locale/ru.json b/packages/experimental/tool-agent-team/locale/ru.json
-new file mode 100644
-index 0000000000..e3c2abaa52
---- /dev/null
-+++ b/packages/experimental/tool-agent-team/locale/ru.json
-@@ -0,0 +1,6 @@
-+{
-+  "meta": {
-+    "title": "Инструменты команды",
-+    "description": "Даёт агентам инструменты для согласования участников, обмена сообщениями и управления общими задачами."
++    "description": "Даёт агенту терминалы, которые открываются вкладками в боковой панели: за ними можно наблюдать и перехватывать управление, просто набрав команду. Процессы продолжают работать между вызовами инструментов, так что можно запустить сервер разработки или REPL и позже вернуться, чтобы прочитать вывод; агент также может читать терминалы, открытые вами."
 +  }
 +}
 diff --git a/packages/experimental/tool-worktree/locale/ru.json b/packages/experimental/tool-worktree/locale/ru.json
