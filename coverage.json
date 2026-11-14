@@ -3,14 +3,16 @@
   "generated": "2026-11-14",
   "pack": {
     "name": "@ragnoryok1/dsh-client-locale-ru",
-    "version": "0.2.27",
+    "version": "0.2.28",
     "license": "MIT",
     "repository": "https://github.com/Ragnoryok1/dsh-client-locale-ru",
     "install": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
   },
   "harness": {
-    "audited_against": "v0.2.2-rc.1",
+    "audited_against": "v0.2.2-rc.3",
     "compatible_versions": [
+      "v0.2.2-rc.3",
+      "v0.2.2-rc.2",
       "v0.2.2-rc.1",
       "v0.2.2-alpha.3",
       "v0.2.1-rc.5",
