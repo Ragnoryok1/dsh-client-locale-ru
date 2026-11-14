@@ -86,6 +86,12 @@ jobs:
       - name: Translated namespace inventory
         run: npm run check:namespaces
 
+      - name: Badge matches the coverage
+        run: npm run check:badge
+
+      - name: README numbers match the pack
+        run: npm run check:readme-claims
+
       - name: Coverage file matches the pack
         run: npm run check:coverage
       - name: README languages move together

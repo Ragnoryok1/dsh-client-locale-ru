@@ -1,7 +1,7 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.28",
+  "version": "0.2.29",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
   "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 602 sections, 69 923 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 602 разделов, 69 923 строк.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
@@ -27,6 +27,8 @@
 插件把 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的界面变成俄语。你看到的一切都会被翻译：设置、侧边栏、对话框、提示、错误信息——以及没有自带俄语的三方插件菜单。
 
 目前包里有 602 个分区、69 923 条文案，其中 526 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
+
+本包翻译的 526 个插件中，**443 个没有自己的俄语**：发布包里没有 `locale/ru.json`，bundle 里也没有西里尔文。没有本包，这些菜单会一直是英文。每条记录都在 [coverage.json](coverage.json) 里：包名、版本、已翻译条数。
 
 安装只需一条命令：`dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru`，然后在设置 General 里选择俄语。
 
