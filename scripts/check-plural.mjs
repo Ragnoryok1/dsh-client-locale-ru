@@ -100,7 +100,7 @@ test('the `n` keys pluralise too, and keys without extra forms keep their value'
 
   const job = locale.bind('job')
   assert.equal(job('count.live.other', { count: 2 }), '2 фоновые задачи выполняются')
-  assert.equal(job('count.idle.other', { count: 5 }), '5 фоновых задач')
+  assert.equal(job('terminal.expand.other', { n: 5 }), 'Показать ещё 5 строк')
 
   // `unit.day` carries `.few` / `.many` now, so the count picks the Russian form;
   // `.other` stays the fallback for a fractional count, where CLDR has no form to
