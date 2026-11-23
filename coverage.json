@@ -1,16 +1,19 @@
 {
   "schema": "dsh-locale-coverage/1",
-  "generated": "2026-11-18",
+  "generated": "2026-11-23",
   "pack": {
     "name": "@ragnoryok1/dsh-client-locale-ru",
-    "version": "0.2.30",
+    "version": "0.2.31",
     "license": "MIT",
     "repository": "https://github.com/Ragnoryok1/dsh-client-locale-ru",
     "install": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
   },
   "harness": {
-    "audited_against": "v0.2.2-rc.4",
+    "audited_against": "v0.2.3-alpha.2",
     "compatible_versions": [
+      "v0.2.3-alpha.2",
+      "v0.2.3-alpha.1",
+      "v0.2.2-rc.5",
       "v0.2.2-rc.4",
       "v0.2.2-rc.3",
       "v0.2.2-rc.2",
@@ -33,8 +36,8 @@
     ]
   },
   "totals": {
-    "namespaces": 602,
-    "strings": 69923,
+    "namespaces": 604,
+    "strings": 70333,
     "plugins": 526,
     "plugin_strings": 65601
   },

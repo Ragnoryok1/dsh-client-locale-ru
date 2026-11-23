@@ -1093,5 +1093,9 @@
   "agentero.pdf · title": "название формата",
   "dsh-context · cmds.hasStderr": "имя потока stderr",
   "dsh-context · cmds.heredoc": "название конструкции heredoc",
-  "settings.models · customGeminiBaseUrlPlaceholder": "URL-пример из подсказки поля, переводить нечего"
+  "settings.models · customGeminiBaseUrlPlaceholder": "URL-пример из подсказки поля, переводить нечего",
+  "forgePanel · noun.pullRequest": "Аббревиатура GitHub, по-русски тоже PR",
+  "forgePanel · noun.mergeRequest": "Аббревиатура GitLab, по-русски тоже MR",
+  "pluginMarket · sourcePathPlaceholder": "Пример пути в поле ввода, переводить нечего",
+  "pluginMarket · sourceRepositoryPlaceholder": "Пример адреса репозитория, переводить нечего"
 }

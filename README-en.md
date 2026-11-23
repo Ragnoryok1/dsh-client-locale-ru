@@ -1,11 +1,11 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.30",
+  "version": "0.2.31",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 602 sections, 69 923 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 602 разделов, 69 923 строк.",
+  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 604 sections, 70 333 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 604 разделов, 70 333 строк.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
-  "compatible_versions": ["v0.2.2-rc.4", "v0.2.2-rc.3", "v0.2.2-rc.2", "v0.2.2-rc.1", "v0.2.2-alpha.3", "v0.2.1-rc.5", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
+  "compatible_versions": ["v0.2.3-alpha.2", "v0.2.3-alpha.1", "v0.2.2-rc.5", "v0.2.2-rc.4", "v0.2.2-rc.3", "v0.2.2-rc.2", "v0.2.2-rc.1", "v0.2.2-alpha.3", "v0.2.1-rc.5", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
   "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
 }
@@ -21,12 +21,12 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.2--alpha.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-602-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-69923-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-604-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-70333-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 The plugin makes the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) interface Russian. Everything you see is translated: settings, side panels, dialogs, hints, error messages — and the menus of third-party plugins that ship no Russian of their own.
 
-The pack currently holds 602 sections and 69,923 strings, 526 of them dictionaries of third-party plugins — more than any other Russian pack for the harness I could find.
+The pack currently holds 604 sections and 70,333 strings, 526 of them dictionaries of third-party plugins — more than any other Russian pack for the harness I could find.
 
 Of the 526 plugins the pack translates, **443 ship no Russian of their own** — no `locale/ru.json` in the published archive and no Cyrillic in the bundle. Without the pack their menus stay English. Every record is in [coverage.json](coverage.json): package, version, translated strings.
 
@@ -41,7 +41,7 @@ The pack does not modify harness files and does not touch your data. If a newer 
 
 ---
 
-The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 602 namespaces, 69,923 strings, with the bundled plugin dictionaries marked.
+The complete inventory is in [NAMESPACES.md](NAMESPACES.md): 604 namespaces, 70,333 strings, with the bundled plugin dictionaries marked.
 
 Plugins outside the harness tree are translated the same way, but their English text comes from their own publication: `plugins/<namespace>.json` records the package, the version, the licence and the strings extracted from its bundle. What is still English in your installation is shown by `npm run report:plugins`: it walks the profile's `node_modules`, finds each plugin's own dictionary and compares its keys with ours, and a plugin without a dictionary is reported as such — there is nothing to translate until it asks for one.
 

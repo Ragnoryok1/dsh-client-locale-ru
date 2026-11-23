@@ -1,11 +1,11 @@
 <!-- deepseek-harness-meta
 {
   "name": "Russian (ru) language pack for DeepSeek Harness",
-  "version": "0.2.30",
+  "version": "0.2.31",
   "tags": ["localization", "russian", "i18n", "web-gui", "language-pack"],
-  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 602 sections, 69 923 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 602 разделов, 69 923 строк.",
+  "description": "Russian language pack and full Russian localization for the DeepSeek Harness web GUI: the whole interface plus the menus of 526 third-party plugins — 604 sections, 70 333 strings. Русский язык и полная локализация веб-интерфейса DeepSeek Harness: весь интерфейс и меню 526 плагинов, 604 разделов, 70 333 строк.",
   "icon": "https://raw.githubusercontent.com/Ragnoryok1/dsh-client-locale-ru/main/assets/icon.png",
-  "compatible_versions": ["v0.2.2-rc.4", "v0.2.2-rc.3", "v0.2.2-rc.2", "v0.2.2-rc.1", "v0.2.2-alpha.3", "v0.2.1-rc.5", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
+  "compatible_versions": ["v0.2.3-alpha.2", "v0.2.3-alpha.1", "v0.2.2-rc.5", "v0.2.2-rc.4", "v0.2.2-rc.3", "v0.2.2-rc.2", "v0.2.2-rc.1", "v0.2.2-alpha.3", "v0.2.1-rc.5", "v0.2.1-rc.3", "v0.2.1-rc.2", "v0.2.1-rc.1", "v0.2.1-alpha.5", "v0.2.1-alpha.4", "v0.2.1-alpha.3", "v0.2.1-alpha.2", "v0.2.1-alpha.1", "v0.2.0-rc.2", "v0.2.0-rc.1", "v0.1.7-rc.2", "v0.1.7-rc.1", "v0.1.7-alpha.2"],
   "screenshots": "images",
   "install_method": "dsh plugin --profile web add @ragnoryok1/dsh-client-locale-ru"
 }
@@ -21,12 +21,12 @@
 [![license](https://img.shields.io/npm/l/%40ragnoryok1%2Fdsh-client-locale-ru)](LICENSE)
 [![verify](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml/badge.svg)](https://github.com/Ragnoryok1/dsh-client-locale-ru/actions/workflows/verify.yml)
 [![dsh](https://img.shields.io/badge/dsh-0.2.2--alpha.2%2B-6366f1)](https://github.com/deepseek-ai/deepseek-harness)
-[![namespaces](https://img.shields.io/badge/namespaces-602-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
-[![strings](https://img.shields.io/badge/strings-69923-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![namespaces](https://img.shields.io/badge/namespaces-604-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
+[![strings](https://img.shields.io/badge/strings-70333-6466f1)](https://github.com/Ragnoryok1/dsh-client-locale-ru)
 
 插件把 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的界面变成俄语。你看到的一切都会被翻译：设置、侧边栏、对话框、提示、错误信息——以及没有自带俄语的三方插件菜单。
 
-目前包里有 602 个分区、69 923 条文案，其中 526 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
+目前包里有 604 个分区、70 333 条文案，其中 526 份是第三方插件的词典——比我能找到的任何其他俄语包都多。
 
 本包翻译的 526 个插件中，**443 个没有自己的俄语**：发布包里没有 `locale/ru.json`，bundle 里也没有西里尔文。没有本包，这些菜单会一直是英文。每条记录都在 [coverage.json](coverage.json) 里：包名、版本、已翻译条数。
 
@@ -40,7 +40,7 @@
 
 ---
 
-完整清单见 [NAMESPACES.md](NAMESPACES.md)：602 个 namespace、69,923 条字符串，随包附带的插件词典单独标注。
+完整清单见 [NAMESPACES.md](NAMESPACES.md)：604 个 namespace、70,333 条字符串，随包附带的插件词典单独标注。
 
 harness 树之外的插件用同样的方式翻译，但英文取自它们自己的发布物：`plugins/<namespace>.json` 记录包名、版本、许可证，以及从其 bundle 中提取的字符串。安装里还剩哪些英文，用 `npm run report:plugins` 查看：它遍历 profile 的 `node_modules`，找出每个插件自己的词典并与我们的对照；没有词典的插件会照实标注——在它请求翻译之前无从翻译。
 

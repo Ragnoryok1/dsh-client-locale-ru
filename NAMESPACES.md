@@ -1,7 +1,7 @@
 <!-- Сгенерировано `npm run namespaces`; проверяется `npm run check:namespaces`. -->
 # Что переведено
 
-Пакет переводит **602 namespace** — 69923 строк. Колонка «как это выглядит»
+Пакет переводит **604 namespace** — 70333 строк. Колонка «как это выглядит»
 берёт заголовок самого namespace (то, что читает пользователь), а не отдельное описание:
 список нельзя разойтись с переводами.
 
@@ -16,13 +16,13 @@
 | `ERR_UNSAFE_PROFILING_DIRECTORY` | — | 15 | @sagmans/dsh-tui@0.16.0 |
 | `about.huaqiu` | О плагине | 9 | @huaqiu/dsh-huaqiu-about@0.6.6 |
 | `account.notifications` | — | 1 | харнесс |
-| `actionCards` | — | 14 | харнесс |
+| `actionCards` | — | 19 | харнесс |
 | `agency` | — | 94 | @michengai/dsh-agency-agents@1.2.10 |
 | `agent-community` | Bots团队 | 1 | @dsh-plugin-agent-community/ui-agent-community@0.3.9 |
 | `agent-schedule` | tool.call.toolview | 61 | dsh-agent-toolkit@0.4.13 |
 | `agent-shell-consent` | — | 2 | dsh-agent-shell@0.4.0 |
 | `agent-skills` | Навыки агента | 53 | dsh-agent-skills@0.1.14 |
-| `agent-team` | Команда агентов | 36 | харнесс |
+| `agent-team` | Команда агентов | 41 | харнесс |
 | `agentLang` | Управление языком | 21 | dsh-agent-lang@0.12.0 |
 | `agentStudio` | — | 248 | dsh-agent-studio@0.1.8 |
 | `agentTeams` | — | 217 | @nanmicoder/dsh-agent-teams@0.1.26 |
@@ -57,7 +57,7 @@
 | `catppuccin` | — | 85 | @nonamelego/dsh-catppuccin@0.6.4 |
 | `chaos` | — | 239 | @hanxuanliang/dsh-chaos@0.1.2 |
 | `chart` | — | 7 | dsh-ab-chart@0.1.19 |
-| `chat` | — | 216 | харнесс |
+| `chat` | — | 219 | харнесс |
 | `chat-timeline` | — | 7 | dsh-chat-timeline@0.1.5 |
 | `claude-code-mods` | — | 4 | харнесс |
 | `clawock` | — | 459 | clawock-dsh@0.4.0 |
@@ -72,10 +72,11 @@
 | `completion-alert` | — | 65 | dsh-completion-alert@1.8.4 |
 | `computer-use` | settings.plugin.item | 1 | @crazy_th/dsh-computer-use@0.2.4 |
 | `config-manager` | — | 36 | dsh-config-manager@0.1.79 |
+| `connectorAccount` | — | 5 | харнесс |
 | `context-zip` | ContextZip | 39 | dsh-context-zip@0.1.10 |
 | `contextMemory` | Контекстная память | 48 | dsh-context-memory@0.9.0 |
 | `contextMenu` | — | 2 | харнесс |
-| `conversation` | — | 398 | харнесс |
+| `conversation` | — | 406 | харнесс |
 | `conversation-anchors` | Якоря | 23 | @biggerboy123/dsh-conversation-anchors@0.1.21 |
 | `conversation.session.header.actions` | Подробное использование | 303 | dsh-damage-pulse@4.2.9 |
 | `cordis` | — | 51 | харнесс |
@@ -84,7 +85,7 @@
 | `cotTranslation` | — | 32 | харнесс |
 | `cpa-panel` | — | 126 | dsh-cpa-switch@0.18.1 |
 | `creationRecommendations` | Персональные страницы | 55 | харнесс |
-| `cuaPermissions` | Разрешить управление компьютером | 66 | харнесс |
+| `cuaPermissions` | Разрешить управление компьютером | 70 | харнесс |
 | `cursor-effect` | — | 13 | dsh-smooth-cursor-patched@0.1.9-patched.6 |
 | `custom-headers` | — | 31 | dsh-custom-headers@0.3.0 |
 | `daruma` | — | 28 | dsh-daruma@0.1.10 |
@@ -96,7 +97,7 @@
 | `diff-stat` | — | 23 | dsh-diff-stat@0.1.9 |
 | `doctor` | — | 138 | @linxin666/dsh-doctor@0.3.24 |
 | `documentHtml` | HTML | 4 | харнесс |
-| `documentMarkdown` | — | 4 | харнесс |
+| `documentMarkdown` | — | 6 | харнесс |
 | `draw` | — | 24 | dsh-draw@0.2.24 |
 | `drawio` | — | 39 | dsh-drawio@0.1.0 |
 | `ds-balance` | — | 71 | dsh-ds-balance@3.1.0 |
@@ -287,7 +288,7 @@
 | `fileDrag` | — | 1 | харнесс |
 | `fileExplorer` | — | 79 | @jaxzhou/dsh-file-explorer@0.1.11 |
 | `foldPositions` | — | 481 | billion-context@0.1.202 |
-| `forgePanel` | — | 425 | харнесс |
+| `forgePanel` | — | 581 | харнесс |
 | `formatforge` | — | 22 | @tianbuyu-wwx/dsh-formatforge@3.0.0 |
 | `free-proxy` | — | 88 | dsh-freeroute@0.10.3 |
 | `genui` | — | 77 | dsh-plugin-genui@0.15.1 |
@@ -371,8 +372,8 @@
 | `plan` | — | 16 | харнесс |
 | `plugin-store` | — | 77 | dsh-plugins-store@0.1.4 |
 | `plugin.intellijMcp` | IntelliJ IDEA MCP | 36 | dsh-intellij-mcp@1.0.5 |
-| `pluginManager` | Плагины | 299 | харнесс |
-| `pluginMarket` | Обзор плагинов | 89 | харнесс |
+| `pluginManager` | Плагины | 303 | харнесс |
+| `pluginMarket` | Обзор плагинов | 95 | харнесс |
 | `pluginRecommendations` | Рекомендуемый плагин | 25 | харнесс |
 | `pluginTopology` | Топология плагинов | 82 | @sleetdrop/dsh-plugin-topology@0.9.0 |
 | `pocketMobileNav` | 📱 Доступ с телефона | 96 | dsh-pocket@2.12.0 |
@@ -391,12 +392,13 @@
 | `quota-panel` | Квота моделей | 68 | dsh-quota-panel@0.1.7-rc.1-v0.1 |
 | `quote-followup` | — | 11 | dsh-quote-followup@0.2.10 |
 | `reasoning-effort` | Рассуждение | 14 | dsh-reasoning-effort@0.2.8 |
-| `reference` | — | 15 | харнесс |
+| `reference` | — | 17 | харнесс |
 | `relay.codex` | — | 63 | relay-dsh-plugin-codex@0.2.4 |
 | `relay.session-import` | — | 1 | relay-dsh-plugin-session-import@0.2.3 |
 | `remix-router-transitions` | — | 1 | dsh-eteams@0.2.22 |
 | `remote` | Удалённый доступ | 117 | @linxin666/dsh-remote-web-ui@0.4.8 |
 | `remote-sessions` | Удалённые сессии | 61 | dsh-remote-sessions@0.8.11 |
+| `remoteConnection` | Удалённое подключение | 30 | харнесс |
 | `repeat-tool-breaker.card` | Repeat tool breaker | 49 | dsh-repeat-tool-breaker@0.11.6 |
 | `research` | — | 831 | dsh-mimir@0.21.1 |
 | `retrace` | — | 172 | dsh-retrace@0.4.134 |
@@ -418,6 +420,7 @@
 | `session-title-pattern` | — | 39 | dsh-session-title-pattern@0.8.9 |
 | `sessionColor` | — | 17 | @idoall/dsh-session-colors@0.1.11 |
 | `sessionGraph` | — | 288 | @benz-ai-x/dsh-research-graph@0.1.5-rc.1 |
+| `sessionPanel` | — | 7 | харнесс |
 | `sessions` | — | 399 | dsh-plugin-ideas-manager@0.10.3 |
 | `settings` | Настройки | 65 | харнесс |
 | `settings-search-v5` | Настройки | 145 | @objectivex666/dsh-settings-search@1.14.0 |
@@ -485,10 +488,8 @@
 | `settings.pluginConsole` | — | 627 | @noob-stupid/dsh-plugin-console@0.5.92 |
 | `settings.pluginHub` | — | 110 | @nanmicoder/dsh-plugin-market@0.2.0 |
 | `settings.pluginInstall` | — | 21 | dsh-plugin-install@0.4.12 |
-| `settings.pluginInventory` | — | 37 | харнесс |
 | `settings.pluginManager` | — | 37 | @linxin666/dsh-client-ui-plugin-manager@0.4.8 |
 | `settings.pluginManagerPro` | Менеджер плагинов | 209 | dsh-plugin-manager-pro@0.9.1 |
-| `settings.plugins` | Встроенные плагины | 5 | харнесс |
 | `settings.plugins.zai` | Веб-поиск (Z.ai) | 43 | dsh-web-search-zai@0.2.0 |
 | `settings.promptSetting` | Настройки промпта | 586 | dsh-prompt-setting@0.2.4 |
 | `settings.qoderCredential` | Учётные данные Qoder | 125 | dsh-provider-qoder@0.5.0 |
@@ -509,7 +510,7 @@
 | `settings.ths-holdings` | Портфель Tonghuashun | 17 | dsh-ths-holdings@0.3.2 |
 | `settings.tokenUsage` | — | 177 | dsh-token-use@0.3.4 |
 | `settings.trae` | — | 347 | dsh-connect-trae@4.4.0 |
-| `settings.webSearch` | Веб-поиск | 44 | харнесс |
+| `settings.webSearch` | Веб-поиск | 45 | харнесс |
 | `settings.workbuddy` | — | 423 | dsh-connect-workbuddy@5.10.0 |
 | `settings.workbuddy-xdpool` | — | 427 | dsh-workbuddy-xdpool@2.0.1 |
 | `settings.workbuddy2api` | — | 126 | dsh-workbuddy2api@0.6.11 |
@@ -543,7 +544,7 @@
 | `status-rotator` | — | 4 | dsh-status-rotator@0.37.0 |
 | `stepTrace` | Трассировка шагов | 31 | dsh-step-trace@0.6.1 |
 | `style` | — | 3 | dsh-output-styles@0.8.1 |
-| `subagent` | — | 85 | харнесс |
+| `subagent` | — | 84 | харнесс |
 | `swarm` | — | 246 | dsh-swarm-orchestrator@0.6.32 |
 | `task-board` | — | 439 | @linxin666/dsh-client-ui-task-board@0.4.8 |
 | `task-board-github` | — | 113 | @linxin666/dsh-client-ui-task-board-github@0.4.8 |
@@ -558,6 +559,7 @@
 | `thinking-levels` | — | 98 | dsh-thinking-levels@4.4.4 |
 | `ticktick` | TickTick | 52 | @perrylink/dsh-ticktick@0.1.20 |
 | `tidy-display` | Аккуратный вид | 39 | dsh-tidy-display@0.4.4 |
+| `timeline` | Хронология | 203 | харнесс |
 | `token-ledger` | Обзор использования токенов | 160 | @chenmiao8563/dsh-token-ledger@1.1.2 |
 | `token-meter-panel` | Расход токенов | 92 | dsh-token-meter-panel@0.6.4 |
 | `token-monitor` | — | 231 | dsh-token-monitor@1.0.12 |
@@ -607,7 +609,7 @@
 | `workbuddy-console` | Каталог навыков WorkBuddy | 28 | dsh-workbuddy-console@2.0.53 |
 | `workflowRun` | — | 20 | харнесс |
 | `workload-report` | — | 171 | dsh-workload-report@1.0.1 |
-| `workspace` | — | 131 | харнесс |
+| `workspace` | — | 143 | харнесс |
 | `workspace-prompt` | — | 48 | @linbin-mk/dsh-workspace-prompt@0.9.0 |
 | `worktree` | — | 410 | @cerbur/clutch-dsh-worktree@0.1.18 |
 | `xiaomi-mimo-tts` | — | 341 | dsh-xiaomi-tts@4.2.0 |
@@ -615,4 +617,4 @@
 | `xrn1997-dsh-novel` | — | 160 | @xrn1997/dsh-novel@0.8.0 |
 | `zhihu-search` | — | 19 | dsh-zhihu-search@2.2.1 |
 
-Итого: **602** namespace, **69923** строк.
+Итого: **604** namespace, **70333** строк.
